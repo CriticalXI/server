@@ -46149,7 +46149,7 @@ INSERT INTO `mob_spawn_points` VALUES (17309977,0,'Groundskeeper','Groundskeeper
 INSERT INTO `mob_spawn_points` VALUES (17309978,0,'Groundskeeper','Groundskeeper',12,-320.503,-25.489,-200.977,105);
 INSERT INTO `mob_spawn_points` VALUES (17309979,0,'Mimic','Mimic',14,1.000,1.000,1.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17309980,0,'Genbu','Genbu',15,257.000,-70.000,517.000,118);
-INSERT INTO `mob_spawn_points` VALUES (17309981,0,'Seiryu','Seiryu',16,569.000,-70.000,-80.000,76);
+INSERT INTO `mob_spawn_points` VALUES (17309981,0,'Seiryu','Seiryu',16,580.835,-70.220,-84.529,134);
 INSERT INTO `mob_spawn_points` VALUES (17309982,0,'Byakko','Byakko',17,-410.488,-70.520,394.720,214);
 INSERT INTO `mob_spawn_points` VALUES (17309983,0,'Suzaku','Suzaku',18,-514.533,-70.520,-264.736,72);
 INSERT INTO `mob_spawn_points` VALUES (17309984,0,'Eraser','Eraser',19,-77.860,-40.700,-147.750,54);
