@@ -147,6 +147,12 @@ xi.mobSkill =
     BLOW                     =  581,
     BLANK_GAZE               =  586,
 
+    BERSERK_BOMB_BIG         =  593, -- Big Bomb / Friars Lantern
+    VULCANIAN_IMPACT         =  594, -- Big Bomb / Friars Lantern
+    HEAT_WAVE                =  595, -- Big Bomb / Friars Lantern
+    HELLSTORM                =  596, -- Big Bomb / Friars Lantern
+    SELF_DESTRUCT_BOMB_BIG   =  597, -- Big Bomb / Friars Lantern
+
     SWEEP                    =  620,
 
     HELLDIVE_1               =  622,

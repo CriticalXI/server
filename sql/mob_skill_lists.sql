@@ -4284,7 +4284,13 @@ INSERT INTO `mob_skill_lists` VALUES ('Bird_Expansion',2089,1159); -- Broadside 
 INSERT INTO `mob_skill_lists` VALUES ('Bird_Expansion',2089,1160); -- Blind Side Barrage
 INSERT INTO `mob_skill_lists` VALUES ('Bird_Expansion',2089,1161); -- Damnation Dive
 
--- Next ID : 2090
+INSERT INTO `mob_skill_lists` VALUES ('Bomb_Grow',2090,593); -- Berserk
+INSERT INTO `mob_skill_lists` VALUES ('Bomb_Grow',2090,594); -- Vulcanian Impact
+INSERT INTO `mob_skill_lists` VALUES ('Bomb_Grow',2090,595); -- Heat Wave
+INSERT INTO `mob_skill_lists` VALUES ('Bomb_Grow',2090,596); -- Hellstorm
+INSERT INTO `mob_skill_lists` VALUES ('Bomb_Grow',2090,597); -- Self-destruct
+
+-- Next ID : 2091
 
 -- ------------------------------------------------------------
 -- Start of Ambuscade section
