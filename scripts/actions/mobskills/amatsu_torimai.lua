@@ -8,7 +8,7 @@ local mobskillObject = {}
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
     if
         mob:getObjType() == xi.objType.TRUST or
-        mob:getAnimationSub() == 0
+        mob:getAnimationSub() == 4
     then
         return 0
     else

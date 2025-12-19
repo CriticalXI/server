@@ -6,10 +6,13 @@
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if mob:getObjType() == xi.objType.TRUST then
+    if
+        mob:getObjType() == xi.objType.TRUST or
+        mob:getAnimationSub() == 4
+    then
         return 0
     else
-        return 1 --if BCNM version dont use this
+        return 1
     end
 end
 

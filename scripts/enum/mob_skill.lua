@@ -479,11 +479,12 @@ xi.mobSkill =
 
     AMATSU_TORIMAI                = 1390,
     AMATSU_KAZAKIRI               = 1391,
-
+    AMATSU_YUKIARASHI             = 1392,
+    AMATSU_TSUKIOBORO             = 1393,
     AMATSU_HANAIKUSA              = 1394,
     AMATSU_TSUKIKAGE              = 1395,
     COSMIC_ELUCIDATION            = 1396,
-
+    OISOYA                        = 1397,
     RANGED_ATTACK_TENZEN_1        = 1398, -- Tenzen Bow High
     RICEBALL_TENZEN               = 1399,
     RANGED_ATTACK_TENZEN_2        = 1400, -- Tenzen Bow Low
