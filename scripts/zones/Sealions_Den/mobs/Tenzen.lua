@@ -26,17 +26,17 @@ local bowPhases =
 
 local formTable =
 {
-    [forms.SHEATHED] = { skill = 0,    standback = xi.behavior.NONE      },
-    [forms.MELEE   ] = { skill = 0,    standback = xi.behavior.NONE      },
-    [forms.BOW_LOW ] = { skill = 1400, standback = xi.behavior.STANDBACK },
-    [forms.BOW_HIGH] = { skill = 1398, standback = xi.behavior.STANDBACK },
+    [forms.SHEATHED] = { skill = 0,    delay = 2000, standback = xi.behavior.NONE      },
+    [forms.MELEE   ] = { skill = 0,    delay = 2000, standback = xi.behavior.NONE      },
+    [forms.BOW_LOW ] = { skill = 2056, delay = 2400, standback = xi.behavior.STANDBACK },
+    [forms.BOW_HIGH] = { skill = 2055, delay = 1000, standback = xi.behavior.STANDBACK },
 }
 
 local bowSequence =
 {
-    [bowPhases.START] = { form = forms.BOW_LOW,  shotDelay = 4, minShots = 1, maxShots = 2,  nextPhase = 2 },
-    [bowPhases.FAST ] = { form = forms.BOW_HIGH, shotDelay = 2, minShots = 5, maxShots = 10, nextPhase = 3 },
-    [bowPhases.SLOW ] = { form = forms.BOW_LOW,  shotDelay = 4, minShots = 1, maxShots = 5,  nextPhase = 0 },
+    [bowPhases.START] = { form = forms.BOW_LOW,  minShots = 1, maxShots = 2,  nextPhase = bowPhases.FAST },
+    [bowPhases.FAST ] = { form = forms.BOW_HIGH, minShots = 5, maxShots = 10, nextPhase = bowPhases.SLOW },
+    [bowPhases.SLOW ] = { form = forms.BOW_LOW,  minShots = 1, maxShots = 5,  nextPhase = bowPhases.NONE },
 }
 
 local normalMeikyo =
@@ -64,6 +64,8 @@ local taruOffsets =
 
 local function setupForm(mob, newForm)
     mob:setAnimationSub(newForm)
+    mob:setMobSkillAttack(formTable[newForm].skill)
+    mob:setDelay(formTable[newForm].delay)
     mob:setBehavior(formTable[newForm].standback)
 
     -- Pause for animation change before enabling auto attacks
@@ -77,17 +79,15 @@ end
 
 -- Setup bow phase handling
 local function setupBowPhase(mob, phase)
-    local config      = bowSequence[phase]
-    local currentTime = GetSystemTime()
+    local config = bowSequence[phase]
 
     setupForm(mob, config.form)
 
-    mob:setMobAbilityEnabled(false)
-
     mob:setLocalVar('[Tenzen]BowPhase', phase)
-    mob:setLocalVar('[Tenzen]ShotTimer', currentTime + config.shotDelay)
     mob:setLocalVar('[Tenzen]ShotCount', 0)
     mob:setLocalVar('[Tenzen]ShotAmount', math.random(config.minShots, config.maxShots))
+    mob:setLocalVar('[Tenzen]ShouldOisoya', 0)
+    mob:setLocalVar('[Tenzen]TransitionActive', 0)
 end
 
 local function wsSequence(mob)
@@ -115,7 +115,7 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.DEF, 350)
-    mob:setMod(xi.mod.REGAIN, 30)
+    mob:setMod(xi.mod.REGAIN, 1000)
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 10)
     mob:setUnkillable(true)
@@ -124,7 +124,17 @@ entity.onMobSpawn = function(mob)
     setupForm(mob, forms.MELEE)
 
     -- Reset local vars.
-    mob:resetLocalVars()
+    mob:setLocalVar('[Tenzen]BowPhase', 0)
+    mob:setLocalVar('[Tenzen]ShotCount', 0)
+    mob:setLocalVar('[Tenzen]ShotAmount', 0)
+    mob:setLocalVar('[Tenzen]ShouldOisoya', 0)
+    mob:setLocalVar('[Tenzen]TransitionActive', 0)
+    mob:setLocalVar('[Tenzen]MeikyoStep', 0)
+    mob:setLocalVar('[Tenzen]MeikyoActive', 0)
+    mob:setLocalVar('[Tenzen]Enrage', 0)
+    mob:setLocalVar('[Tenzen]ShiftTimer', 0)
+    mob:setLocalVar('[Tenzen]RiceBallTimer', 0)
+    mob:setLocalVar('[Tenzen]LastWeaponskill', 0)
 
     xi.mix.jobSpecial.config(mob,
         {
@@ -150,67 +160,97 @@ entity.onMobEngage = function(mob, target)
 end
 
 entity.onMobMobskillChoose = function(mob, target)
-    local form = mob:getAnimationSub()
+    local form         = mob:getAnimationSub()
+    local shouldOisoya = mob:getLocalVar('[Tenzen]ShouldOisoya') == 1
+    print("Tenzen Mobskill Choose - Form:", form, "ShouldOisoya:", shouldOisoya)
 
-    if form == forms.MELEE then
-        local tpList =
-        {
-            xi.mobSkill.AMATSU_HANAIKUSA,
-            xi.mobSkill.AMATSU_TSUKIKAGE,
-            xi.mobSkill.AMATSU_TORIMAI,
-            xi.mobSkill.AMATSU_KAZAKIRI,
-            xi.mobSkill.AMATSU_YUKIARASHI,
-            xi.mobSkill.AMATSU_TSUKIOBORO,
-        }
+    switch (form): caseof
+    {
+        [forms.MELEE] = function()
+            local tpList =
+            {
+                xi.mobSkill.AMATSU_HANAIKUSA,
+                xi.mobSkill.AMATSU_TSUKIKAGE,
+                xi.mobSkill.AMATSU_TORIMAI,
+                xi.mobSkill.AMATSU_KAZAKIRI,
+                xi.mobSkill.AMATSU_YUKIARASHI,
+                xi.mobSkill.AMATSU_TSUKIOBORO,
+            }
 
-        return tpList[math.random(1, #tpList)]
-    elseif form == forms.BOW_HIGH or form == forms.BOW_LOW then
-        return xi.mobSkill.OISOYA
-    end
+            return tpList[math.random(1, #tpList)]
+        end,
+
+        [forms.BOW_HIGH] = function()
+            if shouldOisoya then
+                print('Choosing Oisoya')
+                return xi.mobSkill.OISOYA
+            else
+                print('Choosing Ranged Attack 1')
+                return xi.mobSkill.RANGED_ATTACK_TENZEN_1
+            end
+        end,
+
+        [forms.BOW_LOW] = function()
+            if shouldOisoya then
+                print('Choosing Oisoya')
+                return xi.mobSkill.OISOYA
+            else
+                print('Choosing Ranged Attack 2')
+                return xi.mobSkill.RANGED_ATTACK_TENZEN_2
+            end
+        end,
+    }
 end
 
 entity.onMobWeaponSkill = function(target, mob, skill)
     local skillId = skill:getID()
+    print(string.format('[Tenzen] onMobWeaponSkill SkillID: %d Name: %s', skillId, skill:getName()))
 
     -- Track last time Tenzen did a mobskill. Dont Meikyo Shisui immediately after.
     mob:setLocalVar('[Tenzen]LastWeaponskill', GetSystemTime() + 5)
 
-    -- Increment shot count for bow attacks.
-    if
-        skillId == xi.mobSkill.RANGED_ATTACK_TENZEN_1 or
-        skillId == xi.mobSkill.RANGED_ATTACK_TENZEN_2
-    then
-        mob:setLocalVar('[Tenzen]ShotCount', mob:getLocalVar('[Tenzen]ShotCount') + 1)
-    end
+    switch (skillId): caseof
+    {
+        [xi.mobSkill.COSMIC_ELUCIDATION] = function()
+            mob:timer(2000, function(mobArg)
+                mobArg:setAnimationSub(3)
+                mobArg:showText(mobArg, ID.text.TENZEN_MSG_OFFSET + 1)
+                mobArg:getBattlefield():lose()
+            end)
+        end,
 
-    -- Setup weaponskill chain.
-    if skillId == xi.mobSkill.MEIKYO_SHISUI_1 then
-        mob:setAutoAttackEnabled(false)
-        mob:setMobAbilityEnabled(false)
+        [xi.mobSkill.MEIKYO_SHISUI_1] = function()
+            mob:setAutoAttackEnabled(false)
+            mob:setMobAbilityEnabled(false)
 
-        mob:setLocalVar('[Tenzen]MeikyoActive', 1)
-        mob:setLocalVar('[Tenzen]MeikyoStep', 0)
-        mob:setLocalVar('[Tenzen]ShiftTimer', GetSystemTime() + math.random(25, 70))
-        setupForm(mob, forms.MELEE)
-        wsSequence(mob)
+            mob:setLocalVar('[Tenzen]MeikyoActive', 1)
+            mob:setLocalVar('[Tenzen]MeikyoStep', 0)
+            mob:setLocalVar('[Tenzen]ShiftTimer', GetSystemTime() + math.random(25, 70))
+            setupForm(mob, forms.MELEE)
+            wsSequence(mob)
+        end,
 
-        return
+        [xi.mobSkill.OISOYA] = function()
+            print('Oisoya triggered!')
+            mob:setLocalVar('[Tenzen]ShouldOisoya', 0)
+        end,
 
-    -- Lose battle.
-    elseif skillId == xi.mobSkill.COSMIC_ELUCIDATION then
-        mob:timer(2000, function(mobArg)
-            mobArg:setAnimationSub(3)
-            mobArg:showText(mobArg, ID.text.TENZEN_MSG_OFFSET + 1)
-            mobArg:getBattlefield():lose()
-        end)
+        [xi.mobSkill.RANGED_ATTACK_TENZEN_1] = function()
+            -- Increment shot count for bow attacks.
+            mob:setLocalVar('[Tenzen]ShotCount', mob:getLocalVar('[Tenzen]ShotCount') + 1)
+        end,
 
-        return
-    end
+        [xi.mobSkill.RANGED_ATTACK_TENZEN_2] = function()
+            -- Increment shot count for bow attacks.
+            mob:setLocalVar('[Tenzen]ShotCount', mob:getLocalVar('[Tenzen]ShotCount') + 1)
+        end,
 
-    -- Continue weaponskill chain.
-    if mob:getLocalVar('[Tenzen]MeikyoActive') == 1 then
-        wsSequence(mob)
-    end
+        default = function()
+            if mob:getLocalVar('[Tenzen]MeikyoActive') == 1 then
+                wsSequence(mob)
+            end
+        end,
+    }
 end
 
 entity.onMobFight = function(mob, target)
@@ -278,30 +318,21 @@ entity.onMobFight = function(mob, target)
         end
 
         if currentTime >= mob:getLocalVar('[Tenzen]ShiftTimer') then
-            mob:setAutoAttackEnabled(false)
             setupBowPhase(mob, bowPhases.START)
         end
 
         return
     end
 
-    -- Bow forms: fire shots and handle transitions.
+    -- Bow forms: handle phase transitions based on shot count.
     if form == forms.BOW_LOW or form == forms.BOW_HIGH then
         local phase      = mob:getLocalVar('[Tenzen]BowPhase')
         local shotCount  = mob:getLocalVar('[Tenzen]ShotCount')
         local shotAmount = mob:getLocalVar('[Tenzen]ShotAmount')
-        local shotTimer  = mob:getLocalVar('[Tenzen]ShotTimer')
-
-        -- Fire shot if timer elapsed and shots remaining.
-        if shotCount < shotAmount and currentTime >= shotTimer then
-            mob:setLocalVar('[Tenzen]ShotTimer', currentTime + bowSequence[phase].shotDelay)
-            mob:useMobAbility(formTable[form].skill)
-
-            return
-        end
 
         -- All shots fired, transition to next phase.
-        if shotCount >= shotAmount then
+        if shotCount >= shotAmount and mob:getLocalVar('[Tenzen]TransitionActive') == 0 then
+            print(string.format('[Tenzen] Transition Triggered! ShotCount: %d ShotAmount: %d', shotCount, shotAmount))
             local phaseConfig = bowSequence[phase]
 
             -- Return to melee
@@ -316,7 +347,8 @@ entity.onMobFight = function(mob, target)
 
             -- Transition to next bow phase.
             -- Early skill enable during transition to allow Oisoya.
-            mob:setMobAbilityEnabled(true)
+            mob:setLocalVar('[Tenzen]TransitionActive', 1)
+            mob:setLocalVar('[Tenzen]ShouldOisoya', 1)
             mob:timer(1500, function(mobArg)
                 setupBowPhase(mobArg, phaseConfig.nextPhase)
             end)
