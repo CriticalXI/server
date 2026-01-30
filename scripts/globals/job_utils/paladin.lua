@@ -58,7 +58,7 @@ end
 -----------------------------------
 -- Ability Use Functions
 -----------------------------------
-xi.job_utils.paladin.useChivalry = function(player, target, ability)
+xi.job_utils.paladin.useChivalry = function(player, target, ability, action)
     local merits = player:getMerit(xi.merit.CHIVALRY) - 5
     local tp     = target:getTP()
     local base   = 0.05 + (player:getMod(xi.mod.ENHANCES_CHIVALRY) / 100)
@@ -90,7 +90,7 @@ xi.job_utils.paladin.useDivineEmblem = function(player, target, ability)
     return xi.effect.DIVINE_EMBLEM
 end
 
-xi.job_utils.paladin.useFealty = function(player, target, ability)
+xi.job_utils.paladin.useFealty = function(player, target, ability, action)
     local merits    = player:getMerit(xi.merit.FEALTY) - 5
     local enhFealty = (player:getMerit(xi.merit.FEALTY) / 5) * player:getMod(xi.mod.ENHANCES_FEALTY)
     local duration  = 60 + merits + enhFealty

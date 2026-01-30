@@ -38,3 +38,5 @@
 
 custom/commands/
 custom/lua/test_npcs_in_gm_home.lua
+abyssea/
+rov/

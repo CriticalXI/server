@@ -52,3 +52,19 @@ UPDATE spell_list SET castTime = 3000 WHERE name = 'blindna';
 
 -- Cursna: Revert cast time from 1 to 3 seconds
 UPDATE spell_list SET castTime = 3000 WHERE name = 'cursna';
+
+------------------------------------
+-- Paladin
+------------------------------------
+
+-- Chivalry: Revert recast from 10 to 20 minutes
+UPDATE abilities SET recastTime = 1200 WHERE name = 'chivalry';
+
+-- Fealty: Revert recast from 10 to 20 minutes
+UPDATE abilities SET recastTime = 1200 WHERE name = 'fealty';
+
+-- Chivalry merit: Revert value to 150 seconds per level
+UPDATE merits SET value = 150 WHERE name = 'chivalry';
+
+-- Fealty merit: Revert value to 150 seconds per level
+UPDATE merits SET value = 150 WHERE name = 'fealty';

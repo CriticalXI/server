@@ -66,4 +66,36 @@ m:addOverride('xi.job_utils.white_mage.useDevotion', function(player, target, ab
     return healMP
 end)
 
+-----------------------------------
+-- Paladin
+-----------------------------------
+
+-- Chivalry: Remove increased MP bonus from merits and reduces cooldown per merit
+m:addOverride('xi.job_utils.paladin.useChivalry', function(player, target, ability, action)
+    local recastReduction = player:getMerit(xi.merit.CHIVALRY) - 150
+    action:setRecast(action:getRecast() - recastReduction)
+
+    local tp     = target:getTP()
+    local base   = 0.05 + (player:getMod(xi.mod.ENHANCES_CHIVALRY) / 100)
+    -- MP gained = (TP * 0.05) + (0.0015 * TP * MND)
+    local amount = (tp * base) + (0.0015 * tp * target:getStat(xi.mod.MND))
+
+    target:setTP(0)
+
+    return target:addMP(amount)
+end)
+
+-- Fealty: Remove duration increase per merit and reduces cooldown per merit
+m:addOverride('xi.job_utils.paladin.useFealty', function(player, target, ability, action)
+    local recastReduction = player:getMerit(xi.merit.FEALTY) - 150
+    action:setRecast(action:getRecast() - recastReduction)
+
+    local enhFealty = (player:getMerit(xi.merit.FEALTY) / 5) * player:getMod(xi.mod.ENHANCES_FEALTY)
+    local duration  = 60 + enhFealty
+
+    player:addStatusEffect(xi.effect.FEALTY, 1, 0, duration)
+
+    return xi.effect.FEALTY
+end)
+
 return m
