@@ -7327,15 +7327,6 @@ auto SendToZone(CCharEntity* PChar, uint16 zoneId) -> bool
         return false;
     }
 
-    auto ip   = ipp.getIP();
-    auto port = ipp.getPort();
-    db::preparedStmt("UPDATE accounts_sessions "
-                     "SET server_addr = ?, server_port = ? "
-                     "WHERE charid = ?",
-                     ip,
-                     port,
-                     PChar->id);
-
     db::preparedStmt("UPDATE chars "
                      "SET pos_zone = ?, pos_prevzone = ?, pos_rot = ?,"
                      "pos_x = ?, pos_y = ?, pos_z = ?,"
@@ -7698,7 +7689,7 @@ earth_time::time_point getTraverserEpoch(CCharEntity* PChar)
     const auto rset = db::preparedStmt("SELECT UNIX_TIMESTAMP(traverser_start) AS start FROM char_unlocks WHERE charid = ? LIMIT 1", PChar->id);
     FOR_DB_SINGLE_RESULT(rset)
     {
-        return earth_time::time_point(std::chrono::seconds(rset->get<uint32>("start")));
+        return earth_time::time_point(std::chrono::seconds(rset->getOrDefault<uint32>("start", 0)));
     }
 
     return earth_time::time_point(std::chrono::seconds(0));
@@ -7749,7 +7740,7 @@ uint32 getAvailableTraverserStones(CCharEntity* PChar)
     const auto rset = db::preparedStmt("SELECT UNIX_TIMESTAMP(traverser_start) AS start, traverser_claimed FROM char_unlocks WHERE charid = ? LIMIT 1", PChar->id);
     FOR_DB_SINGLE_RESULT(rset)
     {
-        traverserEpoch   = earth_time::time_point(std::chrono::seconds(rset->get<uint32>("start")));
+        traverserEpoch   = earth_time::time_point(std::chrono::seconds(rset->getOrDefault<uint32>("start", 0)));
         traverserClaimed = rset->get<uint32>("traverser_claimed");
     }
 

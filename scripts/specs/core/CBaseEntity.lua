@@ -630,15 +630,6 @@ function CBaseEntity:sendMenu(menu)
 end
 
 ---@nodiscard
----@param guildID integer
----@param open integer
----@param close integer
----@param holiday integer
----@return boolean
-function CBaseEntity:sendGuild(guildID, open, close, holiday)
-end
-
----@nodiscard
 ---@param npc CBaseEntity
 ---@param open integer
 ---@param close integer
@@ -812,10 +803,6 @@ end
 
 ---@return nil
 function CBaseEntity:forceRezone()
-end
-
----@return nil
-function CBaseEntity:forceLogout()
 end
 
 ---@nodiscard

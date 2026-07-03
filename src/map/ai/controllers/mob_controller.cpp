@@ -79,7 +79,7 @@ auto CMobController::Tick(const timer::time_point tick) -> Task<void>
         }
         else if (!PMob->isDead())
         {
-            if (PMob->SpellContainer->HasSpells() && DoBuffTick())
+            if (PMob->SpellContainer->HasSpells() && !PMob->PAI->PathFind->IsPatrolling() && DoBuffTick())
             {
                 co_return;
             }
@@ -628,8 +628,16 @@ auto CMobController::TryCastSpell() -> bool
         return false; // Target out of range.
     }
 
-    // Perform cast.
-    CastSpell(chosenSpellId.value());
+    // Perform cast. If there is a valid target override, cast at that target, otherwise cast normally.
+    // We need this because CastSpell has its own targetfind and PCastTarget is not used for it.
+    if (maybeTargetOverride.has_value() && PCastTarget)
+    {
+        Cast(PCastTarget->targid, chosenSpellId.value());
+    }
+    else
+    {
+        CastSpell(chosenSpellId.value());
+    }
     return true;
 }
 

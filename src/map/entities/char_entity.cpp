@@ -188,11 +188,6 @@ CCharEntity::CCharEntity()
         i.statusLower = 0;
     }
 
-    m_copCurrent = 0;
-    m_acpCurrent = 0;
-    m_mkeCurrent = 0;
-    m_asaCurrent = 0;
-
     m_PMonstrosity = nullptr;
 
     m_Costume            = 0;
@@ -202,7 +197,6 @@ CCharEntity::CCharEntity()
     m_weaknessLvl        = 0;
     m_hasArise           = false;
     m_LevelRestriction   = 0;
-    m_lastBcnmTimePrompt = 0;
     servmesLastOffset_   = std::nullopt;
     m_AHHistoryTimestamp = timer::time_point::min();
     m_DeathTimestamp     = timer::time_point::min();
@@ -214,8 +208,6 @@ CCharEntity::CCharEntity()
     MeritMode    = false;
     PMeritPoints = nullptr;
     PJobPoints   = nullptr;
-
-    PGuildShop = nullptr;
 
     m_isStyleLocked = false;
     m_isBlockingAid = false;
@@ -381,8 +373,6 @@ CCharEntity::~CCharEntity()
     destroy(UContainer);
     destroy(PLatentEffectContainer);
 
-    PGuildShop = nullptr;
-
     destroy(eventPreparation);
     destroy(currentEvent);
 
@@ -456,7 +446,17 @@ void CCharEntity::updateEntityPacket(CBaseEntity* PEntity, ENTITYUPDATE type, ui
 {
     auto       itr              = EntityUpdatePackets.find(PEntity->id);
     const bool hasPendingPacket = itr != EntityUpdatePackets.end() && itr->second != nullptr;
-    auto*      PChar            = dynamic_cast<CCharEntity*>(PEntity);
+
+    auto* PChar = [&]() -> CCharEntity*
+    {
+        if (PEntity->objtype == TYPE_PC)
+        {
+            return static_cast<CCharEntity*>(PEntity);
+        }
+
+        return nullptr;
+    }();
+
     if (hasPendingPacket)
     {
         // Found existing packet update for the given entity, so we update it instead of pushing new

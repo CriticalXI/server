@@ -849,6 +849,7 @@ void CZoneEntities::syncSpawnListWithGrid(CCharEntity*                     PChar
                                           uint8                            spawnFlag,
                                           const EntityFn&                  visible,
                                           const EntityCallback&            onAdd,
+                                          const EntityCallback&            onUpdate,
                                           const std::vector<CBaseEntity*>* alwaysInclude)
 {
     // Remove pass: anything currently shown that is no longer visible.
@@ -871,8 +872,18 @@ void CZoneEntities::syncSpawnListWithGrid(CCharEntity*                     PChar
     // Add a single candidate if it's the right type, not already shown, and passes the precise filter.
     const auto tryAdd = [&](CBaseEntity* entity)
     {
-        if (entity->objtype != objtype || spawnList.find(entity->id) != spawnList.end() || !visible(entity))
+        if (entity->objtype != objtype || !visible(entity))
         {
+            return;
+        }
+
+        if (spawnList.find(entity->id) != spawnList.end())
+        {
+            if (onUpdate)
+            {
+                onUpdate(entity);
+            }
+
             return;
         }
 
@@ -915,6 +926,11 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
                    isWithinDistance(PChar->loc.p, entity->loc.p, ENTITY_RENDER_DISTANCE);
         },
         /*Fn: onAdd*/ [&](CBaseEntity* entity)
+        {
+            // TODO: Can/should this aggro routine be moved out of here and into the entity's first tick/spawn?
+            tapMobAggro(PChar, static_cast<CMobEntity*>(entity));
+        },
+        /*Fn: onUpdate*/ [&](CBaseEntity* entity)
         {
             // TODO: Can/should this aggro routine be moved out of here and into the entity's first tick/spawn?
             tapMobAggro(PChar, static_cast<CMobEntity*>(entity));
@@ -971,6 +987,7 @@ void CZoneEntities::SpawnNPCs(CCharEntity* PChar)
             return visibleStatus && (inRange || alwaysRel);
         },
         /*Fn: onAdd (empty)*/ {},
+        /*Fn: onUpdate (empty)*/ {},
         &alwaysRelevantNpcs_);
 }
 
@@ -1412,8 +1429,9 @@ void CZoneEntities::UpdateEntityPacket(CBaseEntity* PEntity, ENTITYUPDATE type, 
     TracyZoneScoped;
 
     // Do not send packets that are updates of a hidden GM
-    if (auto* PChar = dynamic_cast<CCharEntity*>(PEntity))
+    if (PEntity->objtype == TYPE_PC)
     {
+        auto* PChar = static_cast<CCharEntity*>(PEntity);
         if (PChar->m_isGMHidden && type != ENTITY_DESPAWN)
         {
             return;
@@ -1802,6 +1820,14 @@ auto CZoneEntities::petTick(CPetEntity* PPet, timer::time_point tick) -> Task<vo
             PCurrentMob->PEnmityContainer->Clear(PPet->id);
         }
 
+        FOR_EACH_PAIR_CAST_SECOND(CCharEntity*, PChar, m_charList)
+        {
+            if (PChar->SpawnPETList.find(PPet->id) != PChar->SpawnPETList.end())
+            {
+                PChar->SpawnPETList.erase(PPet->id);
+            }
+        }
+
         m_petsToDelete.emplace_back(PPet);
         co_return;
     }
@@ -1845,7 +1871,7 @@ auto CZoneEntities::trustTick(CTrustEntity* PTrust, timer::time_point tick) -> T
 
         FOR_EACH_PAIR_CAST_SECOND(CCharEntity*, PChar, m_charList)
         {
-            if (distance(PChar->loc.p, PTrust->loc.p) < ENTITY_RENDER_DISTANCE)
+            if (PChar->SpawnTRUSTList.find(PTrust->id) != PChar->SpawnTRUSTList.end())
             {
                 PChar->SpawnTRUSTList.erase(PTrust->id);
             }
