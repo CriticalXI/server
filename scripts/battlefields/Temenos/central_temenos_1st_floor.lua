@@ -38,7 +38,13 @@ function content:handleMobPartnerDeath(mobs, battlefield, mob, count)
     target:timer(15000, function(mobArg)
         if target:isAlive() then
             target:injectActionPacket(target:getID(), 11, 439, 0, 24, 0, 307, 0)
-            target:addMod(xi.mod.REGAIN, 150)
+            target:addMod(xi.mod.REGAIN, 100)
+            target:addMod(xi.mod.DEFP, 30)
+            target:addMod(xi.mod.ATTP, 30)
+            target:addMod(xi.mod.MATT, 30)
+            target:addMod(xi.mod.ACC, 30)
+            target:addMod(xi.mod.EVA, 30)
+            target:addMod(xi.mod.MEVA, 30)
         end
     end)
 end
@@ -84,38 +90,26 @@ content.loot =
     {
         {
             quantity = 6,
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight = 10000 },
         },
 
         {
-            { itemId = xi.item.SQUARE_OF_BENEDICT_SILK, weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SQUARE_OF_DIABOLIC_SILK, weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SPOOL_OF_CHAMELEON_YARN, weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.PANTIN_WIRE,             weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  4000 },
+            { itemId = xi.item.SQUARE_OF_ECARLATE_CLOTH,  weight =  1000 }, -- WAR
+            { itemId = xi.item.SPOOL_OF_RUBY_SILK_THREAD, weight =  1000 }, -- RDM
+            { itemId = xi.item.SPOOL_OF_COILED_YARN,      weight =  1000 }, -- BRD
+            { itemId = xi.item.SPOOL_OF_GLITTERING_YARN,  weight =  1000 }, -- SMN
+            { itemId = xi.item.SPOOL_OF_SCARLET_ODOSHI,   weight =  1000 }, -- SAM
+            { itemId = xi.item.SPOOL_OF_LUMINIAN_THREAD,  weight =  1000 }, -- BLU
         },
 
         {
-            { itemId = xi.item.SPOOL_OF_RUBY_SILK_THREAD, weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SQUARE_OF_SUPPLE_SKIN,     weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SPOOL_OF_GLITTERING_YARN,  weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SQUARE_OF_BRILLIANTINE,    weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.ORCHID_CHIP,               weight = 10000 },
         },
 
         {
-            { itemId = xi.item.NONE,                     weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.SQUARE_OF_ECARLATE_CLOTH, weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.CHUNK_OF_SNOWY_CERMET,    weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_SMALT_LEATHER,  weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_FILET_LACE,     weight = xi.loot.weight.LOW       },
-        },
-
-        {
-            { itemId = xi.item.ORCHID_CHIP, weight = xi.loot.weight.NORMAL },
-        },
-
-        {
-            { itemId = xi.item.NONE,       weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.METAL_CHIP, weight = xi.loot.weight.VERY_LOW  },
+            { itemId = xi.item.NONE,                      weight =  9000 },
+            { itemId = xi.item.METAL_CHIP,                weight =  1000 },
         },
     }
 }
