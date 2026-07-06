@@ -81,7 +81,7 @@ function Limbus:new(data)
 
     setmetatable(obj, self)
     obj.name          = data.name
-    obj.ID            = zones[obj.zoneId][obj.name]
+    obj.ID            = zones[obj.zoneId][obj.name] or { npc = {} }
     obj.serverVar     = '[' .. obj.name .. ']Time'
     obj.exitLocation  = data.exitLocation or 0
     obj.timeExtension = data.timeExtension or 0
@@ -127,7 +127,7 @@ function Limbus:onBattlefieldInitialize(battlefield)
     SetServerVariable(self.serverVar, battlefield:getTimeLimit() / 60)
     self:closeDoors()
 
-    local ID = zones[battlefield:getZoneID()][self.name]
+    local ID = self.ID
 
     -- Setup Item Crates
     if ID.npc.ITEM_CRATES then
