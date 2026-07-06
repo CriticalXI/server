@@ -39,19 +39,19 @@ INSERT INTO `mob_groups` VALUES (228,10528,37,'Goblin_Theurgist',0,128,2865,9000
 INSERT INTO `mob_groups` VALUES (229,10529,37,'Goblin_Warlord',0,128,2865,9000,9000,0,NULL);
 
 -- Eastern Tower
-INSERT INTO `mob_groups` VALUES (230,10530,37,'Fire_Elemental',0,128,2856,8000,3000,0,NULL);
+INSERT INTO `mob_groups` VALUES (230,10530,37,'Fire_Elemental',0,128,2856,8000,8000,0,NULL);
 INSERT INTO `mob_groups` VALUES (231,10531,37,'Mystic_Avatar',0,128,2860,5000,4000,0,NULL); -- ifrit
-INSERT INTO `mob_groups` VALUES (232,10532,37,'Ice_Elemental',0,128,2856,8000,3000,0,NULL);
+INSERT INTO `mob_groups` VALUES (232,10532,37,'Ice_Elemental',0,128,2856,8000,8000,0,NULL);
 INSERT INTO `mob_groups` VALUES (233,10533,37,'Mystic_Avatar',0,128,2860,5000,4000,0,NULL); -- shiva
-INSERT INTO `mob_groups` VALUES (234,10534,37,'Air_Elemental',0,128,2856,8000,3000,0,NULL);
+INSERT INTO `mob_groups` VALUES (234,10534,37,'Air_Elemental',0,128,2856,8000,8000,0,NULL);
 INSERT INTO `mob_groups` VALUES (235,10535,37,'Mystic_Avatar',0,128,2860,5000,4000,0,NULL); -- garuda
-INSERT INTO `mob_groups` VALUES (236,10536,37,'Earth_Elemental',0,128,2856,8000,3000,0,NULL);
+INSERT INTO `mob_groups` VALUES (236,10536,37,'Earth_Elemental',0,128,2856,8000,8000,0,NULL);
 INSERT INTO `mob_groups` VALUES (237,10537,37,'Mystic_Avatar',0,128,2860,5000,4000,0,NULL); -- titan
-INSERT INTO `mob_groups` VALUES (238,10538,37,'Thunder_Elemental',0,128,2856,8000,3000,0,NULL);
+INSERT INTO `mob_groups` VALUES (238,10538,37,'Thunder_Elemental',0,128,2856,8000,8000,0,NULL);
 INSERT INTO `mob_groups` VALUES (239,10539,37,'Mystic_Avatar',0,128,2860,5000,4000,0,NULL); -- ramuh
-INSERT INTO `mob_groups` VALUES (240,10540,37,'Water_Elemental',0,128,2856,8000,3000,0,NULL);
+INSERT INTO `mob_groups` VALUES (240,10540,37,'Water_Elemental',0,128,2856,8000,8000,0,NULL);
 INSERT INTO `mob_groups` VALUES (241,10541,37,'Mystic_Avatar',0,128,2860,5000,4000,0,NULL); -- leviathan
-INSERT INTO `mob_groups` VALUES (242,10542,37,'Dark_Elemental',0,128,2856,10000,3000,0,NULL);
+INSERT INTO `mob_groups` VALUES (242,10542,37,'Dark_Elemental',0,128,2856,10000,8000,0,NULL);
 INSERT INTO `mob_groups` VALUES (243,10543,37,'Mystic_Avatar',0,128,2860,5000,4000,0,NULL); -- fenrir
 
 -- Western Tower
