@@ -400,6 +400,7 @@ inline Maybe<std::pair<uint32, uint32>> validateAndConsumeLaunchToken(const std:
 
     return std::make_pair(accid, status);
 }
+
 // [Phoenix] Launch Token END
 
 } // namespace otpHelpers
