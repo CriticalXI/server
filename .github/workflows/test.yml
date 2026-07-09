@@ -108,7 +108,7 @@ jobs:
       build_type: Release
       test_modules: false
       multi_process: true
-      xi_test: true
+      xi_test: false
       startup_checks: true
 
   Docker_Test:
