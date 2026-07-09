@@ -26,8 +26,6 @@
 #include <memory>
 
 #include "entities/char_entity.h"
-#include "items/item_equipment.h"
-#include "zone.h"
 
 using Recalculate = xi::Flag<struct RecalculateTag>;
 
@@ -37,7 +35,6 @@ enum class QuestLog : uint8_t;
 enum class KeyItem : uint16_t;
 class CPetEntity;
 class CMobEntity;
-class CMeritPoints;
 class CAbility;
 class CItemWeapon;
 
@@ -100,6 +97,7 @@ EMobDifficulty CheckMob(uint8 charlvl, CBattleEntity* PMob);
 
 uint32 GetBaseExp(uint8 charlvl, int16 moblvl);
 uint32 GetExpNEXTLevel(uint8 charlvl);
+uint8  GetExpLevel(CBattleEntity* PMember);
 
 void DelExperiencePoints(CCharEntity* PChar, float retainpct, uint16 forcedXpLoss);
 void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob);

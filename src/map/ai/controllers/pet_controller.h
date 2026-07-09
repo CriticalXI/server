@@ -24,7 +24,6 @@
 
 #include "mob_controller.h"
 
-class CPetEntity;
 class CPetController : public CMobController
 {
 public:
@@ -39,13 +38,17 @@ protected:
 
     virtual auto Tick(timer::time_point tick) -> Task<void> override;
     virtual auto DoBuffTick() -> bool override;
+
     virtual void HandleEnmity() override
     {
     }
+
     virtual bool TryDeaggro() override;
+
     virtual void TryLink() override
     {
     }
+
     virtual bool Ability(uint16 targid, uint16 abilityid) override;
 
 private:

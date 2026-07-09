@@ -26,9 +26,9 @@
 #include "items/item_fish.h"
 
 #include <map>
-#include <vector>
 
 enum class GP_CLI_COMMAND_FISHING_2_MODE : uint8_t;
+
 struct lsbret_t
 { // lose/snap/break return values
     uint8 failReason;
@@ -899,11 +899,8 @@ enum FISHINGROD : uint32
  *                                                                       *
  ************************************************************************/
 
-class CBasicPacket;
 class CCharEntity;
 class CMobEntity;
-class CItemFish;
-class CItemWeapon;
 
 namespace fishingutils
 {

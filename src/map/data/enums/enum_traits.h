@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include <common/types/hash_map.h>
+
 #include <concepts>
 #include <fmt/format.h>
 #include <span>
@@ -28,7 +30,6 @@
 #include <string>
 #include <string_view>
 #include <type_traits>
-#include <unordered_map>
 #include <utility>
 
 namespace xi::data
@@ -51,12 +52,13 @@ inline constexpr bool isFlagEnum = false;
 
 namespace enum_detail
 {
+
 // Slug -> enum. Throws on miss; typeName goes in the message.
 template <class E>
 auto fromName(const std::string_view name, const std::span<const std::pair<std::string_view, E>> entries, const std::string_view typeName) -> E
 {
     // Lazy-init on first call, reused after.
-    static const std::unordered_map<std::string_view, E> table{ entries.begin(), entries.end() };
+    static const HashMap<std::string_view, E> table{ entries.begin(), entries.end() };
 
     const auto it = table.find(name);
     if (it == table.end())
@@ -73,7 +75,7 @@ auto toName(const E value, const std::span<const std::pair<std::string_view, E>>
     // Reverse map. Lazy-init on first call, reused after.
     static const auto table = [entries]
     {
-        std::unordered_map<E, std::string_view> m;
+        HashMap<E, std::string_view> m;
         m.reserve(entries.size());
         for (const auto& p : entries)
         {
@@ -86,6 +88,7 @@ auto toName(const E value, const std::span<const std::pair<std::string_view, E>>
     const auto it = table.find(value);
     return it != table.end() ? it->second : std::string_view{ "<unknown>" };
 }
+
 } // namespace enum_detail
 
 } // namespace xi::data

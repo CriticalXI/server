@@ -23,25 +23,22 @@
 
 #include <map>
 
-#include <common/md52.h>
 #include <common/mmo.h>
-#include <common/types/maybe.h>
 #include <common/utils.h>
-#include <common/xirand.h>
 
-#include "login_errors.h"
+#include <common/types/hash_map.h>
+#include <common/types/maybe.h>
+
 #include "login_packets.h"
 #include "nlohmann/json.hpp"
 #include "session.h"
-
-#include <iterator>
 
 using json = nlohmann::json;
 
 namespace loginHelpers
 {
 
-std::unordered_map<std::string, std::map<std::string, session_t>>& getAuthenticatedSessions();
+HashMap<std::string, std::map<std::string, session_t>>& getAuthenticatedSessions();
 
 // Displays expansions on main menu. // May be a 32 bit integer on the client.
 enum EXPANSION_DISPLAY : uint16
@@ -87,6 +84,8 @@ enum FEATURE_DISPLAY : uint16
 
 bool isStringMalformed(const std::string& str, std::size_t max_length);
 
+auto validateCharacterName(const std::string& name) -> Maybe<std::string>;
+
 auto isZoneAtPlayerCap(uint16 zoneId, bool isGM) -> bool;
 
 session_t& get_authenticated_session(const std::string& ipAddr, const std::string& sessionHash);
@@ -96,7 +95,7 @@ void generateErrorMessage(uint8* packet, uint16 errorCode);
 
 uint16 generateExpansionBitmask();
 
-uint16 generateFeatureBitmask();
+uint16 generateFeatureBitmask(const bool& needsOTP);
 
 int32 saveCharacter(uint32 accid, uint32 charid, char_mini* createchar);
 

@@ -29,11 +29,9 @@
 #include "ai/states/range_state.h"
 #include "ai/states/weaponskill_state.h"
 #include "enmity_container.h"
-#include "mobskill.h"
 #include "notoriety_container.h"
 #include "spell.h"
 #include "utils/battleutils.h"
-#include "utils/trustutils.h"
 #include "weapon_skill.h"
 
 #include "ai/controllers/player_controller.h"
@@ -42,7 +40,6 @@
 #include "packets/s2c/0x038_schedulor.h"
 
 #include <algorithm>
-#include <ranges>
 
 namespace gambits
 {
@@ -1748,7 +1745,7 @@ bool CGambitsContainer::TryTrustSkill()
                     // Only trigger No Quarter if the last skill used was ACTUALLY a Daybreak opener
                     if (daybreak_ws.count(lastSkillUsed))
                     {
-                        for (auto const& tskill : tp_skills)
+                        for (const auto& tskill : tp_skills)
                         {
                             if (tskill.skill_id == NO_QUARTER)
                             {
@@ -1761,7 +1758,7 @@ bool CGambitsContainer::TryTrustSkill()
                     // If we didn't pick No Quarter (either lastSkill was 0 or a regular skill)
                     if (!chosen_skill)
                     {
-                        for (auto const& tskill : tp_skills)
+                        for (const auto& tskill : tp_skills)
                         {
                             if (daybreak_ws.count(tskill.skill_id))
                             {
@@ -1773,7 +1770,7 @@ bool CGambitsContainer::TryTrustSkill()
                 else
                 {
                     // Normal state: use standard rotation
-                    for (auto const& tskill : tp_skills)
+                    for (const auto& tskill : tp_skills)
                     {
                         if (regular_ws.count(tskill.skill_id))
                         {

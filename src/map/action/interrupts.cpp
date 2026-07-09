@@ -21,11 +21,20 @@
 
 #include "interrupts.h"
 
+#include "action/action.h"
+#include "enums/action/resolution.h"
+#include "spell.h"
+
+#include "enums/action/category.h"
+#include "enums/four_cc.h"
+#include "zone.h"
+
 #include "packets/s2c/0x028_battle2.h"
 #include "petskill.h"
 
 namespace ActionInterrupts
 {
+
 void AvatarOutOfRange(CBattleEntity* PAvatar, const CPetSkill* PSkill, const CBattleEntity* PTarget)
 {
     // Avatars using BP against an enemy out of range use a specific set of BATTLE2 packets:

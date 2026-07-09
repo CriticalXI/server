@@ -101,17 +101,10 @@ xi.job_utils.paladin.useFealty = function(player, target, ability, action)
 end
 
 xi.job_utils.paladin.useHolyCircle = function(player, target, ability)
-    -- TODO:
-    -- Create Bonus vs Ecosystem handling
-    -- https://www.bg-wiki.com/ffxi/Holy_Circle
     -- Main (PLD) job gives a unique 15% damage bonus against undead, 15% damage resistance from undead, and likely +15% Undead Killer.
     -- When subbed, gives 5% of these bonuses.
     local duration = 180 + player:getMod(xi.mod.HOLY_CIRCLE_DURATION)
-    local power    = 15
-
-    if player:getMainJob() ~= xi.job.PLD then
-        power = 5
-    end
+    local power    = player:getMainJob() == xi.job.PLD and 15 or 5
 
     power = power + player:getMod(xi.mod.HOLY_CIRCLE_POTENCY)
 
@@ -223,12 +216,12 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
     then
         local resistanceRate = xi.combat.magicHitRate.calculateResistRate(player, target, 0, 0, xi.skillRank.A_PLUS, xi.element.THUNDER, xi.mod.INT, xi.effect.STUN, 0)
         if xi.data.statusEffect.isResistRateSuccessfull(xi.effect.STUN, resistanceRate, 0) then
-            target:addStatusEffect(xi.effect.STUN, { power = 1, duration = math.random(2, 8) * resistanceRate, origin = player })
+            target:addStatusEffect(xi.effect.STUN, { power = 1, duration = math.randomInt(2, 8) * resistanceRate, origin = player })
         end
     end
 
     -- Randomize damage
-    local randomizer = 1 + (math.random(1, 5) / 100)
+    local randomizer = 1 + (math.randomInt(1, 5) / 100)
 
     damage = damage * randomizer
     damage = utils.handleStoneskin(target, damage)

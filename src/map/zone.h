@@ -26,9 +26,11 @@
 #include <common/mmo.h>
 #include <common/scheduler.h>
 #include <common/timer.h>
-#include <common/types/flat_hash_map.h>
 #include <common/types/maybe.h>
 #include <common/vana_time.h>
+
+#include <common/types/flat_hash_map.h>
+#include <common/types/fn.h>
 
 #include "battlefield_handler.h"
 #include "campaign_handler.h"
@@ -43,10 +45,10 @@
 
 #include <map/ximesh/iximesh.h>
 
+#include <common/types/hash_map.h>
 #include <list>
 #include <map>
 #include <memory>
-#include <unordered_map>
 
 //
 // Forward Declarations
@@ -363,6 +365,7 @@ enum ZONEID : uint16
     ZONE_GWORA_THRONE_ROOM              = 299,
     MAX_ZONEID                          = 300,
 };
+
 DECLARE_FORMAT_AS_UNDERLYING(ZONEID);
 
 enum NATION_TYPE : uint8
@@ -373,6 +376,7 @@ enum NATION_TYPE : uint8
     NATION_BEASTMEN = 0x03,
     NATION_NEUTRAL  = 0xFF,
 };
+
 DECLARE_FORMAT_AS_UNDERLYING(NATION_TYPE);
 
 enum class REGION_TYPE : uint8
@@ -450,6 +454,7 @@ enum ZONE_TYPE : uint16
     DYNAMIS   = 0x0080, // 128
     INSTANCED = 0x0100, // 256
 };
+
 DECLARE_FORMAT_AS_UNDERLYING(ZONE_TYPE);
 
 enum GLOBAL_MESSAGE_TYPE : uint8
@@ -459,6 +464,7 @@ enum GLOBAL_MESSAGE_TYPE : uint8
     CHAR_INSHOUT,
     CHAR_INZONE
 };
+
 DECLARE_FORMAT_AS_UNDERLYING(GLOBAL_MESSAGE_TYPE);
 
 enum class TELEPORT_TYPE : uint8
@@ -498,6 +504,7 @@ enum ZONEMISC : uint16
     MISC_LOS_OFF          = 0x2000, // Zone should not have LoS checks
     MISC_ASSIST           = 0x4000, // Send and receive /assiste, /assistj commands
 };
+
 DECLARE_FORMAT_AS_UNDERLYING(ZONEMISC);
 
 struct zoneMusic_t
@@ -591,10 +598,10 @@ public:
 
     auto queryEntitiesByName(const std::string& pattern) -> const QueryByNameResult_t&;
 
-    uint32                                   GetLocalVar(const char* var);
-    std::unordered_map<std::string, uint32>& GetLocalVars();
-    void                                     SetLocalVar(const char* var, uint32 val);
-    void                                     ResetLocalVars();
+    uint32                        GetLocalVar(const char* var);
+    HashMap<std::string, uint32>& GetLocalVars();
+    void                          SetLocalVar(const char* var, uint32 val);
+    void                          ResetLocalVars();
 
     virtual CCharEntity* GetCharByName(const std::string& name);
     virtual CCharEntity* GetCharByID(uint32 id);
@@ -649,18 +656,18 @@ public:
     virtual auto ZoneServer(timer::time_point tick) -> Task<void>;
     virtual auto CheckTriggerAreas() -> Task<void>;
 
-    virtual void ForEachChar(const std::function<void(CCharEntity*)>& func);
-    virtual void ForEachCharInstance(CBaseEntity* PEntity, const std::function<void(CCharEntity*)>& func);
-    virtual void ForEachMob(const std::function<void(CMobEntity*)>& func);
-    virtual void ForEachMobInstance(CBaseEntity* PEntity, const std::function<void(CMobEntity*)>& func);
-    virtual void ForEachNpc(const std::function<void(CNpcEntity*)>& func);
-    virtual void ForEachNpcInstance(CBaseEntity* PEntity, const std::function<void(CNpcEntity*)>& func);
-    virtual void ForEachTrust(const std::function<void(CTrustEntity*)>& func);
-    virtual void ForEachTrustInstance(CBaseEntity* PEntity, const std::function<void(CTrustEntity*)>& func);
-    virtual void ForEachPet(const std::function<void(CPetEntity*)>& func);
-    virtual void ForEachPetInstance(CBaseEntity* PEntity, const std::function<void(CPetEntity*)>& func);
-    virtual void ForEachAlly(const std::function<void(CMobEntity*)>& func);
-    virtual void ForEachAllyInstance(CBaseEntity* PEntity, const std::function<void(CMobEntity*)>& func);
+    virtual void ForEachChar(FnRef<void(CCharEntity*)> func);
+    virtual void ForEachCharInstance(CBaseEntity* PEntity, FnRef<void(CCharEntity*)> func);
+    virtual void ForEachMob(FnRef<void(CMobEntity*)> func);
+    virtual void ForEachMobInstance(CBaseEntity* PEntity, FnRef<void(CMobEntity*)> func);
+    virtual void ForEachNpc(FnRef<void(CNpcEntity*)> func);
+    virtual void ForEachNpcInstance(CBaseEntity* PEntity, FnRef<void(CNpcEntity*)> func);
+    virtual void ForEachTrust(FnRef<void(CTrustEntity*)> func);
+    virtual void ForEachTrustInstance(CBaseEntity* PEntity, FnRef<void(CTrustEntity*)> func);
+    virtual void ForEachPet(FnRef<void(CPetEntity*)> func);
+    virtual void ForEachPetInstance(CBaseEntity* PEntity, FnRef<void(CPetEntity*)> func);
+    virtual void ForEachAlly(FnRef<void(CMobEntity*)> func);
+    virtual void ForEachAllyInstance(CBaseEntity* PEntity, FnRef<void(CMobEntity*)> func);
 
     auto spawnHandler() const -> SpawnHandler&;
     auto nominateManager() const -> NominateManager&;
@@ -689,7 +696,7 @@ protected:
 
     triggerAreaList_t m_triggerAreaList;
 
-    std::unordered_map<std::string, uint32> localVars_;
+    HashMap<std::string, uint32> localVars_;
 
 private:
     void LoadZoneSettings();
@@ -723,7 +730,7 @@ private:
 
     timer::time_point m_timeZoneEmpty; // The time point when the last player left the zone
 
-    std::unordered_map<std::string, QueryByNameResult_t> m_queryByNameResults;
+    HashMap<std::string, QueryByNameResult_t> m_queryByNameResults;
 
     CBattlefieldHandler*             m_BattlefieldHandler; // BCNM Instances in this zone
     CCampaignHandler*                m_CampaignHandler;    // WOTG campaign information for this zone

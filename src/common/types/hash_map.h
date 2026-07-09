@@ -46,27 +46,36 @@
 
 namespace detail
 {
+
 // Transparent hasher for string-like keys. All overloads must agree on the hash
 // of equal inputs, so they all funnel through std::hash<std::string_view>.
 struct StringHash
 {
     using is_transparent = void;
 
-    [[nodiscard]] std::size_t operator()(std::string_view sv) const noexcept
-    {
-        return std::hash<std::string_view>{}(sv);
-    }
-
-    [[nodiscard]] std::size_t operator()(const std::string& s) const noexcept
-    {
-        return std::hash<std::string_view>{}(s);
-    }
-
-    [[nodiscard]] std::size_t operator()(const char* s) const
-    {
-        return std::hash<std::string_view>{}(std::string_view{ s });
-    }
+    [[nodiscard]] std::size_t operator()(std::string_view sv) const noexcept;
+    [[nodiscard]] std::size_t operator()(const std::string& s) const noexcept;
+    [[nodiscard]] std::size_t operator()(const char* s) const;
 };
+
+//
+// Implementation
+//
+
+inline std::size_t StringHash::operator()(std::string_view sv) const noexcept
+{
+    return std::hash<std::string_view>{}(sv);
+}
+
+inline std::size_t StringHash::operator()(const std::string& s) const noexcept
+{
+    return std::hash<std::string_view>{}(s);
+}
+
+inline std::size_t StringHash::operator()(const char* s) const
+{
+    return std::hash<std::string_view>{}(std::string_view{ s });
+}
 
 // Selects a transparent hash/equal pair for std::string keys, and the plain
 // defaults for everything else.
@@ -83,6 +92,7 @@ struct HashMapTraits<std::string>
     using Hash     = StringHash;
     using KeyEqual = std::equal_to<>; // transparent
 };
+
 } // namespace detail
 
 // namespace xi

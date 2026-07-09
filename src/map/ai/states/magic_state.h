@@ -26,7 +26,6 @@
 #include "state.h"
 
 class CMobEntity;
-struct action_t;
 
 enum MAGICFLAGS
 {
@@ -42,10 +41,12 @@ public:
     virtual bool Update(timer::time_point tick) override;
     virtual void Cleanup(timer::time_point tick) override;
     virtual bool CanChangeState() override;
+
     virtual bool CanFollowPath() override
     {
         return false;
     }
+
     virtual bool CanInterrupt() override
     {
         return true;

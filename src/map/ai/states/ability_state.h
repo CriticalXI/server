@@ -25,8 +25,6 @@
 #include "ability.h"
 #include "state.h"
 
-class CCharEntity;
-
 class CAbilityState : public CState
 {
 public:
@@ -38,15 +36,19 @@ public:
 
 protected:
     virtual bool CanChangeState() override;
+
     virtual bool CanFollowPath() override
     {
         return true;
     }
+
     virtual bool CanInterrupt() override
     {
         return true;
     }
+
     virtual bool Update(timer::time_point tick) override;
+
     virtual void Cleanup(timer::time_point tick) override
     {
     }
