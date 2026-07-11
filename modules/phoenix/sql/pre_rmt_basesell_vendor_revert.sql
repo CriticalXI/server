@@ -351,6 +351,14 @@ UPDATE item_basic SET baseSell = 306 WHERE itemid = 17891;
 -- Fragrant Antica Broth
 UPDATE item_basic SET baseSell = 499 WHERE itemid = 17892;
 
+-- Crab Sushi 
+UPDATE item_basic SET baseSell = 518 WHERE itemid = 5721;
+
+-- Crab Sushi +1
+UPDATE item_basic SET baseSell = 811 WHERE itemid = 5722;
+
+-- Remedy
+UPDATE item_basic SET baseSell = 3200 WHERE itemid = 4155;
 ----------------------------------------------------------------------------------------------------------------------------
 -- PENDING -- I could not find prices for these items, but they were mentioned in patch notes as having price values changed
 ----------------------------------------------------------------------------------------------------------------------------
