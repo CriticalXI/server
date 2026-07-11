@@ -28,6 +28,8 @@ local commands =
     'uptime',
     'immortal',
     'reset',
+    'spawnmob',
+    'gotoname'
 }
 
 for _, name in ipairs(commands) do
