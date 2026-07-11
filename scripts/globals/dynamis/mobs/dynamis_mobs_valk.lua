@@ -260,10 +260,6 @@ xi.dynamis.wave[zoneID] =
     },
     [2] = -- Demon NMs spawn Animated Weapons, Vanguard Dragons, Ying, Yang
     {
-        16936991, -- ( 029 ) Nightmare Manticore (×3)
-        16936994, -- ( 030 ) Nightmare Hippogryph (×3)
-        16936988, -- ( 031 ) Nightmare Sabotender (×3)
-        16936997, -- ( 032 ) Nightmare Sheep (×3)
         16937343, -- (033-Y) Manifest Icon
         16937347, -- (034-Y) Manifest Icon
         16937351, -- (035-Y) Manifest Icon
@@ -333,7 +329,7 @@ xi.dynamis.aggro[zoneID] =
 {
     nonAggressive =
     {
-        [xi.valk.mobs.CIRRATE_CHRISTELLE] = { 16936982, 16936976, 16936970, 16936964 },
+        [xi.valk.mobs.CIRRATE_CHRISTELLE] = { 16936982, 16936976, 16936970, 16936964, 16936991, 16936994, 16936988, 16936997 },
     },
     aggressive =
     {

@@ -52,6 +52,10 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
             return
         end
 
+        if attacker:getMobMod(xi.mobMod.EXP_BONUS) <= -100 then
+            return
+        end
+
         -- Mob is already at max penalty
         local currentPenalty = attacker:getLocalVar('expReduction')
         if currentPenalty >= maxPenalty then

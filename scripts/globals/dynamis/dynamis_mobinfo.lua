@@ -75,6 +75,15 @@ local function isStationaryMob(mob)
     return false
 end
 
+local function spawnWithAnim(mob)
+    mob:spawn()
+
+    -- Set spawn animation to normal after 3 seconds
+    mob:timer(10000, function(mobArg)
+        mobArg:setSpawnAnimation(xi.spawnAnimation.NORMAL)
+    end)
+end
+
 -- ---------------------
 -- General Info functions
 -- ---------------------
@@ -103,7 +112,7 @@ end
 
 xi.dynamis.generalInfo = function(mob, modelSize)
     mob:setTrueDetection(true)
-    mob:setSpawnAnimation(1) -- This is the cool looking spwan animation
+    mob:setSpawnAnimation(xi.spawnAnimation.SPECIAL)
     mob:setMobMod(xi.mobMod.CHARMABLE, 0)
     mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
     mob:setMobMod(xi.mobMod.NO_DESPAWN, 1)
@@ -183,8 +192,9 @@ end
 xi.dynamis.statueOnSpawn = function(mob, modelSize)
     -- Apply the general stats to from dynamis mobs
     xi.dynamis.generalInfo(mob, modelSize)
-    mob:setSpawnAnimation(0)
+    mob:setSpawnAnimation(xi.spawnAnimation.NORMAL)
     mob:setMobMod(xi.mobMod.NO_STANDBACK, 1) -- Statues do not stand back
+    mob:setMod(xi.mod.UDMGMAGIC, -5000) -- 50% damage from magic
 
     if mob:getName() == 'Vanguard_Eye' then
         mob:setBaseSpeed(35)
@@ -525,7 +535,7 @@ xi.dynamis.onBossInitialize = function(mob)
 end
 
 xi.dynamis.onBossSpawn = function(mob, modelSize)
-    mob:setSpawnAnimation(0)
+    mob:setSpawnAnimation(xi.spawnAnimation.NORMAL)
 end
 
 xi.dynamis.onBossEngage = function(mob, target)
@@ -765,7 +775,7 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
                         return
                     end
 
-                    capturedMob:spawn()
+                    spawnWithAnim(capturedMob)
 
                     capturedMob:setLocalVar('spawnedFromMaster', 1)
                     setTimerTarget(capturedMob, capturedTarget)
@@ -775,7 +785,7 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
                     end
                 end)
             else
-                mobToSpawn:spawn()
+                spawnWithAnim(mobToSpawn)
                 mobToSpawn:setLocalVar('spawnedFromMaster', 1)
                 setTimerTarget(mobToSpawn, target)
 
