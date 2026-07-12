@@ -21,6 +21,7 @@
 
 #include "0x03b_subcontainer.h"
 
+#include "common/settings.h"
 #include "entities/char_entity.h"
 #include "enums/item_lockflg.h"
 #include "items/item_furnishing.h"
@@ -55,7 +56,7 @@ const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_
     };
 
     // Bitflag indicating if Mog 2F is unlocked
-    if (PChar->profile.mhflag & 0x20)
+    if ((PChar->profile.mhflag & 0x20) && settings::get<bool>("map.ENABLE_MOG_SAFE2"))
     {
         allowedContainers.insert(LOC_MOGSAFE2);
     }

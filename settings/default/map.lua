@@ -43,6 +43,9 @@ xi.settings.map =
     -- Enable or disable Recycle Bin (Set to false for items to be dropped immediately)
     ENABLE_ITEM_RECYCLE_BIN = true,
 
+    -- Enable or disable access to Mog Safe 2
+    ENABLE_MOG_SAFE2 = true,
+
     -- Self-unstuck feature (sends player to homepoint via Help Desk command)
     SELF_UNSTUCK_ENABLED  = false,
     SELF_UNSTUCK_COOLDOWN = 86400, -- Cooldown in seconds (default: 24 hours)

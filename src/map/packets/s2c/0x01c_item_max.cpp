@@ -21,6 +21,7 @@
 
 #include "0x01c_item_max.h"
 
+#include "common/settings.h"
 #include "entities/char_entity.h"
 #include "item_container.h"
 #include "utils/charutils.h"
@@ -58,7 +59,7 @@ GP_SERV_COMMAND_ITEM_MAX::GP_SERV_COMMAND_ITEM_MAX(const CCharEntity* PChar)
     packet.ItemNum2[LOC_MOGSACK]    = 1 + PChar->getStorage(LOC_MOGSACK)->GetBuff();
     packet.ItemNum2[LOC_MOGCASE]    = 1 + PChar->getStorage(LOC_MOGCASE)->GetBuff();
     packet.ItemNum2[LOC_WARDROBE]   = 1 + PChar->getStorage(LOC_WARDROBE)->GetBuff();
-    packet.ItemNum2[LOC_MOGSAFE2]   = 1 + PChar->getStorage(LOC_MOGSAFE2)->GetBuff();
+    packet.ItemNum2[LOC_MOGSAFE2]   = settings::get<bool>("map.ENABLE_MOG_SAFE2") ? 1 + PChar->getStorage(LOC_MOGSAFE2)->GetBuff() : 0x00;
     packet.ItemNum2[LOC_WARDROBE2]  = 1 + PChar->getStorage(LOC_WARDROBE2)->GetBuff();
     packet.ItemNum2[LOC_WARDROBE3]  = 1 + PChar->getStorage(LOC_WARDROBE3)->GetBuff();
     packet.ItemNum2[LOC_WARDROBE4]  = 1 + PChar->getStorage(LOC_WARDROBE4)->GetBuff();
