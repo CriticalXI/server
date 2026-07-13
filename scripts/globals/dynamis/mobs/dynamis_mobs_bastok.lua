@@ -410,7 +410,7 @@ xi.dynamis.spawnCheck[zoneID] =
         requiredVars    = { '[DYNA]KoDhoKilled', '[DYNA]GiPhaKilled', '[DYNA]ZeVhoKilled', },
 
         spawn           = function()
-            return bossTable[math.random(1, #bossTable)]
+            return bossTable[math.randomInt(1, #bossTable)]
         end,
 
         spawnedVar      = '[DYNA]MegaBossSpawned',

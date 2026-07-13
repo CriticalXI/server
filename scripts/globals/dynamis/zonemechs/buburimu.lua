@@ -207,18 +207,18 @@ local function setNextPath(mob)
     -- If it hits the end of path 2 or the end of path 1
     -- Pick 1 or 2
     elseif isNearPoint(mob, path1First) then
-        local pathToUse = math.random(1, 2)
+        local pathToUse = math.randomInt(1, 2)
         pathThrough(mob, pathToUse, false)
     -- If it hits the end of path 2, pick path 2 or 3
     elseif isNearPoint(mob, path2Last) then
-        local pathToUse = math.random(2, 4)
+        local pathToUse = math.randomInt(2, 4)
         pathThrough(mob, pathToUse, pathToUse == 2)
     -- If it hits the end of path 3, it must reverse back on path 3
     elseif isNearPoint(mob, path3Last) then
         pathThrough(mob, 3, true)
     -- If it hits the end of path 4, it can pick path 4, 5, or 6
     elseif isNearPoint(mob, path4Last) then
-        local pathToUse = math.random(4, 6)
+        local pathToUse = math.randomInt(4, 6)
         pathThrough(mob, pathToUse, pathToUse == 4)
     -- If it hits the end of path 5, it must reverse back on path 5
     elseif isNearPoint(mob, path5Last) then
@@ -343,7 +343,7 @@ xi.dynamis.onApocSpawn = function(mob)
     mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
 
     -- Start pathing
-    local pickPath = math.random(1, 2)
+    local pickPath = math.randomInt(1, 2)
     mob:pathThrough(paths[pickPath], xi.path.flag.COORDS)
     mob:setPos(-227, -21, 99) -- Just in case
     mob:setLocalVar('currentPath', 1) -- Skip regular roam code
@@ -377,7 +377,7 @@ xi.dynamis.onApocFight = function(mob, target)
             apocRemoveAdditionalEffects(mob)
             mob:useMobAbility(available2hrs[index])
             mob:setLocalVar('2hrIndex', index)
-            mob:setLocalVar('next2hrTime', GetSystemTime() + math.random(30, 45))
+            mob:setLocalVar('next2hrTime', GetSystemTime() + math.randomInt(30, 45))
         end
     end
 
@@ -434,7 +434,7 @@ xi.dynamis.onApocSpellChoose = function(mob, target, spellId)
         return nil -- No 2hr active
     end
 
-    return spellList[math.random(1, #spellList)]
+    return spellList[math.randomInt(1, #spellList)]
 end
 
 xi.dynamis.onApocMobskillChoose = function(mob, target, skillId)
@@ -449,7 +449,7 @@ xi.dynamis.onApocMobskillChoose = function(mob, target, skillId)
         return nil
     end
 
-    return available[math.random(1, #available)]
+    return available[math.randomInt(1, #available)]
 end
 
 xi.dynamis.onApocRoam = function(mob)

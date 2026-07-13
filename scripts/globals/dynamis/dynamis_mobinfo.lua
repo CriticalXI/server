@@ -145,7 +145,7 @@ xi.dynamis.onSharedEngage = function(mob, target)
     mob:setLocalVar('engageCheck', 1)
     local zoneId = mob:getZoneID()
 
-    mob:setMobMod(xi.mobMod.MAGIC_DELAY, math.random(5, 15)) -- Random magic delay to make the casts delayed
+    mob:setMobMod(xi.mobMod.MAGIC_DELAY, math.randomInt(5, 15)) -- Random magic delay to make the casts delayed
 
     local lineSpawnConfig = xi.dynamis.lineSpawns and xi.dynamis.lineSpawns[zoneId] and xi.dynamis.lineSpawns[zoneId][mobID]
     local firstAdd        = GetMobByID(mobID + 1)
@@ -708,7 +708,7 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
 
     local statueId        = statue:getID()
     local statuePos       = statue:getPos()
-    local randomStunTime  = math.random(4000, 8000)
+    local randomStunTime  = math.randomInt(4000, 8000)
     local zoneId          = statue:getZoneID()
     local zoneSpawnTable  = xi.dynamis.spawnTable and xi.dynamis.spawnTable[zoneId]
     local lineSpawnConfig = xi.dynamis.lineSpawns and xi.dynamis.lineSpawns[zoneId] and xi.dynamis.lineSpawns[zoneId][statueId]
