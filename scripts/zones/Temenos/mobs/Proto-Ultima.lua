@@ -26,33 +26,6 @@ local function handleDrawIn(mob, target)
     mob:drawIn(target, 0, 0, pos)
 end
 
--- Handler to cast Holy on a random player within 20 yalms.
-local function castHoly(mob)
-    local battlefield = mob:getBattlefield()
-    if not battlefield then
-        return
-    end
-
-    local players = battlefield:getPlayers()
-    if not players then
-        return
-    end
-
-    local holyTargets = {}
-
-    for _, player in ipairs(players) do
-        if player:isAlive() and mob:checkDistance(player) <= 20 then
-            table.insert(holyTargets, player)
-        end
-    end
-
-    if #holyTargets == 0 then
-        return
-    end
-
-    mob:castSpell(xi.magic.spell.HOLY_II, holyTargets[math.randomInt(1, #holyTargets)])
-end
-
 -- Table with the countdown times for Citadel Buster, uses a bitmask to track which messages have been sent.
 local citadelBusterCountdown =
 {
@@ -140,12 +113,17 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGMAGIC, -3000)
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 250)
     mob:setMod(xi.mod.POWER_MULTIPLIER_SPELL, 100)
+    mob:setMobMod(xi.mobMod.NO_SPELL_COST, 1)
     mob:setLocalVar('phase', 1)
     mob:setLocalVar('skillIndex', 1)
     mob:setLocalVar('nextSkillTime', 0)
-    mob:setLocalVar('nextHolyTime', 0)
     mob:setLocalVar('nextDetonateTime', 0)
     mob:setLocalVar('nuclearWasteUsed', 0)
+
+    -- Holy II has a long recast time. Set it to 0.
+    mob:addListener('MAGIC_USE', 'PROTO_ULTIMA_MAGIC_USE', function(mobArg, target, spell, action)
+        mobArg:addRecast(xi.recast.MAGIC, spell:getID(), 0)
+    end)
 end
 
 entity.onMobFight = function(mob, target)
@@ -174,6 +152,8 @@ entity.onMobFight = function(mob, target)
             if hpp <= 60 then
                 mob:useMobAbility(xi.mobSkill.DISSIPATION)
                 mob:setLocalVar('phase', 3)
+                mob:setMobMod(xi.mobMod.MAGIC_COOL, 60)
+                mob:setMagicCastingEnabled(true)
             end
         end,
 
@@ -181,13 +161,7 @@ entity.onMobFight = function(mob, target)
             if hpp <= 40 then
                 mob:useMobAbility(xi.mobSkill.DISSIPATION)
                 mob:setLocalVar('phase', 4)
-                mob:setLocalVar('nextHolyTime', currentTime + math.randomInt(20, 30))
-            else
-                local nextHolyTime = mob:getLocalVar('nextHolyTime')
-                if currentTime >= nextHolyTime then
-                    castHoly(mob)
-                    mob:setLocalVar('nextHolyTime', currentTime + math.randomInt(50, 60))
-                end
+                mob:setMobMod(xi.mobMod.MAGIC_COOL, 30)
             end
         end,
 
@@ -196,22 +170,10 @@ entity.onMobFight = function(mob, target)
                 mob:useMobAbility(xi.mobSkill.DISSIPATION)
                 mob:setLocalVar('phase', 5)
                 mob:setLocalVar('nextSkillTime', currentTime + math.randomInt(15, 30))
-            else
-                local nextHolyTime = mob:getLocalVar('nextHolyTime')
-                if currentTime >= nextHolyTime then
-                    castHoly(mob)
-                    mob:setLocalVar('nextHolyTime', currentTime + math.randomInt(20, 30))
-                end
             end
         end,
 
         [5] = function()
-            local nextHolyTime = mob:getLocalVar('nextHolyTime')
-            if currentTime >= nextHolyTime then
-                castHoly(mob)
-                mob:setLocalVar('nextHolyTime', currentTime + math.randomInt(20, 30))
-            end
-
             local nextDetonateTime = mob:getLocalVar('nextDetonateTime')
 
             if nextDetonateTime ~= 0 then
@@ -236,8 +198,11 @@ entity.onMobFight = function(mob, target)
                     mob:setLocalVar('nextSkillTime', currentTime + math.randomInt(30, 45))
                     mob:useMobAbility(xi.mobSkill.CITADEL_BUSTER)
                     mob:setBaseSpeed(40)
-                    mob:setAutoAttackEnabled(true)
-                    mob:setMobAbilityEnabled(true)
+                    mob:timer(5000, function(mobArg)
+                        mobArg:setAutoAttackEnabled(true)
+                        mobArg:setMobAbilityEnabled(true)
+                        mobArg:setMagicCastingEnabled(true)
+                    end)
                 end
 
                 return
@@ -255,6 +220,7 @@ entity.onMobFight = function(mob, target)
                 mob:setBaseSpeed(0)
                 mob:setAutoAttackEnabled(false)
                 mob:setMobAbilityEnabled(false)
+                mob:setMagicCastingEnabled(false)
                 mob:setLocalVar('nextDetonateTime', currentTime + 30)
                 mob:setLocalVar('citadelBit', 0)
                 return
@@ -264,6 +230,27 @@ entity.onMobFight = function(mob, target)
             mob:useMobAbility(skillToUse)
         end,
     }
+end
+
+entity.onMobSpellChoose = function(mob, target, spell)
+    local battlefield = mob:getBattlefield()
+    if not battlefield then
+        return 0
+    end
+
+    local holyTargets = {}
+
+    for _, player in ipairs(battlefield:getPlayers()) do
+        if player:isAlive() and mob:checkDistance(player) <= 20 then
+            table.insert(holyTargets, player)
+        end
+    end
+
+    if #holyTargets == 0 then
+        return 0
+    end
+
+    return xi.magic.spell.HOLY_II, holyTargets[math.randomInt(1, #holyTargets)]
 end
 
 entity.onMobMobskillChoose = function(mob, target, skillId)
