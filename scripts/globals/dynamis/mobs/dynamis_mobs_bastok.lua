@@ -410,7 +410,7 @@ xi.dynamis.spawnCheck[zoneID] =
         requiredVars    = { '[DYNA]KoDhoKilled', '[DYNA]GiPhaKilled', '[DYNA]ZeVhoKilled', },
 
         spawn           = function()
-            return bossTable[math.random(1, #bossTable)]
+            return bossTable[math.randomInt(1, #bossTable)]
         end,
 
         spawnedVar      = '[DYNA]MegaBossSpawned',
@@ -476,7 +476,7 @@ xi.dynamis.paths[zoneID] =
     [17539191] = { { -94,    0,    0  },  {  -86,    0,    0 }                      }, -- W1 Under Bridge W
     [17539183] = { { -94,    0,   -9  },  {  -87,    0,   -4 }                      }, -- W1 Under Bridge SW
     [17539139] = { { -108,   -8, -60  },  { -108,   -0,  -35 }, { -108,   0,  -14 } }, -- W1 Depot Ramp Base
-    [17539142] = { { -102,   -8, -60  },  {  -60,    0,  -60 }                      }, -- W1 Depot Ramp Top
+    [17539142] = { { -102,   -8, -60  },  {  -60,   -8,  -60 }                      }, -- W1 Depot Ramp Top
     [17539125] = { { -128, -1.6,   4  },  { -128,    0,   -6 }                      }, -- W1 Zer N.Ramp (SW)
     [17539122] = { { -132,    0,  -6  },  { -132, -1.6,    4 }                      }, -- W1 Zer N.Ramp (NW)
     [17539439] = { {   36,    0,   8  },  {   21,    0,    8 }                      }, -- W1 O.St. CW Enc.#3

@@ -34,8 +34,8 @@ local spawns =
 }
 
 xi.dynamis.onNewDynamisTav = function(player, zone)
-    zone:setLocalVar('wormSpawnIndex', math.random(#spawns.worm.positions))
-    zone:setLocalVar('antlionSpawnIndex', math.random(#spawns.antlion.positions))
+    zone:setLocalVar('wormSpawnIndex', math.randomInt(1, #spawns.worm.positions))
+    zone:setLocalVar('antlionSpawnIndex', math.randomInt(1, #spawns.antlion.positions))
 end
 
 xi.dynamis.onZoneInitTav = function(zone)
@@ -146,7 +146,7 @@ local function checkAndSpawnQm(zone, qmNpc, spawnVarName, eyeVars)
 
     -- 50% chance with 1 eye killed, 100% with 2 eyes killed
     if
-        (killedCount == 1 and math.random(1, 2) == 1) or
+        (killedCount == 1 and math.randomInt(1, 2) == 1) or
         killedCount == 2
     then
         qmNpc:setStatus(xi.status.NORMAL)

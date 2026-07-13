@@ -54,23 +54,71 @@ local function handleNoPlayers(playersInZone, cleanupScript, zoneCooldownEnter, 
     local currentTime = GetSystemTime()
 
     -- Build variable name strings
-    local varNoPlayerTimer = string.format('[DYNA]NoPlayerTimer_%s', zoneId)
-    local varExpiration    = string.format('[DYNA]ExpirationTime_%s', zoneId)
-    local varZoneCooldown  = string.format('[DYNA]ZoneCooldown_%s', zoneId)
+    local varNoPlayerTimer  = string.format('[DYNA]NoPlayerTimer_%s', zoneId)
+    local varExpiration     = string.format('[DYNA]ExpirationTime_%s', zoneId)
+    local varReservation    = string.format('[DYNA]ReservationExpires_%s', zoneId)
+    local varZoneCooldown   = string.format('[DYNA]ZoneCooldown_%s', zoneId)
+    local varPlayersEntered = string.format('[DYNA]PlayersEntered_%s', zoneId)
 
     -- Get current state
-    local noPlayerTimer = zone:getLocalVar(varNoPlayerTimer)
+    local noPlayerTimer  = zone:getLocalVar(varNoPlayerTimer)
     local zoneExpiration = GetServerVariable(varExpiration)
+    local reservation    = zone:getLocalVar(varReservation)
+    local playersEntered = zone:getLocalVar(varPlayersEntered)
+    local playerCount    = #playersInZone
+    local hasPlayers     = playerCount > 0
     debugTickPrint(string.format('------------xi.dynamis.handleNoPlayers------------'))
 
-    debugTickPrint('Current Players in Zone: ' .. tostring(#playersInZone))
+    debugTickPrint('Current Players in Zone: ' .. tostring(playerCount))
     debugTickPrint('No Player Timer: ' .. tostring(noPlayerTimer))
     debugTickPrint('Zone Expiration: ' .. tostring(zoneExpiration))
     debugTickPrint('Zone Cooldown Enter: ' .. tostring(zoneCooldownEnter))
+    debugTickPrint('Reservation Expires: ' .. tostring(reservation))
+    debugTickPrint('Players Entered: ' .. tostring(playersEntered))
     debugTickPrint('Time Remaining: ' .. tostring(xi.dynamis.getDynaTimeRemaining(zoneExpiration) / 60))
-    -- Start no-player timer if zone is empty
+
+    -- Only count a player as entered once the zone itself can see them
+    if hasPlayers then
+        if playersEntered == 0 then
+            zone:setLocalVar(varPlayersEntered, 1)
+            zone:setLocalVar(varReservation, 0)
+            playersEntered = 1
+            reservation = 0
+        end
+
+        -- A player returned during a zone countdown.
+        -- Clear both the stored timer and this ticks cached value so cleanup cannot run
+        if noPlayerTimer ~= 0 then
+            zone:setLocalVar(varNoPlayerTimer, 0)
+            noPlayerTimer = 0
+        end
+    end
+
+    -- Reservation state: the run exists, but nobody has fully entered yet.
+    -- Do not start the abandoned-zone timer while the registrant is still outside stuck in the cutscene
     if
-        #playersInZone == 0 and             -- No players in the zone
+        not hasPlayers and
+        playersEntered == 0
+    then
+        -- If nobody enters before the reservation window expires, clean up the unused run and let the entry zone reopen after its short cooldown
+        if
+            reservation > 0 and
+            reservation <= currentTime and
+            cleanupScript == 0 and
+            zoneCooldownEnter == 0
+        then
+            parentZone:setLocalVar(varZoneCooldown, currentTime + 90)
+            debugTickPrint('Cleaning Dynamis -> Reservation Expired')
+            xi.dynamis.cleanupDynamis(zone)
+        end
+
+        debugTickPrint('-----------------------------------')
+        return
+    end
+
+    -- Abandoned state: players entered before, but the zone is empty now
+    if
+        not hasPlayers and                 -- No players in the zone
         noPlayerTimer == 0 and              -- The timer for no players in the zone is not set
         cleanupScript == 0 and              -- Cleanup has not run yet
         zoneExpiration > currentTime + 600  -- Zone has more than 10 minutes left
@@ -84,18 +132,11 @@ local function handleNoPlayers(playersInZone, cleanupScript, zoneCooldownEnter, 
         -- We need to update all player hourglasses to match the new 10 min expiration
         -- This is NOT era accurate. The dynamis playonline website specifically says the hourglass outside of dynamis does not update
         xi.dynamis.updatePlayerHourglassForAll(zone)
-
-    -- Clear timer if players return with sufficient time remaining (10+ minutes)
-    elseif
-        #playersInZone > 0 and
-        noPlayerTimer ~= 0 and
-        zoneExpiration >= currentTime + 600
-    then
-        zone:setLocalVar(varNoPlayerTimer, 0)
     end
 
-    -- Run cleanup when no-player timer expires
+    -- Timer-expired state: if the abandoned-zone countdown finished and the zone is still empty, clean up the run.
     if
+        not hasPlayers and
         noPlayerTimer > 0 and
         noPlayerTimer <= currentTime and
         cleanupScript == 0 and
@@ -180,7 +221,10 @@ xi.dynamis.dynamisTick = function(zone)
     onDynamisZoneTick(zone)
 
     -- Time has finally expired - goodbye players o7
-    if zoneTimeRemaining <= 1 then
+    if
+        zoneExpiration > 0 and
+        zoneTimeRemaining <= 1
+    then
         debugTickPrint('Ejecting All Players -> Time Expired')
         xi.dynamis.ejectAllPlayers(zone)
 
@@ -240,7 +284,7 @@ xi.dynamis.onNewDynamis = function(player, mode, gmZone)
     elseif zoneId == xi.zone.DYNAMIS_BUBURIMU or zoneId == xi.zone.DYNAMIS_QUFIM then
         local locations = dynaInfo.sjRestrictionLocation
         if locations and #locations > 0 then
-            local pick = locations[math.random(#locations)]
+            local pick = locations[math.randomInt(1, #locations)]
             local sjNPC = GetNPCByID(dynaInfo.sjRestrictionNPC)
             if sjNPC then
                 sjNPC:setPos(pick[1], pick[2], pick[3])
@@ -459,10 +503,17 @@ xi.dynamis.registerDynamis = function(player, startTime, endTime)
     local varOrigRegistrant = string.format('[DYNA]OriginalRegistrant_%s', dynazoneID)
     local varInstanceID     = string.format('[DYNA]InstanceID_%s', dynazoneID)
     local varCleanupScript  = string.format('[DYNA]CleanupScript_%s', dynazoneID)
+    local varNoPlayerTimer  = string.format('[DYNA]NoPlayerTimer_%s', dynazoneID)
+    local varReservation    = string.format('[DYNA]ReservationExpires_%s', dynazoneID)
+    local varPlayersEntered = string.format('[DYNA]PlayersEntered_%s', dynazoneID)
 
     -- Set server vars
     SetServerVariable(varOrigRegistrant, player:getID())
     SetServerVariable(varInstanceID, instanceId)
+
+    dynaZone:setLocalVar(varNoPlayerTimer, 0)
+    dynaZone:setLocalVar(varPlayersEntered, 0)
+    dynaZone:setLocalVar(varReservation, startTime + xi.dynamis.settings.RESERVATION_TIMEOUT)
 
     -- Register the original registrant
     xi.dynamis.registerPlayer(player)

@@ -474,7 +474,7 @@ local mobNames =
         { 'Nantina',                mobType.NORMAL   , 3 },
         { 'Stcemqestcint',          mobType.NORMAL   , 3 },
         { 'Nightmare_Fly',          mobType.NORMAL   , 3 },
-        { 'Nightmare_Morbol',       mobType.NIGHTMARE, 3 },
+        { 'Nightmare_Morbol',       mobType.NIGHTMARE, 2 },
         { 'Nightmare_Hippogryph',   mobType.NIGHTMARE, 3 },
         { 'Nightmare_Manticore',    mobType.NIGHTMARE, 3 },
         { 'Nightmare_Sabotender',   mobType.NIGHTMARE, 3 },
@@ -663,10 +663,10 @@ local mobNames =
     },
     ['Dynamis-Qufim'] =
     {
-        { 'Antaeus',                  mobType.BOSS     , 1 },
-        { 'Scolopendra',              mobType.BOSS     , 1 },
-        { 'Suttung',                  mobType.BOSS     , 1 },
-        { 'Stringes',                 mobType.BOSS     , 1 },
+        { 'Antaeus',                  mobType.BOSS     , 3 },
+        { 'Scolopendra',              mobType.BOSS     , 2 },
+        { 'Suttung',                  mobType.BOSS     , 2 },
+        { 'Stringes',                 mobType.BOSS     , 2 },
         { 'Warchief_Tombstone',       mobType.STATUE   , 1 },
         { 'Manifest_Icon',            mobType.STATUE   , 1 },
         { 'Adamantking_Effigy',       mobType.STATUE   , 1 },
@@ -801,7 +801,7 @@ local mobNames =
         { 'Kindreds_Avatar',     mobType.NORMAL   , 2 },
         { 'Kindreds_Wyvern',     mobType.NORMAL   , 2 },
         { 'Nightmare_Antlion',   mobType.NIGHTMARE, 2 },
-        { 'Nightmare_Bugard',    mobType.NIGHTMARE, 2 },
+        { 'Nightmare_Bugard',    mobType.NIGHTMARE, 3 },
         { 'Nightmare_Cluster',   mobType.NIGHTMARE, 2 },
         { 'Nightmare_Hornet',    mobType.NIGHTMARE, 2 },
         { 'Nightmare_Leech',     mobType.NIGHTMARE, 2 },
@@ -1220,6 +1220,11 @@ local function registerMobOverrides(zoneName, mobName, overrideMobType, modelSiz
                 handler = function(mob)
                     xi.dynamis.generalInfo(mob, modelSize)
                     xi.dynamis.onBossSpawn(mob, modelSize)
+                end
+            elseif overrideMobType == mobType.NIGHTMARE then
+                handler = function(mob)
+                    xi.dynamis.onMobSpawn(mob, overrideMobType, modelSize)
+                    xi.dynamis.generatePath(mob, modelSize)
                 end
             else
                 handler = function(mob)
