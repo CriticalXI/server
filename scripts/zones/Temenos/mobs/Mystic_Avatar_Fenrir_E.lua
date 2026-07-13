@@ -21,7 +21,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            { id = xi.mobSkill.HOWLING_MOON_1, hpp = math.random(15, 55) }, -- uses Howling Moon once while near 50% HPP.
+            { id = xi.mobSkill.HOWLING_MOON_1, hpp = math.randomInt(15, 55) }, -- uses Howling Moon once while near 50% HPP.
         },
     })
 end

@@ -28,7 +28,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            { id = xi.mobSkill.SEARING_LIGHT_1, hpp = math.random(30, 55) }, -- uses Searing Light once while near 50% HPP.
+            { id = xi.mobSkill.SEARING_LIGHT_1, hpp = math.randomInt(30, 55) }, -- uses Searing Light once while near 50% HPP.
         },
     })
 end

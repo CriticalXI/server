@@ -11,7 +11,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            { id = xi.jsa.PERFECT_DODGE, hpp = math.random(50, 60) },
+            { id = xi.jsa.PERFECT_DODGE, hpp = math.randomInt(50, 60) },
         },
     })
 end

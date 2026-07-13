@@ -426,7 +426,7 @@ entity.onTrigger = function(player, npc)
             cosmoTime = getCosmoCleanseTime(player)
         end
 
-        player:startEvent(310, menu, arg3, arg4, gil, cosmoTime, 1, hasCosmoCleanse, storedABCs)
+        player:startEvent(310, menu, arg3, arg4, gil, cosmoTime, 1, hasCosmoCleanse, storedABCs, 501) -- PHOENIX OVERRIDE: XIDivert paramater 501
     end
 end
 

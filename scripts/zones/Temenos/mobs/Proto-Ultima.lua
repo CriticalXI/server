@@ -50,7 +50,7 @@ local function castHoly(mob)
         return
     end
 
-    mob:castSpell(xi.magic.spell.HOLY_II, holyTargets[math.random(1, #holyTargets)])
+    mob:castSpell(xi.magic.spell.HOLY_II, holyTargets[math.randomInt(1, #holyTargets)])
 end
 
 -- Table with the countdown times for Citadel Buster, uses a bitmask to track which messages have been sent.
@@ -181,12 +181,12 @@ entity.onMobFight = function(mob, target)
             if hpp <= 40 then
                 mob:useMobAbility(xi.mobSkill.DISSIPATION)
                 mob:setLocalVar('phase', 4)
-                mob:setLocalVar('nextHolyTime', currentTime + math.random(20, 30))
+                mob:setLocalVar('nextHolyTime', currentTime + math.randomInt(20, 30))
             else
                 local nextHolyTime = mob:getLocalVar('nextHolyTime')
                 if currentTime >= nextHolyTime then
                     castHoly(mob)
-                    mob:setLocalVar('nextHolyTime', currentTime + math.random(50, 60))
+                    mob:setLocalVar('nextHolyTime', currentTime + math.randomInt(50, 60))
                 end
             end
         end,
@@ -195,12 +195,12 @@ entity.onMobFight = function(mob, target)
             if hpp <= 20 then
                 mob:useMobAbility(xi.mobSkill.DISSIPATION)
                 mob:setLocalVar('phase', 5)
-                mob:setLocalVar('nextSkillTime', currentTime + math.random(15, 30))
+                mob:setLocalVar('nextSkillTime', currentTime + math.randomInt(15, 30))
             else
                 local nextHolyTime = mob:getLocalVar('nextHolyTime')
                 if currentTime >= nextHolyTime then
                     castHoly(mob)
-                    mob:setLocalVar('nextHolyTime', currentTime + math.random(20, 30))
+                    mob:setLocalVar('nextHolyTime', currentTime + math.randomInt(20, 30))
                 end
             end
         end,
@@ -209,7 +209,7 @@ entity.onMobFight = function(mob, target)
             local nextHolyTime = mob:getLocalVar('nextHolyTime')
             if currentTime >= nextHolyTime then
                 castHoly(mob)
-                mob:setLocalVar('nextHolyTime', currentTime + math.random(20, 30))
+                mob:setLocalVar('nextHolyTime', currentTime + math.randomInt(20, 30))
             end
 
             local nextDetonateTime = mob:getLocalVar('nextDetonateTime')
@@ -233,7 +233,7 @@ entity.onMobFight = function(mob, target)
                 if currentTime >= nextDetonateTime then
                     mob:setTP(0)
                     mob:setLocalVar('nextDetonateTime', 0)
-                    mob:setLocalVar('nextSkillTime', currentTime + math.random(30, 45))
+                    mob:setLocalVar('nextSkillTime', currentTime + math.randomInt(30, 45))
                     mob:useMobAbility(xi.mobSkill.CITADEL_BUSTER)
                     mob:setBaseSpeed(40)
                     mob:setAutoAttackEnabled(true)
@@ -260,7 +260,7 @@ entity.onMobFight = function(mob, target)
                 return
             end
 
-            mob:setLocalVar('nextSkillTime', currentTime + math.random(30, 45))
+            mob:setLocalVar('nextSkillTime', currentTime + math.randomInt(30, 45))
             mob:useMobAbility(skillToUse)
         end,
     }
@@ -279,12 +279,12 @@ entity.onMobMobskillChoose = function(mob, target, skillId)
     -- If Nuclear Waste was used, the next skill will be an elemental breath.
     if nuclearWasteUsed == 1 then
         mob:setLocalVar('nuclearWasteUsed', 0)
-        return elementalBreaths[math.random(1, #elementalBreaths)]
+        return elementalBreaths[math.randomInt(1, #elementalBreaths)]
     end
 
     -- Return a random skill from the skill table for the current phase.
     local phaseSkills = skillTable[phase]
-    return phaseSkills[math.random(1, #phaseSkills)]
+    return phaseSkills[math.randomInt(1, #phaseSkills)]
 end
 
 -- Tracks if Nuclear Waste was used, to determine if next ability should be a elemental breath.
