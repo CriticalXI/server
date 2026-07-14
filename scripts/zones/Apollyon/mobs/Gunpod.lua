@@ -9,7 +9,7 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:addListener('ITEM_DROPS', 'GUNPOD_ITEM_DROPS', function(mobArg, loot)
-        local result = math.random(1, 100)
+        local result = math.randomInt(1, 100)
         local group
         if result <= 25 then
             -- Apollyon Chips
