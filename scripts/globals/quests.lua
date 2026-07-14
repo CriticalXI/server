@@ -111,7 +111,7 @@ xi.quest.id =
         TEA_WITH_A_TONBERRY             = 109, -- + Converted
         SPICE_GALS                      = 110, -- + Converted
         OVER_THE_HILLS_AND_FAR_AWAY     = 112, -- +
-        LURE_OF_THE_WILDCAT             = 113, -- +
+        LURE_OF_THE_WILDCAT             = 113, -- + Converted
         ATELLOUNES_LAMENT               = 114, -- + Converted
         THICK_SHELLS                    = 117, -- +
         FOREST_FOR_THE_TREES            = 118,
@@ -1247,7 +1247,7 @@ xi.quest.setLocalVar = function(player, areaId, questId, name, value)
 end
 
 xi.quest.getMustZone = function(player, areaId, questId)
-    return player:setCharVar(getVarPrefix(areaId, questId) .. 'mustZone') ~= 0 and true or false
+    return player:getCharVar(getVarPrefix(areaId, questId) .. 'mustZone') ~= 0 and true or false
 end
 
 xi.quest.setMustZone = function(player, areaId, questId)

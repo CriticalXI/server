@@ -15,7 +15,6 @@ if not xi.module.isContentEnabled('ROV') then
         local defense     = player:getMainLvl() == 75 and 23 or 21
 
         -- Apply STONESKIN effect but display as RAMPART icon
-        -- TODO: subType 2 not yet implemented for magical only stoneskin
         target:addStatusEffect(xi.effect.STONESKIN, { power = defense, duration = duration, origin   = player, icon = xi.effect.RAMPART, subType  = 2, subPower = stoneskinHP })
 
         return xi.effect.RAMPART
@@ -71,7 +70,8 @@ if not xi.module.isContentEnabled('ABYSSEA') then
         local recastReduction = player:getMerit(xi.merit.FEALTY) - 150
         action:setRecast(action:getRecast() - recastReduction)
 
-        local enhFealty = (player:getMerit(xi.merit.FEALTY) / 5) * player:getMod(xi.mod.ENHANCES_FEALTY)
+        -- Divide by merit value (150s in pre-Abyssea) to recover merit rank count for gear scaling
+        local enhFealty = (player:getMerit(xi.merit.FEALTY) / 150) * player:getMod(xi.mod.ENHANCES_FEALTY)
         local duration  = 60 + enhFealty
 
         player:addStatusEffect(xi.effect.FEALTY, { power = 1, duration = duration, origin = player })

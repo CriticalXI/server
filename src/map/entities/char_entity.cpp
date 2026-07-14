@@ -115,10 +115,10 @@ CCharEntity::CCharEntity()
     eventPreparation = new EventPrep();
     currentEvent     = new EventInfo();
 
-    inSequence       = false;
-    gotMessage       = false;
-    m_Locked         = false;
-    m_zoneInCutscene = false;
+    inSequence   = false;
+    gotMessage   = false;
+    m_Locked     = false;
+    m_isPCHidden = false;
 
     accid        = 0;
     m_GMlevel    = 0;
@@ -1576,24 +1576,24 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
     charutils::RemoveStratagems(this, PSpell);
     if (PSpell->tookEffect())
     {
-        charutils::TrySkillUP(this, (SKILLTYPE)PSpell->getSkillType(), PTarget->GetMLevel());
+        charutils::TrySkillUP(this, PSpell->getSkillType(), PTarget->GetMLevel());
 
         CItemWeapon* PItem = static_cast<CItemWeapon*>(getEquip(SLOT_RANGED));
 
         if (PItem && PItem->isType(ITEM_EQUIPMENT))
         {
-            SKILLTYPE Skilltype = (SKILLTYPE)PItem->getSkillType();
+            xi::SkillType Skilltype = PItem->getSkillType();
 
             switch (PSpell->getSkillType())
             {
-                case SKILL_GEOMANCY:
-                    if (Skilltype == SKILL_HANDBELL)
+                case xi::SkillType::Geomancy:
+                    if (Skilltype == xi::SkillType::Handbell)
                     {
                         charutils::TrySkillUP(this, Skilltype, PTarget->GetMLevel());
                     }
                     break;
-                case SKILL_SINGING:
-                    if (Skilltype == SKILL_STRING_INSTRUMENT || Skilltype == SKILL_WIND_INSTRUMENT || Skilltype == SKILL_SINGING)
+                case xi::SkillType::Singing:
+                    if (Skilltype == xi::SkillType::StringInstrument || Skilltype == xi::SkillType::WindInstrument || Skilltype == xi::SkillType::Singing)
                     {
                         charutils::TrySkillUP(this, Skilltype, PTarget->GetMLevel());
                     }
@@ -1801,10 +1801,17 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         if (PAbility->getMeritModID() > 0 && !(PAbility->getAddType() & ADDTYPE_MERIT))
         {
             recastReduction = std::chrono::seconds(PMeritPoints->GetMeritValue((MERIT_TYPE)PAbility->getMeritModID(), this));
+
+            if (PAbility->getID() == ABILITY_THIRD_EYE && StatusEffectContainer->HasStatusEffect(xi::StatusEffect::Seigan))
+            {
+                recastReduction = recastReduction / 2;
+            }
         }
 
         auto* charge         = ability::GetCharge(this, static_cast<uint16>(PAbility->getRecastId()));
         auto  baseChargeTime = 0ns; // this can be reduced with merits/job point gifts. NOT the same as Recast- gear (so far...)
+
+        timer::duration bloodPactRecast = 0s;
 
         if (charge && PAbility->getID() != ABILITY_SIC)
         {
@@ -1852,9 +1859,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
             int16 bloodPactDelayReduction = favorReduction + std::min<int16>(bloodPact_I_Reduction + bloodPact_II_Reduction + bloodPact_III_Reduction, 30);
 
+            // Snapshot BP recast here so we can carry it into Paralyze check
+            bloodPactRecast = std::max<timer::duration>(0s, action.recast - std::chrono::seconds(bloodPactDelayReduction));
+
             // Localvar will set the BP ability timer when the move consumes MP
             // The delay is snapshot when the player uses the ability: https://www.bg-wiki.com/ffxi/Blood_Pact_Ability_Delay
-            this->SetLocalVar("bpRecastTime", static_cast<uint16>(timer::count_seconds(std::max<timer::duration>(0s, action.recast - std::chrono::seconds(bloodPactDelayReduction)))));
+            this->SetLocalVar("bpRecastTime", static_cast<uint16>(timer::count_seconds(bloodPactRecast)));
 
             // Recast is actually triggered when the bp goes off (no recast packet at all on using a bp and the target moving out of range of the pet)
             action.recast = 0s;
@@ -1867,7 +1877,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             const auto recastId = PAbility->getRecastId();
             if (recastId != Recast::Special && recastId != Recast::Special2)
             {
-                charutils::ApplyAbilityRecast(this, PAbility, charge, baseChargeTime, action.recast);
+                const bool isBloodPact = recastId == Recast::BloodPactRage || recastId == Recast::BloodPactWard;
+                charutils::ApplyAbilityRecast(this, PAbility, charge, baseChargeTime, isBloodPact ? bloodPactRecast : action.recast);
             }
 
             ActionInterrupts::AbilityParalyzed(this, PTarget);
@@ -2352,7 +2363,7 @@ CBattleEntity* CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags
         // Check if target is a BEHAVIOR_NO_ASSIST mob with player allegiance
         auto* PEntity = GetEntity(targid, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST);
         if (PEntity && PEntity->objtype == TYPE_MOB && static_cast<CMobEntity*>(PEntity)->allegiance == xi::Allegiance::Player &&
-            (static_cast<CMobEntity*>(PEntity)->m_Behavior & BEHAVIOR_NO_ASSIST))
+            ((static_cast<CMobEntity*>(PEntity)->m_Behavior & xi::Behavior::NoAssist) != xi::Behavior::None))
         {
             errMsg = std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(this, this, 0, 0, MsgBasic::CannotOnThatTarget);
         }
@@ -2910,8 +2921,8 @@ void CCharEntity::endCurrentEvent()
     currentEvent->reset();
     eventPreparation->reset();
     setLocked(false);
-    m_zoneInCutscene = false;
-    m_Substate       = CHAR_SUBSTATE::SUBSTATE_NONE;
+    m_isPCHidden = false;
+    m_Substate   = CHAR_SUBSTATE::SUBSTATE_NONE;
     tryStartNextEvent();
 }
 
@@ -2992,6 +3003,9 @@ void CCharEntity::tryStartNextEvent()
 
     // If it's a cutscene, we lock the player immediately
     setLocked(currentEvent->type == CUTSCENE);
+
+    // Set hidden status based on event data
+    m_isPCHidden = currentEvent->isHidden;
 
     if (currentEvent->strings.empty())
     {
@@ -3175,7 +3189,7 @@ void CCharEntity::clearCharVarsWithPrefix(const std::string& prefix)
     db::preparedStmt("DELETE FROM char_vars WHERE charid = ? AND varname LIKE ?", this->id, fmt::format("{}%", prefix));
 }
 
-bool CCharEntity::startSynth(SKILLTYPE synthSkill)
+bool CCharEntity::startSynth(xi::SkillType synthSkill)
 {
     if (PAI)
     {
