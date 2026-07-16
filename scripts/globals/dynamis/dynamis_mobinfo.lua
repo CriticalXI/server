@@ -84,6 +84,27 @@ local function spawnWithAnim(mob)
     end)
 end
 
+-- Need to add a table to track spawn positions
+xi.dynamis.insideSpawnAdds = xi.dynamis.insideSpawnAdds or {}
+
+local function isDefaultInsideSpawnPosition(spawnPos)
+    return
+        spawnPos ~= nil and
+        spawnPos.x == 1.000 and
+        spawnPos.y == 1.000 and
+        spawnPos.z == 1.000
+end
+
+local function isDefaultInsideAdd(mob)
+    local mobId = mob:getID()
+
+    if xi.dynamis.insideSpawnAdds[mobId] == nil then
+        xi.dynamis.insideSpawnAdds[mobId] = isDefaultInsideSpawnPosition(mob:getSpawnPos())
+    end
+
+    return xi.dynamis.insideSpawnAdds[mobId]
+end
+
 -- ---------------------
 -- General Info functions
 -- ---------------------
@@ -149,12 +170,7 @@ xi.dynamis.onSharedEngage = function(mob, target)
 
     local lineSpawnConfig = xi.dynamis.lineSpawns and xi.dynamis.lineSpawns[zoneId] and xi.dynamis.lineSpawns[zoneId][mobID]
     local firstAdd        = GetMobByID(mobID + 1)
-    local firstAddSpawn   = firstAdd and firstAdd:getSpawnPos()
-    local defaultInside   =
-        firstAddSpawn and
-        firstAddSpawn.x == 1.000 and
-        firstAddSpawn.y == 1.000 and
-        firstAddSpawn.z == 1.000
+    local defaultInside   = firstAdd ~= nil and isDefaultInsideAdd(firstAdd)
 
     -- Default inside statues use a short stun; explicit line spawns keep the normal stun.
     if lineSpawnConfig or not defaultInside then
@@ -591,14 +607,6 @@ local function getLineSpawnRotation(statuePos)
     return math.cos(radians), math.sin(radians)
 end
 
-local function isDefaultInsideSpawnPosition(spawnPos)
-    return
-        spawnPos and
-        spawnPos.x == 1.000 and
-        spawnPos.y == 1.000 and
-        spawnPos.z == 1.000
-end
-
 local function setSpawnPosition(mobToSpawn, x, y, z, rot, fallbackPos)
     if
         not isValidSpawnNumber(x) or
@@ -659,7 +667,7 @@ local function calculateSideSpawnPosition(statuePos, distance)
         false
 end
 
-local function calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCount, addSpawnPos)
+local function calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCount, defaultInside)
     local spawnIndex = spawnedCount + 1
 
     if lineSpawnConfig then
@@ -688,7 +696,7 @@ local function calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCou
         end
     end
 
-    if isDefaultInsideSpawnPosition(addSpawnPos) then
+    if defaultInside then
         return statuePos.x, statuePos.y, statuePos.z, true, true
     end
 
@@ -737,6 +745,9 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
             -- mobToSpawn:setMobMod(xi.mobMod.SUPERLINK, statue:getTargID())
             mobToSpawn:setRoamFlags(xi.roamFlag.SCRIPTED)
 
+            -- Learn the classification now, before any setSpawn below overwrites the DB sentinel
+            local defaultInside = isDefaultInsideAdd(mobToSpawn)
+
             local spawnX, spawnY, spawnZ, shouldSetSpawn, spawnOnTop
             if isAnimatedMob then
                 local angle = (spawnedCount / count) * 2 * math.pi
@@ -748,7 +759,7 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
                 shouldSetSpawn = true
                 spawnOnTop     = false
             else
-                spawnX, spawnY, spawnZ, shouldSetSpawn, spawnOnTop = calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCount, mobToSpawn:getSpawnPos())
+                spawnX, spawnY, spawnZ, shouldSetSpawn, spawnOnTop = calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCount, defaultInside)
             end
 
             if spawnOnTop then

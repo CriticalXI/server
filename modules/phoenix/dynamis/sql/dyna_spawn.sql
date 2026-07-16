@@ -116,9 +116,9 @@ INSERT INTO `mob_spawn_points` VALUES (17535078,0,'Serjeant_Tombstone','Serjeant
 INSERT INTO `mob_spawn_points` VALUES (17535079,0,'Vanguard_Pillager','Vanguard Pillager',8,75,77,1.000,1.000,1.000,1,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535080,0,'Vanguard_Pillager','Vanguard Pillager',8,75,77,1.000,1.000,1.000,1,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535081,0,'Serjeant_Tombstone','Serjeant Tombstone',22,65,65,-12.359,-73.771,2.000,249,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (17535082,0,'Vanguard_Amputator','Vanguard Amputator',6,75,77,-12.359,-73.771,2.000,249,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (17535082,0,'Vanguard_Amputator','Vanguard Amputator',6,75,77,1.000,1.000,1.000,1,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535083,0,'Serjeant_Tombstone','Serjeant Tombstone',22,65,65,5.482,-74.629,2.000,241,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (17535084,0,'Vanguard_Amputator','Vanguard Amputator',6,75,77,5.482,-74.629,2.000,241,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (17535084,0,'Vanguard_Amputator','Vanguard Amputator',6,75,77,1.000,1.000,1.000,1,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535085,0,'Serjeant_Tombstone','Serjeant Tombstone',22,65,65,4.221,2.000,-84.063,161,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535086,0,'Vanguard_Trooper','Vanguard Trooper',5,75,77,5.847,2.000,-82.399,161,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535087,0,'Vanguard_Trooper','Vanguard Trooper',5,75,77,1.734,2.000,-86.105,161,NULL,NULL);
