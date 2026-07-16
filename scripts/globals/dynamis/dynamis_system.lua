@@ -61,7 +61,7 @@ local function handleNoPlayers(playersInZone, cleanupScript, zoneCooldownEnter, 
     local varPlayersEntered = string.format('[DYNA]PlayersEntered_%s', zoneId)
 
     -- Get current state
-    local noPlayerTimer  = zone:getLocalVar(varNoPlayerTimer)
+    local noPlayerTimer  = GetServerVariable(varNoPlayerTimer)
     local zoneExpiration = GetServerVariable(varExpiration)
     local reservation    = zone:getLocalVar(varReservation)
     local playersEntered = zone:getLocalVar(varPlayersEntered)
@@ -89,7 +89,7 @@ local function handleNoPlayers(playersInZone, cleanupScript, zoneCooldownEnter, 
         -- A player returned during a zone countdown.
         -- Clear both the stored timer and this ticks cached value so cleanup cannot run
         if noPlayerTimer ~= 0 then
-            zone:setLocalVar(varNoPlayerTimer, 0)
+            SetServerVariable(varNoPlayerTimer, 0)
             noPlayerTimer = 0
         end
     end
@@ -123,15 +123,9 @@ local function handleNoPlayers(playersInZone, cleanupScript, zoneCooldownEnter, 
         cleanupScript == 0 and              -- Cleanup has not run yet
         zoneExpiration > currentTime + 600  -- Zone has more than 10 minutes left
     then
-        -- 5sec less than 10min to prevent zone idle before cleanup fires
-        zone:setLocalVar(varNoPlayerTimer, currentTime + 595)
 
         -- Sync with zone expiration to handle valid hourglass edge cases
-        SetServerVariable(varExpiration, currentTime + 595)
-
-        -- We need to update all player hourglasses to match the new 10 min expiration
-        -- This is NOT era accurate. The dynamis playonline website specifically says the hourglass outside of dynamis does not update
-        xi.dynamis.updatePlayerHourglassForAll(zone)
+        SetServerVariable(varNoPlayerTimer, currentTime + 595)
     end
 
     -- Timer-expired state: if the abandoned-zone countdown finished and the zone is still empty, clean up the run.
@@ -281,6 +275,14 @@ xi.dynamis.onNewDynamis = function(player, mode, gmZone)
     if zoneId == xi.zone.DYNAMIS_TAVNAZIA then
         -- Setting random spawn for nightmare worm and antlion
         xi.dynamis.onNewDynamisTav(player, zone)
+
+        -- Since we are moving cleanup to register lets hide everything at the start for Tav
+        for _, timeExt in ipairs(dynaInfo.timeExtensions) do
+            local npc = GetNPCByID(timeExt)
+            if npc then
+                npc:setStatus(xi.status.DISAPPEAR)
+            end
+        end
     elseif zoneId == xi.zone.DYNAMIS_BUBURIMU or zoneId == xi.zone.DYNAMIS_QUFIM then
         local locations = dynaInfo.sjRestrictionLocation
         if locations and #locations > 0 then
@@ -372,6 +374,12 @@ xi.dynamis.getDynaTimeRemaining = function(zoneExpiration)
     end
 end
 
+-- Once the abandoned zone countdown has happened, plus the 90 second cleanup buffer.
+xi.dynamis.isZoneAbandoned = function(dynaZoneId)
+    local noPlayerTimer = GetServerVariable(string.format('[DYNA]NoPlayerTimer_%s', dynaZoneId))
+    return noPlayerTimer > 0 and noPlayerTimer + 90 <= GetSystemTime()
+end
+
 xi.dynamis.cleanupDynamis = function(zone)
     local zoneId = zone:getID()
     local parentZone = GetZone(xi.dynamis.dynaIDLookup[zoneId].entryZone)
@@ -389,6 +397,7 @@ xi.dynamis.cleanupDynamis = function(zone)
     SetServerVariable(string.format('[DYNA]StartTime_%s', zoneId), 0)
     SetServerVariable(string.format('[DYNA]ExpirationTime_%s', zoneId), 0)
     SetServerVariable(string.format('[DYNA]OriginalRegistrant_%s', zoneId), 0)
+    SetServerVariable(string.format('[DYNA]NoPlayerTimer_%s', zoneId), 0) -- Server var, so resetLocalVars below does not clear it
 
     -- Reset local vars
     zone:resetLocalVars()
@@ -490,6 +499,14 @@ xi.dynamis.registerDynamis = function(player, startTime, endTime)
         return
     end
 
+    -- Make sure everything is cleared up
+    -- TODO: Remove after zones do not sleep
+    xi.dynamis.cleanupDynamis(dynaZone)
+
+    -- cleanupDynamis zeroes the timing vars, so stamp this run's window after it
+    SetServerVariable(string.format('[DYNA]StartTime_%s', dynaInfo.dynaZone), startTime)
+    SetServerVariable(string.format('[DYNA]ExpirationTime_%s', dynaInfo.dynaZone), endTime)
+
     -- Since only one instance can run per zone at a time, use zoneId as instanceId
     local instanceId = zoneId
     xi.dynamis.instances[instanceId] = {} -- Initialize instance in global table
@@ -510,8 +527,8 @@ xi.dynamis.registerDynamis = function(player, startTime, endTime)
     -- Set server vars
     SetServerVariable(varOrigRegistrant, player:getID())
     SetServerVariable(varInstanceID, instanceId)
+    SetServerVariable(varNoPlayerTimer, 0)
 
-    dynaZone:setLocalVar(varNoPlayerTimer, 0)
     dynaZone:setLocalVar(varPlayersEntered, 0)
     dynaZone:setLocalVar(varReservation, startTime + xi.dynamis.settings.RESERVATION_TIMEOUT)
 
