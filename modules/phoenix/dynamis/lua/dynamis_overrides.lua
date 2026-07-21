@@ -93,9 +93,9 @@ local mobNames =
         { 'Vanguard_Predator',       mobType.NORMAL, 2 },
         { 'Vanguard_Trooper',        mobType.NORMAL, 2 },
         { 'Vanguard_Vexer',          mobType.NORMAL, 2 },
-        { 'Vanguards_Avatar',        mobType.NORMAL, 2 },
         { 'Vanguards_Hecteyes',      mobType.NORMAL, 2 },
         { 'Vanguards_Wyvern',        mobType.NORMAL, 2 },
+        { 'Vanguards_Avatar', mobType.AVATAR, 2 },
     },
     ['Dynamis-Bastok'] =
     {
@@ -123,9 +123,9 @@ local mobNames =
         { 'Vanguard_Undertaker',  mobType.MASTER, 2 },
         { 'Vanguard_Vigilante',   mobType.NORMAL, 2 },
         { 'Vanguard_Vindicator',  mobType.NORMAL, 2 },
-        { 'Vanguards_Avatar',     mobType.NORMAL, 2 },
         { 'Vanguards_Scorpion',   mobType.NORMAL, 2 },
         { 'Vanguards_Wyvern',     mobType.NORMAL, 2 },
+        { 'Vanguards_Avatar', mobType.AVATAR, 2 },
     },
     ['Dynamis-Windurst'] =
     {
@@ -154,9 +154,9 @@ local mobNames =
         { 'Vanguard_Sentinel',       mobType.NORMAL, 2 },
         { 'Vanguard_Skirmisher',     mobType.NORMAL, 2 },
         { 'Vanguard_Visionary',      mobType.NORMAL, 2 },
-        { 'Vanguards_Avatar',        mobType.NORMAL, 2 },
         { 'Vanguards_Crow',          mobType.NORMAL, 2 },
         { 'Vanguards_Wyvern',        mobType.NORMAL, 2 },
+        { 'Vanguards_Avatar', mobType.AVATAR, 2 },
     },
     ['Dynamis-Jeuno'] =
     {
@@ -211,9 +211,9 @@ local mobNames =
         { 'Vanguard_Smithy',        mobType.NORMAL, 2 },
         { 'Vanguard_Tinkerer',      mobType.NORMAL, 2 },
         { 'Vanguard_Welldigger',    mobType.NORMAL, 2 },
-        { 'Vanguards_Avatar',       mobType.NORMAL, 2 },
         { 'Vanguards_Slime',        mobType.NORMAL, 2 },
         { 'Vanguards_Wyvern',       mobType.NORMAL, 2 },
+        { 'Vanguards_Avatar', mobType.AVATAR, 2 },
     },
     ['Dynamis-Beaucedine'] =
     {
@@ -313,7 +313,6 @@ local mobNames =
         { 'Hydra_Thief',             mobType.NORMAL, 2 },
         { 'Hydra_Warrior',           mobType.NORMAL, 2 },
         { 'Hydra_White_Mage',        mobType.NORMAL, 2 },
-        { 'Hydras_Avatar',           mobType.NORMAL, 2 },
         { 'Hydras_Hound',            mobType.NORMAL, 2 },
         { 'Hydras_Wyvern',           mobType.NORMAL, 2 },
         { 'Vanguard_Alchemist',      mobType.NORMAL, 2 },
@@ -381,7 +380,8 @@ local mobNames =
         { 'Vanguards_Scorpion',      mobType.NORMAL, 2 },
         { 'Vanguards_Hecteyes',      mobType.NORMAL, 2 },
         { 'Vanguards_Crow',          mobType.NORMAL, 2 },
-        { 'Vanguards_Avatar',        mobType.NORMAL, 2 },
+        { 'Vanguards_Avatar', mobType.AVATAR, 2 },
+        { 'Hydras_Avatar', mobType.AVATAR, 2 },
     },
     ['Dynamis-Xarcabard'] =
     {
@@ -413,7 +413,6 @@ local mobNames =
         { 'Duke_Berith',           mobType.NORMAL, 3 },
         { 'Duke_Gomory',           mobType.NORMAL, 3 },
         { 'Duke_Scox',             mobType.NORMAL, 3 },
-        { 'Kindreds_Avatar',       mobType.NORMAL, 2 },
         { 'Kindred_Bard',          mobType.NORMAL, 2 },
         { 'Kindred_Beastmaster',   mobType.MASTER, 2 },
         { 'Kindred_Black_Mage',    mobType.NORMAL, 2 },
@@ -440,7 +439,6 @@ local mobNames =
         { 'Marquis_Nebiros',       mobType.MASTER, 3 },
         { 'Marquis_Orias',         mobType.NORMAL, 3 },
         { 'Marquis_Sabnak',        mobType.NORMAL, 3 },
-        { 'Nebiross_Avatar',       mobType.NORMAL, 3 },
         { 'Prince_Seere',          mobType.NORMAL, 3 },
         { 'Satellite_Claymores',   mobType.NORMAL, 2 },
         { 'Satellite_Daggers',     mobType.NORMAL, 2 },
@@ -462,6 +460,8 @@ local mobNames =
         { 'Yang',                  mobType.NORMAL, 3 },
         { 'Ying',                  mobType.NORMAL, 3 },
         { 'Zagans_Wyvern',         mobType.NORMAL, 2 },
+        { 'Kindreds_Avatar', mobType.AVATAR, 2 },
+        { 'Nebiross_Avatar', mobType.AVATAR, 3 },
     },
     ['Dynamis-Valkurm'] =
     {
@@ -540,12 +540,12 @@ local mobNames =
         { 'Vanguard_Vindicator',    mobType.NORMAL   , 1 },
         { 'Vanguard_Visionary',     mobType.NORMAL   , 1 },
         { 'Vanguard_Welldigger',    mobType.NORMAL   , 1 },
-        { 'Vanguards_Avatar',       mobType.NORMAL   , 1 },
         { 'Vanguards_Crow',         mobType.NORMAL   , 1 },
         { 'Vanguards_Hecteyes',     mobType.NORMAL   , 1 },
         { 'Vanguards_Scorpion',     mobType.NORMAL   , 1 },
         { 'Vanguards_Slime',        mobType.NORMAL   , 1 },
         { 'Vanguards_Wyvern',       mobType.NORMAL   , 1 },
+        { 'Vanguards_Avatar', mobType.AVATAR, 1 },
     },
     ['Dynamis-Buburimu'] =
     {
@@ -567,7 +567,6 @@ local mobNames =
         { 'Nightmare_Scorpion',       mobType.NIGHTMARE, 2 },
         { 'Nightmare_Uragnite',       mobType.NIGHTMARE, 2 },
         { 'Baa_Dava_the_Bibliophage', mobType.MASTER   , 2 },
-        { 'Baas_Avatar',              mobType.NORMAL   , 2 },
         { 'Doo_Peku_the_Fleetfoot',   mobType.NORMAL   , 2 },
         { 'Elvaansticker_Bxafraff',   mobType.MASTER   , 2 },
         { 'Bxafraffs_Wyvern',         mobType.NORMAL   , 2 },
@@ -586,7 +585,6 @@ local mobNames =
         { 'Vanguard_Amputator',       mobType.NORMAL   , 2 },
         { 'Vanguard_Armorer',         mobType.NORMAL   , 2 },
         { 'Vanguard_Assassin',        mobType.NORMAL   , 2 },
-        { 'Vanguards_Avatar',         mobType.NORMAL   , 2 },
         { 'Vanguard_Backstabber',     mobType.NORMAL   , 2 },
         { 'Vanguard_Beasttender',     mobType.MASTER   , 2 },
         { 'Vanguard_Bugler',          mobType.NORMAL   , 2 },
@@ -660,6 +658,8 @@ local mobNames =
         { 'Tarasca',                  mobType.BOSS     , 3 },
         { 'Jurik',                    mobType.BOSS     , 3 },
         { 'Vishap',                   mobType.BOSS     , 3 },
+        { 'Vanguards_Avatar', mobType.AVATAR, 2 },
+        { 'Baas_Avatar', mobType.AVATAR, 2 },
     },
     ['Dynamis-Qufim'] =
     {
@@ -683,7 +683,6 @@ local mobNames =
         { 'Vanguard_Mesmerizer',      mobType.NORMAL   , 1 },
         { 'Vanguard_Pillager',        mobType.NORMAL   , 1 },
         { 'Vanguard_Dollmaster',      mobType.MASTER   , 1 },
-        { 'Vanguards_Avatar',         mobType.NORMAL   , 1 },
         { 'Vanguard_Footsoldier',     mobType.NORMAL   , 1 },
         { 'Vanguard_Gutslasher',      mobType.NORMAL   , 1 },
         { 'Vanguard_Predator',        mobType.NORMAL   , 1 },
@@ -754,6 +753,7 @@ local mobNames =
         { 'Nightmare_Raptor',         mobType.NIGHTMARE, 1 },
         { 'Nightmare_Tiger',          mobType.NIGHTMARE, 1 },
         { 'Nightmare_Weapon',         mobType.NIGHTMARE, 1 },
+        { 'Vanguards_Avatar', mobType.AVATAR, 1 },
     },
     ['Dynamis-Tavnazia'] =
     {
@@ -780,7 +780,6 @@ local mobNames =
         { 'Hydra_Warrior',       mobType.NORMAL   , 2 },
         { 'Hydra_White_Mage',    mobType.NORMAL   , 2 },
         { 'Hydras_Hound',        mobType.NORMAL   , 2 },
-        { 'Hydras_Avatar',       mobType.NORMAL   , 2 },
         { 'Hydras_Wyvern',       mobType.NORMAL   , 2 },
         { 'Kindred_Bard',        mobType.NORMAL   , 2 },
         { 'Kindred_Beastmaster', mobType.MASTER   , 2 },
@@ -798,7 +797,6 @@ local mobNames =
         { 'Kindred_Warrior',     mobType.NORMAL   , 2 },
         { 'Kindred_White_Mage',  mobType.NORMAL   , 2 },
         { 'Kindreds_Vouivre',    mobType.NORMAL   , 2 },
-        { 'Kindreds_Avatar',     mobType.NORMAL   , 2 },
         { 'Kindreds_Wyvern',     mobType.NORMAL   , 2 },
         { 'Nightmare_Antlion',   mobType.NIGHTMARE, 2 },
         { 'Nightmare_Bugard',    mobType.NIGHTMARE, 3 },
@@ -808,6 +806,8 @@ local mobNames =
         { 'Nightmare_Makara',    mobType.NIGHTMARE, 2 },
         { 'Nightmare_Taurus',    mobType.NIGHTMARE, 2 },
         { 'Nightmare_Worm',      mobType.NIGHTMARE, 2 },
+        { 'Hydras_Avatar', mobType.AVATAR, 2 },
+        { 'Kindreds_Avatar', mobType.AVATAR, 2 },
     }
 }
 
@@ -1154,12 +1154,43 @@ local mobOverrideHandlers =
             xi.dynamis.onMobDisengage(mob)
         end,
 
+        -- Summoner-type masters (avatar pet) 2hr and resummon; no-op for BST/DRG masters
+        onMobFight = function(mob, target)
+            xi.dynamis.summonerOnFight(mob, target)
+        end,
+
         onMobDeath = function(mob, player, optParams)
             xi.dynamis.onMobDeath(mob, player, optParams)
         end,
 
         onMobDespawn = noMobDespawn,
     },
+
+    [mobType.AVATAR] =
+    {
+        onMobInitialize = function(mob)
+            xi.dynamis.onSharedInitialize(mob)
+        end,
+
+        onMobRoam = function(mob)
+            xi.dynamis.onMobRoam(mob)
+        end,
+
+        onMobDisengage = function(mob)
+            xi.dynamis.onMobDisengage(mob)
+        end,
+
+        onMobFight = function(mob, target)
+            xi.dynamis.avatarOnFight(mob, target)
+        end,
+
+        onMobDeath = function(mob, player, optParams)
+            xi.dynamis.onMobDeath(mob, player, optParams)
+        end,
+
+        onMobDespawn = noMobDespawn,
+    },
+
 
     [mobType.NIGHTMARE] =
     {
@@ -1206,6 +1237,7 @@ local function registerMobOverrides(zoneName, mobName, overrideMobType, modelSiz
         return
     end
 
+
     for _, eventName in ipairs(mobOverrideOrder) do
         local handler    = handlers[eventName]
         local hasMobHook = hasSpecialMobHook(zoneName, mobName, eventName)
@@ -1225,6 +1257,16 @@ local function registerMobOverrides(zoneName, mobName, overrideMobType, modelSiz
                 handler = function(mob)
                     xi.dynamis.onMobSpawn(mob, overrideMobType, modelSize)
                     xi.dynamis.generatePath(mob, modelSize)
+                end
+            elseif overrideMobType == mobType.MASTER then
+                handler = function(mob)
+                    xi.dynamis.onMobSpawn(mob, overrideMobType, modelSize)
+                    xi.dynamis.summonerOnSpawn(mob) -- No-op unless the master's pet is an avatar
+                end
+            elseif overrideMobType == mobType.AVATAR then
+                handler = function(mob)
+                    xi.dynamis.onMobSpawn(mob, overrideMobType, modelSize)
+                    xi.dynamis.avatarOnSpawn(mob)
                 end
             else
                 handler = function(mob)
