@@ -55,8 +55,8 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
 
     -- We are going to call this abandoned zone because I hate Dynamis
     -- The zone counts as "free" again once the abandoned zone countdown has expired
-    -- Even if the tick-driven cleanup has not run yet, the zone is considered "free".
-    -- Registration always starts from a clean slate now so this should never happen.
+    -- Even if the tick-driven cleanup has not run yet, the zone is considered "free"
+    -- Registration always starts from a clean slate now so this should never happen
     -- We basically remove the cleanup off the tick because its unnecessary and causes issue with cooldowns
     -- I hate that I have to write a paragraph so I remember why we did this
     local zoneAbandoned = xi.dynamis.isZoneAbandoned(dynaZoneId)
@@ -399,6 +399,9 @@ xi.dynamis.qmOnTriggerEra = function(player, npc)
     if not player:hasKeyItem(xi.dynamis.dynaInfoEra[zoneId].winKI) then
         npcUtil.giveKeyItem(player, xi.dynamis.dynaInfoEra[zoneId].winKI)
     end
+
+    -- Win title comes from clicking the ???
+    player:addTitle(xi.dynamis.dynaInfoEra[zoneId].winTitle)
 
     -- Tavnazia awards a unique title for QM defeat
     if zoneId == xi.zone.DYNAMIS_TAVNAZIA then

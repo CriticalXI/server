@@ -374,7 +374,7 @@ xi.dynamis.getDynaTimeRemaining = function(zoneExpiration)
     end
 end
 
--- Once the abandoned zone countdown has happened, plus the 90 second cleanup buffer.
+-- When the zone has nobody inside and its cleaned up, add the 90 second cleanup buffer
 xi.dynamis.isZoneAbandoned = function(dynaZoneId)
     local noPlayerTimer = GetServerVariable(string.format('[DYNA]NoPlayerTimer_%s', dynaZoneId))
     return noPlayerTimer > 0 and noPlayerTimer + 90 <= GetSystemTime()
@@ -499,14 +499,6 @@ xi.dynamis.registerDynamis = function(player, startTime, endTime)
         return
     end
 
-    -- Make sure everything is cleared up
-    -- TODO: Remove after zones do not sleep
-    xi.dynamis.cleanupDynamis(dynaZone)
-
-    -- cleanupDynamis zeroes the timing vars, so stamp this run's window after it
-    SetServerVariable(string.format('[DYNA]StartTime_%s', dynaInfo.dynaZone), startTime)
-    SetServerVariable(string.format('[DYNA]ExpirationTime_%s', dynaInfo.dynaZone), endTime)
-
     -- Since only one instance can run per zone at a time, use zoneId as instanceId
     local instanceId = zoneId
     xi.dynamis.instances[instanceId] = {} -- Initialize instance in global table
@@ -528,6 +520,10 @@ xi.dynamis.registerDynamis = function(player, startTime, endTime)
     SetServerVariable(varOrigRegistrant, player:getID())
     SetServerVariable(varInstanceID, instanceId)
     SetServerVariable(varNoPlayerTimer, 0)
+
+    -- A new run always starts with zero registrants. The tick cleanup normally
+    -- zeroes this, but it cannot run for a run that died to a map restart
+    SetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', dynazoneID), 0)
 
     dynaZone:setLocalVar(varPlayersEntered, 0)
     dynaZone:setLocalVar(varReservation, startTime + xi.dynamis.settings.RESERVATION_TIMEOUT)

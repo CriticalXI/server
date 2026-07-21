@@ -254,6 +254,8 @@ xi.dynamis.statueOnSpawn = function(mob, modelSize)
     mob:setSpawnAnimation(xi.spawnAnimation.NORMAL)
     mob:setMobMod(xi.mobMod.NO_STANDBACK, 1) -- Statues do not stand back
     mob:setMod(xi.mod.UDMGMAGIC, -5000) -- 50% damage from magic
+    mob:addImmunity(xi.immunity.BIND)
+    mob:addImmunity(xi.immunity.SILENCE)
 
     if mob:getName() == 'Vanguard_Eye' then
         mob:setBaseSpeed(35)
@@ -626,13 +628,6 @@ xi.dynamis.onBossDeath = function(mob, player, optParams)
         winQM:setStatus(xi.status.NORMAL)
     end
 
-    -- Award Title
-    local zone = mob:getZone()
-    local playerList = zone:getPlayers()
-    for _, players in pairs(playerList) do
-        players:addTitle(xi.dynamis.dynaInfoEra[zoneId].winTitle)
-    end
-
     -- Run normal dead function
     xi.dynamis.onMobDeath(mob, player, optParams)
 end
@@ -701,6 +696,9 @@ xi.dynamis.summonerOnSpawn = function(mob)
     -- Remove the spell list because when it casts a spell the entire summons dont work
     mob:setSpellList(0)
 
+    -- Our avatar is at mob ID + 1; the astral_flow mobskill defaults to +2
+    mob:setMobMod(xi.mobMod.ASTRAL_PET_OFFSET, 1)
+
     -- Randomize the HP% that triggers Astral Flow for this pop
     mob:setLocalVar('astralFlowHPP', math.randomInt(25, 75))
 
@@ -723,7 +721,7 @@ xi.dynamis.summonerOnFight = function(mob, target)
         return
     end
 
-    -- Activate 2hr under HP threshold
+    -- Do the 2hr and set the var for astral flow
     if
         mob:getLocalVar('astralFlowUsed') == 0 and
         mob:getHPP() < mob:getLocalVar('astralFlowHPP')
@@ -731,24 +729,25 @@ xi.dynamis.summonerOnFight = function(mob, target)
         mob:setLocalVar('astralFlowUsed', 1)
 
         if pet:isAlive() then
-            -- Engage the avatar so onMobFight can fire its flow ability
+            -- Engage the avatar and tell it to fire its flow ability
             pet:updateEnmity(target)
+            pet:setLocalVar('astralFlowUsed', 1)
             debugPrint('Master ' .. mob:getID() .. ' 2hr with avatar ' .. pet:getID() .. ' alive')
         else
             -- Avatar died: Astral Flow instantly spawns it back (no summon cast)
-            -- and it opens with its flow ability
             if pet:isSpawned() then
-                DespawnMob(pet:getID()) -- Clear a still-fading corpse so it can respawn now
+                DespawnMob(pet:getID())
             end
 
             local pos = mob:getPos()
             pet:setSpawn(pos.x + 2, pos.y, pos.z + 2, pos.rot)
             pet:spawn()
             pet:updateEnmity(target)
+            pet:setLocalVar('astralFlowUsed', 1)
             debugPrint('Master ' .. mob:getID() .. ' 2hr: instantly revived avatar ' .. pet:getID())
         end
 
-        mob:useMobAbility(xi.mobSkill.ASTRAL_FLOW_MAAT)
+        mob:useMobAbility(xi.mobSkill.ASTRAL_FLOW_1)
         return
     end
 end
@@ -768,7 +767,6 @@ xi.dynamis.avatarOnSpawn = function(mob)
 end
 
 xi.dynamis.avatarOnFight = function(mob, target)
-    -- If the Avatar is asleep, or unable to act, do nothing.
     if xi.combat.behavior.isEntityBusy(mob) then
         return
     end
