@@ -107,9 +107,9 @@ INSERT INTO `mob_groups` VALUES (285,10574,37,'Wootz_Quadav',0,128,3236,0,0,0,NU
 INSERT INTO `mob_groups` VALUES (286,10575,37,'Fossil_Quadav',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (287,10576,37,'Star_Ruby_Quadav',0,128,3236,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (288,10577,37,'Whitegold_Quadav',0,128,3236,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (289,10078,37,'Abyssdweller_Jhabdebb',0,128,3235,22000,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (290,10579,37,'Orichalcum_Quadav',0,128,3235,22000,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (291,10580,37,'Pee_Qoho_the_Python',0,128,3235,22000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (289,10078,37,'Abyssdweller_Jhabdebb',0,128,3235,17000,17000,0,NULL);
+INSERT INTO `mob_groups` VALUES (290,10579,37,'Orichalcum_Quadav',0,128,3235,22000,22000,0,NULL);
+INSERT INTO `mob_groups` VALUES (291,10580,37,'Pee_Qoho_the_Python',0,128,3235,16000,16000,0,NULL);
 INSERT INTO `mob_groups` VALUES (292,10581,37,'Yagudos_Elemental',0,128,0,2000,500,0,NULL);
 INSERT INTO `mob_groups` VALUES (293,10582,37,'Yagudos_Avatar',0,128,0,0,0,0,NULL);
 

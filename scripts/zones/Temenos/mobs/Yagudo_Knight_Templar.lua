@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Temenos
---  Mob: Whitegold Quadav
+--  Mob: Yagudo Knight Templar
 -----------------------------------
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------

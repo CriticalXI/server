@@ -1,13 +1,11 @@
 -----------------------------------
 -- Area: Temenos
---  Mob: Whitegold Quadav
------------------------------------
-mixins = { require('scripts/mixins/job_special') }
+--  Mob: Orc's Wyvern
 -----------------------------------
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+entity.onMobDeath = function(mob, player, optParams)
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
 end
 

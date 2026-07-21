@@ -23,12 +23,15 @@ local content = Limbus:new({
     lootCrateId      = ID.npc.C3_LOOT_CRATE,
 })
 
-function content:handleWeakenBoss(name, battlefield, mob)
-    local boss = mob:getZone():queryEntitiesByName(name)[1]
-    boss:setMod(xi.mod.REGAIN, 0)
+local damageReduction = { [0] = -5000, [1] = -4250, [2] = -3000, [3] = -2250, [4] = -1500, [5] = -750, [6] = 0 }
+
+function content:handleEscortDeath(bossName, battlefield, mob, count)
+    local boss = mob:getZone():queryEntitiesByName(bossName)[1]
+
+    boss:setMod(xi.mod.DMG, damageReduction[count])
 end
 
-function content:handleStrengthenBosses(bonusMod, amount, battlefield, mob, count)
+function content:handleStrengthenBosses(bonusMods, amount, battlefield, mob, count)
     local bosses = { 'Abyssdweller_Jhabdebb', 'Orichalcum_Quadav', 'Pee_Qoho_the_Python' }
 
     for _, name in ipairs(bosses) do
@@ -36,7 +39,10 @@ function content:handleStrengthenBosses(bonusMod, amount, battlefield, mob, coun
 
         if boss:isAlive() then
             boss:injectActionPacket(boss:getID(), 11, 439, 0, 24, 0, 307, 0)
-            boss:addMod(bonusMod, amount)
+
+            for _, bonusMod in ipairs(bonusMods) do
+                boss:setMod(bonusMod, amount)
+            end
         end
     end
 end
@@ -99,7 +105,8 @@ content.groups =
             'Grognard_Impaler',
         },
 
-        allDeath = utils.bind(content.handleWeakenBoss, content, 'Abyssdweller_Jhabdebb'),
+        isParty = true,
+        death   = utils.bind(content.handleEscortDeath, content, 'Abyssdweller_Jhabdebb'),
     },
 
     {
@@ -113,7 +120,8 @@ content.groups =
             'Lightsteel_Quadav',
         },
 
-        allDeath = utils.bind(content.handleWeakenBoss, content, 'Orichalcum_Quadav'),
+        isParty = true,
+        death   = utils.bind(content.handleEscortDeath, content, 'Orichalcum_Quadav'),
     },
 
     {
@@ -127,22 +135,23 @@ content.groups =
             'Yagudo_Eradicator',
         },
 
-        allDeath = utils.bind(content.handleWeakenBoss, content, 'Pee_Qoho_the_Python'),
+        isParty = true,
+        death   = utils.bind(content.handleEscortDeath, content, 'Pee_Qoho_the_Python'),
     },
 
     {
         mobs  = { 'Abyssdweller_Jhabdebb' },
-        death = utils.bind(content.handleStrengthenBosses, content, xi.mod.ATTP, 50),
+        death = utils.bind(content.handleStrengthenBosses, content, { xi.mod.ATTP }, 50),
     },
 
     {
         mobs  = { 'Orichalcum_Quadav' },
-        death = utils.bind(content.handleStrengthenBosses, content, xi.mod.UDMGPHYS, 5000),
+        death = utils.bind(content.handleStrengthenBosses, content, { xi.mod.UDMGPHYS, xi.mod.UDMGRANGE }, -5000),
     },
 
     {
         mobs  = { 'Pee_Qoho_the_Python' },
-        death = utils.bind(content.handleStrengthenBosses, content, xi.mod.UDMGMAGIC, 5000),
+        death = utils.bind(content.handleStrengthenBosses, content, { xi.mod.UDMGMAGIC, xi.mod.UDMGBREATH }, -5000),
     },
 
     {
@@ -173,47 +182,30 @@ content.loot =
     {
         {
             quantity = 4,
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,        weight = 10000 },
         },
 
         {
-            { itemId = xi.item.UTOPIAN_GOLD_THREAD,      weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.CHUNK_OF_SNOWY_CERMET,    weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SPOOL_OF_SCARLET_ODOSHI,  weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SPOOL_OF_SILKWORM_THREAD, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.UTOPIAN_GOLD_THREAD,      weight =  2500 }, -- MNK
+            { itemId = xi.item.SQUARE_OF_SUPPLE_SKIN,    weight =  2500 }, -- THF
+            { itemId = xi.item.SPOOL_OF_SILKWORM_THREAD, weight =  2500 }, -- COR
+          --{ itemId = xi.item.SQUARE_OF_BRILLIANTINE,   weight =  2500 }, -- SCH
         },
 
         {
-            { itemId = xi.item.NONE,                      weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.SQUARE_OF_BENEDICT_SILK,   weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_DIABOLIC_SILK,   weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SPOOL_OF_RUBY_SILK_THREAD, weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_BRILLIANTINE,    weight = xi.loot.weight.LOW       },
+            { itemId = xi.item.PLAITED_CORD,             weight =  2500 }, -- NIN
+            { itemId = xi.item.SHEET_OF_COBALT_MYTHRIL,  weight =  2500 }, -- DRG
+            { itemId = xi.item.SQUARE_OF_BENEDICT_SILK,  weight =  2500 }, -- WHM
+          --{ itemId = xi.item.SQUARE_OF_FILET_LACE,     weight =  2500 }, -- DNC
         },
 
         {
-            { itemId = xi.item.NONE,                     weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.SPOOL_OF_COILED_YARN,     weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SPOOL_OF_CHAMELEON_YARN,  weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.PLAITED_CORD,             weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SPOOL_OF_LUMINIAN_THREAD, weight = xi.loot.weight.LOW       },
+            { itemId = xi.item.SILVER_CHIP,              weight = 10000 },
         },
 
         {
-            { itemId = xi.item.NONE,                     weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.DARK_ORICHALCUM_INGOT,    weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SPOOL_OF_GLITTERING_YARN, weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SHEET_OF_COBALT_MYTHRIL,  weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.PANTIN_WIRE,              weight = xi.loot.weight.LOW       },
-        },
-
-        {
-            { itemId = xi.item.SILVER_CHIP, weight = xi.loot.weight.NORMAL },
-        },
-
-        {
-            { itemId = xi.item.NONE,       weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.METAL_CHIP, weight = xi.loot.weight.VERY_LOW  },
+            { itemId = xi.item.NONE,                     weight =  9000 },
+            { itemId = xi.item.METAL_CHIP,               weight =  1000 },
         },
     }
 }
