@@ -3,40 +3,63 @@
 --  Mob: Abyssdweller Jhabdebb
 -----------------------------------
 mixins = { require('scripts/mixins/job_special') }
-local ID = zones[xi.zone.TEMENOS]
 -----------------------------------
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobEngage = function(mob, target)
-    if
-        GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 5):isDead() and GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 6):isDead() and
-        GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 7):isDead() and GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 8):isDead() and
-        GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 9):isDead() and GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 10):isDead()
-    then
-        mob:setMod(xi.mod.SLASH_SDT, 4000)
-        mob:setMod(xi.mod.PIERCE_SDT, 4000)
-        mob:setMod(xi.mod.IMPACT_SDT, 4000)
-        mob:setMod(xi.mod.HTH_SDT, 4000)
-    else
-        mob:setMod(xi.mod.SLASH_SDT, -7000)
-        mob:setMod(xi.mod.PIERCE_SDT, -7000)
-        mob:setMod(xi.mod.IMPACT_SDT, -7000)
-        mob:setMod(xi.mod.HTH_SDT, -7000)
-    end
+entity.onMobSpawn = function(mob)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200)
 
-    GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 1):updateEnmity(target)
-    GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 2):updateEnmity(target)
+    mob:setMod(xi.mod.DMG, -5000)
+    mob:setMod(xi.mod.ATTP, 0)
+    mob:setMod(xi.mod.UDMGPHYS, 0)
+    mob:setMod(xi.mod.UDMGRANGE, 0)
+    mob:setMod(xi.mod.UDMGMAGIC, 0)
+    mob:setMod(xi.mod.UDMGBREATH, 0)
+
+    mob:setMod(xi.mod.PARALYZE_RES_RANK, 4)
+    mob:setMod(xi.mod.BIND_RES_RANK, 4)
+    mob:setMod(xi.mod.SILENCE_RES_RANK, 4)
+    mob:setMod(xi.mod.SLOW_RES_RANK, 4)
+    mob:setMod(xi.mod.POISON_RES_RANK, 4)
+    mob:setMod(xi.mod.LIGHT_SLEEP_RES_RANK, 4)
+    mob:setMod(xi.mod.DARK_SLEEP_RES_RANK, 4)
+    mob:setMod(xi.mod.BLIND_RES_RANK, 4)
 end
 
-entity.onMobDeath = function(mob, player, optParams)
-    if optParams.isKiller or optParams.noKiller then
+entity.onMobSpellChoose = function(mob, target, spellId)
+    local spellList =
+    {
+        [1] = { xi.magic.spell.BANISH_II,  target, false, xi.action.type.DAMAGE_TARGET,     nil,               0, 100 },
+        [2] = { xi.magic.spell.CURE_IV,    mob,    true,  xi.action.type.HEALING_TARGET,    33,                0, 100 },
+        [3] = { xi.magic.spell.FLASH,      target, false, xi.action.type.ENFEEBLING_TARGET, xi.effect.FLASH,   0, 100 },
+        [4] = { xi.magic.spell.PROTECT_IV, mob,    true,  xi.action.type.ENHANCING_TARGET,  xi.effect.PROTECT, 4, 100 },
+        [5] = { xi.magic.spell.SHELL_III,  mob,    true,  xi.action.type.ENHANCING_TARGET,  xi.effect.SHELL,   3, 100 },
+    }
+
+    local bossParty = {}
+
+    for _, member in ipairs(mob:getParty()) do
         if
-            GetMobByID(ID.mob.TEMENOS_C_MOB[3]):isDead() and
-            GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 1):isDead() and
-            GetMobByID(ID.mob.TEMENOS_C_MOB[3] + 2):isDead()
+            member and
+            member:getID() ~= mob:getID() and
+            member:isAlive() and
+            member:checkDistance(mob) < 20
         then
-            GetNPCByID(ID.npc.TEMENOS_C_CRATE[3]):setStatus(xi.status.NORMAL)
+            table.insert(bossParty, member)
+        end
+    end
+
+    return xi.combat.behavior.chooseAction(mob, target, bossParty, spellList)
+end
+
+entity.onMobEngage = function(mob, target)
+    for _, member in ipairs(mob:getParty()) do
+        if
+            member and
+            member:getID() ~= mob:getID()
+        then
+            member:updateEnmity(target)
         end
     end
 end
