@@ -217,6 +217,14 @@ zones[xi.zone.TEMENOS] =
             },
         },
     },
+
+    CENTRAL_TEMENOS_BASEMENT =
+    {
+        mob =
+        {
+            BASEMENT_AERN = GetFirstID('Temenos_Aern_SAM'), -- Lowest aern ID (bottom-right room); anchor for the battlefield's room offsets
+        },
+    },
 }
 
 return zones[xi.zone.TEMENOS]

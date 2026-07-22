@@ -26,7 +26,26 @@ local content = Limbus:new({
 content.groups =
 {
     {
-        mobs    = { 'Temenos_Aern' },
+        mobs =
+        {
+            'Temenos_Aern_WAR',
+            'Temenos_Aern_MNK',
+            'Temenos_Aern_WHM',
+            'Temenos_Aern_BLM',
+            'Temenos_Aern_RDM',
+            'Temenos_Aern_THF',
+            'Temenos_Aern_PLD',
+            'Temenos_Aern_DRK',
+            'Temenos_Aern_BST',
+            'Temenos_Aern_BRD',
+            'Temenos_Aern_RNG',
+            'Temenos_Aern_SAM',
+            'Temenos_Aern_NIN',
+            'Temenos_Aern_DRG',
+            'Temenos_Aern_SMN',
+        },
+
+        isParty = true,
         mobMods = { [xi.mobMod.DETECTION] = xi.detects.HEARING },
         mixins =
         {
@@ -60,26 +79,33 @@ content.groups =
                 end)
             end
 
-            -- Aern are split into groups and 6 of the 10 random groups are assigned a time extension to a random mob
-            local groups =
+            local aernByID = {}
+
+            for _, mob in ipairs(mobs) do
+                aernByID[mob:getID()] = mob
+            end
+
+            -- Aern are split into rooms and 6 of the 10 random rooms are assigned a time extension to a random member
+            local aernID = ID.CENTRAL_TEMENOS_BASEMENT.mob.BASEMENT_AERN
+            local rooms =
             {
-                {  1,  2 },
-                {  3,  4 },
-                {  5,  6 },
-                {  7,  8 },
-                {  9, 10 },
-                { 11, 12 },
-                { 13, 14, 15 },
-                { 16, 17, 18 },
-                { 19, 20, 21, 22 },
-                { 23, 24, 25, 26, 27 },
+                { aernID +  0, aernID +  1 },                                        -- Bottom-right room: SAM MNK
+                { aernID +  2, aernID +  4 },                                        -- Bottom-left room: DRG WHM
+                { aernID +  5, aernID +  7 },                                        -- Lower-center-right room: RDM BST
+                { aernID +  8, aernID +  9 },                                        -- Lower-center-left room: NIN DRK
+                { aernID + 10, aernID + 11 },                                        -- Mid-right room: WAR BLM
+                { aernID + 12, aernID + 13 },                                        -- Mid-left room: WAR SMN
+                { aernID + 16, aernID + 18, aernID + 19 },                           -- Top-right room: DRG WHM BLM
+                { aernID + 20, aernID + 22, aernID + 23 },                           -- Top-left room: BST RNG SAM
+                { aernID + 24, aernID + 25, aernID + 26, aernID + 29 },              -- Center room: RDM PLD SMN THF
+                { aernID + 30, aernID + 31, aernID + 32, aernID + 33, aernID + 34 }, -- Top-center room: MNK DRK BRD NIN WAR
             }
 
-            groups = utils.shuffle(groups)
+            rooms = utils.shuffle(rooms)
 
             for i = 1, 6, 1 do
-                local group = groups[i]
-                local mob   = mobs[group[math.random(1, #group)]]
+                local room = rooms[i]
+                local mob  = aernByID[room[math.random(1, #room)]]
 
                 -- Award time extension once the aern fully despawns and is no longer reraising
                 mob:addListener('DESPAWN', 'DESPAWN_AERN_TIME', function(mobArg)

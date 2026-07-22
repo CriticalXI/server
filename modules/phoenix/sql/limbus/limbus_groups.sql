@@ -86,6 +86,12 @@ INSERT INTO `mob_groups` VALUES (268,10540,37,'Water_Elemental',0,128,3234,6500,
 INSERT INTO `mob_groups` VALUES (269,10541,37,'Mystic_Avatar',0,128,3234,7000,4000,0,NULL); -- leviathan
 INSERT INTO `mob_groups` VALUES (257,10557,37,'Light_Elemental',0,128,3235,6500,4000,0,NULL);
 INSERT INTO `mob_groups` VALUES (304,10593,37,'Mystic_Avatar',0,128,3235,15000,0,0,NULL); -- carbuncle
+INSERT INTO `mob_groups` VALUES (331,10531,37,'Mystic_Avatar',0,128,3235,15000,0,0,NULL); -- ifrit (4F)
+INSERT INTO `mob_groups` VALUES (332,10533,37,'Mystic_Avatar',0,128,3235,15000,0,0,NULL); -- shiva (4F)
+INSERT INTO `mob_groups` VALUES (333,10535,37,'Mystic_Avatar',0,128,3235,15000,0,0,NULL); -- garuda (4F)
+INSERT INTO `mob_groups` VALUES (334,10537,37,'Mystic_Avatar',0,128,3235,15000,0,0,NULL); -- titan (4F)
+INSERT INTO `mob_groups` VALUES (335,10539,37,'Mystic_Avatar',0,128,3235,15000,0,0,NULL); -- ramuh (4F)
+INSERT INTO `mob_groups` VALUES (336,10541,37,'Mystic_Avatar',0,128,3235,15000,0,0,NULL); -- leviathan (4F)
 
 -- Central 3rd Floor
 INSERT INTO `mob_groups` VALUES (270,10559,37,'Grognard_Footsoldier',0,128,3236,0,0,0,NULL);
@@ -114,39 +120,39 @@ INSERT INTO `mob_groups` VALUES (292,10581,37,'Yagudos_Elemental',0,128,0,2000,5
 INSERT INTO `mob_groups` VALUES (293,10582,37,'Yagudos_Avatar',0,128,0,0,0,0,NULL);
 
 -- Central 4th Floor
-INSERT INTO `mob_groups` VALUES (294,10583,37,'Enhanced_Akbaba',0,128,3237,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (295,10584,37,'Enhanced_Jelly',0,128,3237,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (296,10585,37,'Enhanced_Kettenkaefer',0,128,3237,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (297,10586,37,'Enhanced_Koenigstiger',0,128,3237,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (298,10587,37,'Enhanced_Makara',0,128,3237,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (299,10588,37,'Enhanced_Pygmaioi',0,128,3237,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (300,10589,37,'Enhanced_Salamander',0,128,3237,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (301,10590,37,'Kingslayer_Doggvdegg',0,128,3237,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (302,10591,37,'JiGho_Ageless',0,128,3237,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (303,10592,37,'Koo_Buzu_the_Theomanic',0,128,3237,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (294,10583,37,'Enhanced_Akbaba',0,128,3237,10000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (295,10584,37,'Enhanced_Jelly',0,128,3237,10000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (296,10585,37,'Enhanced_Kettenkaefer',0,128,3237,10000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (297,10586,37,'Enhanced_Koenigstiger',0,128,3237,10000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (298,10587,37,'Enhanced_Makara',0,128,3237,10000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (299,10588,37,'Enhanced_Pygmaioi',0,128,3237,10000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (300,10589,37,'Enhanced_Salamander',0,128,3237,10000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (301,10590,37,'Kingslayer_Doggvdegg',0,128,3237,17000,17000,0,NULL);
+INSERT INTO `mob_groups` VALUES (302,10591,37,'JiGho_Ageless',0,128,3237,22000,22000,0,NULL);
+INSERT INTO `mob_groups` VALUES (303,10592,37,'Koo_Buzu_the_Theomanic',0,128,3237,16000,16000,0,NULL);
 INSERT INTO `mob_groups` VALUES (305,10594,37,'Proto-Ultima',0,128,0,55000,55000,0,NULL);
 
 -- Central Basement
-INSERT INTO `mob_groups` VALUES (306,10595,37,'Temenos_Aern_pld',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (307,10596,37,'Temenos_Aern_nin',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (308,10597,37,'Temenos_Aern_drg',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (309,10598,37,'Aerns_Wynav',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (310,10599,37,'Temenos_Aern_war',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (311,10600,37,'Temenos_Aern_blm',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (312,10601,37,'Temenos_Aern_brd',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (313,10602,37,'Temenos_Aern_mnk',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (314,10603,37,'Temenos_Aern_sam',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (315,10604,37,'Temenos_Aern_thf',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (316,10605,37,'Temenos_Aern_rng',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (317,10606,37,'Temenos_Aern_bst',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (318,10607,37,'Aerns_Euvhi',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (319,10608,37,'Temenos_Aern_whm',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (320,10609,37,'Temenos_Aern_rdm',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (321,10610,37,'Temenos_Aern_smn',0,128,2861,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (306,10595,37,'Temenos_Aern_pld',0,128,2861,6000,6000,0,NULL);
+INSERT INTO `mob_groups` VALUES (307,10596,37,'Temenos_Aern_nin',0,128,2861,6000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (308,10597,37,'Temenos_Aern_drg',0,128,2861,6000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (309,10598,37,'Aerns_Wynav',0,128,0,2700,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (310,10599,37,'Temenos_Aern_war',0,128,2861,6000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (311,10600,37,'Temenos_Aern_blm',0,128,2861,6000,6000,0,NULL);
+INSERT INTO `mob_groups` VALUES (312,10601,37,'Temenos_Aern_brd',0,128,2861,6000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (313,10602,37,'Temenos_Aern_mnk',0,128,2861,6000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (314,10603,37,'Temenos_Aern_sam',0,128,2861,6000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (315,10604,37,'Temenos_Aern_thf',0,128,2861,6000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (316,10605,37,'Temenos_Aern_rng',0,128,2861,6000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (317,10606,37,'Temenos_Aern_bst',0,128,2861,6000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (318,10607,37,'Aerns_Euvhi',0,128,0,3500,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (319,10608,37,'Temenos_Aern_whm',0,128,2861,6000,6000,0,NULL);
+INSERT INTO `mob_groups` VALUES (320,10609,37,'Temenos_Aern_rdm',0,128,2861,6000,6000,0,NULL);
+INSERT INTO `mob_groups` VALUES (321,10610,37,'Temenos_Aern_smn',0,128,2861,6000,6000,0,NULL);
 INSERT INTO `mob_groups` VALUES (322,10611,37,'Aerns_Elemental',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (323,10612,37,'Aerns_Avatar',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (324,10613,37,'Temenos_Aern_drk',0,128,2861,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (325,10614,37,'Temenos_Ghrah',0,128,0,16000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (324,10613,37,'Temenos_Aern_drk',0,128,2861,6000,6000,0,NULL);
+INSERT INTO `mob_groups` VALUES (325,10614,37,'Temenos_Ghrah',0,128,0,12000,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (326,10677,37,'Armoury_Crate',0,128,0,1,0,0,NULL);
 
 -- ------------------------------------------------------------
