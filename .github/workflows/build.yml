@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - base
+      - beta
   workflow_dispatch:
 
 concurrency:
