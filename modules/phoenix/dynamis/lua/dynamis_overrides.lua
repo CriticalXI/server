@@ -1018,7 +1018,8 @@ local specialMobHooks =
     },
 }
 
-local function runSpecialMobHook(zoneName, mobName, eventName, modelSize, ...)
+-- target is the engage/fight target, or the killer player for onMobDeath
+local function runSpecialMobHook(zoneName, mobName, eventName, modelSize, mob, target, optParams)
     local zoneHooks = specialMobHooks[zoneName]
     if not zoneHooks then
         return
@@ -1040,9 +1041,9 @@ local function runSpecialMobHook(zoneName, mobName, eventName, modelSize, ...)
 
     if type(hook) == 'function' then
         if eventName == 'onMobSpawn' then
-            hook(..., modelSize)
+            hook(mob, modelSize)
         else
-            hook(...)
+            hook(mob, target, optParams)
         end
     end
 end
@@ -1229,11 +1230,27 @@ local mobOverrideOrder =
     'onMobDespawn',
 }
 
+-- Mobs whose base zone script should keep running (upstream code that matches era)
+-- original = run the base script function first (via super), then the era handler
+-- only     = base script only; the era module does not override this mob at all (not sure if this will ever be used bc we need to set the rank stats but added it anyway)
+local baseScriptMobs =
+{
+    ['Dynamis-Xarcabard'] =
+    {
+        Dynamis_Lord = 'original',
+    },
+}
+
 local function registerMobOverrides(zoneName, mobName, overrideMobType, modelSize)
     local mobPath  = string.format('xi.zones.%s.mobs.%s', zoneName, mobName)
     local handlers = mobOverrideHandlers[overrideMobType]
     if not handlers then
         return
+    end
+
+    local baseMode = baseScriptMobs[zoneName] and baseScriptMobs[zoneName][mobName]
+    if baseMode == 'only' then
+        return -- Leave the base zone script fully in charge of this mob
     end
 
     for _, eventName in ipairs(mobOverrideOrder) do
@@ -1274,12 +1291,18 @@ local function registerMobOverrides(zoneName, mobName, overrideMobType, modelSiz
         end
 
         if handler or hasMobHook then
-            m:addOverride(mobPath .. '.' .. eventName, function(...)
-                if handler then
-                    handler(...)
+            -- target is the engage/fight target, or the killer player for onMobDeath
+            m:addOverride(mobPath .. '.' .. eventName, function(mob, target, optParams)
+                -- run the original code first
+                if baseMode == 'original' then
+                    super(mob, target, optParams)
                 end
 
-                runSpecialMobHook(zoneName, mobName, eventName, modelSize, ...)
+                if handler then
+                    handler(mob, target, optParams)
+                end
+
+                runSpecialMobHook(zoneName, mobName, eventName, modelSize, mob, target, optParams)
             end)
         end
     end
