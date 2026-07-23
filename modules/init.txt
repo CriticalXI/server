@@ -58,5 +58,4 @@ phoenix/cpp
 phoenix/lua
 
 # Dynamis
-phoenix/dynamis/cpp/
 phoenix/dynamis/lua/

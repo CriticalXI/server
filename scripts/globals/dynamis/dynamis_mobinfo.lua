@@ -6,6 +6,7 @@
 require('scripts/globals/battlefield')
 require('scripts/globals/missions')
 require('scripts/globals/npc_util')
+require('scripts/globals/pets/summon')
 -----------------------------------
 xi = xi or {}
 xi.dynamis = xi.dynamis or {}
@@ -16,6 +17,7 @@ xi.dynamis.mobType = xi.dynamis.mobType or
     BOSS      = 3,
     NIGHTMARE = 4,
     MASTER    = 5,
+    AVATAR    = 6,
 }
 
 -- Debug control
@@ -84,6 +86,68 @@ local function spawnWithAnim(mob)
     end)
 end
 
+-- Apparently NO_MOVE mod locks them in place including their facing direction
+-- This looks really ugly and that is because it is but its the only way I got
+local function faceHeldTarget(mob)
+    if not mob:isSpawned() or mob:getLocalVar('spawnHoldActive') == 0 then
+        return
+    end
+
+    local target = mob:getTarget() or getTimerTarget(mob)
+    if target then
+        mob:clearPath()
+        mob:lookAt(target:getPos())
+    end
+
+    mob:timer(250, function(mobArg)
+        faceHeldTarget(mobArg)
+    end)
+end
+
+-- Handles initial spawn of mobs
+local function holdSpawnedAdd(mob, durationMs)
+    mob:setAutoAttackEnabled(false)
+    mob:setMagicCastingEnabled(false)
+    mob:setMobAbilityEnabled(false)
+    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+
+    mob:setLocalVar('spawnHoldActive', 1)
+    faceHeldTarget(mob)
+
+    mob:timer(durationMs, function(mobArg)
+        if not mobArg:isSpawned() then
+            return
+        end
+
+        mobArg:setLocalVar('spawnHoldActive', 0)
+        mobArg:setAutoAttackEnabled(true)
+        mobArg:setMagicCastingEnabled(true)
+        mobArg:setMobAbilityEnabled(true)
+        mobArg:setMobMod(xi.mobMod.NO_MOVE, 0)
+    end)
+end
+
+-- Need to add a table to track spawn positions
+xi.dynamis.insideSpawnAdds = xi.dynamis.insideSpawnAdds or {}
+
+local function isDefaultInsideSpawnPosition(spawnPos)
+    return
+        spawnPos ~= nil and
+        spawnPos.x == 1.000 and
+        spawnPos.y == 1.000 and
+        spawnPos.z == 1.000
+end
+
+local function isDefaultInsideAdd(mob)
+    local mobId = mob:getID()
+
+    if xi.dynamis.insideSpawnAdds[mobId] == nil then
+        xi.dynamis.insideSpawnAdds[mobId] = isDefaultInsideSpawnPosition(mob:getSpawnPos())
+    end
+
+    return xi.dynamis.insideSpawnAdds[mobId]
+end
+
 -- ---------------------
 -- General Info functions
 -- ---------------------
@@ -149,12 +213,7 @@ xi.dynamis.onSharedEngage = function(mob, target)
 
     local lineSpawnConfig = xi.dynamis.lineSpawns and xi.dynamis.lineSpawns[zoneId] and xi.dynamis.lineSpawns[zoneId][mobID]
     local firstAdd        = GetMobByID(mobID + 1)
-    local firstAddSpawn   = firstAdd and firstAdd:getSpawnPos()
-    local defaultInside   =
-        firstAddSpawn and
-        firstAddSpawn.x == 1.000 and
-        firstAddSpawn.y == 1.000 and
-        firstAddSpawn.z == 1.000
+    local defaultInside   = firstAdd ~= nil and isDefaultInsideAdd(firstAdd)
 
     -- Default inside statues use a short stun; explicit line spawns keep the normal stun.
     if lineSpawnConfig or not defaultInside then
@@ -195,6 +254,8 @@ xi.dynamis.statueOnSpawn = function(mob, modelSize)
     mob:setSpawnAnimation(xi.spawnAnimation.NORMAL)
     mob:setMobMod(xi.mobMod.NO_STANDBACK, 1) -- Statues do not stand back
     mob:setMod(xi.mod.UDMGMAGIC, -5000) -- 50% damage from magic
+    mob:addImmunity(xi.immunity.BIND)
+    mob:addImmunity(xi.immunity.SILENCE)
 
     if mob:getName() == 'Vanguard_Eye' then
         mob:setBaseSpeed(35)
@@ -310,8 +371,8 @@ xi.dynamis.onStatueFight = function(mob, target)
             if eye == xi.dynamis.eye.BLUE then
                 debugPrint('Restoring HP to nearby players')
                 local missingHP = playerObj:getMaxHP() - playerObj:getHP()
-                -- TODO: figure out if this wakes slept players up
                 playerObj:restoreHP(missingHP)
+                playerObj:wakeUp()
                 playerObj:messageBasic(xi.msg.basic.RECOVERS_HP, 0, missingHP)
                 mob:injectActionPacket(playerObj:getID(), 11, 772, 0, 0, xi.msg.basic.AOE_REGAIN_HP, 0, missingHP)
             else
@@ -567,15 +628,156 @@ xi.dynamis.onBossDeath = function(mob, player, optParams)
         winQM:setStatus(xi.status.NORMAL)
     end
 
-    -- Award Title
-    local zone = mob:getZone()
-    local playerList = zone:getPlayers()
-    for _, players in pairs(playerList) do
-        players:addTitle(xi.dynamis.dynaInfoEra[zoneId].winTitle)
-    end
-
     -- Run normal dead function
     xi.dynamis.onMobDeath(mob, player, optParams)
+end
+
+-- ---------------------
+-- Summoner masters and their avatar pets
+-- ---------------------
+-- Dynamis summon mechanics:
+-- Call a random avatar shortly after spawning
+-- Summonm stays out and fights. Once the master goes below a certain % it uses astral flow
+local summonerCallPetParams =
+{
+    callPetJob   = xi.job.SMN,
+    inactiveTime = 3000, -- Casting animation time
+    superLink    = true,
+    dieWithOwner = true,
+    maxSpawns    = 1,
+}
+
+local possibleAvatars =
+{
+    xi.pets.summon.type.CARBUNCLE,
+    xi.pets.summon.type.IFRIT,
+    xi.pets.summon.type.TITAN,
+    xi.pets.summon.type.LEVIATHAN,
+    xi.pets.summon.type.GARUDA,
+    xi.pets.summon.type.SHIVA,
+    xi.pets.summon.type.RAMUH,
+}
+
+-- A master counts as a summoner when the pet slotted after it is an avatar
+local function getAvatarPet(master)
+    local pet = GetMobByID(master:getID() + 1)
+    if pet then
+        return pet
+    end
+
+    return nil
+end
+
+-- Retry the summon until it goes off (callPets fails while slept/stunned)
+-- Once the avatar is out, death is permanent - thank you BO
+local function trySummonAvatar(mob)
+    if not mob:isSpawned() or mob:isDead() then
+        return
+    end
+
+    local pet = getAvatarPet(mob)
+    if not pet or pet:isAlive() then
+        return
+    end
+
+    if not xi.mob.callPets(mob, pet:getID(), summonerCallPetParams) then
+        mob:timer(3000, function(mobArg)
+            trySummonAvatar(mobArg)
+        end)
+    end
+end
+
+xi.dynamis.summonerOnSpawn = function(mob)
+    local pet = getAvatarPet(mob)
+    if not pet then
+        return
+    end
+
+    -- Remove the spell list because when it casts a spell the entire summons dont work
+    mob:setSpellList(0)
+
+    -- Our avatar is at mob ID + 1; the astral_flow mobskill defaults to +2
+    mob:setMobMod(xi.mobMod.ASTRAL_PET_OFFSET, 1)
+
+    -- Randomize the HP% that triggers Astral Flow for this pop
+    mob:setLocalVar('astralFlowHPP', math.randomInt(25, 75))
+
+    -- Mute the job_special mixin's auto-2hr; our logic owns Astral Flow
+    mob:setLocalVar('[jobSpecial]chance', 0)
+
+    -- Summon the avatar shortly after spawning
+    mob:timer(2000, function(mobArg)
+        trySummonAvatar(mobArg)
+    end)
+end
+
+xi.dynamis.summonerOnFight = function(mob, target)
+    local pet = getAvatarPet(mob)
+    if not pet then
+        return
+    end
+
+    if xi.combat.behavior.isEntityBusy(mob) then
+        return
+    end
+
+    -- Do the 2hr and set the var for astral flow
+    if
+        mob:getLocalVar('astralFlowUsed') == 0 and
+        mob:getHPP() < mob:getLocalVar('astralFlowHPP')
+    then
+        mob:setLocalVar('astralFlowUsed', 1)
+
+        if pet:isAlive() then
+            -- Engage the avatar and tell it to fire its flow ability
+            pet:updateEnmity(target)
+            pet:setLocalVar('astralFlowUsed', 1)
+            debugPrint('Master ' .. mob:getID() .. ' 2hr with avatar ' .. pet:getID() .. ' alive')
+        else
+            -- Avatar died: Astral Flow instantly spawns it back (no summon cast)
+            if pet:isSpawned() then
+                DespawnMob(pet:getID())
+            end
+
+            local pos = mob:getPos()
+            pet:setSpawn(pos.x + 2, pos.y, pos.z + 2, pos.rot)
+            pet:spawn()
+            pet:updateEnmity(target)
+            pet:setLocalVar('astralFlowUsed', 1)
+            debugPrint('Master ' .. mob:getID() .. ' 2hr: instantly revived avatar ' .. pet:getID())
+        end
+
+        mob:useMobAbility(xi.mobSkill.ASTRAL_FLOW_1)
+        return
+    end
+end
+
+xi.dynamis.avatarOnSpawn = function(mob)
+    -- Remove all the mixin listeners
+    mob:removeListener('AVATAR_SPAWN')
+    mob:removeListener('AVATAR_ENGAGE')
+    mob:removeListener('AVATAR_MOBSKILL_FINISHED')
+
+    -- Random avatar appearance, spell list and astral flow ability
+    xi.pets.summon.setupSummon(mob, possibleAvatars)
+
+    xi.combat.behavior.enableAllActions(mob)
+
+    debugPrint('Avatar ' .. mob:getID() .. ' spawned | astralFlowId ' .. mob:getLocalVar('astralFlowId'))
+end
+
+xi.dynamis.avatarOnFight = function(mob, target)
+    if xi.combat.behavior.isEntityBusy(mob) then
+        return
+    end
+
+    if
+        mob:getLocalVar('astralFlowUsed') == 1 and
+        mob:checkDistance(target) <= 25
+    then
+        mob:useMobAbility(mob:getLocalVar('astralFlowId'))
+        mob:setLocalVar('astralFlowUsed', 0)
+    end
 end
 
 -- ---------------------
@@ -589,14 +791,6 @@ local function getLineSpawnRotation(statuePos)
     local rot     = isValidSpawnNumber(statuePos.rot) and statuePos.rot or 0
     local radians = 2 * math.pi - (rot / 256) * 2 * math.pi
     return math.cos(radians), math.sin(radians)
-end
-
-local function isDefaultInsideSpawnPosition(spawnPos)
-    return
-        spawnPos and
-        spawnPos.x == 1.000 and
-        spawnPos.y == 1.000 and
-        spawnPos.z == 1.000
 end
 
 local function setSpawnPosition(mobToSpawn, x, y, z, rot, fallbackPos)
@@ -659,7 +853,7 @@ local function calculateSideSpawnPosition(statuePos, distance)
         false
 end
 
-local function calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCount, addSpawnPos)
+local function calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCount, defaultInside)
     local spawnIndex = spawnedCount + 1
 
     if lineSpawnConfig then
@@ -688,7 +882,7 @@ local function calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCou
         end
     end
 
-    if isDefaultInsideSpawnPosition(addSpawnPos) then
+    if defaultInside then
         return statuePos.x, statuePos.y, statuePos.z, true, true
     end
 
@@ -708,7 +902,7 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
 
     local statueId        = statue:getID()
     local statuePos       = statue:getPos()
-    local randomStunTime  = math.randomInt(4000, 8000)
+    local randomHoldTime  = math.randomInt(4000, 8000)
     local zoneId          = statue:getZoneID()
     local zoneSpawnTable  = xi.dynamis.spawnTable and xi.dynamis.spawnTable[zoneId]
     local lineSpawnConfig = xi.dynamis.lineSpawns and xi.dynamis.lineSpawns[zoneId] and xi.dynamis.lineSpawns[zoneId][statueId]
@@ -737,6 +931,9 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
             -- mobToSpawn:setMobMod(xi.mobMod.SUPERLINK, statue:getTargID())
             mobToSpawn:setRoamFlags(xi.roamFlag.SCRIPTED)
 
+            -- Learn the classification now, before any setSpawn below overwrites the DB sentinel
+            local defaultInside = isDefaultInsideAdd(mobToSpawn)
+
             local spawnX, spawnY, spawnZ, shouldSetSpawn, spawnOnTop
             if isAnimatedMob then
                 local angle = (spawnedCount / count) * 2 * math.pi
@@ -748,7 +945,7 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
                 shouldSetSpawn = true
                 spawnOnTop     = false
             else
-                spawnX, spawnY, spawnZ, shouldSetSpawn, spawnOnTop = calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCount, mobToSpawn:getSpawnPos())
+                spawnX, spawnY, spawnZ, shouldSetSpawn, spawnOnTop = calculateLineSpawnPosition(statuePos, lineSpawnConfig, spawnedCount, defaultInside)
             end
 
             if spawnOnTop then
@@ -794,25 +991,7 @@ xi.dynamis.spawnNextMobsOnce = function(statue, count, target)
                     mobToSpawn:updateEnmity(target)
                 end
 
-                mobToSpawn:setAutoAttackEnabled(false)
-                mobToSpawn:setMagicCastingEnabled(false)
-                mobToSpawn:setMobAbilityEnabled(false)
-
-                mobToSpawn:stun(randomStunTime)
-                mobToSpawn:timer(3000, function(mobArg)
-                    if not mobArg then
-                        return
-                    end
-
-                    local timerTarget = getTimerTarget(mobArg)
-                    if timerTarget then
-                        mobArg:lookAt(timerTarget:getPos())
-                    end
-
-                    mobArg:setAutoAttackEnabled(true)
-                    mobArg:setMagicCastingEnabled(true)
-                    mobArg:setMobAbilityEnabled(true)
-                end)
+                holdSpawnedAdd(mobToSpawn, randomHoldTime)
             end
 
             spawnedCount = spawnedCount + 1

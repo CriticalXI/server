@@ -53,6 +53,14 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
     local zoneExpiration       = GetServerVariable(varExpiration)
     local dynamisTimeRemaining = xi.dynamis.getDynaTimeRemaining(zoneExpiration)
 
+    -- We are going to call this abandoned zone because I hate Dynamis
+    -- The zone counts as "free" again once the abandoned zone countdown has expired
+    -- Even if the tick-driven cleanup has not run yet, the zone is considered "free"
+    -- Registration always starts from a clean slate now so this should never happen
+    -- We basically remove the cleanup off the tick because its unnecessary and causes issue with cooldowns
+    -- I hate that I have to write a paragraph so I remember why we did this
+    local zoneAbandoned = xi.dynamis.isZoneAbandoned(dynaZoneId)
+
     -- Setup zone cooldown/cleanup tracking variables
     local varZoneCooldown   = string.format('[DYNA]ZoneCooldown_%s', dynaZoneId)
     local varCleanupScript  = string.format('[DYNA]CleanupScript_%s', dynaZoneId)
@@ -74,7 +82,7 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
         xi.dynamis.debugPrint('Timeless hourglass trade detected')
 
         -- 1. Check if another group is currently in Dynamis
-        if dynamisTimeRemaining > 0 then
+        if dynamisTimeRemaining > 0 and not zoneAbandoned then
             xi.dynamis.debugPrint('Another group is currently in Dynamis, time remaining: ' .. tostring(dynamisTimeRemaining))
             player:messageSpecial(xi.dynamis.getZoneMessageID('ANOTHER_GROUP', zoneId), entryInfo.csBit)
             return
@@ -94,9 +102,8 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
             return
         end
 
-        -- 4. Zone cooldown must have expired
-        -- Zone stays on cooldown after an instance expires (unless cleanup succeeded)
-        if zoneCooldownEnter > currentTime and cleanupScript ~= 1 then
+        -- 4. Zone cooldown must have expired and 90 second cleanup must have passed
+        if zoneCooldownEnter > currentTime then
             xi.dynamis.debugPrint('Zone is on cooldown, cooldown time remaining: ' .. tostring(zoneCooldownEnter - currentTime))
             player:messageSpecial(xi.dynamis.getZoneMessageID('ANOTHER_GROUP', zoneId), entryInfo.csBit)
             return
@@ -282,8 +289,16 @@ xi.dynamis.entryNpcOnEventUpdate = function(player, csid, option, npc)
     local zoneExpiration       = GetServerVariable(string.format('[DYNA]ExpirationTime_%s', dynaZoneId))
     local dynamisTimeRemaining = xi.dynamis.getDynaTimeRemaining(zoneExpiration)
 
+    -- Check the 90 second cooldown again: the run may have ended (and cleanup armed the cooldown) while the registration cutscene was still playing
+    local zoneCooldownEnter = zone:getLocalVar(string.format('[DYNA]ZoneCooldown_%s', dynaZoneId))
+
     -- Proceed only if cutscene completed successfully and no instance is running
-    if option == 0 and dynamisTimeRemaining <= 0 then
+    -- (an abandoned run whose countdown expiredd counts as no instance)
+    if
+        option == 0 and
+        zoneCooldownEnter <= GetSystemTime() and
+        (dynamisTimeRemaining <= 0 or xi.dynamis.isZoneAbandoned(dynaZoneId))
+    then
         xi.dynamis.debugPrint('Calling registerDynamis')
 
         if not tradeItemCheck(player:getTrade(), dynamisTimelessHourglass) then
@@ -384,6 +399,9 @@ xi.dynamis.qmOnTriggerEra = function(player, npc)
     if not player:hasKeyItem(xi.dynamis.dynaInfoEra[zoneId].winKI) then
         npcUtil.giveKeyItem(player, xi.dynamis.dynaInfoEra[zoneId].winKI)
     end
+
+    -- Win title comes from clicking the ???
+    player:addTitle(xi.dynamis.dynaInfoEra[zoneId].winTitle)
 
     -- Tavnazia awards a unique title for QM defeat
     if zoneId == xi.zone.DYNAMIS_TAVNAZIA then

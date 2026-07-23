@@ -116,9 +116,9 @@ INSERT INTO `mob_spawn_points` VALUES (17535078,0,'Serjeant_Tombstone','Serjeant
 INSERT INTO `mob_spawn_points` VALUES (17535079,0,'Vanguard_Pillager','Vanguard Pillager',8,75,77,1.000,1.000,1.000,1,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535080,0,'Vanguard_Pillager','Vanguard Pillager',8,75,77,1.000,1.000,1.000,1,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535081,0,'Serjeant_Tombstone','Serjeant Tombstone',22,65,65,-12.359,-73.771,2.000,249,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (17535082,0,'Vanguard_Amputator','Vanguard Amputator',6,75,77,-12.359,-73.771,2.000,249,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (17535082,0,'Vanguard_Amputator','Vanguard Amputator',6,75,77,1.000,1.000,1.000,1,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535083,0,'Serjeant_Tombstone','Serjeant Tombstone',22,65,65,5.482,-74.629,2.000,241,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (17535084,0,'Vanguard_Amputator','Vanguard Amputator',6,75,77,5.482,-74.629,2.000,241,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (17535084,0,'Vanguard_Amputator','Vanguard Amputator',6,75,77,1.000,1.000,1.000,1,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535085,0,'Serjeant_Tombstone','Serjeant Tombstone',22,65,65,4.221,2.000,-84.063,161,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535086,0,'Vanguard_Trooper','Vanguard Trooper',5,75,77,5.847,2.000,-82.399,161,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17535087,0,'Vanguard_Trooper','Vanguard Trooper',5,75,77,1.734,2.000,-86.105,161,NULL,NULL);
@@ -523,26 +523,8 @@ INSERT INTO `mob_spawn_points` VALUES (17535483,0,'Vanguards_Wyvern','Vanguard\'
 -- Dynamis - Bastok (Zone 186)
 -- ------------------------------
 UPDATE `mob_groups` SET spawntype = 128, respawntime = 0 WHERE zoneid = 186; -- Sets mobs to not spawn
-INSERT INTO `mob_groups` VALUES (100,16,186,'AaNyu_Dismantler',0,128,2907,8000,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (101,7201,186,'BeEbo_Tortoisedriver',0,128,2907,8000,0,0,NULL); -- POOLID DOES NOT EXIST MAKEA NEW ONE
 
-INSERT INTO `mob_groups` VALUES (102,20000,186,'Effigy_Shield_WAR',0,128,2907,8000,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (103,20001,186,'Effigy_Shield_WHM',0,128,2907,8000,20000,0,NULL);
-INSERT INTO `mob_groups` VALUES (104,20002,186,'Effigy_Shield_MNK',0,128,2907,8000,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (105,20003,186,'Effigy_Shield_BLM',0,128,2907,8000,20000,0,NULL);
-INSERT INTO `mob_groups` VALUES (106,20004,186,'Effigy_Shield_THF',0,128,2907,8000,0,0,NULL);
-
-INSERT INTO `mob_groups` VALUES (107,20005,186,'Effigy_Shield_DRK',0,128,2907,8000,20000,0,NULL);
-INSERT INTO `mob_groups` VALUES (108,20006,186,'Effigy_Shield_PLD',0,128,2907,8000,20000,0,NULL);
-INSERT INTO `mob_groups` VALUES (109,20007,186,'Effigy_Shield_BRD',0,128,2907,8000,20000,0,NULL);
-INSERT INTO `mob_groups` VALUES (110,20008,186,'Effigy_Shield_NIN',0,128,2907,8000,20000,0,NULL);
-INSERT INTO `mob_groups` VALUES (111,20009,186,'Effigy_Shield_SAM',0,128,2907,8000,0,0,NULL);
-
-INSERT INTO `mob_groups` VALUES (112,20010,186,'Effigy_Shield_RNG',0,128,2907,8000,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (113,20011,186,'Effigy_Shield_SMN',0,128,2907,8000,20000,0,NULL);
-INSERT INTO `mob_groups` VALUES (114,20012,186,'Effigy_Shield_RDM',0,128,2907,8000,20000,0,NULL);
-INSERT INTO `mob_groups` VALUES (115,20013,186,'Effigy_Shield_DRG',0,128,2907,8000,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (116,20014,186,'Effigy_Shield_BST',0,128,2907,8000,0,0,NULL);
+INSERT INTO `mob_pools` VALUES (20015,'BeEbo_Tortoisedriver','BeEbo_Tortoisedriver',150,0x00001C0400000000000000000000000000000000,9,1,5,265,100,0,1,0,1,0,0,0,7,131,0,0,0,0,0,337,337,2,17);
 
 INSERT INTO `mob_pools` VALUES (20000,'Effigy_Shield','Effigy_Shield',150,0x00001b0400000000000000000000000000000000,1,1,6,240,100,0,1,0,1,0,0,0,1,131,0,0,0,0,0,705,337,1,15);   -- WAR
 INSERT INTO `mob_pools` VALUES (20001,'Effigy_Shield','Effigy_Shield',150,0x00001e0400000000000000000000000000000000,3,1,11,240,100,0,1,0,1,0,0,0,1,131,0,0,20,0,0,705,337,1,15); -- WHM
@@ -561,6 +543,27 @@ INSERT INTO `mob_pools` VALUES (20011,'Effigy_Shield','Effigy_Shield',150,0x0000
 INSERT INTO `mob_pools` VALUES (20012,'Effigy_Shield','Effigy_Shield',150,0x00001d0400000000000000000000000000000000,5,1,3,240,100,0,1,0,1,0,0,0,1,131,0,0,3,0,0,705,337,1,15);      -- RDM
 INSERT INTO `mob_pools` VALUES (20013,'Effigy_Shield','Effigy_Shield',150,0x00001d0400000000000000000000000000000000,14,1,3,240,100,0,1,0,1,0,0,0,1,131,0,0,0,0,0,705,337,1,15);    -- DRG
 INSERT INTO `mob_pools` VALUES (20014,'Effigy_Shield','Effigy_Shield',150,0x00001c0400000000000000000000000000000000,9,1,5,240,100,0,1,0,1,0,0,0,1,131,0,0,0,0,0,705,337,1,15);      -- BST
+
+INSERT INTO `mob_groups` VALUES (100,16,186,'AaNyu_Dismantler',0,128,2907,8000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (101,20015,186,'BeEbo_Tortoisedriver',0,128,2907,8000,0,0,NULL); -- POOLID DOES NOT EXIST MAKEA NEW ONE
+
+INSERT INTO `mob_groups` VALUES (102,20000,186,'Effigy_Shield_WAR',0,128,2907,8000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (103,20001,186,'Effigy_Shield_WHM',0,128,2907,8000,20000,0,NULL);
+INSERT INTO `mob_groups` VALUES (104,20002,186,'Effigy_Shield_MNK',0,128,2907,8000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (105,20003,186,'Effigy_Shield_BLM',0,128,2907,8000,20000,0,NULL);
+INSERT INTO `mob_groups` VALUES (106,20004,186,'Effigy_Shield_THF',0,128,2907,8000,0,0,NULL);
+
+INSERT INTO `mob_groups` VALUES (107,20005,186,'Effigy_Shield_DRK',0,128,2907,8000,20000,0,NULL);
+INSERT INTO `mob_groups` VALUES (108,20006,186,'Effigy_Shield_PLD',0,128,2907,8000,20000,0,NULL);
+INSERT INTO `mob_groups` VALUES (109,20007,186,'Effigy_Shield_BRD',0,128,2907,8000,20000,0,NULL);
+INSERT INTO `mob_groups` VALUES (110,20008,186,'Effigy_Shield_NIN',0,128,2907,8000,20000,0,NULL);
+INSERT INTO `mob_groups` VALUES (111,20009,186,'Effigy_Shield_SAM',0,128,2907,8000,0,0,NULL);
+
+INSERT INTO `mob_groups` VALUES (112,20010,186,'Effigy_Shield_RNG',0,128,2907,8000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (113,20011,186,'Effigy_Shield_SMN',0,128,2907,8000,20000,0,NULL);
+INSERT INTO `mob_groups` VALUES (114,20012,186,'Effigy_Shield_RDM',0,128,2907,8000,20000,0,NULL);
+INSERT INTO `mob_groups` VALUES (115,20013,186,'Effigy_Shield_DRG',0,128,2907,8000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (116,20014,186,'Effigy_Shield_BST',0,128,2907,8000,0,0,NULL);
 
 -- Delete new dyna spawn points table
 DELETE FROM `mob_spawn_points` WHERE `mobid` BETWEEN 17539073 AND 17539400;
@@ -1631,6 +1634,8 @@ INSERT INTO `mob_spawn_points` VALUES (17543673,0,'Vanguards_Wyvern','Vanguard\'
 -- ------------------------------
 UPDATE `mob_groups` SET spawntype = 128, respawntime = 0 WHERE zoneid = 188; -- Sets mobs to not spawn
 
+UPDATE `mob_pools` SET `mjob` = 2, `sjob` = 1 WHERE `poolid` = 2116; -- Sets mobs to be WAR/MNK
+
 -- Delete new dyna spawn points table
 DELETE FROM `mob_spawn_points` WHERE `mobid` BETWEEN 17547265 AND 17547525;
 DELETE FROM `npc_list` WHERE `npcid` BETWEEN 17547500 AND 17547524;
@@ -2153,6 +2158,8 @@ INSERT INTO `mob_spawn_points` VALUES (17547774,0,'Vanguard_Ambusher','Vanguard 
 -- ------------------------------
 -- Dynamis - Beaucedine (Zone 134)
 -- ------------------------------
+UPDATE `mob_pools` SET `spellList` = 0 WHERE `poolid` = 1914; -- Hee_Mida_the_Meticulous
+
 UPDATE `mob_groups` SET spawntype = 128, respawntime = 0 WHERE zoneid = 134; -- Sets mobs to not spawn
 INSERT INTO `mob_groups` VALUES (300,1153,134,'Dynamis_Icon',0,128,0,9000,10000,0,NULL);
 INSERT INTO `mob_groups` VALUES (301,1155,134,'Dynamis_Statue',0,128,0,9000,10000,0,NULL);
@@ -2190,7 +2197,7 @@ INSERT INTO `mob_spawn_points` VALUES (17326100,0,'Vanguard_Defender','Vanguard 
 INSERT INTO `mob_spawn_points` VALUES (17326101,0,'Avatar_Icon','Avatar Icon',123,82,82,-281.362,-39.382,-294.221,122,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17326102,0,'Vanguard_Assassin','Vanguard Assassin',92,75,77,-292.713,-40.112,-292.925,224,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17326103,0,'Vanguard_Visionary','Vanguard Visionary',95,75,77,-285.044,-39.949,-279.380,65,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (17326104,0,'Goblin_Replica','Goblin Replica',157,65,65,-281.362,-40.777,-268.540,37,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (17326104,0,'Goblin_Replica','Goblin Replica',157,65,65,-304.400,-40.777,-268.540,37,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17326105,0,'Vanguard_Necromancer','Vanguard Necromancer',135,75,77,-301.346,-39.746,-272.681,37,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17326106,0,'Vanguards_Avatar','Vanguard\'s Avatar',36,75,77,1.000,1.000,1.000,1,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17326107,0,'Vanguard_Welldigger','Vanguard Welldigger',132,75,77,-298.310,-39.086,-276.798,37,NULL,NULL);
