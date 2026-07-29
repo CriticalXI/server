@@ -4,22 +4,17 @@
 -- Description: Deals physical damage to a single target. Additional Effect: Poison
 -- Notes: This module reverses the changes found on the 09/08/2008 patch. https://www.bg-wiki.com/ffxi/Version_Update_(09/08/2008)
 -- https://wiki.ffo.jp/html/3039.html
-
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
+local moduleName = 'queasyshroom_adjust'
 
-local moduleName = 'toau_queasyshroom'
-
-if xi.module.isContentEnabled('TOAU') then
+if xi.module.isContentEnabled('WOTG') then
     return { name = moduleName }
 end
 
 local m = Module:new(moduleName)
 
------------------------------------
--- Queasyshroom
------------------------------------
 m:addOverride('xi.actions.mobskills.queasyshroom.onMobWeaponSkill', function(mob, target, skill, action)
     local params = {}
 

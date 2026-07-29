@@ -8,14 +8,8 @@
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
+local m = Module:new('final_sting_adjust')
 
-local moduleName = 'toau_final_sting'
-
-local m = Module:new(moduleName)
-
------------------------------------
--- Final Sting
------------------------------------
 m:addOverride('xi.actions.mobskills.final_sting.onMobSkillCheck', function(target, mob, skill)
     if mob:getHPP() <= 33 then
         return 0

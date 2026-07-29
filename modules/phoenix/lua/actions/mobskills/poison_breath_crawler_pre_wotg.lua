@@ -7,18 +7,14 @@
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
+local moduleName = 'poison_breath_crawler'
 
-local moduleName = 'toau_poison_breath_crawler'
-
-if xi.module.isContentEnabled('TOAU') then
+if xi.module.isContentEnabled('WOTG') then
     return { name = moduleName }
 end
 
 local m = Module:new(moduleName)
 
------------------------------------
--- Poison Breath
------------------------------------
 m:addOverride('xi.actions.mobskills.poison_breath_crawler.onMobWeaponSkill', function(mob, target, skill, action)
     local params = {}
 
