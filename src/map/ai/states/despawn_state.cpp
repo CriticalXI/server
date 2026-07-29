@@ -27,24 +27,33 @@
 #include "spawn_handler.h"
 #include "zone.h"
 
-CDespawnState::CDespawnState(CBaseEntity* _PEntity, bool instantDespawn)
-: CState(_PEntity, _PEntity->targid)
-, despawnTime_(timer::now() + (instantDespawn ? 0s : 3s))
+CDespawnState::CDespawnState(xi::Badge<CState>, CBaseEntity* PEntity, const bool instantDespawn)
+: CState(PEntity, PEntity->entityId())
+, instantDespawn_(instantDespawn)
 {
-    if (!instantDespawn && (_PEntity->status != xi::Status::Disappear && !((static_cast<CMobEntity*>(_PEntity)->m_Behavior & xi::Behavior::NoDespawn) != xi::Behavior::None)))
+    // Capture constructor arguments into members and nothing else. All other logic goes into init().
+}
+
+auto CDespawnState::init() -> StateErrorOr<void>
+{
+    despawnTime_ = timer::now() + (instantDespawn_ ? 0s : 3s);
+
+    if (!instantDespawn_ && (m_PEntity->status != xi::Status::Disappear && !((static_cast<CMobEntity*>(m_PEntity)->m_Behavior & xi::Behavior::NoDespawn) != xi::Behavior::None)))
     {
-        _PEntity->loc.zone->PushPacket(_PEntity, CHAR_INRANGE, std::make_unique<GP_SERV_COMMAND_SCHEDULOR>(_PEntity, _PEntity, FourCC::FadeOut));
+        m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE, std::make_unique<GP_SERV_COMMAND_SCHEDULOR>(m_PEntity, m_PEntity, FourCC::FadeOut));
     }
 
-    if (auto* PMob = dynamic_cast<CMobEntity*>(_PEntity); PMob && PMob->m_AllowRespawn && PMob->loc.zone != nullptr)
+    if (auto* PMob = dynamic_cast<CMobEntity*>(m_PEntity); PMob && PMob->m_AllowRespawn && PMob->loc.zone != nullptr)
     {
         PMob->loc.zone->spawnHandler().registerForRespawn(PMob);
     }
+
+    return Success();
 }
 
-bool CDespawnState::Update(timer::time_point tick)
+auto CDespawnState::Update(const timer::time_point tick) -> bool
 {
-    if (!IsCompleted() && !((static_cast<CMobEntity*>(m_PEntity)->m_Behavior & xi::Behavior::NoDespawn) != xi::Behavior::None))
+    if (!IsCompleted() && (static_cast<CMobEntity*>(m_PEntity)->m_Behavior & xi::Behavior::NoDespawn) == xi::Behavior::None)
     {
         if (tick >= despawnTime_)
         {
@@ -59,7 +68,17 @@ void CDespawnState::Cleanup(timer::time_point tick)
 {
 }
 
-bool CDespawnState::CanChangeState()
+auto CDespawnState::CanChangeState() -> bool
+{
+    return false;
+}
+
+auto CDespawnState::CanFollowPath() -> bool
+{
+    return false;
+}
+
+auto CDespawnState::CanInterrupt() -> bool
 {
     return false;
 }

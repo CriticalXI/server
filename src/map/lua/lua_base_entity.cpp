@@ -1664,7 +1664,7 @@ bool CLuaBaseEntity::needToZone(const sol::object& arg0)
 
         if (writeZoning)
         {
-            PChar->setCharVar("[generic]mustZone", PChar->getZone());
+            PChar->setCharVar("[generic]mustZone", static_cast<int32>(PChar->getZone()));
             return true;
         }
 
@@ -2735,7 +2735,7 @@ void CLuaBaseEntity::setWeather(xi::Weather weatherType)
  *  Notes   : Used for mounting Chocobo and changing Jeuno music in Winter
  ************************************************************************/
 
-void CLuaBaseEntity::changeMusic(MusicSlot slotId, uint16 trackId) const
+void CLuaBaseEntity::changeMusic(xi::MusicSlot slotId, uint16 trackId) const
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -2819,8 +2819,7 @@ auto CLuaBaseEntity::openGuildShop(CLuaBaseEntity* PNpc, uint8 open, uint8 close
 
     const auto* PNpcEntity = PNpc->GetBaseEntity();
 
-    PChar->guildShopNpc_.id     = PNpcEntity->id;
-    PChar->guildShopNpc_.targid = PNpcEntity->targid;
+    PChar->guildShopNpc_ = EntityId(PNpcEntity);
     PChar->pushPacket<GP_SERV_COMMAND_GUILD_OPEN>(status, open, close, holiday.value_or(0));
 
     return isOpen;
@@ -3101,7 +3100,7 @@ auto CLuaBaseEntity::getZone(const sol::object& arg0) -> CZone*
     {
         return m_PBaseEntity->loc.zone;
     }
-    else if (m_PBaseEntity->loc.destination && (arg0 != sol::lua_nil) && arg0.is<bool>() && arg0.as<bool>() != false)
+    else if (m_PBaseEntity->loc.destination != xi::ZoneId::Unknown && (arg0 != sol::lua_nil) && arg0.is<bool>() && arg0.as<bool>() != false)
     {
         return zoneutils::GetZone(m_PBaseEntity->loc.destination);
     }
@@ -3116,7 +3115,7 @@ auto CLuaBaseEntity::getZone(const sol::object& arg0) -> CZone*
  *  Notes   :
  ************************************************************************/
 
-uint16 CLuaBaseEntity::getZoneID()
+auto CLuaBaseEntity::getZoneID() -> xi::ZoneId
 {
     return m_PBaseEntity->getZone();
 }
@@ -3165,7 +3164,7 @@ bool CLuaBaseEntity::hasVisitedZone(uint16 zone)
  *  Notes   : Useful for returning players to their last position
  ************************************************************************/
 
-uint16 CLuaBaseEntity::getPreviousZone()
+auto CLuaBaseEntity::getPreviousZone() -> xi::ZoneId
 {
     return m_PBaseEntity->loc.prevzone;
 }
@@ -3579,8 +3578,8 @@ void CLuaBaseEntity::setPos(sol::variadic_args va)
 
         if (va[4].is<double>())
         {
-            auto zoneid = va[4].as<uint16>();
-            if (zoneid >= MAX_ZONEID)
+            const auto zoneid = va[4].as<xi::ZoneId>();
+            if (static_cast<uint16>(zoneid) >= MAX_ZONEID)
             {
                 return;
             }
@@ -4215,14 +4214,14 @@ void CLuaBaseEntity::resetPlayer(const char* charName)
                      "boundary = ?, "
                      "moghouse = ? "
                      "WHERE charid = ?",
-                     ZONE_LOWER_JEUNO, // pos_zone
-                     ZONE_LOWER_JEUNO, // prev zone
-                     86,               // rotation
-                     33.464f,          // x
-                     -5.000f,          // y
-                     69.162f,          // z
-                     0,                // boundary,
-                     0,                // moghouse,
+                     xi::ZoneId::LowerJeuno, // pos_zone
+                     xi::ZoneId::LowerJeuno, // prev zone
+                     86,                     // rotation
+                     33.464f,                // x
+                     -5.000f,                // y
+                     69.162f,                // z
+                     0,                      // boundary,
+                     0,                      // moghouse,
                      id);
 
     ShowDebug("Player reset was successful.");
@@ -5378,7 +5377,7 @@ bool CLuaBaseEntity::canEquipItem(uint16 itemID, const sol::object& chkLevel)
         return false;
     }
 
-    if (!(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))))
+    if (!(PItem->getJobs() & (1 << (static_cast<uint8>(PChar->GetMJob()) - 1))))
     {
         return false;
     }
@@ -5599,7 +5598,7 @@ int16 CLuaBaseEntity::getShieldDefense()
  *  Notes   : Used exclusively in scripts/globals/gear_sets.lua
  ************************************************************************/
 
-void CLuaBaseEntity::addGearSetMod(uint8 setId, Mod modId, uint16 modValue)
+void CLuaBaseEntity::addGearSetMod(uint8 setId, xi::Mod modId, uint16 modValue)
 {
     CCharEntity* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
 
@@ -6909,12 +6908,12 @@ uint32 CLuaBaseEntity::getTimeCreated()
  *  Notes   :
  ************************************************************************/
 
-uint8 CLuaBaseEntity::getMainJob()
+auto CLuaBaseEntity::getMainJob() -> xi::Job
 {
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
-        return 0;
+        return xi::Job::NONE;
     }
 
     return static_cast<CBattleEntity*>(m_PBaseEntity)->GetMJob();
@@ -6927,12 +6926,12 @@ uint8 CLuaBaseEntity::getMainJob()
  *  Notes   :
  ************************************************************************/
 
-uint8 CLuaBaseEntity::getSubJob()
+auto CLuaBaseEntity::getSubJob() -> xi::Job
 {
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
-        return 0;
+        return xi::Job::NONE;
     }
 
     return static_cast<CBattleEntity*>(m_PBaseEntity)->GetSJob();
@@ -6949,7 +6948,7 @@ void CLuaBaseEntity::changeJob(uint8 newJob)
 {
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
     {
-        JOBTYPE prevjob = PChar->GetMJob();
+        xi::Job prevjob = PChar->GetMJob();
 
         PChar->resetPetZoningInfo();
 
@@ -6959,14 +6958,14 @@ void CLuaBaseEntity::changeJob(uint8 newJob)
         charutils::ApplyAllEquipMods(PChar);
         puppetutils::LoadAutomaton(PChar);
 
-        if (newJob == JOB_BLU)
+        if (newJob == static_cast<uint8>(xi::Job::BLU))
         {
-            if (prevjob != JOB_BLU)
+            if (prevjob != xi::Job::BLU)
             {
                 blueutils::LoadSetSpells(PChar);
             }
         }
-        else if (PChar->GetSJob() != JOB_BLU)
+        else if (PChar->GetSJob() != xi::Job::BLU)
         {
             blueutils::UnequipAllBlueSpells(PChar);
         }
@@ -7018,58 +7017,58 @@ void CLuaBaseEntity::changeJob(uint8 newJob)
         PWeapon->setDelay(240);
         PWeapon->setBaseDelay(240);
 
-        switch (newJob)
+        switch (static_cast<xi::Job>(newJob))
         {
-            case JOB_MNK:
-            case JOB_PUP:
+            case xi::Job::MNK:
+            case xi::Job::PUP:
                 PWeapon->setSkillType(xi::SkillType::HandToHand);
                 PWeapon->setBaseDelay(480);
                 PWeapon->setDelay(480);
                 break;
-            case JOB_THF:
-            case JOB_BRD:
-            case JOB_RNG:
-            case JOB_COR:
+            case xi::Job::THF:
+            case xi::Job::BRD:
+            case xi::Job::RNG:
+            case xi::Job::COR:
                 PWeapon->setSkillType(xi::SkillType::Dagger);
                 break;
-            case JOB_RDM:
-            case JOB_PLD:
-            case JOB_BLU:
+            case xi::Job::RDM:
+            case xi::Job::PLD:
+            case xi::Job::BLU:
                 PWeapon->setSkillType(xi::SkillType::Sword);
                 break;
-            case JOB_RUN:
+            case xi::Job::RUN:
                 PWeapon->setSkillType(xi::SkillType::GreatSword);
                 PWeapon->setDelay(480);
                 PWeapon->setBaseDelay(480);
                 break;
-            case JOB_WAR:
-            case JOB_BST:
+            case xi::Job::WAR:
+            case xi::Job::BST:
                 PWeapon->setSkillType(xi::SkillType::Axe);
                 break;
-            case JOB_DRK:
+            case xi::Job::DRK:
                 PWeapon->setSkillType(xi::SkillType::Scythe);
                 PWeapon->setDelay(480);
                 PWeapon->setBaseDelay(480);
                 break;
-            case JOB_DRG:
+            case xi::Job::DRG:
                 PWeapon->setSkillType(xi::SkillType::Polearm);
                 PWeapon->setDelay(480);
                 PWeapon->setBaseDelay(480);
                 break;
-            case JOB_NIN:
+            case xi::Job::NIN:
                 PWeapon->setSkillType(xi::SkillType::Katana);
                 break;
-            case JOB_SAM:
+            case xi::Job::SAM:
                 PWeapon->setSkillType(xi::SkillType::GreatKatana);
                 PWeapon->setDelay(480);
                 PWeapon->setBaseDelay(480);
                 break;
-            case JOB_WHM:
-            case JOB_BLM:
-            case JOB_GEO:
+            case xi::Job::WHM:
+            case xi::Job::BLM:
+            case xi::Job::GEO:
                 PWeapon->setSkillType(xi::SkillType::Club);
                 break;
-            case JOB_SMN:
+            case xi::Job::SMN:
                 PWeapon->setSkillType(xi::SkillType::Staff);
                 PWeapon->setDelay(480);
                 PWeapon->setBaseDelay(480);
@@ -7110,7 +7109,7 @@ void CLuaBaseEntity::changesJob(uint8 subJob)
     puppetutils::LoadAutomaton(PChar);
     charutils::UpdateSubJob(PChar);
 
-    if (subJob == JOB_BLU)
+    if (subJob == static_cast<uint8>(xi::Job::BLU))
     {
         blueutils::LoadSetSpells(PChar);
     }
@@ -7141,18 +7140,18 @@ void CLuaBaseEntity::unlockJob(uint8 JobID)
 
     if (JobID < MAX_JOBTYPE)
     {
-        PChar->jobs.unlocked |= (1 << JobID);
+        PChar->jobs.unlocked |= (1 << static_cast<uint8>(JobID));
 
-        if (JobID == JOB_NON)
+        if (JobID == static_cast<uint8>(xi::Job::NONE))
         {
-            JobID = JOB_WAR;
+            JobID = static_cast<uint8>(xi::Job::WAR);
         }
-        if (PChar->jobs.job[JobID] == 0)
+        if (PChar->jobs.job[static_cast<uint8>(JobID)] == 0)
         {
-            PChar->jobs.job[JobID] = 1;
+            PChar->jobs.job[static_cast<uint8>(JobID)] = 1;
         }
 
-        charutils::SaveCharJob(PChar, static_cast<JOBTYPE>(JobID));
+        charutils::SaveCharJob(PChar, static_cast<xi::Job>(JobID));
         PChar->pushPacket<GP_SERV_COMMAND_JOB_INFO>(PChar);
     }
 }
@@ -7171,10 +7170,10 @@ bool CLuaBaseEntity::hasJob(uint8 job)
         return false;
     }
 
-    JOBTYPE JobID = static_cast<JOBTYPE>(job);
+    xi::Job JobID = static_cast<xi::Job>(job);
     auto*   PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-    return (PChar->jobs.unlocked >> JobID) & 1;
+    return (PChar->jobs.unlocked >> static_cast<uint8>(JobID)) & 1;
 }
 
 /************************************************************************
@@ -7226,7 +7225,7 @@ uint8 CLuaBaseEntity::getJobLevel(uint8 JobID)
     }
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    return PChar->jobs.job[JobID];
+    return PChar->jobs.job[static_cast<uint8>(JobID)];
 }
 
 /************************************************************************
@@ -7254,9 +7253,9 @@ void CLuaBaseEntity::setLevel(uint8 level)
     {
         charutils::RemoveAllEquipMods(PChar);
         PChar->SetMLevel(level);
-        PChar->jobs.job[PChar->GetMJob()] = level;
-        PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
-        PChar->jobs.exp[PChar->GetMJob()] = charutils::GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1;
+        PChar->jobs.job[static_cast<uint8>(PChar->GetMJob())] = level;
+        PChar->SetSLevel(PChar->jobs.job[static_cast<uint8>(PChar->GetSJob())]);
+        PChar->jobs.exp[static_cast<uint8>(PChar->GetMJob())] = charutils::GetExpNEXTLevel(PChar->jobs.job[static_cast<uint8>(PChar->GetMJob())]) - 1;
         charutils::ApplyAllEquipMods(PChar);
 
         charutils::SetStyleLock(PChar, false);
@@ -7314,9 +7313,9 @@ void CLuaBaseEntity::setsLevel(uint8 slevel)
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-    PChar->jobs.job[PChar->GetSJob()] = slevel;
-    PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
-    PChar->jobs.exp[PChar->GetSJob()] = charutils::GetExpNEXTLevel(PChar->jobs.job[PChar->GetSJob()]) - 1;
+    PChar->jobs.job[static_cast<uint8>(PChar->GetSJob())] = slevel;
+    PChar->SetSLevel(PChar->jobs.job[static_cast<uint8>(PChar->GetSJob())]);
+    PChar->jobs.exp[static_cast<uint8>(PChar->GetSJob())] = charutils::GetExpNEXTLevel(PChar->jobs.job[static_cast<uint8>(PChar->GetSJob())]) - 1;
 
     charutils::SetStyleLock(PChar, false);
     jobpointutils::RefreshGiftMods(PChar);
@@ -7411,13 +7410,13 @@ uint8 CLuaBaseEntity::levelRestriction(const sol::object& level)
 
         uint8 NewMLevel = 0;
 
-        if (PChar->m_LevelRestriction != 0 && PChar->m_LevelRestriction < PChar->jobs.job[PChar->GetMJob()])
+        if (PChar->m_LevelRestriction != 0 && PChar->m_LevelRestriction < PChar->jobs.job[static_cast<uint8>(PChar->GetMJob())])
         {
             NewMLevel = PChar->m_LevelRestriction;
         }
         else
         {
-            NewMLevel = PChar->jobs.job[PChar->GetMJob()];
+            NewMLevel = PChar->jobs.job[static_cast<uint8>(PChar->GetMJob())];
         }
 
         if (PChar->GetMLevel() != NewMLevel)
@@ -7429,7 +7428,7 @@ uint8 CLuaBaseEntity::levelRestriction(const sol::object& level)
             }
             charutils::RemoveAllEquipMods(PChar);
             PChar->SetMLevel(NewMLevel);
-            PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
+            PChar->SetSLevel(PChar->jobs.job[static_cast<uint8>(PChar->GetSJob())]);
 
             charutils::ApplyAllEquipMods(PChar);
             blueutils::ValidateBlueSpells(PChar);
@@ -7444,7 +7443,7 @@ uint8 CLuaBaseEntity::levelRestriction(const sol::object& level)
             PChar->updatemask |= UPDATE_HP;
 
             // Update the character's Automaton capacity bonus regardless if the pet is out or not
-            PChar->setAutomatonElementalCapacityBonus(PChar->getMod(Mod::AUTO_ELEM_CAPACITY));
+            PChar->setAutomatonElementalCapacityBonus(PChar->getMod(xi::Mod::AUTO_ELEM_CAPACITY));
 
             if (PChar->status != xi::Status::Disappear)
             {
@@ -7549,7 +7548,7 @@ void CLuaBaseEntity::addWyvernJobTraits(uint8 jobID, uint8 level)
     // Under no circumstances should this be called for anything but a dragoon pet wyvern
     if (PPet && PPet->getPetType() == PET_TYPE::WYVERN)
     {
-        battleutils::AddTraits(PPet, traits::GetTraits(jobID), level);
+        battleutils::AddTraits(PPet, traits::GetTraits(static_cast<xi::Job>(jobID)), level);
     }
     else
     {
@@ -9582,12 +9581,12 @@ void CLuaBaseEntity::delJobPoints(uint8 jobID, uint16 amount)
  *  Example : player:getJobPoints(17)
  *  Notes   : Used in NPC Oboro
  ************************************************************************/
-uint16 CLuaBaseEntity::getJobPoints(JOBTYPE jobID)
+auto CLuaBaseEntity::getJobPoints(xi::Job jobID) -> uint16
 {
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
         CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-        return PChar->PJobPoints->GetJobPointsByJob(jobID);
+        return PChar->PJobPoints->GetJobPointsByJob(static_cast<uint8>(jobID));
     }
     return 0;
 }
@@ -9609,7 +9608,7 @@ void CLuaBaseEntity::masterJob()
 
     CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-    auto jpCategory = 0x020 * PChar->GetMJob();
+    auto jpCategory = 0x020 * static_cast<uint8>(PChar->GetMJob());
     for (auto i = jpCategory; i < jpCategory + 0xA; i++)
     {
         auto points       = PChar->PJobPoints->GetJobPointType((JOBPOINT_TYPE)i);
@@ -10952,7 +10951,7 @@ void CLuaBaseEntity::setSkillLevel(uint8 SkillID, uint16 SkillAmount)
 uint16 CLuaBaseEntity::getMaxSkillLevel(uint8 level, uint8 jobId, uint8 skillId)
 {
     auto skill = static_cast<xi::SkillType>(skillId);
-    auto job   = static_cast<JOBTYPE>(jobId);
+    auto job   = static_cast<xi::Job>(jobId);
 
     return battleutils::GetMaxSkill(skill, job, level);
 }
@@ -11669,14 +11668,14 @@ bool CLuaBaseEntity::hasPartyJob(uint8 job)
     {
         if (auto* PTarget = dynamic_cast<CCharEntity*>(member))
         {
-            if (PTarget->GetMJob() == job)
+            if (static_cast<uint8>(PTarget->GetMJob()) == job)
             {
                 return true;
             }
 
             for (auto* PTrust : PTarget->PTrusts)
             {
-                if (PTrust->GetMJob() == job)
+                if (static_cast<uint8>(PTrust->GetMJob()) == job)
                 {
                     return true;
                 }
@@ -12910,7 +12909,7 @@ void CLuaBaseEntity::engage(uint16 requestedTarget)
     auto* PBattle = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (PBattle && requestedTarget > 0)
     {
-        PBattle->PAI->Engage(requestedTarget);
+        PBattle->PAI->Engage(EntityId(PBattle->GetEntity(requestedTarget)));
     }
 }
 
@@ -13629,7 +13628,7 @@ void CLuaBaseEntity::updateEnmity(CLuaBaseEntity* PEntity)
 
     if (PEntity != nullptr && PEntity->GetBaseEntity()->objtype != TYPE_NPC)
     {
-        m_PBaseEntity->PAI->Engage(PEntity->GetBaseEntity()->targid);
+        m_PBaseEntity->PAI->Engage(PEntity->GetBaseEntity()->entityId());
     }
 }
 
@@ -13930,7 +13929,7 @@ auto CLuaBaseEntity::getMasterThreatMob(const sol::object& rangeOverride) -> CBa
     }
 
     const auto maxDistance = rangeOverride.is<float>() ? rangeOverride.as<float>() : 22.0f;
-    auto*      PMastersTarget{ PMaster->GetEntity(PMaster->GetBattleTargetID()) };
+    auto*      PMastersTarget{ PMaster->battleTarget().resolve() };
 
     auto isMasterTopEnmityOnMob = [PMaster](CMobEntity* PMob) -> bool
     {
@@ -13976,7 +13975,7 @@ auto CLuaBaseEntity::getMasterThreatMob(const sol::object& rangeOverride) -> CBa
             continue;
         }
 
-        auto* PTarget            = PMob->GetEntity(PMob->GetBattleTargetID());
+        auto* PTarget            = PMob->battleTarget().resolve();
         bool  isTargetingMaster  = PTarget && PTarget->id == PMaster->id;
         bool  masterHasTopEnmity = isMasterTopEnmityOnMob(PMob);
 
@@ -14055,7 +14054,7 @@ auto CLuaBaseEntity::addStatusEffect(const xi::StatusEffect effectId, sol::table
 
     if (effectId == xi::StatusEffect::Food)
     {
-        if (const auto durationModifier = PBattleEntity->getMod(Mod::FOOD_DURATION))
+        if (const auto durationModifier = PBattleEntity->getMod(xi::Mod::FOOD_DURATION))
         {
             effectDuration += std::chrono::floor<std::chrono::milliseconds>(effectDuration * (durationModifier / 100.0f));
         }
@@ -14679,7 +14678,7 @@ void CLuaBaseEntity::addMod(uint16 type, int16 amount)
         return;
     }
 
-    PBattleEntity->addModifier(static_cast<Mod>(type), amount);
+    PBattleEntity->addModifier(static_cast<xi::Mod>(type), amount);
 }
 
 /************************************************************************
@@ -14702,7 +14701,7 @@ int16 CLuaBaseEntity::getMod(uint16 modID)
         return 0;
     }
 
-    return static_cast<CBattleEntity*>(m_PBaseEntity)->getMod(static_cast<Mod>(modID));
+    return static_cast<CBattleEntity*>(m_PBaseEntity)->getMod(static_cast<xi::Mod>(modID));
 }
 
 /************************************************************************
@@ -14725,7 +14724,7 @@ void CLuaBaseEntity::setMod(uint16 modID, int16 value)
         return;
     }
 
-    static_cast<CBattleEntity*>(m_PBaseEntity)->setModifier(static_cast<Mod>(modID), value);
+    static_cast<CBattleEntity*>(m_PBaseEntity)->setModifier(static_cast<xi::Mod>(modID), value);
 }
 
 /************************************************************************
@@ -14748,7 +14747,7 @@ void CLuaBaseEntity::delMod(uint16 modID, int16 value)
         return;
     }
 
-    static_cast<CBattleEntity*>(m_PBaseEntity)->delModifier(static_cast<Mod>(modID), value);
+    static_cast<CBattleEntity*>(m_PBaseEntity)->delModifier(static_cast<xi::Mod>(modID), value);
 }
 
 /************************************************************************
@@ -14769,7 +14768,7 @@ void CLuaBaseEntity::printAllMods()
     const auto longestEnumLength = [&]()
     {
         std::size_t longest = 0U;
-        for (auto modId : magic_enum::enum_values<Mod>())
+        for (auto modId : magic_enum::enum_values<xi::Mod>())
         {
             if (auto length = magic_enum::enum_name(modId).size(); length > longest)
             {
@@ -14781,7 +14780,7 @@ void CLuaBaseEntity::printAllMods()
 
     auto* PEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
     ShowInfo(fmt::format("{}'s ({}) mods:", PEntity->getName(), PEntity->id).c_str());
-    for (const auto& modId : magic_enum::enum_values<Mod>())
+    for (const auto& modId : magic_enum::enum_values<xi::Mod>())
     {
         if (const auto& value = PEntity->getMod(modId); value != 0)
         {
@@ -14805,7 +14804,7 @@ void CLuaBaseEntity::addLatent(uint16 condID, uint16 conditionValue, uint16 mID,
     }
 
     xi::Latent conditionID = static_cast<xi::Latent>(condID);
-    Mod        modID       = static_cast<Mod>(mID);
+    xi::Mod    modID       = static_cast<xi::Mod>(mID);
 
     static_cast<CCharEntity*>(m_PBaseEntity)->PLatentEffectContainer->AddLatentEffect(conditionID, conditionValue, modID, modValue);
 }
@@ -14826,7 +14825,7 @@ auto CLuaBaseEntity::delLatent(uint16 condID, uint16 conditionValue, uint16 mID,
     }
 
     xi::Latent conditionID = static_cast<xi::Latent>(condID);
-    Mod        modID       = static_cast<Mod>(mID);
+    xi::Mod    modID       = static_cast<xi::Mod>(mID);
 
     return static_cast<CCharEntity*>(m_PBaseEntity)->PLatentEffectContainer->DelLatentEffect(conditionID, conditionValue, modID, modValue);
 }
@@ -14856,7 +14855,7 @@ bool CLuaBaseEntity::hasAllLatentsActive(uint8 slot)
  *  Notes   :
  ************************************************************************/
 
-int16 CLuaBaseEntity::getMaxGearMod(Mod modId)
+int16 CLuaBaseEntity::getMaxGearMod(xi::Mod modId)
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -14865,7 +14864,7 @@ int16 CLuaBaseEntity::getMaxGearMod(Mod modId)
         return 0;
     }
 
-    return static_cast<CCharEntity*>(m_PBaseEntity)->getMaxGearMod(static_cast<Mod>(modId));
+    return static_cast<CCharEntity*>(m_PBaseEntity)->getMaxGearMod(static_cast<xi::Mod>(modId));
 }
 
 /************************************************************************
@@ -14874,7 +14873,7 @@ int16 CLuaBaseEntity::getMaxGearMod(Mod modId)
  *  Example : local maxValue = player:getMaxGearMod(xi.mod.GEOMANCY_BONUS)
  *  Notes   :
  ************************************************************************/
-int16 CLuaBaseEntity::getGearModFromSlot(uint8 slot, Mod modId)
+int16 CLuaBaseEntity::getGearModFromSlot(uint8 slot, xi::Mod modId)
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -15037,7 +15036,7 @@ auto CLuaBaseEntity::addBardSong(CLuaBaseEntity* PEntity, xi::StatusEffect effec
             maxSongs = 1;
         }
 
-        maxSongs += PCaster->getMod(Mod::MAXIMUM_SONGS_BONUS);
+        maxSongs += PCaster->getMod(xi::Mod::MAXIMUM_SONGS_BONUS);
     }
 
     return PBattle->StatusEffectContainer->ApplyBardEffect(PEffect, maxSongs);
@@ -15190,51 +15189,51 @@ uint16 CLuaBaseEntity::getStat(uint16 statId, sol::variadic_args va)
     auto*  PEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
     uint16 value   = 0;
 
-    switch (static_cast<Mod>(statId))
+    switch (static_cast<xi::Mod>(statId))
     {
-        case Mod::STR:
+        case xi::Mod::STR:
             value = PEntity->STR();
             break;
-        case Mod::DEX:
+        case xi::Mod::DEX:
             value = PEntity->DEX();
             break;
-        case Mod::VIT:
+        case xi::Mod::VIT:
             value = PEntity->VIT();
             break;
-        case Mod::AGI:
+        case xi::Mod::AGI:
             value = PEntity->AGI();
             break;
-        case Mod::INT:
+        case xi::Mod::INT:
             value = PEntity->INT();
             break;
-        case Mod::MND:
+        case xi::Mod::MND:
             value = PEntity->MND();
             break;
-        case Mod::CHR:
+        case xi::Mod::CHR:
             value = PEntity->CHR();
             break;
-        case Mod::ATT:
+        case xi::Mod::ATT:
         {
             SLOTTYPE weaponSlot = va[0].is<uint32>() ? va[0].as<SLOTTYPE>() : SLOTTYPE::SLOT_MAIN;
             value               = PEntity->ATT(weaponSlot);
         }
         break;
-        case Mod::ACC:
+        case xi::Mod::ACC:
         {
             uint8_t attackNumber = va[0].is<uint8>() ? va[0].as<uint8>() : 0;
             value                = PEntity->ACC(attackNumber, 0);
         }
         break;
-        case Mod::RATT:
+        case xi::Mod::RATT:
             value = PEntity->RATT();
             break;
-        case Mod::RACC:
+        case xi::Mod::RACC:
             value = PEntity->RACC();
             break;
-        case Mod::DEF:
+        case xi::Mod::DEF:
             value = PEntity->DEF();
             break;
-        case Mod::EVA:
+        case xi::Mod::EVA:
             value = PEntity->EVA();
             break;
         default:
@@ -16792,7 +16791,7 @@ void CLuaBaseEntity::addPetMod(uint16 modID, int16 amount)
         return;
     }
 
-    static_cast<CBattleEntity*>(m_PBaseEntity)->addPetModifier(static_cast<Mod>(modID), PetModType::All, amount);
+    static_cast<CBattleEntity*>(m_PBaseEntity)->addPetModifier(static_cast<xi::Mod>(modID), PetModType::All, amount);
 }
 
 /************************************************************************
@@ -16810,7 +16809,7 @@ void CLuaBaseEntity::setPetMod(uint16 modID, int16 amount)
         return;
     }
 
-    static_cast<CBattleEntity*>(m_PBaseEntity)->setPetModifier(static_cast<Mod>(modID), PetModType::All, amount);
+    static_cast<CBattleEntity*>(m_PBaseEntity)->setPetModifier(static_cast<xi::Mod>(modID), PetModType::All, amount);
 }
 
 /************************************************************************
@@ -16828,7 +16827,7 @@ void CLuaBaseEntity::delPetMod(uint16 modID, int16 amount)
         return;
     }
 
-    static_cast<CBattleEntity*>(m_PBaseEntity)->delPetModifier(static_cast<Mod>(modID), PetModType::All, amount);
+    static_cast<CBattleEntity*>(m_PBaseEntity)->delPetModifier(static_cast<xi::Mod>(modID), PetModType::All, amount);
 }
 
 /************************************************************************
@@ -18818,7 +18817,7 @@ auto CLuaBaseEntity::getTarget() -> CBaseEntity*
         return nullptr;
     }
 
-    auto* PBattleTarget{ m_PBaseEntity->GetEntity(static_cast<CBattleEntity*>(m_PBaseEntity)->GetBattleTargetID()) };
+    auto* PBattleTarget{ static_cast<CBattleEntity*>(m_PBaseEntity)->battleTarget().resolve() };
 
     if (PBattleTarget)
     {
@@ -18848,7 +18847,7 @@ void CLuaBaseEntity::updateTarget()
 
     if (PTarget)
     {
-        PMobEntity->PAI->ChangeTarget(PTarget->targid);
+        PMobEntity->PAI->ChangeTarget(PTarget->entityId());
     }
 }
 
@@ -18964,11 +18963,11 @@ void CLuaBaseEntity::castSpell(const sol::object& spell, const sol::object& enti
 
             if (targid)
             {
-                PEntity->PAI->Cast(targid, spellid);
+                PEntity->PAI->Cast(EntityId(PEntity->GetEntity(targid)), spellid);
             }
             else if (PMobEntity)
             {
-                PEntity->PAI->Cast(PMobEntity->GetBattleTargetID(), spellid);
+                PEntity->PAI->Cast(PMobEntity->battleTarget(), spellid);
             }
         }));
         // clang-format on
@@ -18998,24 +18997,24 @@ void CLuaBaseEntity::castSpell(const sol::object& spell, const sol::object& enti
 
 void CLuaBaseEntity::useJobAbility(uint16 skillID, const sol::object& pet)
 {
-    EntityID_t targetId{};
+    EntityId targetId{};
 
     if ((pet != sol::lua_nil) && pet.is<CLuaBaseEntity*>())
     {
         CLuaBaseEntity* PLuaBaseEntity = pet.as<CLuaBaseEntity*>();
-        targetId                       = EntityID_t(PLuaBaseEntity->m_PBaseEntity);
+        targetId                       = EntityId(PLuaBaseEntity->m_PBaseEntity);
     }
 
     // clang-format off
     m_PBaseEntity->PAI->QueueAction(queueAction_t(0ms, true, [targetId, skillID](auto PEntity)
     {
-        if (auto* PTarget = targetId.resolve<CBattleEntity>())
+        if (targetId.resolve<CBattleEntity>())
         {
-            PEntity->PAI->Ability(PTarget->targid, skillID);
+            PEntity->PAI->Ability(targetId, skillID);
         }
         else if (dynamic_cast<CMobEntity*>(PEntity))
         {
-            PEntity->PAI->Ability(static_cast<CMobEntity*>(PEntity)->GetBattleTargetID(), skillID);
+            PEntity->PAI->Ability(static_cast<CMobEntity*>(PEntity)->battleTarget(), skillID);
         }
     }));
     // clang-format on
@@ -19053,9 +19052,9 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
         return;
     }
 
-    auto       skillid{ va.get<uint16>(0) };
-    EntityID_t targetId{};
-    auto*      PMobSkill{ battleutils::GetMobSkill(skillid) };
+    auto     skillid{ va.get<uint16>(0) };
+    EntityId targetId{};
+    auto*    PMobSkill{ battleutils::GetMobSkill(skillid) };
 
     if (!PMobSkill)
     {
@@ -19065,7 +19064,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
     if (va.size() >= 2)
     {
         CLuaBaseEntity* PLuaBaseEntity = va.get<CLuaBaseEntity*>(1);
-        targetId                       = PLuaBaseEntity ? EntityID_t(PLuaBaseEntity->m_PBaseEntity) : EntityID_t{};
+        targetId                       = PLuaBaseEntity ? EntityId(PLuaBaseEntity->m_PBaseEntity) : EntityId{};
     }
 
     Maybe<timer::duration> castTimeOverride = std::nullopt;
@@ -19098,7 +19097,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
             float currentDistance = distance(mobObj->loc.p, PTarget->loc.p);
             if (ignoreDistance || currentDistance <= PMobSkill->getDistance())
             {
-                PEntity->PAI->MobSkill(PTarget->targid, skillid, castTimeOverride);
+                PEntity->PAI->MobSkill(targetId, skillid, castTimeOverride);
             }
         }
         // does not have a specified target so default to current battle target
@@ -19107,7 +19106,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
             // Self-centered AoE uses self as target
             if (PMobSkill->getAoe() == static_cast<uint8>(AOE_RADIUS::ATTACKER))
             {
-                PEntity->PAI->MobSkill(PEntity->targid, skillid, castTimeOverride);
+                PEntity->PAI->MobSkill(PEntity->entityId(), skillid, castTimeOverride);
             }
             else if (PMobSkill->getValidTargets() & TARGET_ENEMY)
             {
@@ -19118,13 +19117,13 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
                     float currentDistance = distance(mobObj->loc.p, defaultTarget->loc.p);
                     if (ignoreDistance || currentDistance <= PMobSkill->getDistance())
                     {
-                        PEntity->PAI->MobSkill(defaultTarget->targid, skillid, castTimeOverride);
+                        PEntity->PAI->MobSkill(defaultTarget->entityId(), skillid, castTimeOverride);
                     }
                 }
             }
             else if (PMobSkill->getValidTargets() & TARGET_SELF)
             {
-                PEntity->PAI->MobSkill(PEntity->targid, skillid, castTimeOverride);
+                PEntity->PAI->MobSkill(PEntity->entityId(), skillid, castTimeOverride);
             }
         }
     }));
@@ -19141,7 +19140,7 @@ void CLuaBaseEntity::useMobAbility(sol::variadic_args va)
 
 void CLuaBaseEntity::usePetAbility(uint16 skillId, const sol::object& target) const
 {
-    EntityID_t targetId{};
+    EntityId targetId{};
 
     // Don't queue an ability if we're not in auto attack state or no state
     if (!m_PBaseEntity->PAI->IsCurrentState<CAttackState>() && !m_PBaseEntity->PAI->IsStateStackEmpty())
@@ -19163,19 +19162,20 @@ void CLuaBaseEntity::usePetAbility(uint16 skillId, const sol::object& target) co
     if ((target != sol::lua_nil) && target.is<CLuaBaseEntity*>())
     {
         const auto* PLuaBaseEntity = target.as<CLuaBaseEntity*>();
-        targetId                   = EntityID_t(PLuaBaseEntity->m_PBaseEntity);
+        targetId                   = EntityId(PLuaBaseEntity->m_PBaseEntity);
     }
 
     // clang-format off
     m_PBaseEntity->PAI->QueueAction(queueAction_t(0ms, true, [targetId, skillId](auto PEntity)
     {
-        if (auto* PTarget = targetId.resolve<CBattleEntity>())
+        // TODO: Is the resolution here relevant?
+        if (targetId.resolve<CBattleEntity>())
         {
-            PEntity->PAI->PetSkill(PTarget->targid, skillId);
+            PEntity->PAI->PetSkill(targetId, skillId);
         }
         else if (dynamic_cast<CMobEntity*>(PEntity))
         {
-            PEntity->PAI->PetSkill(static_cast<CMobEntity*>(PEntity)->GetBattleTargetID(), skillId);
+            PEntity->PAI->PetSkill(static_cast<CMobEntity*>(PEntity)->battleTarget(), skillId);
         }
     }));
     // clang-format on

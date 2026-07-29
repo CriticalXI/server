@@ -320,7 +320,7 @@ CCharStatusPacket::CCharStatusPacket(CCharEntity* PChar)
     flags4.GeoIndiElement = 0;
     flags4.GeoIndiSize    = 1;
     flags4.GeoIndiFlag    = 0;
-    flags4.JobMasterFlag  = PChar->getMod(Mod::SUPERIOR_LEVEL) == 5 && PChar->m_jobMasterDisplay;
+    flags4.JobMasterFlag  = PChar->getMod(xi::Mod::SUPERIOR_LEVEL) == 5 && PChar->m_jobMasterDisplay;
 
     // GEO bubble effects, changes bubble effect depending on what effect is activated.
     if (PChar->StatusEffectContainer->HasStatusEffect(xi::StatusEffect::ColureActive))
@@ -354,7 +354,7 @@ CCharStatusPacket::CCharStatusPacket(CCharEntity* PChar)
         packet->monstrosity_name_id2 = PChar->m_PMonstrosity->NamePrefix2;
 
         // Sword & Shield icon only shows outside of the Feretory
-        if (PChar->m_PMonstrosity->Belligerency && PChar->loc.zone->GetID() != ZONE_FERETORY)
+        if (PChar->m_PMonstrosity->Belligerency && PChar->loc.zone->GetID() != xi::ZoneId::Feretory)
         {
             packet->Flags2.BallistaFlg |= 0x08; // 0x18?
         }

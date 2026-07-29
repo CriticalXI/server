@@ -1486,6 +1486,7 @@ INSERT INTO `mob_skill_lists` VALUES ('WarlordRojgnojOrc',334,607);
 INSERT INTO `mob_skill_lists` VALUES ('WarlordRojgnojOrc',334,608);
 INSERT INTO `mob_skill_lists` VALUES ('WarlordRojgnojOrc',334,609);
 INSERT INTO `mob_skill_lists` VALUES ('WarlordRojgnojOrc',334,1066);
+INSERT INTO `mob_skill_lists` VALUES ('WarlordRojgnojOrc',334,766);
 INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1028);
 INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1033);
 INSERT INTO `mob_skill_lists` VALUES ('Maat',335,1034);
@@ -3384,8 +3385,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Flame_Skimmer',997,659); -- cuirsed_spher
 INSERT INTO `mob_skill_lists` VALUES ('Flame_Skimmer',997,660); -- venom
 -- INSERT INTO `mob_skill_lists` VALUES ('Flame_Skimmer',997,1624); -- debilitating_drone
 INSERT INTO `mob_skill_lists` VALUES ('Hovering_Hotpot',998,521); -- spinning attack
-INSERT INTO `mob_skill_lists` VALUES ('Suparna',999,923);
-INSERT INTO `mob_skill_lists` VALUES ('Suparna',999,924);
+-- 999: free
 INSERT INTO `mob_skill_lists` VALUES ('Chariot_Armed',1000,2060); -- brainjack
 INSERT INTO `mob_skill_lists` VALUES ('Chariot_Battle',1001,2059); -- discoid
 INSERT INTO `mob_skill_lists` VALUES ('Chariot_Armored',1002,2054); -- diffusion ray
@@ -4359,7 +4359,12 @@ INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2100,251); -- aegis_s
 INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2100,252); -- dancing_chains
 INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2100,253); -- barbed_crescent
 
--- Next ID : 2101
+INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2101,668); -- kick_back
+INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2101,671); -- umbra_smash
+INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2101,672); -- giga_slash
+INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2101,673); -- dark_nova
+
+-- Next ID : 2102
 -- ------------------------------------------------------------
 -- Start of Ambuscade section
 -- NOTE: The mobs are changed every update in the DATs, so using out-of-date

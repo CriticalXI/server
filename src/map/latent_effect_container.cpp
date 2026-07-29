@@ -96,12 +96,12 @@ bool CLatentEffectContainer::HasAllLatentsActive(uint8 slot)
     return allActive;
 }
 
-void CLatentEffectContainer::AddLatentEffect(xi::Latent conditionID, uint16 conditionValue, Mod modID, int16 modValue)
+void CLatentEffectContainer::AddLatentEffect(xi::Latent conditionID, uint16 conditionValue, xi::Mod modID, int16 modValue)
 {
     m_LatentEffectList.emplace_back(m_POwner, conditionID, conditionValue, MAX_SLOTTYPE, modID, modValue);
 }
 
-auto CLatentEffectContainer::DelLatentEffect(xi::Latent conditionID, uint16 conditionValue, Mod modID, int16 modValue) -> bool
+auto CLatentEffectContainer::DelLatentEffect(xi::Latent conditionID, uint16 conditionValue, xi::Mod modID, int16 modValue) -> bool
 {
     // Find and remove the first instance of the latent matching the parameters
     for (auto iter = m_LatentEffectList.begin(); iter != m_LatentEffectList.end(); ++iter)
@@ -697,8 +697,8 @@ void CLatentEffectContainer::CheckLatentsZone()
  ************************************************************************/
 void CLatentEffectContainer::CheckLatentsWeather()
 {
-    uint16 zoneId = m_POwner->getZone();
-    CZone* PZone  = zoneutils::GetZone(zoneId);
+    const auto zoneId = m_POwner->getZone();
+    CZone*     PZone  = zoneutils::GetZone(zoneId);
 
     if (PZone == nullptr)
     {
@@ -784,8 +784,8 @@ auto CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bo
     }
 
     // this gets the current zone ID or destination zone ID if zoning
-    uint16 playerZoneID = m_POwner->getZone();
-    if (playerZoneID == 0)
+    const auto playerZoneID = m_POwner->getZone();
+    if (playerZoneID == xi::ZoneId::Unknown)
     {
         return false;
     }
@@ -820,7 +820,7 @@ auto CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bo
             expression = m_POwner->health.tp > latentEffect.GetConditionsValue();
             break;
         case xi::Latent::Subjob:
-            expression = m_POwner->GetSJob() == latentEffect.GetConditionsValue();
+            expression = static_cast<uint8>(m_POwner->GetSJob()) == latentEffect.GetConditionsValue();
             break;
         case xi::Latent::PetId:
             expression =
@@ -955,7 +955,7 @@ auto CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bo
                 {
                     if (member->id != m_POwner->id)
                     {
-                        if (member->GetMJob() == latentEffect.GetConditionsValue())
+                        if (static_cast<uint8>(member->GetMJob()) == latentEffect.GetConditionsValue())
                         {
                             expression = true;
                             break;
@@ -973,7 +973,7 @@ auto CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bo
 
                 for (auto* trust : leader->PTrusts)
                 {
-                    if (trust->GetMJob() == latentEffect.GetConditionsValue())
+                    if (static_cast<uint8>(trust->GetMJob()) == latentEffect.GetConditionsValue())
                     {
                         expression = true;
                         break;
@@ -982,7 +982,7 @@ auto CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bo
             }
             break;
         case xi::Latent::Zone:
-            expression = latentEffect.GetConditionsValue() == m_POwner->getZone();
+            expression = latentEffect.GetConditionsValue() == static_cast<uint16>(m_POwner->getZone());
             break;
         case xi::Latent::SynthTrainee:
         {
@@ -1323,7 +1323,7 @@ auto CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bo
             }
             break;
         case xi::Latent::Mainjob:
-            expression = m_POwner->GetMJob() == latentEffect.GetConditionsValue();
+            expression = static_cast<uint8>(m_POwner->GetMJob()) == latentEffect.GetConditionsValue();
             break;
         case xi::Latent::EquippedInSlot:
             expression = latentEffect.GetSlot() == latentEffect.GetConditionsValue();

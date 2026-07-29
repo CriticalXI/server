@@ -46,6 +46,7 @@
 #include <map/lua/lua_spell.h>
 #include <map/lua/lua_statuseffect.h>
 #include <map/lua/lua_trade_container.h>
+#include <map/lua/lua_trait.h>
 #include <map/lua/lua_treasure_pool.h>
 #include <map/lua/lua_trigger_area.h>
 #include <map/lua/lua_weaponskill.h>
@@ -377,6 +378,7 @@ void init(IPP mapIPP, bool isRunningInCI)
     CLuaSpell::Register();
     CLuaStatusEffect::Register();
     CLuaTradeContainer::Register();
+    CLuaTrait::Register();
     CLuaTreasurePool::Register();
     CLuaZone::Register();
     CLuaItem::Register();
@@ -1142,7 +1144,7 @@ void LoadExpDifficultyCurves(const sol::table& expToDifficultyTable, const uint8
     charutils::SetExpDifficultyCurve(expDifficultyTable, iep);
 }
 
-void PopulateIDLookups(uint16 zoneId, const std::string& zoneName)
+void PopulateIDLookups(const xi::ZoneId zoneId, const std::string& zoneName)
 {
     TracyZoneScoped;
 
@@ -1311,18 +1313,18 @@ void PopulateIDLookupsByFilename(Maybe<std::string> maybeFilename)
 
     const auto handleZone = [&](const std::string& zoneName)
     {
-        uint16 zoneId = [&]() -> uint16
+        const auto zoneId = [&]() -> xi::ZoneId
         {
             const auto rset = db::preparedStmt("SELECT zoneid FROM zone_settings WHERE name = ? LIMIT 1", zoneName);
             if (rset && rset->rowsCount())
             {
                 if (rset->next())
                 {
-                    return rset->get<uint16>("zoneid");
+                    return rset->get<xi::ZoneId>("zoneid");
                 }
             }
 
-            return 0;
+            return xi::ZoneId::Unknown;
         }();
 
         PopulateIDLookups(zoneId, zoneName);
@@ -1352,7 +1354,7 @@ void PopulateIDLookupsByFilename(Maybe<std::string> maybeFilename)
     }
 }
 
-void PopulateIDLookupsByZone(Maybe<uint16> maybeZoneId)
+void PopulateIDLookupsByZone(Maybe<xi::ZoneId> maybeZoneId)
 {
     TracyZoneScoped;
 
@@ -1477,7 +1479,7 @@ void InitInteractionGlobal()
     }
 }
 
-CZone* GetZone(uint16 zoneId)
+auto GetZone(const xi::ZoneId zoneId) -> CZone*
 {
     TracyZoneScoped;
 
@@ -1574,22 +1576,35 @@ uint8 GetNationRank(uint8 nation)
 {
     TracyZoneScoped;
 
-    uint8 balance = conquest::GetBalance();
+    const uint8 balance  = conquest::GetBalance();
+    const uint8 sandoria = balance & 0x3U;
+    const uint8 bastok   = (balance >> 2) & 0x3U;
+    const uint8 windurst = (balance >> 4) & 0x3U;
+
+    uint8 rank = 0;
     switch (nation)
     {
         case NATION_SANDORIA:
-            balance &= 0x3U;
-            return balance;
+            rank = sandoria;
+            break;
         case NATION_BASTOK:
-            balance &= 0xCU;
-            balance >>= 2;
-            return balance;
+            rank = bastok;
+            break;
         case NATION_WINDURST:
-            balance >>= 4;
-            return balance;
+            rank = windurst;
+            break;
         default:
             return 0;
     }
+
+    // If two nations are tied for first, they are both read as second.
+    // If all three nations are tied for first, they all register as third.
+    if (rank == 1)
+    {
+        rank = static_cast<uint8>((sandoria == 1) + (bastok == 1) + (windurst == 1));
+    }
+
+    return rank;
 }
 
 uint8 GetConquestBalance()
@@ -1619,7 +1634,7 @@ void SetRegionalConquestOverseers(uint8 regionID)
     callGlobal<void>("xi.conquest.setRegionalConquestOverseers", regionID);
 }
 
-void SendLuaFuncStringToZone(uint16 requestingZoneId, uint16 executorZoneId, const std::string& str)
+void SendLuaFuncStringToZone(const xi::ZoneId requestingZoneId, const xi::ZoneId executorZoneId, const std::string& str)
 {
     message::send(ipc::LuaFunction{
         .requesterZoneId = requestingZoneId,
@@ -2136,7 +2151,7 @@ void SendToJailOffline(uint32 playerId, int8 cellId, float posX, float posY, flo
                      posY,
                      posZ,
                      rot,
-                     ZONEID::ZONE_MORDION_GAOL,
+                     xi::ZoneId::MordionGaol,
                      playerId);
 }
 
@@ -2161,11 +2176,11 @@ void DrawIn(CLuaBaseEntity* PLuaBaseEntity, const sol::table& table, float offse
  *                                                                       *
  ************************************************************************/
 
-int32 GetTextIDVariable(uint16 ZoneID, const char* variable)
+auto GetTextIDVariable(const xi::ZoneId ZoneID, const char* variable) -> int32
 {
     TracyZoneScoped;
 
-    return lua["zones"][ZoneID]["text"][variable].get_or(0);
+    return lua["zones"][static_cast<uint16>(ZoneID)]["text"][variable].get_or(0);
 }
 
 /************************************************************************
@@ -2198,7 +2213,7 @@ bool IsContentEnabled(const std::string& contentTag)
     return true;
 }
 
-void OnZoneInitialize(uint16 ZoneID)
+void OnZoneInitialize(const xi::ZoneId ZoneID)
 {
     TracyZoneScoped;
 
@@ -4056,7 +4071,7 @@ void OnGameHour(CZone* PZone)
     }
 }
 
-void OnZoneWeatherChange(const uint16 zoneId, xi::Weather weather)
+void OnZoneWeatherChange(const xi::ZoneId zoneId, xi::Weather weather)
 {
     TracyZoneScoped;
 
@@ -4083,7 +4098,7 @@ void OnZoneWeatherChange(const uint16 zoneId, xi::Weather weather)
     }
 }
 
-void OnTOTDChange(uint16 ZoneID, uint8 TOTD)
+void OnTOTDChange(const xi::ZoneId ZoneID, const uint8 TOTD)
 {
     TracyZoneScoped;
 
@@ -4633,7 +4648,7 @@ int32 OnPetAbility(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill
         if (PPet->getPetType() == PET_TYPE::AVATAR && PPet->PMaster->objtype == TYPE_PC)
         {
             CCharEntity* PMaster = (CCharEntity*)PPet->PMaster;
-            if (PMaster->GetMJob() == JOB_SMN)
+            if (PMaster->GetMJob() == xi::Job::SMN)
             {
                 charutils::TrySkillUP(PMaster, xi::SkillType::SummoningMagic, PMaster->GetMLevel());
             }
@@ -4666,7 +4681,7 @@ int32 OnPetAbility(CBaseEntity* PTarget, CPetEntity* PPet, CPetSkill* PPetSkill,
     if (PPet->getPetType() == PET_TYPE::AVATAR && PPet->PMaster->objtype == TYPE_PC)
     {
         CCharEntity* PMaster = (CCharEntity*)PPet->PMaster;
-        if (PMaster->GetMJob() == JOB_SMN)
+        if (PMaster->GetMJob() == xi::Job::SMN)
         {
             charutils::TrySkillUP(PMaster, xi::SkillType::SummoningMagic, PMaster->GetMLevel());
         }
@@ -4847,7 +4862,7 @@ void AfterInstanceRegister(CBaseEntity* PChar)
     }
 }
 
-int32 OnInstanceLoadFailed(CZone* PZone)
+auto OnInstanceLoadFailed(CZone* PZone) -> xi::ZoneId
 {
     TracyZoneScoped;
 
@@ -4856,7 +4871,7 @@ int32 OnInstanceLoadFailed(CZone* PZone)
     auto onInstanceLoadFailed = lua["xi"]["zones"][name]["Zone"]["onInstanceLoadFailed"];
     if (!onInstanceLoadFailed.valid())
     {
-        return -1;
+        return ZONE_NO_DESTINATION;
     }
 
     auto result = onInstanceLoadFailed();
@@ -4864,10 +4879,10 @@ int32 OnInstanceLoadFailed(CZone* PZone)
     {
         sol::error err = result;
         ShowError("luautils::onInstanceLoadFailed %s", err.what());
-        return 0;
+        return xi::ZoneId::Unknown;
     }
 
-    return result.get_type(0) == sol::type::number ? result.get<int32>(0) : 0;
+    return result.get_type(0) == sol::type::number ? result.get<xi::ZoneId>(0) : xi::ZoneId::Unknown;
 }
 
 void OnInstanceTimeUpdate(CZone* PZone, CInstance* PInstance, uint32 time)
@@ -5096,7 +5111,7 @@ void ClearCharVarFromAll(const std::string& varName)
     charutils::ClearCharVarFromAll(varName);
 }
 
-void OnTransportEvent(CCharEntity* PChar, uint16 prevZoneId, uint16 transportId)
+void OnTransportEvent(CCharEntity* PChar, xi::ZoneId prevZoneId, uint16 transportId)
 {
     TracyZoneScoped;
 
@@ -5838,7 +5853,7 @@ CBaseEntity* GenerateDynamicEntity(CZone* PZone, CInstance* PInstance, sol::tabl
     else
     {
         auto groupId     = table.get_or<uint32>("groupId", 0);
-        auto groupZoneId = table.get_or<uint32>("groupZoneId", 0);
+        auto groupZoneId = static_cast<xi::ZoneId>(table.get_or<uint32>("groupZoneId", 0));
 
         PEntity = mobutils::InstantiateDynamicMob(groupId, groupZoneId, PZone->GetID());
     }
@@ -6102,7 +6117,7 @@ void InitializeFishingContestSystem()
 {
     // IMPORTANT: This should only be called on the Zone Init in Selbina
     // Do not run this from multiple server instances
-    if (g_PZoneList[ZONEID::ZONE_SELBINA] != nullptr)
+    if (g_PZoneList[xi::ZoneId::Selbina] != nullptr)
     {
         fishingcontest::InitializeFishingContestSystem();
     }

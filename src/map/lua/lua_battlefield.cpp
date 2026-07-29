@@ -48,7 +48,7 @@ uint16 CLuaBattlefield::getID()
     return m_PLuaBattlefield->GetID();
 }
 
-uint16 CLuaBattlefield::getZoneID()
+auto CLuaBattlefield::getZoneID() -> xi::ZoneId
 {
     return m_PLuaBattlefield->GetZoneID();
 }
@@ -568,7 +568,7 @@ void CLuaBattlefield::addGroups(const sol::table& groups, bool hasMultipleArenas
 
                 for (const auto& modifier : mods.get<sol::table>())
                 {
-                    PMob->setModifier(modifier.first.as<Mod>(), modifier.second.as<uint16>());
+                    PMob->setModifier(modifier.first.as<xi::Mod>(), modifier.second.as<uint16>());
                 }
                 PMob->saveModifiers();
             }

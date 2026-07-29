@@ -155,7 +155,7 @@ uint16 GetBaseWeaponDamage(CMobEntity* PMob, uint16 slot)
 
     // Normal mobs in beginner zones have the offset lowered by 1.
     // Excluded NMs for now for things like Voidwatch Mobs.
-    if (mobZoneId != 0 && PMob->m_Type != xi::MobType::Notorious && (mobZoneId == ZONE_WEST_RONFAURE || mobZoneId == ZONE_EAST_RONFAURE || mobZoneId == ZONE_NORTH_GUSTABERG || mobZoneId == ZONE_SOUTH_GUSTABERG || mobZoneId == ZONE_WEST_SARUTABARUTA || mobZoneId == ZONE_EAST_SARUTABARUTA))
+    if (mobZoneId != xi::ZoneId::Unknown && PMob->m_Type != xi::MobType::Notorious && (mobZoneId == xi::ZoneId::WestRonfaure || mobZoneId == xi::ZoneId::EastRonfaure || mobZoneId == xi::ZoneId::NorthGustaberg || mobZoneId == xi::ZoneId::SouthGustaberg || mobZoneId == xi::ZoneId::WestSarutabaruta || mobZoneId == xi::ZoneId::EastSarutabaruta))
     {
         offset -= 1;
         rangedOffset -= 1;
@@ -186,15 +186,15 @@ uint16 GetBaseSkill(CMobEntity* PMob, uint8 rank)
     switch (rank)
     {
         case 1:
-            return battleutils::GetMaxSkill(xi::SkillType::GreatAxe, JOB_WAR, mlvl); // A+ Skill (1)
+            return battleutils::GetMaxSkill(xi::SkillType::GreatAxe, xi::Job::WAR, mlvl); // A+ Skill (1)
         case 2:
-            return battleutils::GetMaxSkill(xi::SkillType::Staff, JOB_WAR, mlvl); // B Skill (2)
+            return battleutils::GetMaxSkill(xi::SkillType::Staff, xi::Job::WAR, mlvl); // B Skill (2)
         case 3:
-            return battleutils::GetMaxSkill(xi::SkillType::Evasion, JOB_WAR, mlvl); // C Skill (3)
+            return battleutils::GetMaxSkill(xi::SkillType::Evasion, xi::Job::WAR, mlvl); // C Skill (3)
         case 4:
-            return battleutils::GetMaxSkill(xi::SkillType::Archery, JOB_WAR, mlvl); // D Skill (4)
+            return battleutils::GetMaxSkill(xi::SkillType::Archery, xi::Job::WAR, mlvl); // D Skill (4)
         case 5:
-            return battleutils::GetMaxSkill(xi::SkillType::Throwing, JOB_MNK, mlvl); // E Skill (5)
+            return battleutils::GetMaxSkill(xi::SkillType::Throwing, xi::Job::MNK, mlvl); // E Skill (5)
     }
 
     ShowError("mobutils::GetBaseSkill rank (%d) is out of bounds for mob (%u) ", rank, PMob->id);
@@ -453,101 +453,101 @@ uint16 GetSubJobStats(uint8 rank, uint16 level, uint16 stat)
  ************************************************************************/
 bool CheckSubJobZone(CMobEntity* PMob)
 {
-    auto zoneId = PMob->getZone();
-    if (zoneId != 0 && (zoneId == ZONE_WEST_RONFAURE ||
-                        zoneId == ZONE_EAST_RONFAURE ||
-                        zoneId == ZONE_LA_THEINE_PLATEAU ||
-                        zoneId == ZONE_VALKURM_DUNES ||
-                        zoneId == ZONE_JUGNER_FOREST ||
-                        zoneId == ZONE_BATALLIA_DOWNS ||
-                        zoneId == ZONE_NORTH_GUSTABERG ||
-                        zoneId == ZONE_SOUTH_GUSTABERG ||
-                        zoneId == ZONE_KONSCHTAT_HIGHLANDS ||
-                        zoneId == ZONE_PASHHOW_MARSHLANDS ||
-                        zoneId == ZONE_ROLANBERRY_FIELDS ||
-                        zoneId == ZONE_BEAUCEDINE_GLACIER ||
-                        zoneId == ZONE_XARCABARD ||
-                        zoneId == ZONE_CAPE_TERIGGAN ||
-                        zoneId == ZONE_EASTERN_ALTEPA_DESERT ||
-                        zoneId == ZONE_WEST_SARUTABARUTA ||
-                        zoneId == ZONE_EAST_SARUTABARUTA ||
-                        zoneId == ZONE_TAHRONGI_CANYON ||
-                        zoneId == ZONE_BUBURIMU_PENINSULA ||
-                        zoneId == ZONE_MERIPHATAUD_MOUNTAINS ||
-                        zoneId == ZONE_SAUROMUGUE_CHAMPAIGN ||
-                        zoneId == ZONE_THE_SANCTUARY_OF_ZITAH ||
-                        zoneId == ZONE_ROMAEVE ||
-                        zoneId == ZONE_YUHTUNGA_JUNGLE ||
-                        zoneId == ZONE_YHOATOR_JUNGLE ||
-                        zoneId == ZONE_WESTERN_ALTEPA_DESERT ||
-                        zoneId == ZONE_QUFIM_ISLAND ||
-                        zoneId == ZONE_BEHEMOTHS_DOMINION ||
-                        zoneId == ZONE_VALLEY_OF_SORROWS ||
-                        zoneId == ZONE_HORLAIS_PEAK ||
-                        zoneId == ZONE_GHELSBA_OUTPOST ||
-                        zoneId == ZONE_FORT_GHELSBA ||
-                        zoneId == ZONE_YUGHOTT_GROTTO ||
-                        zoneId == ZONE_PALBOROUGH_MINES ||
-                        zoneId == ZONE_WAUGHROON_SHRINE ||
-                        zoneId == ZONE_GIDDEUS ||
-                        zoneId == ZONE_BALGAS_DAIS ||
-                        zoneId == ZONE_BEADEAUX ||
-                        zoneId == ZONE_QULUN_DOME ||
-                        zoneId == ZONE_DAVOI ||
-                        zoneId == ZONE_MONASTIC_CAVERN ||
-                        zoneId == ZONE_CASTLE_OZTROJA ||
-                        zoneId == ZONE_ALTAR_ROOM ||
-                        zoneId == ZONE_THE_BOYAHDA_TREE ||
-                        zoneId == ZONE_DRAGONS_AERY ||
-                        zoneId == ZONE_MIDDLE_DELKFUTTS_TOWER ||
-                        zoneId == ZONE_UPPER_DELKFUTTS_TOWER ||
-                        zoneId == ZONE_TEMPLE_OF_UGGALEPIH ||
-                        zoneId == ZONE_DEN_OF_RANCOR ||
-                        zoneId == ZONE_CASTLE_ZVAHL_BAILEYS ||
-                        zoneId == ZONE_CASTLE_ZVAHL_KEEP ||
-                        zoneId == ZONE_SACRIFICIAL_CHAMBER ||
-                        zoneId == ZONE_THRONE_ROOM ||
-                        zoneId == ZONE_RANGUEMONT_PASS ||
-                        zoneId == ZONE_BOSTAUNIEUX_OUBLIETTE ||
-                        zoneId == ZONE_CHAMBER_OF_ORACLES ||
-                        zoneId == ZONE_TORAIMARAI_CANAL ||
-                        zoneId == ZONE_FULL_MOON_FOUNTAIN ||
-                        zoneId == ZONE_ZERUHN_MINES ||
-                        zoneId == ZONE_KORROLOKA_TUNNEL ||
-                        zoneId == ZONE_KUFTAL_TUNNEL ||
-                        zoneId == ZONE_SEA_SERPENT_GROTTO ||
-                        zoneId == ZONE_VELUGANNON_PALACE ||
-                        zoneId == ZONE_THE_SHRINE_OF_RUAVITAU ||
-                        zoneId == ZONE_STELLAR_FULCRUM ||
-                        zoneId == ZONE_LALOFF_AMPHITHEATER ||
-                        zoneId == ZONE_THE_CELESTIAL_NEXUS ||
-                        zoneId == ZONE_LOWER_DELKFUTTS_TOWER ||
-                        zoneId == ZONE_KING_RANPERRES_TOMB ||
-                        zoneId == ZONE_DANGRUF_WADI ||
-                        zoneId == ZONE_INNER_HORUTOTO_RUINS ||
-                        zoneId == ZONE_ORDELLES_CAVES ||
-                        zoneId == ZONE_OUTER_HORUTOTO_RUINS ||
-                        zoneId == ZONE_THE_ELDIEME_NECROPOLIS ||
-                        zoneId == ZONE_GUSGEN_MINES ||
-                        zoneId == ZONE_CRAWLERS_NEST ||
-                        zoneId == ZONE_MAZE_OF_SHAKHRAMI ||
-                        zoneId == ZONE_GARLAIGE_CITADEL ||
-                        zoneId == ZONE_CLOISTER_OF_GALES ||
-                        zoneId == ZONE_CLOISTER_OF_STORMS ||
-                        zoneId == ZONE_CLOISTER_OF_FROST ||
-                        zoneId == ZONE_FEIYIN ||
-                        zoneId == ZONE_IFRITS_CAULDRON ||
-                        zoneId == ZONE_QUBIA_ARENA ||
-                        zoneId == ZONE_CLOISTER_OF_FLAMES ||
-                        zoneId == ZONE_QUICKSAND_CAVES ||
-                        zoneId == ZONE_CLOISTER_OF_TREMORS ||
-                        zoneId == ZONE_CLOISTER_OF_TIDES ||
-                        zoneId == ZONE_GUSTAV_TUNNEL ||
-                        zoneId == ZONE_LABYRINTH_OF_ONZOZO ||
-                        zoneId == ZONE_SHIP_BOUND_FOR_SELBINA ||
-                        zoneId == ZONE_SHIP_BOUND_FOR_MHAURA ||
-                        zoneId == ZONE_SHIP_BOUND_FOR_SELBINA_PIRATES ||
-                        zoneId == ZONE_SHIP_BOUND_FOR_MHAURA_PIRATES))
+    const auto zoneId = PMob->getZone();
+    if (zoneId != xi::ZoneId::Unknown && (zoneId == xi::ZoneId::WestRonfaure ||
+                                          zoneId == xi::ZoneId::EastRonfaure ||
+                                          zoneId == xi::ZoneId::LaTheinePlateau ||
+                                          zoneId == xi::ZoneId::ValkurmDunes ||
+                                          zoneId == xi::ZoneId::JugnerForest ||
+                                          zoneId == xi::ZoneId::BatalliaDowns ||
+                                          zoneId == xi::ZoneId::NorthGustaberg ||
+                                          zoneId == xi::ZoneId::SouthGustaberg ||
+                                          zoneId == xi::ZoneId::KonschtatHighlands ||
+                                          zoneId == xi::ZoneId::PashhowMarshlands ||
+                                          zoneId == xi::ZoneId::RolanberryFields ||
+                                          zoneId == xi::ZoneId::BeaucedineGlacier ||
+                                          zoneId == xi::ZoneId::Xarcabard ||
+                                          zoneId == xi::ZoneId::CapeTeriggan ||
+                                          zoneId == xi::ZoneId::EasternAltepaDesert ||
+                                          zoneId == xi::ZoneId::WestSarutabaruta ||
+                                          zoneId == xi::ZoneId::EastSarutabaruta ||
+                                          zoneId == xi::ZoneId::TahrongiCanyon ||
+                                          zoneId == xi::ZoneId::BuburimuPeninsula ||
+                                          zoneId == xi::ZoneId::MeriphataudMountains ||
+                                          zoneId == xi::ZoneId::SauromugueChampaign ||
+                                          zoneId == xi::ZoneId::TheSanctuaryOfZitah ||
+                                          zoneId == xi::ZoneId::Romaeve ||
+                                          zoneId == xi::ZoneId::YuhtungaJungle ||
+                                          zoneId == xi::ZoneId::YhoatorJungle ||
+                                          zoneId == xi::ZoneId::WesternAltepaDesert ||
+                                          zoneId == xi::ZoneId::QufimIsland ||
+                                          zoneId == xi::ZoneId::BehemothsDominion ||
+                                          zoneId == xi::ZoneId::ValleyOfSorrows ||
+                                          zoneId == xi::ZoneId::HorlaisPeak ||
+                                          zoneId == xi::ZoneId::GhelsbaOutpost ||
+                                          zoneId == xi::ZoneId::FortGhelsba ||
+                                          zoneId == xi::ZoneId::YughottGrotto ||
+                                          zoneId == xi::ZoneId::PalboroughMines ||
+                                          zoneId == xi::ZoneId::WaughroonShrine ||
+                                          zoneId == xi::ZoneId::Giddeus ||
+                                          zoneId == xi::ZoneId::BalgasDais ||
+                                          zoneId == xi::ZoneId::Beadeaux ||
+                                          zoneId == xi::ZoneId::QulunDome ||
+                                          zoneId == xi::ZoneId::Davoi ||
+                                          zoneId == xi::ZoneId::MonasticCavern ||
+                                          zoneId == xi::ZoneId::CastleOztroja ||
+                                          zoneId == xi::ZoneId::AltarRoom ||
+                                          zoneId == xi::ZoneId::TheBoyahdaTree ||
+                                          zoneId == xi::ZoneId::DragonsAery ||
+                                          zoneId == xi::ZoneId::MiddleDelkfuttsTower ||
+                                          zoneId == xi::ZoneId::UpperDelkfuttsTower ||
+                                          zoneId == xi::ZoneId::TempleOfUggalepih ||
+                                          zoneId == xi::ZoneId::DenOfRancor ||
+                                          zoneId == xi::ZoneId::CastleZvahlBaileys ||
+                                          zoneId == xi::ZoneId::CastleZvahlKeep ||
+                                          zoneId == xi::ZoneId::SacrificialChamber ||
+                                          zoneId == xi::ZoneId::ThroneRoom ||
+                                          zoneId == xi::ZoneId::RanguemontPass ||
+                                          zoneId == xi::ZoneId::BostaunieuxOubliette ||
+                                          zoneId == xi::ZoneId::ChamberOfOracles ||
+                                          zoneId == xi::ZoneId::ToraimaraiCanal ||
+                                          zoneId == xi::ZoneId::FullMoonFountain ||
+                                          zoneId == xi::ZoneId::ZeruhnMines ||
+                                          zoneId == xi::ZoneId::KorrolokaTunnel ||
+                                          zoneId == xi::ZoneId::KuftalTunnel ||
+                                          zoneId == xi::ZoneId::SeaSerpentGrotto ||
+                                          zoneId == xi::ZoneId::VelugannonPalace ||
+                                          zoneId == xi::ZoneId::TheShrineOfRuavitau ||
+                                          zoneId == xi::ZoneId::StellarFulcrum ||
+                                          zoneId == xi::ZoneId::LaloffAmphitheater ||
+                                          zoneId == xi::ZoneId::TheCelestialNexus ||
+                                          zoneId == xi::ZoneId::LowerDelkfuttsTower ||
+                                          zoneId == xi::ZoneId::KingRanperresTomb ||
+                                          zoneId == xi::ZoneId::DangrufWadi ||
+                                          zoneId == xi::ZoneId::InnerHorutotoRuins ||
+                                          zoneId == xi::ZoneId::OrdellesCaves ||
+                                          zoneId == xi::ZoneId::OuterHorutotoRuins ||
+                                          zoneId == xi::ZoneId::TheEldiemeNecropolis ||
+                                          zoneId == xi::ZoneId::GusgenMines ||
+                                          zoneId == xi::ZoneId::CrawlersNest ||
+                                          zoneId == xi::ZoneId::MazeOfShakhrami ||
+                                          zoneId == xi::ZoneId::GarlaigeCitadel ||
+                                          zoneId == xi::ZoneId::CloisterOfGales ||
+                                          zoneId == xi::ZoneId::CloisterOfStorms ||
+                                          zoneId == xi::ZoneId::CloisterOfFrost ||
+                                          zoneId == xi::ZoneId::Feiyin ||
+                                          zoneId == xi::ZoneId::IfritsCauldron ||
+                                          zoneId == xi::ZoneId::QubiaArena ||
+                                          zoneId == xi::ZoneId::CloisterOfFlames ||
+                                          zoneId == xi::ZoneId::QuicksandCaves ||
+                                          zoneId == xi::ZoneId::CloisterOfTremors ||
+                                          zoneId == xi::ZoneId::CloisterOfTides ||
+                                          zoneId == xi::ZoneId::GustavTunnel ||
+                                          zoneId == xi::ZoneId::LabyrinthOfOnzozo ||
+                                          zoneId == xi::ZoneId::ShipBoundForSelbina ||
+                                          zoneId == xi::ZoneId::ShipBoundForMhaura ||
+                                          zoneId == xi::ZoneId::ShipBoundForSelbinaPirates ||
+                                          zoneId == xi::ZoneId::ShipBoundForMhauraPirates))
     {
         return true;
     }
@@ -671,8 +671,8 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     }
 
     bool         isNM     = (PMob->m_Type & xi::MobType::Notorious) != xi::MobType::Normal;
-    JOBTYPE      mJob     = PMob->GetMJob();
-    JOBTYPE      sJob     = PMob->GetSJob();
+    xi::Job      mJob     = PMob->GetMJob();
+    xi::Job      sJob     = PMob->GetSJob();
     uint8        mLvl     = PMob->GetMLevel();
     uint8        sLvl     = PMob->GetSLevel();
     xi::ZoneType zoneType = PMob->loc.zone->GetTypeMask();
@@ -739,14 +739,14 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
 
         switch (mJob)
         {
-            case JOB_PLD:
-            case JOB_WHM:
-            case JOB_BLM:
-            case JOB_RDM:
-            case JOB_DRK:
-            case JOB_BLU:
-            case JOB_SCH:
-            case JOB_SMN:
+            case xi::Job::PLD:
+            case xi::Job::WHM:
+            case xi::Job::BLM:
+            case xi::Job::RDM:
+            case xi::Job::DRK:
+            case xi::Job::BLU:
+            case xi::Job::SCH:
+            case xi::Job::SMN:
                 hasMp = true;
                 break;
             default:
@@ -755,14 +755,14 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
 
         switch (sJob)
         {
-            case JOB_PLD:
-            case JOB_WHM:
-            case JOB_BLM:
-            case JOB_RDM:
-            case JOB_DRK:
-            case JOB_BLU:
-            case JOB_SCH:
-            case JOB_SMN:
+            case xi::Job::PLD:
+            case xi::Job::WHM:
+            case xi::Job::BLM:
+            case xi::Job::RDM:
+            case xi::Job::DRK:
+            case xi::Job::BLU:
+            case xi::Job::SCH:
+            case xi::Job::SMN:
                 hasMp = true;
                 break;
             default:
@@ -811,7 +811,7 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     ((CItemWeapon*)PMob->m_Weapons[SLOT_RANGED])->setDamage(GetBaseWeaponDamage(PMob, SLOT_RANGED));
 
     // reduce weapon delay of MNK
-    if (PMob->GetMJob() == JOB_MNK)
+    if (PMob->GetMJob() == xi::Job::MNK)
     {
         ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
     }
@@ -927,12 +927,12 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
         }
     }
 
-    PMob->addModifier(Mod::DEF, GetBaseDefEva(PMob, PMob->defRank));                         // Base Defense for all mobs
-    PMob->addModifier(Mod::EVA, GetBaseDefEva(PMob, JobSkillRankToBaseEvaRank(mJob, sJob))); // Evasion is based off the highest job rank. // TODO: add family bonuses (colibri has static evasion+ porrogos have % boost.)
-    PMob->addModifier(Mod::ATT, GetBaseSkill(PMob, PMob->attRank));                          // Base Attack for all mobs is Rank A+ but pull from DB for specific cases
-    PMob->addModifier(Mod::ACC, GetBaseSkill(PMob, PMob->accRank));                          // Base Accuracy for all mobs is Rank A+ but pull from DB for specific cases
-    PMob->addModifier(Mod::RATT, GetBaseSkill(PMob, PMob->attRank));                         // Base Ranged Attack for all mobs is Rank A+ but pull from DB for specific cases
-    PMob->addModifier(Mod::RACC, GetBaseSkill(PMob, PMob->accRank));                         // Base Ranged Accuracy for all mobs is Rank A+ but pull from DB for specific cases
+    PMob->addModifier(xi::Mod::DEF, GetBaseDefEva(PMob, PMob->defRank));                         // Base Defense for all mobs
+    PMob->addModifier(xi::Mod::EVA, GetBaseDefEva(PMob, JobSkillRankToBaseEvaRank(mJob, sJob))); // Evasion is based off the highest job rank. // TODO: add family bonuses (colibri has static evasion+ porrogos have % boost.)
+    PMob->addModifier(xi::Mod::ATT, GetBaseSkill(PMob, PMob->attRank));                          // Base Attack for all mobs is Rank A+ but pull from DB for specific cases
+    PMob->addModifier(xi::Mod::ACC, GetBaseSkill(PMob, PMob->accRank));                          // Base Accuracy for all mobs is Rank A+ but pull from DB for specific cases
+    PMob->addModifier(xi::Mod::RATT, GetBaseSkill(PMob, PMob->attRank));                         // Base Ranged Attack for all mobs is Rank A+ but pull from DB for specific cases
+    PMob->addModifier(xi::Mod::RACC, GetBaseSkill(PMob, PMob->accRank));                         // Base Ranged Accuracy for all mobs is Rank A+ but pull from DB for specific cases
 
     // Known Base Parry for all mobs is Rank C
     // xi::MobMod::CanParry uses the mod value as the rank, unknown if mobs in current retail or somewhere else have a different parry rank
@@ -945,13 +945,13 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     }
 
     // Assume base guard for MNK and PUP mobs is the same as parry (Rank C)
-    if ((PMob->GetMJob() == JOB_MNK || PMob->GetMJob() == JOB_PUP) && PMob->getMobMod(xi::MobMod::CannotGuard) == 0)
+    if ((PMob->GetMJob() == xi::Job::MNK || PMob->GetMJob() == xi::Job::PUP) && PMob->getMobMod(xi::MobMod::CannotGuard) == 0)
     {
         PMob->WorkingSkills.skill[static_cast<uint8>(xi::SkillType::Guard)] = GetBaseSkill(PMob, 3);
     }
 
     // natural magic evasion
-    PMob->addModifier(Mod::MEVA, GetMagicEvasion(PMob));
+    PMob->addModifier(xi::Mod::MEVA, GetMagicEvasion(PMob));
 
     // add traits for sub and main
     battleutils::AddTraits(PMob, traits::GetTraits(mJob), mLvl);
@@ -1024,11 +1024,6 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     {
         ShowError("mobutils::CalculateMobStats Mob (%s, %d) with magic but no cool down set!", PMob->getName(), PMob->id);
     }
-
-    if (PMob->getMobMod(xi::MobMod::Detection) == 0)
-    {
-        ShowError("mobutils::CalculateMobStats Mob (%s, %d, %d) has no detection methods!", PMob->getName(), PMob->id, PMob->m_Species);
-    }
 }
 
 void SetupRangedAttack(CMobEntity* PMob)
@@ -1042,11 +1037,11 @@ void SetupRangedAttack(CMobEntity* PMob)
 
 void SetupJob(CMobEntity* PMob)
 {
-    JOBTYPE mJob = PMob->GetMJob();
-    JOBTYPE sJob = PMob->GetSJob();
-    JOBTYPE job{};
+    xi::Job mJob = PMob->GetMJob();
+    xi::Job sJob = PMob->GetSJob();
+    xi::Job job{};
 
-    if (grade::GetJobGrade(mJob, 1) > 0 || mJob == JOB_NIN || mJob == JOB_BRD) // Check if main job is a caster.
+    if (grade::GetJobGrade(mJob, 1) > 0 || mJob == xi::Job::NIN || mJob == xi::Job::BRD) // Check if main job is a caster.
     {
         job = mJob;
     }
@@ -1058,56 +1053,56 @@ void SetupJob(CMobEntity* PMob)
     // This switch falls back to a subjob if a mainjob isn't matched, and is mainly magic stuff
     switch (job)
     {
-        case JOB_BLM:
+        case xi::Job::BLM:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             PMob->defaultMobMod(xi::MobMod::GaChance, 40);
             PMob->defaultMobMod(xi::MobMod::BuffChance, 15);
             PMob->defaultMobMod(xi::MobMod::SevereSpellChance, 20);
             break;
-        case JOB_PLD:
+        case xi::Job::PLD:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             PMob->defaultMobMod(xi::MobMod::MagicDelay, 7);
             break;
-        case JOB_DRK:
+        case xi::Job::DRK:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             PMob->defaultMobMod(xi::MobMod::MagicDelay, 7);
             break;
-        case JOB_WHM:
+        case xi::Job::WHM:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             PMob->defaultMobMod(xi::MobMod::MagicDelay, 10);
             break;
-        case JOB_BRD:
+        case xi::Job::BRD:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             PMob->defaultMobMod(xi::MobMod::GaChance, 25);
             PMob->defaultMobMod(xi::MobMod::BuffChance, 60);
             PMob->defaultMobMod(xi::MobMod::MagicDelay, 10);
             break;
-        case JOB_RDM:
+        case xi::Job::RDM:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             PMob->defaultMobMod(xi::MobMod::GaChance, 15);
             PMob->defaultMobMod(xi::MobMod::BuffChance, 40);
             PMob->defaultMobMod(xi::MobMod::MagicDelay, 10);
             break;
-        case JOB_SMN:
+        case xi::Job::SMN:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 70);
             PMob->defaultMobMod(xi::MobMod::BuffChance, 100); // SMN only has "buffs"
             break;
-        case JOB_NIN:
+        case xi::Job::NIN:
             PMob->defaultMobMod(xi::MobMod::SpecialCool, 9);
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             PMob->defaultMobMod(xi::MobMod::BuffChance, 20);
             PMob->defaultMobMod(xi::MobMod::MagicDelay, 7);
             break;
-        case JOB_BLU:
+        case xi::Job::BLU:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             break;
-        case JOB_SCH:
+        case xi::Job::SCH:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             break;
-        case JOB_GEO:
+        case xi::Job::GEO:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             break;
-        case JOB_RUN:
+        case xi::Job::RUN:
             PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             break;
         default:
@@ -1117,7 +1112,7 @@ void SetupJob(CMobEntity* PMob)
     // This switch is mainjob only and contains mainly non magic related stuff
     switch (mJob)
     {
-        case JOB_THF:
+        case xi::Job::THF:
             // thfs drop more gil
             if (PMob->m_EcoSystem == xi::Ecosystem::Beastmen)
             {
@@ -1125,7 +1120,7 @@ void SetupJob(CMobEntity* PMob)
                 PMob->defaultMobMod(xi::MobMod::GilBonus, 150);
             }
             break;
-        case JOB_RNG:
+        case xi::Job::RNG:
             if (PMob->m_Family == 57) // Gigas
             {
                 PMob->defaultMobMod(xi::MobMod::SpecialSkill, 658); // Catapult only used while at range
@@ -1164,7 +1159,7 @@ void SetupJob(CMobEntity* PMob)
             PMob->defaultMobMod(xi::MobMod::SpecialCool, 12);
             PMob->defaultMobMod(xi::MobMod::HpStandback, 70);
             break;
-        case JOB_NIN:
+        case xi::Job::NIN:
             if (PMob->m_Family == 131) // Aern
             {
                 PMob->defaultMobMod(xi::MobMod::SpecialSkill, 1388);
@@ -1191,15 +1186,15 @@ void SetupJob(CMobEntity* PMob)
 
             PMob->defaultMobMod(xi::MobMod::HpStandback, 70);
             break;
-        case JOB_BST:
+        case xi::Job::BST:
             PMob->defaultMobMod(xi::MobMod::SpecialCool, 70);
             PMob->defaultMobMod(xi::MobMod::SpecialSkill, 1017);
             break;
-        case JOB_PUP:
+        case xi::Job::PUP:
             PMob->defaultMobMod(xi::MobMod::SpecialSkill, 1901);
             PMob->defaultMobMod(xi::MobMod::SpecialCool, 720);
             break;
-        case JOB_BLM:
+        case xi::Job::BLM:
             // We don't want to do the mages stand-back part from subjob, so we have it here
             PMob->defaultMobMod(xi::MobMod::StandbackCool, 12);
             PMob->defaultMobMod(xi::MobMod::HpStandback, 70);
@@ -1279,14 +1274,14 @@ void SetupPetSkills(CMobEntity* PMob)
     }
 }
 
-uint8 JobSkillRankToBaseEvaRank(JOBTYPE mjob, JOBTYPE sjob)
+auto JobSkillRankToBaseEvaRank(xi::Job mjob, xi::Job sjob) -> uint8
 {
     // Pick the best rank between the two jobs
     // Lower is better
     uint8 mainEvasionSkillRank = battleutils::GetSkillRank(xi::SkillType::Evasion, mjob);
     uint8 subEvasionSkillRank  = battleutils::GetSkillRank(xi::SkillType::Evasion, sjob);
 
-    if (sjob == JOB_NON)
+    if (sjob == xi::Job::NONE)
     {
         subEvasionSkillRank = mainEvasionSkillRank;
     }
@@ -1365,11 +1360,11 @@ void SetupDungeonInstanceMob(CMobEntity* PMob)
     PMob->SetDespawnTime(0s);
     PMob->setMobMod(xi::MobMod::NoDespawn, 1);
     // Salvage and Nyzul
-    if (PMob->getZone() >= ZONE_ZHAYOLM_REMNANTS && PMob->getZone() <= ZONE_NYZUL_ISLE)
+    if (PMob->getZone() >= xi::ZoneId::ZhayolmRemnants && PMob->getZone() <= xi::ZoneId::NyzulIsle)
     {
         // Salvage and Nyzul mobs can not be charmed
         PMob->setMobMod(xi::MobMod::Charmable, 0);
-        if (PMob->getZone() != ZONE_NYZUL_ISLE)
+        if (PMob->getZone() != xi::ZoneId::NyzulIsle)
         {
             PMob->setMobMod(xi::MobMod::CheckAsNm, 1);
         }
@@ -1438,7 +1433,7 @@ void InitializeMob(CMobEntity* PMob)
 
     if (PMob->m_maxLevel == 0 && PMob->m_minLevel == 0)
     {
-        if (PMob->getZone() >= 1 && PMob->getZone() <= 252)
+        if (const auto mobZone = static_cast<uint16>(PMob->getZone()); mobZone >= 1 && mobZone <= 252)
         {
             ShowError("Mob %s level is 0! zoneid %d, poolid %d", PMob->getName(), PMob->getZone(), PMob->m_Pool);
         }
@@ -1463,7 +1458,7 @@ void LoadSqlModifiers()
     {
         ModsList_t* speciesMods = GetMobSpeciesMods(rset->get<uint16>("speciesid"), true);
 
-        auto* mod = new CModifier(rset->get<Mod>("modid"));
+        auto* mod = new CModifier(rset->get<xi::Mod>("modid"));
         mod->setModAmount(rset->get<int16>("value"));
 
         if (rset->get<bool>("is_mob_mod"))
@@ -1484,7 +1479,7 @@ void LoadSqlModifiers()
         const auto  pool     = rset->get<uint16>("poolid");
         ModsList_t* poolMods = GetMobPoolMods(pool, true);
 
-        const auto id = rset->get<Mod>("modid");
+        const auto id = rset->get<xi::Mod>("modid");
 
         auto* mod = new CModifier(id);
         mod->setModAmount(rset->get<int16>("value"));
@@ -1676,7 +1671,7 @@ void AddSqlModifiers(CMobEntity* PMob)
     }
 }
 
-auto InstantiateAlly(uint32 groupid, uint16 zoneID, CInstance* instance) -> CMobEntity*
+auto InstantiateAlly(const uint32 groupid, const xi::ZoneId zoneID, CInstance* instance) -> CMobEntity*
 {
     CMobEntity* PMob = nullptr;
 
@@ -1759,41 +1754,41 @@ auto InstantiateAlly(uint32 groupid, uint16 zoneID, CInstance* instance) -> CMob
         PMob->attRank = rset->get<uint8>("ATT");
         PMob->accRank = rset->get<uint8>("ACC");
 
-        PMob->setModifier(Mod::SLASH_SDT, rset->get<int16>("slash_sdt"));
-        PMob->setModifier(Mod::PIERCE_SDT, rset->get<int16>("pierce_sdt"));
-        PMob->setModifier(Mod::HTH_SDT, rset->get<int16>("h2h_sdt"));
-        PMob->setModifier(Mod::IMPACT_SDT, rset->get<int16>("impact_sdt"));
+        PMob->setModifier(xi::Mod::SLASH_SDT, rset->get<int16>("slash_sdt"));
+        PMob->setModifier(xi::Mod::PIERCE_SDT, rset->get<int16>("pierce_sdt"));
+        PMob->setModifier(xi::Mod::HTH_SDT, rset->get<int16>("h2h_sdt"));
+        PMob->setModifier(xi::Mod::IMPACT_SDT, rset->get<int16>("impact_sdt"));
 
-        PMob->setModifier(Mod::UDMGMAGIC, rset->get<int16>("magical_sdt")); // Modifier 389, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::UDMGMAGIC, rset->get<int16>("magical_sdt")); // Modifier 389, base 10000 stored as signed integer. Positives signify less damage.
 
-        PMob->setModifier(Mod::FIRE_SDT, rset->get<int16>("fire_sdt"));         // Modifier 54, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::ICE_SDT, rset->get<int16>("ice_sdt"));           // Modifier 55, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::WIND_SDT, rset->get<int16>("wind_sdt"));         // Modifier 56, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::EARTH_SDT, rset->get<int16>("earth_sdt"));       // Modifier 57, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::THUNDER_SDT, rset->get<int16>("lightning_sdt")); // Modifier 58, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::WATER_SDT, rset->get<int16>("water_sdt"));       // Modifier 59, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::LIGHT_SDT, rset->get<int16>("light_sdt"));       // Modifier 60, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::DARK_SDT, rset->get<int16>("dark_sdt"));         // Modifier 61, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::FIRE_SDT, rset->get<int16>("fire_sdt"));         // Modifier 54, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::ICE_SDT, rset->get<int16>("ice_sdt"));           // Modifier 55, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::WIND_SDT, rset->get<int16>("wind_sdt"));         // Modifier 56, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::EARTH_SDT, rset->get<int16>("earth_sdt"));       // Modifier 57, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::THUNDER_SDT, rset->get<int16>("lightning_sdt")); // Modifier 58, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::WATER_SDT, rset->get<int16>("water_sdt"));       // Modifier 59, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::LIGHT_SDT, rset->get<int16>("light_sdt"));       // Modifier 60, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::DARK_SDT, rset->get<int16>("dark_sdt"));         // Modifier 61, base 10000 stored as signed integer. Positives signify less damage.
 
-        PMob->setModifier(Mod::FIRE_RES_RANK, rset->get<int8>("fire_res_rank"));
-        PMob->setModifier(Mod::ICE_RES_RANK, rset->get<int8>("ice_res_rank"));
-        PMob->setModifier(Mod::WIND_RES_RANK, rset->get<int8>("wind_res_rank"));
-        PMob->setModifier(Mod::EARTH_RES_RANK, rset->get<int8>("earth_res_rank"));
-        PMob->setModifier(Mod::THUNDER_RES_RANK, rset->get<int8>("lightning_res_rank"));
-        PMob->setModifier(Mod::WATER_RES_RANK, rset->get<int8>("water_res_rank"));
-        PMob->setModifier(Mod::LIGHT_RES_RANK, rset->get<int8>("light_res_rank"));
-        PMob->setModifier(Mod::DARK_RES_RANK, rset->get<int8>("dark_res_rank"));
+        PMob->setModifier(xi::Mod::FIRE_RES_RANK, rset->get<int8>("fire_res_rank"));
+        PMob->setModifier(xi::Mod::ICE_RES_RANK, rset->get<int8>("ice_res_rank"));
+        PMob->setModifier(xi::Mod::WIND_RES_RANK, rset->get<int8>("wind_res_rank"));
+        PMob->setModifier(xi::Mod::EARTH_RES_RANK, rset->get<int8>("earth_res_rank"));
+        PMob->setModifier(xi::Mod::THUNDER_RES_RANK, rset->get<int8>("lightning_res_rank"));
+        PMob->setModifier(xi::Mod::WATER_RES_RANK, rset->get<int8>("water_res_rank"));
+        PMob->setModifier(xi::Mod::LIGHT_RES_RANK, rset->get<int8>("light_res_rank"));
+        PMob->setModifier(xi::Mod::DARK_RES_RANK, rset->get<int8>("dark_res_rank"));
 
-        PMob->setModifier(Mod::PARALYZE_RES_RANK, rset->get<int8>("paralyze_res_rank"));
-        PMob->setModifier(Mod::BIND_RES_RANK, rset->get<int8>("bind_res_rank"));
-        PMob->setModifier(Mod::SILENCE_RES_RANK, rset->get<int8>("silence_res_rank"));
-        PMob->setModifier(Mod::SLOW_RES_RANK, rset->get<int8>("slow_res_rank"));
-        PMob->setModifier(Mod::POISON_RES_RANK, rset->get<int8>("poison_res_rank"));
-        PMob->setModifier(Mod::LIGHT_SLEEP_RES_RANK, rset->get<int8>("light_sleep_res_rank"));
-        PMob->setModifier(Mod::DARK_SLEEP_RES_RANK, rset->get<int8>("dark_sleep_res_rank"));
-        PMob->setModifier(Mod::BLIND_RES_RANK, rset->get<int8>("blind_res_rank"));
-        PMob->setModifier(Mod::STUN_RES_RANK, rset->get<int8>("stun_res_rank"));
-        PMob->setModifier(Mod::GRAVITY_RES_RANK, rset->get<int8>("gravity_res_rank"));
+        PMob->setModifier(xi::Mod::PARALYZE_RES_RANK, rset->get<int8>("paralyze_res_rank"));
+        PMob->setModifier(xi::Mod::BIND_RES_RANK, rset->get<int8>("bind_res_rank"));
+        PMob->setModifier(xi::Mod::SILENCE_RES_RANK, rset->get<int8>("silence_res_rank"));
+        PMob->setModifier(xi::Mod::SLOW_RES_RANK, rset->get<int8>("slow_res_rank"));
+        PMob->setModifier(xi::Mod::POISON_RES_RANK, rset->get<int8>("poison_res_rank"));
+        PMob->setModifier(xi::Mod::LIGHT_SLEEP_RES_RANK, rset->get<int8>("light_sleep_res_rank"));
+        PMob->setModifier(xi::Mod::DARK_SLEEP_RES_RANK, rset->get<int8>("dark_sleep_res_rank"));
+        PMob->setModifier(xi::Mod::BLIND_RES_RANK, rset->get<int8>("blind_res_rank"));
+        PMob->setModifier(xi::Mod::STUN_RES_RANK, rset->get<int8>("stun_res_rank"));
+        PMob->setModifier(xi::Mod::GRAVITY_RES_RANK, rset->get<int8>("gravity_res_rank"));
 
         PMob->m_Element     = rset->get<uint8>("Element");
         PMob->m_Species     = rset->get<uint16>("speciesid");
@@ -1860,7 +1855,7 @@ auto InstantiateAlly(uint32 groupid, uint16 zoneID, CInstance* instance) -> CMob
     return PMob;
 }
 
-auto InstantiateDynamicMob(uint32 groupid, uint16 groupZoneId, uint16 targetZoneId) -> CMobEntity*
+auto InstantiateDynamicMob(const uint32 groupid, const xi::ZoneId groupZoneId, const xi::ZoneId targetZoneId) -> CMobEntity*
 {
     auto* PMob = new CMobEntity();
 
@@ -1936,30 +1931,30 @@ auto InstantiateDynamicMob(uint32 groupid, uint16 groupZoneId, uint16 targetZone
         PMob->attRank = rset->get<uint8>("ATT");
         PMob->accRank = rset->get<uint8>("ACC");
 
-        PMob->setModifier(Mod::SLASH_SDT, rset->get<int16>("slash_sdt"));
-        PMob->setModifier(Mod::PIERCE_SDT, rset->get<int16>("pierce_sdt"));
-        PMob->setModifier(Mod::HTH_SDT, rset->get<int16>("h2h_sdt"));
-        PMob->setModifier(Mod::IMPACT_SDT, rset->get<int16>("impact_sdt"));
+        PMob->setModifier(xi::Mod::SLASH_SDT, rset->get<int16>("slash_sdt"));
+        PMob->setModifier(xi::Mod::PIERCE_SDT, rset->get<int16>("pierce_sdt"));
+        PMob->setModifier(xi::Mod::HTH_SDT, rset->get<int16>("h2h_sdt"));
+        PMob->setModifier(xi::Mod::IMPACT_SDT, rset->get<int16>("impact_sdt"));
 
-        PMob->setModifier(Mod::UDMGMAGIC, rset->get<int16>("magical_sdt")); // Modifier 389, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::UDMGMAGIC, rset->get<int16>("magical_sdt")); // Modifier 389, base 10000 stored as signed integer. Positives signify less damage.
 
-        PMob->setModifier(Mod::FIRE_SDT, rset->get<int16>("fire_sdt"));         // Modifier 54, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::ICE_SDT, rset->get<int16>("ice_sdt"));           // Modifier 55, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::WIND_SDT, rset->get<int16>("wind_sdt"));         // Modifier 56, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::EARTH_SDT, rset->get<int16>("earth_sdt"));       // Modifier 57, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::THUNDER_SDT, rset->get<int16>("lightning_sdt")); // Modifier 58, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::WATER_SDT, rset->get<int16>("water_sdt"));       // Modifier 59, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::LIGHT_SDT, rset->get<int16>("light_sdt"));       // Modifier 60, base 10000 stored as signed integer. Positives signify less damage.
-        PMob->setModifier(Mod::DARK_SDT, rset->get<int16>("dark_sdt"));         // Modifier 61, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::FIRE_SDT, rset->get<int16>("fire_sdt"));         // Modifier 54, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::ICE_SDT, rset->get<int16>("ice_sdt"));           // Modifier 55, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::WIND_SDT, rset->get<int16>("wind_sdt"));         // Modifier 56, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::EARTH_SDT, rset->get<int16>("earth_sdt"));       // Modifier 57, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::THUNDER_SDT, rset->get<int16>("lightning_sdt")); // Modifier 58, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::WATER_SDT, rset->get<int16>("water_sdt"));       // Modifier 59, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::LIGHT_SDT, rset->get<int16>("light_sdt"));       // Modifier 60, base 10000 stored as signed integer. Positives signify less damage.
+        PMob->setModifier(xi::Mod::DARK_SDT, rset->get<int16>("dark_sdt"));         // Modifier 61, base 10000 stored as signed integer. Positives signify less damage.
 
-        PMob->setModifier(Mod::FIRE_RES_RANK, rset->get<int8>("fire_res_rank"));
-        PMob->setModifier(Mod::ICE_RES_RANK, rset->get<int8>("ice_res_rank"));
-        PMob->setModifier(Mod::WIND_RES_RANK, rset->get<int8>("wind_res_rank"));
-        PMob->setModifier(Mod::EARTH_RES_RANK, rset->get<int8>("earth_res_rank"));
-        PMob->setModifier(Mod::THUNDER_RES_RANK, rset->get<int8>("lightning_res_rank"));
-        PMob->setModifier(Mod::WATER_RES_RANK, rset->get<int8>("water_res_rank"));
-        PMob->setModifier(Mod::LIGHT_RES_RANK, rset->get<int8>("light_res_rank"));
-        PMob->setModifier(Mod::DARK_RES_RANK, rset->get<int8>("dark_res_rank"));
+        PMob->setModifier(xi::Mod::FIRE_RES_RANK, rset->get<int8>("fire_res_rank"));
+        PMob->setModifier(xi::Mod::ICE_RES_RANK, rset->get<int8>("ice_res_rank"));
+        PMob->setModifier(xi::Mod::WIND_RES_RANK, rset->get<int8>("wind_res_rank"));
+        PMob->setModifier(xi::Mod::EARTH_RES_RANK, rset->get<int8>("earth_res_rank"));
+        PMob->setModifier(xi::Mod::THUNDER_RES_RANK, rset->get<int8>("lightning_res_rank"));
+        PMob->setModifier(xi::Mod::WATER_RES_RANK, rset->get<int8>("water_res_rank"));
+        PMob->setModifier(xi::Mod::LIGHT_RES_RANK, rset->get<int8>("light_res_rank"));
+        PMob->setModifier(xi::Mod::DARK_RES_RANK, rset->get<int8>("dark_res_rank"));
 
         PMob->m_Element     = rset->get<uint8>("Element");
         PMob->m_Species     = rset->get<uint16>("speciesid");

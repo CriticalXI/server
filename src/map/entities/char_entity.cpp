@@ -333,7 +333,7 @@ CCharEntity::~CCharEntity()
         StatusEffectContainer->DelStatusEffectSilent(xi::StatusEffect::LevelRestriction);
     }
 
-    if (PParty && loc.destination != 0 && !inMogHouse())
+    if (PParty && loc.destination != xi::ZoneId::Unknown && !inMogHouse())
     {
         if (PParty->m_PAlliance)
         {
@@ -846,7 +846,7 @@ int16 CCharEntity::getShieldDefense()
 
     if (PItem && PItem->IsShield())
     {
-        return PItem->getModifier(Mod::DEF);
+        return PItem->getModifier(xi::Mod::DEF);
     }
 
     return 0;
@@ -1461,7 +1461,7 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
     TracyZoneScoped;
 
     auto* PSpell  = state.GetSpell();
-    auto* PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    auto* PTarget = state.target().resolve<CBattleEntity>();
 
     // not ideal, since Trick Attack character (taChar) is also calculated on the lua side for the base spell.
     // Only blue spells that act as a physical WS can TA.
@@ -1645,7 +1645,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
     CBattleEntity::OnWeaponSkillFinished(state, action);
 
     auto* PWeaponSkill  = state.GetSkill();
-    auto* PBattleTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    auto* PBattleTarget = state.target().resolve<CBattleEntity>();
 
     int16 tp = state.GetSpentTP();
     tp       = battleutils::CalculateWeaponSkillTP(this, PWeaponSkill, tp);
@@ -1796,7 +1796,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         findFlags |= FINDFLAGS_DEAD;
     }
 
-    auto* PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    auto* PTarget = state.target().resolve<CBattleEntity>();
     PAI->TargetFind->reset();
     PAI->TargetFind->findSingleTarget(PTarget, findFlags, PAbility->getValidTarget());
 
@@ -1839,7 +1839,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
             else if (PAbility->getRecastId() == Recast::Strategems)
             {
-                recastReduction += std::chrono::seconds(this->getMod(Mod::STRATAGEM_RECAST));
+                recastReduction += std::chrono::seconds(this->getMod(xi::Mod::STRATAGEM_RECAST));
             }
 
             baseChargeTime = charge->chargeTime - recastReduction;
@@ -1862,8 +1862,8 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         else if (PAbility->getRecastId() == Recast::BloodPactRage || PAbility->getRecastId() == Recast::BloodPactWard)
         {
             uint16 favorReduction          = 0;
-            uint16 bloodPact_I_Reduction   = std::min<int16>(getMod(Mod::BP_DELAY), 15);
-            uint16 bloodPact_II_Reduction  = std::min<int16>(getMod(Mod::BP_DELAY_II), 15);
+            uint16 bloodPact_I_Reduction   = std::min<int16>(getMod(xi::Mod::BP_DELAY), 15);
+            uint16 bloodPact_II_Reduction  = std::min<int16>(getMod(xi::Mod::BP_DELAY_II), 15);
             uint16 bloodPact_III_Reduction = 0; // std::min<int16>(getMod(Mod::BP_DELAY_III, 10); TODO: BP Delay III (SMN JP gift) not implemented
 
             CStatusEffect* avatarsFavor = this->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::AvatarsFavor);
@@ -1936,7 +1936,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         }
         else if (PAbility->getID() == ABILITY_READY || PAbility->getID() == ABILITY_SIC)
         {
-            action.recast = std::max<timer::duration>(0s, action.recast - std::chrono::seconds(getMod(Mod::SIC_READY_RECAST)));
+            action.recast = std::max<timer::duration>(0s, action.recast - std::chrono::seconds(getMod(xi::Mod::SIC_READY_RECAST)));
         }
 
         action.actorId    = this->id;
@@ -1964,18 +1964,18 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 actionResult.animation        = ActionAnimation::PetSkillStart;
                 actionResult.resolution       = ActionResolution::Hit;
 
-                auto PPetTarget = PTarget->targid;
+                auto PPetTarget = PTarget->entityId();
 
                 // set primary target for jug ready abilities (JA targets the player, but the pet acts like a mob and makes its own decision on the skill target)
                 if (PPetEntity->getPetType() == PET_TYPE::JUG_PET)
                 {
                     if (PPetSkill->getValidTargets() & TARGET_ENEMY)
                     {
-                        PPetTarget = PPetEntity->GetBattleTargetID();
+                        PPetTarget = PPetEntity->battleTarget();
                     }
                     else
                     {
-                        PPetTarget = PPetEntity->targid;
+                        PPetTarget = PPetEntity->entityId();
                     }
                 }
 
@@ -2096,7 +2096,7 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
         return false;
     }
 
-    if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC)
+    if (PBattleTarget->m_OwnerID.UniqueNo == 0 || PBattleTarget->m_OwnerID.UniqueNo == this->id || PBattleTarget->objtype == TYPE_PC)
     {
         return true;
     }
@@ -2114,7 +2114,7 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
     // clang-format off
     ForAlliance([&PBattleTarget, &found](CBattleEntity* PEntity)
     {
-        if (PEntity->id == PBattleTarget->m_OwnerID.id)
+        if (PEntity->id == PBattleTarget->m_OwnerID.UniqueNo)
         {
             found = true;
         }
@@ -2181,7 +2181,7 @@ void CCharEntity::OnRaise()
         auto& actionResult = actionTarget.addResult();
 
         // Mijin Gakure used with MIJIN_RERAISE MOD
-        if (GetLocalVar("MijinGakure") != 0 && getMod(Mod::MIJIN_RERAISE) != 0)
+        if (GetLocalVar("MijinGakure") != 0 && getMod(xi::Mod::MIJIN_RERAISE) != 0)
         {
             actionResult.animation = ActionAnimation::Raise;
             hpReturned             = (uint16)(GetMaxHP());
@@ -2243,7 +2243,7 @@ auto CCharEntity::OnItemFinish(CItemState& state, action_t& action) -> bool
 {
     TracyZoneScoped;
 
-    auto* PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    auto* PTarget = state.target().resolve<CBattleEntity>();
     auto* PItem   = state.GetItem();
 
     if (!PItem->isType(ITEM_EQUIPMENT) && (PItem->getQuantity() < 1 || PItem->getReserve() > 0))
@@ -2343,11 +2343,23 @@ auto CCharEntity::OnItemFinish(CItemState& state, action_t& action) -> bool
     return true;
 }
 
-CBattleEntity* CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags, std::unique_ptr<CBasicPacket>& errMsg)
+auto CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags, std::unique_ptr<CBasicPacket>& errMsg) -> CBattleEntity*
 {
     TracyZoneScoped;
 
-    auto* PTarget = CBattleEntity::IsValidTarget(targid, validTargetFlags, errMsg);
+    return applyTargetRestrictions(GetEntity(targid, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST), validTargetFlags, errMsg);
+}
+
+auto CCharEntity::IsValidTarget(EntityId target, uint16 validTargetFlags, std::unique_ptr<CBasicPacket>& errMsg) -> CBattleEntity*
+{
+    TracyZoneScoped;
+
+    return applyTargetRestrictions(target.resolve(), validTargetFlags, errMsg);
+}
+
+auto CCharEntity::applyTargetRestrictions(CBaseEntity* PResolved, uint16 validTargetFlags, std::unique_ptr<CBasicPacket>& errMsg) -> CBattleEntity*
+{
+    auto* PTarget = PAI->TargetFind->getValidTarget(dynamic_cast<CBattleEntity*>(PResolved), validTargetFlags);
     if (PTarget)
     {
         if (PTarget->objtype == TYPE_PC && charutils::IsAidBlocked(this, static_cast<CCharEntity*>(PTarget)))
@@ -2376,7 +2388,7 @@ CBattleEntity* CCharEntity::IsValidTarget(uint16 targid, uint16 validTargetFlags
     else
     {
         // Check if target is a BEHAVIOR_NO_ASSIST mob with player allegiance
-        auto* PEntity = GetEntity(targid, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST);
+        auto* PEntity = PResolved;
         if (PEntity && PEntity->objtype == TYPE_MOB && static_cast<CMobEntity*>(PEntity)->allegiance == xi::Allegiance::Player &&
             ((static_cast<CMobEntity*>(PEntity)->m_Behavior & xi::Behavior::NoAssist) != xi::Behavior::None))
         {
@@ -2394,7 +2406,7 @@ void CCharEntity::Die()
 {
     TracyZoneScoped;
 
-    if (auto* PLastAttacker = GetEntity(lastAttackerId_.targid); PLastAttacker && PLastAttacker->id == lastAttackerId_.id)
+    if (auto* PLastAttacker = lastAttackerId_.resolve())
     {
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(PLastAttacker, this, 0, 0, MsgBasic::PlayerDefeatedBy));
     }
@@ -2422,7 +2434,7 @@ void CCharEntity::Die()
         (PBattlefield == nullptr || (PBattlefield->GetRuleMask() & RULES_LOSE_EXP) == RULES_LOSE_EXP) &&
         GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
     {
-        float retainPercent = std::clamp(settings::get<uint8>("map.EXP_RETAIN") + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
+        float retainPercent = std::clamp(settings::get<uint8>("map.EXP_RETAIN") + getMod(xi::Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
         charutils::DelExperiencePoints(this, retainPercent, 0);
     }
 
@@ -2456,22 +2468,22 @@ void CCharEntity::Die(timer::duration _duration)
     allegiance = xi::Allegiance::Player;
 
     // reraise modifiers
-    if (this->getMod(Mod::RERAISE_I) > 0)
+    if (this->getMod(xi::Mod::RERAISE_I) > 0)
     {
         m_hasRaise = 1;
     }
 
-    if (this->getMod(Mod::RERAISE_II) > 0)
+    if (this->getMod(xi::Mod::RERAISE_II) > 0)
     {
         m_hasRaise = 2;
     }
 
-    if (this->getMod(Mod::RERAISE_III) > 0)
+    if (this->getMod(xi::Mod::RERAISE_III) > 0)
     {
         m_hasRaise = 3;
     }
     // MIJIN_RERAISE checks
-    if (m_hasRaise == 0 && this->getMod(Mod::MIJIN_RERAISE) > 0)
+    if (m_hasRaise == 0 && this->getMod(xi::Mod::MIJIN_RERAISE) > 0)
     {
         m_hasRaise = 1;
     }
@@ -2679,138 +2691,138 @@ void CCharEntity::changeMoghancement(uint16 moghancementID, bool isAdding)
     switch (moghancementID)
     {
         case MOGHANCEMENT_FIRE:
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_FIRE, 5 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_FIRE, 5 * multiplier);
             break;
         case MOGHANCEMENT_ICE:
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_ICE, 5 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_ICE, 5 * multiplier);
             break;
         case MOGHANCEMENT_WIND:
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_WIND, 5 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_WIND, 5 * multiplier);
             break;
         case MOGHANCEMENT_EARTH:
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_EARTH, 5 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_EARTH, 5 * multiplier);
             break;
         case MOGHANCEMENT_LIGHTNING:
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_THUNDER, 5 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_THUNDER, 5 * multiplier);
             break;
         case MOGHANCEMENT_WATER:
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_WATER, 5 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_WATER, 5 * multiplier);
             break;
         case MOGHANCEMENT_LIGHT:
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_LIGHT, 5 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_LIGHT, 5 * multiplier);
             break;
         case MOGHANCEMENT_DARK:
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_DARK, 5 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_DARK, 5 * multiplier);
             break;
 
         case MOGHANCEMENT_FISHING:
-            addModifier(Mod::FISH, 1 * multiplier);
+            addModifier(xi::Mod::FISH, 1 * multiplier);
             break;
         case MOGHANCEMENT_WOODWORKING:
-            addModifier(Mod::WOOD, 1 * multiplier);
+            addModifier(xi::Mod::WOOD, 1 * multiplier);
             break;
         case MOGHANCEMENT_SMITHING:
-            addModifier(Mod::SMITH, 1 * multiplier);
+            addModifier(xi::Mod::SMITH, 1 * multiplier);
             break;
         case MOGHANCEMENT_GOLDSMITHING:
-            addModifier(Mod::GOLDSMITH, 1 * multiplier);
+            addModifier(xi::Mod::GOLDSMITH, 1 * multiplier);
             break;
         case MOGHANCEMENT_CLOTHCRAFT:
-            addModifier(Mod::CLOTH, 1 * multiplier);
+            addModifier(xi::Mod::CLOTH, 1 * multiplier);
             break;
         case MOGHANCEMENT_LEATHERCRAFT:
-            addModifier(Mod::LEATHER, 1 * multiplier);
+            addModifier(xi::Mod::LEATHER, 1 * multiplier);
             break;
         case MOGHANCEMENT_BONECRAFT:
-            addModifier(Mod::BONE, 1 * multiplier);
+            addModifier(xi::Mod::BONE, 1 * multiplier);
             break;
         case MOGHANCEMENT_ALCHEMY:
-            addModifier(Mod::ALCHEMY, 1 * multiplier);
+            addModifier(xi::Mod::ALCHEMY, 1 * multiplier);
             break;
         case MOGHANCEMENT_COOKING:
-            addModifier(Mod::COOK, 1 * multiplier);
+            addModifier(xi::Mod::COOK, 1 * multiplier);
             break;
 
         case MOGLIFICATION_FISHING:
-            addModifier(Mod::FISH, 1 * multiplier);
+            addModifier(xi::Mod::FISH, 1 * multiplier);
             // TODO: "makes it slightly easier to reel in your catch"
             break;
         case MOGLIFICATION_WOODWORKING:
-            addModifier(Mod::WOOD, 1 * multiplier);
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_WOODWORKING, 5 * multiplier);
+            addModifier(xi::Mod::WOOD, 1 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_WOODWORKING, 5 * multiplier);
             break;
         case MOGLIFICATION_SMITHING:
-            addModifier(Mod::SMITH, 1 * multiplier);
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_SMITHING, 5 * multiplier);
+            addModifier(xi::Mod::SMITH, 1 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_SMITHING, 5 * multiplier);
             break;
         case MOGLIFICATION_GOLDSMITHING:
-            addModifier(Mod::GOLDSMITH, 1 * multiplier);
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_GOLDSMITHING, 5 * multiplier);
+            addModifier(xi::Mod::GOLDSMITH, 1 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_GOLDSMITHING, 5 * multiplier);
             break;
         case MOGLIFICATION_CLOTHCRAFT:
-            addModifier(Mod::CLOTH, 1 * multiplier);
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_CLOTHCRAFT, 5 * multiplier);
+            addModifier(xi::Mod::CLOTH, 1 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_CLOTHCRAFT, 5 * multiplier);
             break;
         case MOGLIFICATION_LEATHERCRAFT:
-            addModifier(Mod::LEATHER, 1 * multiplier);
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_LEATHERCRAFT, 5 * multiplier);
+            addModifier(xi::Mod::LEATHER, 1 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_LEATHERCRAFT, 5 * multiplier);
             break;
         case MOGLIFICATION_BONECRAFT:
-            addModifier(Mod::BONE, 1 * multiplier);
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_BONECRAFT, 5 * multiplier);
+            addModifier(xi::Mod::BONE, 1 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_BONECRAFT, 5 * multiplier);
             break;
         case MOGLIFICATION_ALCHEMY:
-            addModifier(Mod::ALCHEMY, 1 * multiplier);
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_ALCHEMY, 5 * multiplier);
+            addModifier(xi::Mod::ALCHEMY, 1 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_ALCHEMY, 5 * multiplier);
             break;
         case MOGLIFICATION_COOKING:
-            addModifier(Mod::COOK, 1 * multiplier);
-            addModifier(Mod::SYNTH_MATERIAL_LOSS_COOKING, 5 * multiplier);
+            addModifier(xi::Mod::COOK, 1 * multiplier);
+            addModifier(xi::Mod::SYNTH_MATERIAL_LOSS_COOKING, 5 * multiplier);
             break;
 
         // Mega Moglifications do not state anything about lowering material loss.
         case MEGA_MOGLIFICATION_FISHING:
-            addModifier(Mod::FISH, 5 * multiplier);
+            addModifier(xi::Mod::FISH, 5 * multiplier);
             break;
         case MEGA_MOGLIFICATION_WOODWORKING:
-            addModifier(Mod::WOOD, 5 * multiplier);
+            addModifier(xi::Mod::WOOD, 5 * multiplier);
             break;
         case MEGA_MOGLIFICATION_SMITHING:
-            addModifier(Mod::SMITH, 5 * multiplier);
+            addModifier(xi::Mod::SMITH, 5 * multiplier);
             break;
         case MEGA_MOGLIFICATION_GOLDSMITHING:
-            addModifier(Mod::GOLDSMITH, 5 * multiplier);
+            addModifier(xi::Mod::GOLDSMITH, 5 * multiplier);
             break;
         case MEGA_MOGLIFICATION_CLOTHCRAFT:
-            addModifier(Mod::CLOTH, 5 * multiplier);
+            addModifier(xi::Mod::CLOTH, 5 * multiplier);
             break;
         case MEGA_MOGLIFICATION_LEATHERCRAFT:
-            addModifier(Mod::LEATHER, 5 * multiplier);
+            addModifier(xi::Mod::LEATHER, 5 * multiplier);
             break;
         case MEGA_MOGLIFICATION_BONECRAFT:
-            addModifier(Mod::BONE, 5 * multiplier);
+            addModifier(xi::Mod::BONE, 5 * multiplier);
             break;
         case MEGA_MOGLIFICATION_ALCHEMY:
-            addModifier(Mod::ALCHEMY, 5 * multiplier);
+            addModifier(xi::Mod::ALCHEMY, 5 * multiplier);
             break;
         case MEGA_MOGLIFICATION_COOKING:
-            addModifier(Mod::COOK, 5 * multiplier);
+            addModifier(xi::Mod::COOK, 5 * multiplier);
             break;
 
         case MOGHANCEMENT_EXPERIENCE:
-            addModifier(Mod::EXPERIENCE_RETAINED, 5 * multiplier);
+            addModifier(xi::Mod::EXPERIENCE_RETAINED, 5 * multiplier);
             break;
         case MOGHANCEMENT_GARDENING:
-            addModifier(Mod::GARDENING_WILT_BONUS, 36 * multiplier);
+            addModifier(xi::Mod::GARDENING_WILT_BONUS, 36 * multiplier);
             break;
         case MOGHANCEMENT_DESYNTHESIS:
-            addModifier(Mod::SYNTH_SUCCESS_RATE_DESYNTHESIS, 2 * multiplier);
+            addModifier(xi::Mod::SYNTH_SUCCESS_RATE_DESYNTHESIS, 2 * multiplier);
             break;
         case MOGHANCEMENT_CONQUEST:
-            addModifier(Mod::CONQUEST_BONUS, 6 * multiplier);
+            addModifier(xi::Mod::CONQUEST_BONUS, 6 * multiplier);
             break;
         case MOGHANCEMENT_REGION:
-            addModifier(Mod::CONQUEST_REGION_BONUS, 10 * multiplier);
+            addModifier(xi::Mod::CONQUEST_REGION_BONUS, 10 * multiplier);
             break;
         case MOGHANCEMENT_FISHING_ITEM:
             // TODO: Increases the chances of finding items when fishing
@@ -2818,70 +2830,70 @@ void CCharEntity::changeMoghancement(uint16 moghancementID, bool isAdding)
         case MOGHANCEMENT_SANDORIA_CONQUEST:
             if (profile.nation == 0)
             {
-                addModifier(Mod::CONQUEST_BONUS, 6 * multiplier);
+                addModifier(xi::Mod::CONQUEST_BONUS, 6 * multiplier);
             }
             break;
         case MOGHANCEMENT_BASTOK_CONQUEST:
             if (profile.nation == 1)
             {
-                addModifier(Mod::CONQUEST_BONUS, 6 * multiplier);
+                addModifier(xi::Mod::CONQUEST_BONUS, 6 * multiplier);
             }
             break;
         case MOGHANCEMENT_WINDURST_CONQUEST:
             if (profile.nation == 2)
             {
-                addModifier(Mod::CONQUEST_BONUS, 6 * multiplier);
+                addModifier(xi::Mod::CONQUEST_BONUS, 6 * multiplier);
             }
             break;
         case MOGHANCEMENT_MONEY:
-            addModifier(Mod::MOGHANCEMENT_GIL_BONUS_P, 10 * multiplier);
+            addModifier(xi::Mod::MOGHANCEMENT_GIL_BONUS_P, 10 * multiplier);
             break;
         case MOGHANCEMENT_CAMPAIGN:
-            addModifier(Mod::CAMPAIGN_BONUS, 5 * multiplier);
+            addModifier(xi::Mod::CAMPAIGN_BONUS, 5 * multiplier);
             break;
         case MOGHANCEMENT_MONEY_II:
-            addModifier(Mod::MOGHANCEMENT_GIL_BONUS_P, 15 * multiplier);
+            addModifier(xi::Mod::MOGHANCEMENT_GIL_BONUS_P, 15 * multiplier);
             break;
         case MOGHANCEMENT_SKILL_GAINS:
             // NOTE: Exact value is unknown but considering this only granted by a newish item it makes sense SE made it fairly strong
-            addModifier(Mod::COMBAT_SKILLUP_RATE, 25 * multiplier);
-            addModifier(Mod::MAGIC_SKILLUP_RATE, 25 * multiplier);
+            addModifier(xi::Mod::COMBAT_SKILLUP_RATE, 25 * multiplier);
+            addModifier(xi::Mod::MAGIC_SKILLUP_RATE, 25 * multiplier);
             break;
         case MOGHANCEMENT_BOUNTY:
-            addModifier(Mod::EXP_BONUS, 10 * multiplier);
-            addModifier(Mod::CAPACITY_BONUS, 10 * multiplier);
+            addModifier(xi::Mod::EXP_BONUS, 10 * multiplier);
+            addModifier(xi::Mod::CAPACITY_BONUS, 10 * multiplier);
             break;
         case MOGLIFICATION_EXPERIENCE_BOOST:
-            addModifier(Mod::EXP_BONUS, 15 * multiplier);
+            addModifier(xi::Mod::EXP_BONUS, 15 * multiplier);
             break;
         case MOGLIFICATION_CAPACITY_BOOST:
-            addModifier(Mod::CAPACITY_BONUS, 15 * multiplier);
+            addModifier(xi::Mod::CAPACITY_BONUS, 15 * multiplier);
             break;
 
         // NOTE: Exact values for resistances is unknown
         case MOGLIFICATION_RESIST_DEATH:
-            addModifier(Mod::DEATHRES, 10 * multiplier);
+            addModifier(xi::Mod::DEATHRES, 10 * multiplier);
             break;
         case MOGLIFICATION_RESIST_SLEEP:
-            addModifier(Mod::SLEEPRES, 10 * multiplier);
+            addModifier(xi::Mod::SLEEPRES, 10 * multiplier);
             break;
         case MOGLIFICATION_RESIST_POISON:
-            addModifier(Mod::POISONRES, 10 * multiplier);
+            addModifier(xi::Mod::POISONRES, 10 * multiplier);
             break;
         case MOGLIFICATION_RESIST_PARALYSIS:
-            addModifier(Mod::PARALYZERES, 10 * multiplier);
+            addModifier(xi::Mod::PARALYZERES, 10 * multiplier);
             break;
         case MOGLIFICATION_RESIST_SILENCE:
-            addModifier(Mod::SILENCERES, 10 * multiplier);
+            addModifier(xi::Mod::SILENCERES, 10 * multiplier);
             break;
         case MOGLIFICATION_RESIST_PETRIFICATION:
-            addModifier(Mod::PETRIFYRES, 10 * multiplier);
+            addModifier(xi::Mod::PETRIFYRES, 10 * multiplier);
             break;
         case MOGLIFICATION_RESIST_VIRUS:
-            addModifier(Mod::VIRUSRES, 10 * multiplier);
+            addModifier(xi::Mod::VIRUSRES, 10 * multiplier);
             break;
         case MOGLIFICATION_RESIST_CURSE:
-            addModifier(Mod::CURSERES, 10 * multiplier);
+            addModifier(xi::Mod::CURSERES, 10 * multiplier);
             break;
         default:
             break;

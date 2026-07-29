@@ -102,7 +102,7 @@ void TestChar::clean(uint32 charId /* = 0 */)
     }
 }
 
-auto TestChar::create(const uint16_t zoneId) -> std::unique_ptr<TestChar>
+auto TestChar::create(const xi::ZoneId zoneId) -> std::unique_ptr<TestChar>
 {
     uint32_t accId  = 0;
     uint32_t charId = 0;
@@ -145,7 +145,7 @@ auto TestChar::create(const uint16_t zoneId) -> std::unique_ptr<TestChar>
 
     char_mini mini = {
         .m_name   = {},
-        .m_mjob   = JOB_WAR,
+        .m_mjob   = static_cast<uint8>(xi::Job::WAR),
         .m_zone   = zoneId,
         .m_nation = NATION_SANDORIA,
     };

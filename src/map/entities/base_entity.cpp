@@ -98,9 +98,9 @@ const std::string& CBaseEntity::getPacketName()
     return packetName;
 }
 
-uint16 CBaseEntity::getZone() const
+auto CBaseEntity::getZone() const -> xi::ZoneId
 {
-    return loc.zone != nullptr ? (uint16)loc.zone->GetID() : (uint16)loc.destination;
+    return loc.zone != nullptr ? loc.zone->GetID() : loc.destination;
 }
 
 float CBaseEntity::GetXPos() const
@@ -228,9 +228,9 @@ auto CBaseEntity::serial() const -> uint64
     return serial_;
 }
 
-auto CBaseEntity::entityId() const -> EntityID_t
+auto CBaseEntity::entityId() const -> EntityId
 {
-    return EntityID_t{ this };
+    return EntityId{ this };
 }
 
 void CBaseEntity::SendZoneUpdate()

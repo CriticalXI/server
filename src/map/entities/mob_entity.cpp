@@ -496,9 +496,10 @@ void CMobEntity::setMobMod(xi::MobMod type, int16 value)
     m_mobModStat[type] = value;
 }
 
-int16 CMobEntity::getMobMod(xi::MobMod type)
+auto CMobEntity::getMobMod(xi::MobMod type) const -> int16
 {
-    return m_mobModStat[type];
+    const auto it = m_mobModStat.find(type);
+    return it != m_mobModStat.end() ? it->second : 0;
 }
 
 void CMobEntity::addMobMod(xi::MobMod type, int16 value)
@@ -765,9 +766,9 @@ void CMobEntity::DistributeRewards()
 {
     TracyZoneScoped;
 
-    CCharEntity* PChar = (CCharEntity*)GetEntity(m_OwnerID.targid, TYPE_PC);
+    CCharEntity* PChar = m_OwnerID.resolve<CCharEntity>();
 
-    if (PChar != nullptr && PChar->id == m_OwnerID.id)
+    if (PChar != nullptr && PChar->id == m_OwnerID.UniqueNo)
     {
         StatusEffectContainer->KillAllStatusEffect();
         PChar->m_charHistory.enemiesDefeated++;
@@ -1200,15 +1201,15 @@ void CMobEntity::OnEngage(CAttackState& state)
     TracyZoneScoped;
 
     CBattleEntity::OnEngage(state);
-    luautils::OnMobEngage(this, state.GetTarget());
+    luautils::OnMobEngage(this, state.target().resolve());
     unsigned int range = this->getMobMod(xi::MobMod::AlliHate);
     if (range != 0)
     {
-        CBaseEntity* PTarget = state.GetTarget();
+        CBaseEntity* PTarget = state.target().resolve();
         CBaseEntity* PPet    = nullptr;
         if (PTarget->objtype == TYPE_PET)
         {
-            PPet    = state.GetTarget();
+            PPet    = state.target().resolve();
             PTarget = ((CPetEntity*)PTarget)->PMaster;
         }
 
@@ -1273,7 +1274,7 @@ void CMobEntity::Die()
 
     PEnmityContainer->Clear();
     PAI->ClearStateStack();
-    if (PPet != nullptr && PPet->isAlive() && GetMJob() == JOB_SMN)
+    if (PPet != nullptr && PPet->isAlive() && GetMJob() == xi::Job::SMN)
     {
         PPet->Die();
     }
@@ -1285,7 +1286,7 @@ void CMobEntity::Die()
     {
         if (static_cast<CMobEntity*>(PEntity)->isDead())
         {
-            if (auto* PLastAttacker = GetEntity(lastAttackerId_.targid); PLastAttacker && PLastAttacker->id == lastAttackerId_.id)
+            if (auto* PLastAttacker = lastAttackerId_.resolve())
             {
                 loc.zone->PushPacket(this, CHAR_INRANGE, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(PLastAttacker, this, 0, 0, MsgBasic::DefeatsTarget));
             }

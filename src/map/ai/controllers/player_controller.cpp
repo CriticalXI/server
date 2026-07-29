@@ -39,35 +39,38 @@ CPlayerController::CPlayerController(CCharEntity* _PChar)
 {
 }
 
+CPlayerController::~CPlayerController()
+{
+}
+
 auto CPlayerController::Tick(timer::time_point /*tick*/) -> Task<void>
 {
     co_return;
 }
 
-bool CPlayerController::Cast(uint16 targid, SpellID spellid)
+auto CPlayerController::Cast(const EntityId target, SpellID spellid) -> bool
 {
     auto* PChar = static_cast<CCharEntity*>(POwner);
     if (canAct() && !PChar->PRecastContainer->HasRecast(RECAST_MAGIC, static_cast<Recast>(spellid), 0s))
     {
-        if (auto target = PChar->GetEntity(targid); target && target->PAI->IsUntargetable())
+        if (const auto PTarget = target.resolve<CBattleEntity>(); PTarget && PTarget->PAI->IsUntargetable())
         {
             return false;
         }
-        return CController::Cast(targid, spellid);
+
+        return CController::Cast(target, spellid);
     }
-    else
-    {
-        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::UnableToCast);
-        return false;
-    }
+
+    PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::UnableToCast);
+    return false;
 }
 
-bool CPlayerController::Engage(uint16 targid)
+auto CPlayerController::Engage(const EntityId& target) -> bool
 {
     // TODO: pet engage/disengage
     std::unique_ptr<CBasicPacket> errMsg;
     auto*                         PChar   = static_cast<CCharEntity*>(POwner);
-    auto*                         PTarget = PChar->IsValidTarget(targid, TARGET_ENEMY, errMsg);
+    auto*                         PTarget = PChar->IsValidTarget(target, TARGET_ENEMY, errMsg);
 
     if (PTarget)
     {
@@ -75,7 +78,7 @@ bool CPlayerController::Engage(uint16 targid)
         {
             if (m_lastAttackTime + std::chrono::milliseconds(PChar->GetWeaponDelay(false)) < timer::now())
             {
-                if (CController::Engage(targid))
+                if (CController::Engage(target))
                 {
                     PChar->PLatentEffectContainer->CheckLatentsWeaponDraw(true);
                     PChar->pushPacket<GP_SERV_COMMAND_ASSIST>(PChar, PTarget);
@@ -99,90 +102,17 @@ bool CPlayerController::Engage(uint16 targid)
     return false;
 }
 
-bool CPlayerController::ChangeTarget(uint16 targid)
+auto CPlayerController::ChangeTarget(const EntityId& target) -> bool
 {
-    return CController::ChangeTarget(targid);
+    return CController::ChangeTarget(target);
 }
 
-bool CPlayerController::Disengage()
+auto CPlayerController::Disengage() -> bool
 {
     return CController::Disengage();
 }
 
-bool CPlayerController::Ability(uint16 targid, uint16 abilityid)
-{
-    auto* PChar = static_cast<CCharEntity*>(POwner);
-    if (canAct() && PChar->PAI->CanChangeState())
-    {
-        CAbility* PAbility = ability::GetAbility(abilityid);
-        if (!PAbility)
-        {
-            PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::UnableToUseJobAbility);
-            return false;
-        }
-        if (PChar->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
-        {
-            Recast_t* recast = PChar->PRecastContainer->GetRecast(RECAST_ABILITY, PAbility->getRecastId());
-            // Set recast time to the normal recast time minus any charge time.
-            // Abilities without a charge will have zero chargeTime
-            timer::duration currentRecast = recast->TimeStamp - timer::now() + recast->RecastTime;
-            // Abilities with a single charge (low-level scholar stratagems) behave like abilities without a charge
-            if (recast->maxCharges > 1)
-            {
-                currentRecast -= recast->chargeTime * (recast->maxCharges - 1);
-            }
-
-            currentRecast = std::chrono::ceil<std::chrono::seconds>(currentRecast);
-            PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::UnableToUseJobAbility2);
-            PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, static_cast<uint32>(std::max<int64>(timer::count_seconds(currentRecast), 0)), 0, MsgBasic::TimeLeft);
-            return false;
-        }
-        if (auto target = PChar->GetEntity(targid); target && target->PAI->IsUntargetable())
-        {
-            return false;
-        }
-        return PChar->PAI->Internal_Ability(targid, abilityid);
-    }
-    else
-    {
-        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::UnableToUseJobAbility);
-        return false;
-    }
-}
-
-bool CPlayerController::RangedAttack(uint16 targid)
-{
-    auto* PChar = static_cast<CCharEntity*>(POwner);
-    if (canAct() && PChar->PAI->CanChangeState())
-    {
-        if (auto target = PChar->GetEntity(targid); target && target->PAI->IsUntargetable())
-        {
-            return false;
-        }
-        return PChar->PAI->Internal_RangedAttack(targid);
-    }
-    else
-    {
-        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
-    }
-    return false;
-}
-
-bool CPlayerController::UseItem(uint16 targid, uint8 loc, uint8 slotid)
-{
-    auto* PChar = static_cast<CCharEntity*>(POwner);
-    if (canAct() && PChar->PAI->CanChangeState())
-    {
-        if (auto target = PChar->GetEntity(targid); target && target->PAI->IsUntargetable())
-        {
-            return false;
-        }
-        return PChar->PAI->Internal_UseItem(targid, loc, slotid);
-    }
-    return false;
-}
-
-bool CPlayerController::WeaponSkill(uint16 targid, uint16 wsid)
+auto CPlayerController::WeaponSkill(EntityId target, uint16 wsid) -> bool
 {
     auto* PChar = static_cast<CCharEntity*>(POwner);
     if (canAct() && PChar->PAI->CanChangeState())
@@ -230,7 +160,7 @@ bool CPlayerController::WeaponSkill(uint16 targid, uint16 wsid)
 
         std::unique_ptr<CBasicPacket> errMsg;
 
-        auto* PTarget = PChar->IsValidTarget(targid, battleutils::isValidSelfTargetWeaponskill(wsid) ? TARGET_SELF : TARGET_ENEMY, errMsg);
+        auto* PTarget = PChar->IsValidTarget(target, battleutils::isValidSelfTargetWeaponskill(wsid) ? TARGET_SELF : TARGET_ENEMY, errMsg);
         if (PTarget)
         {
             if (PTarget->PAI->IsUntargetable())
@@ -246,7 +176,7 @@ bool CPlayerController::WeaponSkill(uint16 targid, uint16 wsid)
 
             m_lastWeaponSkill = PWeaponSkill;
 
-            return CController::WeaponSkill(targid, wsid);
+            return CController::WeaponSkill(target, wsid);
         }
         else if (errMsg)
         {
@@ -260,7 +190,80 @@ bool CPlayerController::WeaponSkill(uint16 targid, uint16 wsid)
     return false;
 }
 
-timer::time_point CPlayerController::getLastAttackTime()
+auto CPlayerController::Ability(EntityId target, const uint16 abilityid) -> bool
+{
+    auto* PChar = static_cast<CCharEntity*>(POwner);
+    if (canAct() && PChar->PAI->CanChangeState())
+    {
+        CAbility* PAbility = ability::GetAbility(abilityid);
+        if (!PAbility)
+        {
+            PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::UnableToUseJobAbility);
+            return false;
+        }
+        if (PChar->PRecastContainer->HasRecast(RECAST_ABILITY, PAbility->getRecastId(), PAbility->getRecastTime()))
+        {
+            Recast_t* recast = PChar->PRecastContainer->GetRecast(RECAST_ABILITY, PAbility->getRecastId());
+            // Set recast time to the normal recast time minus any charge time.
+            // Abilities without a charge will have zero chargeTime
+            timer::duration currentRecast = recast->TimeStamp - timer::now() + recast->RecastTime;
+            // Abilities with a single charge (low-level scholar stratagems) behave like abilities without a charge
+            if (recast->maxCharges > 1)
+            {
+                currentRecast -= recast->chargeTime * (recast->maxCharges - 1);
+            }
+
+            currentRecast = std::chrono::ceil<std::chrono::seconds>(currentRecast);
+            PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::UnableToUseJobAbility2);
+            PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, static_cast<uint32>(std::max<int64>(timer::count_seconds(currentRecast), 0)), 0, MsgBasic::TimeLeft);
+            return false;
+        }
+
+        if (const auto PTarget = target.resolve<CBattleEntity>(); PTarget && PTarget->PAI->IsUntargetable())
+        {
+            return false;
+        }
+
+        return PChar->PAI->Internal_Ability(target, abilityid);
+    }
+
+    PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::UnableToUseJobAbility);
+    return false;
+}
+
+auto CPlayerController::RangedAttack(const EntityId target) -> bool
+{
+    auto* PChar = static_cast<CCharEntity*>(POwner);
+    if (canAct() && PChar->PAI->CanChangeState())
+    {
+        if (const auto PTarget = target.resolve<CBattleEntity>(); PTarget && PTarget->PAI->IsUntargetable())
+        {
+            return false;
+        }
+
+        return PChar->PAI->Internal_RangedAttack(target);
+    }
+
+    PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
+    return false;
+}
+
+auto CPlayerController::UseItem(const EntityId& target, const uint8 loc, const uint8 slotid) -> bool
+{
+    const auto* PChar = static_cast<CCharEntity*>(POwner);
+    if (canAct() && PChar->PAI->CanChangeState())
+    {
+        if (const auto PTarget = target.resolve<CBattleEntity>(); PTarget && PTarget->PAI->IsUntargetable())
+        {
+            return false;
+        }
+
+        return PChar->PAI->Internal_UseItem(target, loc, slotid);
+    }
+    return false;
+}
+
+auto CPlayerController::getLastAttackTime() -> timer::time_point
 {
     return m_lastAttackTime;
 }
@@ -270,7 +273,7 @@ void CPlayerController::setLastAttackTime(timer::time_point _lastAttackTime)
     m_lastAttackTime = _lastAttackTime;
 }
 
-timer::time_point CPlayerController::getLastSpellFinishedTime()
+auto CPlayerController::getLastSpellFinishedTime() -> timer::time_point
 {
     return m_spellFinishedTime;
 }
@@ -285,12 +288,12 @@ void CPlayerController::setLastErrMsgTime(timer::time_point _LastErrMsgTime)
     m_errMsgTime = _LastErrMsgTime;
 }
 
-timer::time_point CPlayerController::getLastErrMsgTime()
+auto CPlayerController::getLastErrMsgTime() -> timer::time_point
 {
     return m_errMsgTime;
 }
 
-CWeaponSkill* CPlayerController::getLastWeaponSkill()
+auto CPlayerController::getLastWeaponSkill() -> CWeaponSkill*
 {
     return m_lastWeaponSkill;
 }
@@ -298,7 +301,7 @@ CWeaponSkill* CPlayerController::getLastWeaponSkill()
 // Spells, JAs, ranged attacks and items can't be used instantly after a spell finishes
 // Engaging seems to be immune to this
 // TODO: there seems to be a penalty or rate limit to incoming 0x01As if you act too early
-bool CPlayerController::canAct()
+auto CPlayerController::canAct() -> bool
 {
     auto timeSinceLastSpell = timer::now() - getLastSpellFinishedTime();
 

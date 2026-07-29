@@ -243,7 +243,7 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
             // MONs are allowed to use doors, but nothing else
             if (PChar->m_PMonstrosity != nullptr &&
                 PNpc->look.size != 0x02 &&
-                PChar->getZone() != ZONEID::ZONE_FERETORY &&
+                PChar->getZone() != xi::ZoneId::Feretory &&
                 !settings::get<bool>("main.MONSTROSITY_TRIGGER_NPCS"))
             {
                 PChar->pushPacket<GP_SERV_COMMAND_EVENTUCOFF>(PChar, GP_SERV_COMMAND_EVENTUCOFF_MODE::Standard);
@@ -271,7 +271,7 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
                 PChar->StatusEffectContainer->DelStatusEffectSilent(xi::StatusEffect::Mounted);
             }
 
-            PChar->PAI->Engage(this->ActIndex);
+            PChar->PAI->Engage(EntityId(PChar->GetEntity(this->ActIndex)));
         }
         break;
         case GP_CLI_COMMAND_ACTION_ACTIONID::CastMagic:
@@ -290,7 +290,7 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
             // clang-format on
 
             const auto spellId = static_cast<SpellID>(this->CastMagic.SpellId);
-            PChar->PAI->Cast(this->ActIndex, spellId);
+            PChar->PAI->Cast(EntityId(PChar->GetEntity(this->ActIndex)), spellId);
 
             // target offset used only for luopan placement as of now
             if (spellId >= SpellID::Geo_Regen && spellId <= SpellID::Geo_Gravity)
@@ -342,7 +342,7 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
                 return;
             }
 
-            PChar->PAI->WeaponSkill(this->ActIndex, this->Weaponskill.SkillId);
+            PChar->PAI->WeaponSkill(EntityId(PChar->GetEntity(this->ActIndex)), this->Weaponskill.SkillId);
         }
         break;
         case GP_CLI_COMMAND_ACTION_ACTIONID::JobAbility:
@@ -357,7 +357,7 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
                 }
             }
 
-            PChar->PAI->Ability(this->ActIndex, this->JobAbility.SkillId);
+            PChar->PAI->Ability(EntityId(PChar->GetEntity(this->ActIndex)), this->JobAbility.SkillId);
         }
         break;
         case GP_CLI_COMMAND_ACTION_ACTIONID::HomepointMenu:
@@ -408,12 +408,12 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
         break;
         case GP_CLI_COMMAND_ACTION_ACTIONID::ChangeTarget:
         {
-            PChar->PAI->ChangeTarget(this->ActIndex);
+            PChar->PAI->ChangeTarget(EntityId(PChar->GetEntity(this->ActIndex)));
         }
         break;
         case GP_CLI_COMMAND_ACTION_ACTIONID::Shoot:
         {
-            PChar->PAI->RangedAttack(this->ActIndex);
+            PChar->PAI->RangedAttack(EntityId(PChar->GetEntity(this->ActIndex)));
         }
         break;
         case GP_CLI_COMMAND_ACTION_ACTIONID::ChocoboDig:

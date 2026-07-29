@@ -399,7 +399,7 @@ void CCharUpdatePacket::updateWith(CCharEntity* PChar, ENTITYUPDATE type, uint8 
             packet->GrapIDTbl[0] = PChar->m_PMonstrosity->Look;
             packet->GrapIDTbl[8] = 0xFFFF;
             // Sword & Shield icon only shows outside of the Feretory
-            if (PChar->m_PMonstrosity->Belligerency && PChar->loc.zone->GetID() != ZONE_FERETORY)
+            if (PChar->m_PMonstrosity->Belligerency && PChar->loc.zone->GetID() != xi::ZoneId::Feretory)
             {
                 packet->Flags3.BallistaTeam |= 0x08; // 0x18?
             }
@@ -437,6 +437,6 @@ void CCharUpdatePacket::updateWith(CCharEntity* PChar, ENTITYUPDATE type, uint8 
         }
 
         packet->Flags4.TrialFlag     = 0; // Trial accounts not implemented.
-        packet->Flags4.JobMasterFlag = PChar->getMod(Mod::SUPERIOR_LEVEL) == 5 && PChar->m_jobMasterDisplay;
+        packet->Flags4.JobMasterFlag = PChar->getMod(xi::Mod::SUPERIOR_LEVEL) == 5 && PChar->m_jobMasterDisplay;
     }
 }

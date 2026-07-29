@@ -136,7 +136,7 @@ void CLuaClientEntityPairActions::setBlueSpells(const sol::table& spellIds) cons
         const auto offsettedId               = static_cast<uint8>(spellId - 0x200);
         const auto packet                    = parent_->packets().createPacket<GP_CLI_COMMAND_EXTENDED_JOB>();
         auto*      bluPacket                 = packet->as<GP_CLI_COMMAND_EXTENDED_JOB>();
-        bluPacket->Data.bluData.JobIndex     = JOB_BLU;
+        bluPacket->Data.bluData.JobIndex     = static_cast<uint8_t>(xi::Job::BLU);
         bluPacket->Data.bluData.SpellId      = offsettedId;
         bluPacket->Data.bluData.Spells[slot] = offsettedId;
 
@@ -698,7 +698,7 @@ void CLuaClientEntityPairActions::skillchain(CLuaBaseEntity* target, sol::variad
     {
         PChar->health.tp = 3000;
 
-        PChar->PAI->Internal_WeaponSkill(PMob->targid, wsIds[i]);
+        PChar->PAI->Internal_WeaponSkill(EntityId(PMob), wsIds[i]);
         parent_->simulation()->skipTime(2);
 
         if (i >= 1)

@@ -178,27 +178,27 @@ WYVERN_TYPE CPetEntity::getWyvernType()
 
     switch (PMaster->GetSJob())
     {
-        case JOB_BLM:
-        case JOB_BLU:
-        case JOB_SMN:
-        case JOB_WHM:
-        case JOB_RDM:
-        case JOB_SCH:
-        case JOB_GEO:
+        case xi::Job::BLM:
+        case xi::Job::BLU:
+        case xi::Job::SMN:
+        case xi::Job::WHM:
+        case xi::Job::RDM:
+        case xi::Job::SCH:
+        case xi::Job::GEO:
             return WYVERN_TYPE::DEFENSIVE;
-        case JOB_DRK:
-        case JOB_PLD:
-        case JOB_NIN:
-        case JOB_BRD:
-        case JOB_RUN:
+        case xi::Job::DRK:
+        case xi::Job::PLD:
+        case xi::Job::NIN:
+        case xi::Job::BRD:
+        case xi::Job::RUN:
             return WYVERN_TYPE::MULTIPURPOSE;
-        case JOB_WAR:
-        case JOB_SAM:
-        case JOB_THF:
-        case JOB_BST:
-        case JOB_RNG:
-        case JOB_COR:
-        case JOB_DNC:
+        case xi::Job::WAR:
+        case xi::Job::SAM:
+        case xi::Job::THF:
+        case xi::Job::BST:
+        case xi::Job::RNG:
+        case xi::Job::COR:
+        case xi::Job::DNC:
             return WYVERN_TYPE::OFFENSIVE;
 
         default:
@@ -301,7 +301,7 @@ void CPetEntity::loadPetZoningInfo()
 void CPetEntity::OnAbility(CAbilityState& state, action_t& action)
 {
     auto* PAbility = state.GetAbility();
-    auto* PTarget  = static_cast<CBattleEntity*>(state.GetTarget());
+    auto* PTarget  = state.target().resolve<CBattleEntity>();
 
     std::unique_ptr<CBasicPacket> errMsg;
     if (PTarget && IsValidTarget(PTarget->targid, PAbility->getValidTarget(), errMsg))
@@ -387,7 +387,7 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
     TracyZoneScoped;
 
     auto* PSkill  = state.GetPetSkill();
-    auto* PTarget = dynamic_cast<CBattleEntity*>(state.GetTarget());
+    auto* PTarget = state.target().resolve<CBattleEntity>();
 
     if (PTarget == nullptr)
     {
@@ -602,7 +602,7 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
         battleutils::DirtyExp(PTargetFound, this);
     }
 
-    PTarget = dynamic_cast<CBattleEntity*>(state.GetTarget()); // TODO: why is this recast here? can state change between now and the original cast?
+    PTarget = state.target().resolve<CBattleEntity>(); // TODO: why is this recast here? can state change between now and the original cast?
 
     if (PTarget)
     {

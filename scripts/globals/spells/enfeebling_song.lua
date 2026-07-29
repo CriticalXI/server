@@ -70,7 +70,7 @@ xi.spells.enfeebling.calculateSongPower = function(caster, spellEffect, basePowe
     if spellEffect == xi.effect.REQUIEM then
         power = power + utils.clamp(gearBoost - 1, 0, 20) + caster:getJobPointLevel(xi.jp.REQUIEM_EFFECT) * 3
     elseif spellEffect == xi.effect.ELEGY then
-        power = power + gearBoost * 6375 / 256 -- Simplified numbers of: 25.5 * 10000/1024
+        power = power + math.floor(gearBoost * 25.6) * 10000 / 1024
     elseif spellEffect == xi.effect.THRENODY then
         power = power + gearBoost * 5
     elseif spellEffect == xi.effect.NOCTURNE then
@@ -176,12 +176,24 @@ xi.spells.enfeebling.useEnfeeblingSong = function(caster, target, spell)
     local gearBoost = caster:getMod(pTable[spellId][column.SONG_MODIFIER]) + caster:getMod(xi.mod.ALL_SONGS_EFFECT)
 
     -- Finale has innate +175 to magic accuracy.
+    local magicBurstTier = xi.combat.magicBurst.getMagicBurstTier(target, spellElement)
     local bonusMagicAcc = 0
     if spellEffect == xi.effect.NONE then
         bonusMagicAcc = 175 + gearBoost * 5
     end
 
-    local resistRate = xi.combat.magicHitRate.calculateResistRate(caster, target, xi.magic.spellGroup.SONG, xi.skill.SINGING, 0, spellElement, xi.mod.CHR, spellEffect, bonusMagicAcc)
+    local maccParams =
+    {
+        effectId       = spellEffect,
+        magicalElement = spellElement,
+        magicBurstTier = magicBurstTier,
+        actorStat      = xi.mod.CHR,
+        skillType      = xi.skill.SINGING,
+        spellGroup     = xi.magic.spellGroup.SONG,
+        bonusMacc      = bonusMagicAcc,
+    }
+
+    local resistRate = xi.combat.magicHitRate.calculateResistRate(caster, target, maccParams)
     if not xi.data.statusEffect.isResistRateSuccessfull(spellEffect, resistRate, 0) then
         spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         return spellEffect
@@ -242,7 +254,6 @@ xi.spells.enfeebling.useEnfeeblingSong = function(caster, target, spell)
     -- STEP 5: Attempt to apply the status effect. Check for magic burst.
     ------------------------------
     if target:addStatusEffect(spellEffect, { power = power, duration = duration, origin = caster, tick = tick, subPower = subEffect, tier = spellTier }) then
-        local magicBurstTier = xi.combat.magicBurst.getMagicBurstTier(target, spellElement)
         if magicBurstTier > 0 then
             spell:setMsg(xi.msg.basic.MAGIC_BURST_ENFEEB)
             caster:triggerRoeEvent(xi.roeTrigger.MAGIC_BURST)

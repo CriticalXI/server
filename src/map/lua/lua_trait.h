@@ -1,7 +1,7 @@
 /*
 ===========================================================================
 
-  Copyright (c) 2025 LandSandBoat Dev Teams
+  Copyright (c) 2026 LandSandBoat Dev Teams
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -21,14 +21,38 @@
 
 #pragma once
 
-enum class MusicSlot : uint16_t
+#include "common/cbasetypes.h"
+#include "luautils.h"
+#include "modifier.h"
+
+class CTrait;
+
+class CLuaTrait
 {
-    ZoneDay     = 0,
-    ZoneNight   = 1,
-    CombatSolo  = 2,
-    CombatParty = 3,
-    Mount       = 4,
-    Dead        = 5,
-    MogHouse    = 6,
-    Fishing     = 7,
+    CTrait* trait_;
+
+public:
+    CLuaTrait(CTrait*);
+
+    auto trait() const -> CTrait*
+    {
+        return trait_;
+    }
+
+    friend auto operator<<(std::ostream& out, const CLuaTrait& trait) -> std::ostream&;
+
+    auto getID() const -> uint16;
+    auto getJob() const -> uint8;
+    auto getLevel() const -> uint8;
+    auto getMod() const -> xi::Mod;
+    auto getValue() const -> int16;
+    auto getRank() const -> uint8;
+    auto getMeritID() const -> uint32;
+
+    auto operator==(const CLuaTrait& other) const -> bool
+    {
+        return trait_ == other.trait_;
+    }
+
+    static void Register();
 };

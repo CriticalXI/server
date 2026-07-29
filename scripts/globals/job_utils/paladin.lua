@@ -214,17 +214,25 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
         not xi.data.statusEffect.isTargetResistant(player, target, xi.effect.STUN) and
         not xi.data.statusEffect.isEffectNullified(target, xi.effect.STUN, 0)
     then
-        local resistanceRate = xi.combat.magicHitRate.calculateResistRate(player, target, 0, 0, xi.skillRank.A_PLUS, xi.element.THUNDER, xi.mod.INT, xi.effect.STUN, 0)
+        local maccParams =
+        {
+            effectId       = xi.effect.STUN,
+            magicalElement = xi.element.THUNDER,
+            skillRank      = xi.skillRank.A_PLUS,
+            actorStat      = xi.mod.INT,
+        }
+
+        local resistanceRate = xi.combat.magicHitRate.calculateResistRate(player, target, maccParams)
         if xi.data.statusEffect.isResistRateSuccessfull(xi.effect.STUN, resistanceRate, 0) then
             target:addStatusEffect(xi.effect.STUN, { power = 1, duration = math.randomInt(2, 8) * resistanceRate, origin = player })
         end
     end
 
     -- Randomize damage
-    local randomizer = 1 + (math.randomInt(1, 5) / 100)
+    local randomizer = 1 + math.randomInt(1, 5) / 100
 
-    damage = damage * randomizer
-    damage = utils.handleStoneskin(target, damage)
+    damage = math.floor(damage * randomizer)
+    damage = utils.handleStoneskin(target, damage, xi.attackType.PHYSICAL)
 
     target:takeDamage(damage, player, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
     target:updateEnmityFromDamage(player, damage)

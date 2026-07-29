@@ -243,10 +243,17 @@ local function calculateHybridMagicDamage(tp, physicaldmg, attacker, target, wsP
         wsd = wsd + attacker:getMod(xi.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
     end
 
+    local maccParams =
+    {
+        magicalElement = wsParams.ele,
+        skillType      = wsParams.skill,
+        bonusMacc      = calcParams.bonusAcc,
+    }
+
     magicdmg = math.floor(magicdmg * (100 + wsd) / 100)
     magicdmg = math.floor(addBonusesAbility(attacker, wsParams.ele, target, magicdmg, wsParams))
     magicdmg = math.floor(magicdmg + calcParams.bonusfTP * physicaldmg)
-    magicdmg = math.floor(magicdmg * xi.combat.magicHitRate.calculateResistRate(attacker, target, 0, wsParams.skill, 0, wsParams.ele, 0, 0, calcParams.bonusAcc))
+    magicdmg = math.floor(magicdmg * xi.combat.magicHitRate.calculateResistRate(attacker, target, maccParams))
     magicdmg = math.floor(magicdmg * xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false))
     magicdmg = math.floor(target:handleSevereDamage(magicdmg, false))
 
@@ -258,7 +265,7 @@ local function calculateHybridMagicDamage(tp, physicaldmg, attacker, target, wsP
     if magicdmg > 0 then -- handle nonzero damage if previous function does not absorb or nullify
         magicdmg = utils.handlePhalanx(target, magicdmg)
         magicdmg = utils.handleOneForAll(target, magicdmg)
-        magicdmg = utils.handleStoneskin(target, magicdmg)
+        magicdmg = utils.handleStoneskin(target, magicdmg, xi.attackType.MAGICAL)
     end
 
     return math.floor(magicdmg)
@@ -287,7 +294,11 @@ end
 -- luacheck: ignore 561
 xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action, wsParams, calcParams)
     local targetLvl = target:getMainLvl()
-    local targetHp  = target:getHP() + target:getMod(xi.mod.STONESKIN)
+    local targetHp  = target:getHP()
+    local stoneskin = target:getStatusEffect(xi.effect.STONESKIN)
+    if stoneskin then
+        targetHp = targetHp + stoneskin:getPower()
+    end
 
     -- Obtains alpha, used for working out WSC on legacy servers. Retail has no alpha anymore as of 2014 Weaponskill functions
     local alpha = 1
@@ -873,13 +884,20 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
             bonusdmg = bonusdmg + attacker:getMod(xi.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
         end
 
+        local maccParams =
+        {
+            magicalElement = wsParams.ele,
+            skillType      = wsParams.skill,
+            bonusMacc      = gearAcc,
+        }
+
         -- Add in bonusdmg
         dmg = dmg * (100 + bonusdmg) / 100 -- Apply our "all hits" WS dmg bonuses
         dmg = dmg + dmg * attacker:getMod(xi.mod.ALL_WSDMG_FIRST_HIT) / 100 -- Add in our "first hit" WS dmg bonus
 
         -- Calculate magical bonuses and reductions
         dmg = math.floor(addBonusesAbility(attacker, wsParams.ele, target, dmg, wsParams))
-        dmg = math.floor(dmg * xi.combat.magicHitRate.calculateResistRate(attacker, target, 0, wsParams.skill, 0, wsParams.ele, 0, 0, gearAcc))
+        dmg = math.floor(dmg * xi.combat.magicHitRate.calculateResistRate(attacker, target, maccParams))
         dmg = math.floor(dmg * xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false))
         dmg = math.floor(target:handleSevereDamage(dmg, false))
 
@@ -895,7 +913,7 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
 
         dmg = utils.handlePhalanx(target, dmg)
         dmg = utils.handleOneForAll(target, dmg)
-        dmg = utils.handleStoneskin(target, dmg)
+        dmg = utils.handleStoneskin(target, dmg, xi.attackType.MAGICAL)
 
         dmg = dmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
     else

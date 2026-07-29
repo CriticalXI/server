@@ -39,7 +39,7 @@ CTargetFind::CTargetFind(CBattleEntity* PBattleEntity)
 , m_PBattleEntity(PBattleEntity)
 , m_PMasterTarget(nullptr)
 , m_PTarget(nullptr)
-, m_zone(0)
+, m_zone(xi::ZoneId::Unknown)
 , m_findType{}
 , m_findFlags(0)
 , m_targetFlags(0)
@@ -59,7 +59,7 @@ void CTargetFind::reset()
     m_targets.clear();
     m_conal           = false;
     m_radius          = 0.0f;
-    m_zone            = 0;
+    m_zone            = xi::ZoneId::Unknown;
     m_findFlags       = FINDFLAGS_NONE;
     m_selfCenteredAoE = false;
 
@@ -448,7 +448,7 @@ bool CTargetFind::isMobOwner(CBattleEntity* PTarget)
         return true;
     }
 
-    if (PTarget->m_OwnerID.id == 0 || PTarget->m_OwnerID.id == findMaster(m_PBattleEntity)->id)
+    if (PTarget->m_OwnerID.UniqueNo == 0 || PTarget->m_OwnerID.UniqueNo == findMaster(m_PBattleEntity)->id)
     {
         return true;
     }
@@ -466,7 +466,7 @@ bool CTargetFind::isMobOwner(CBattleEntity* PTarget)
     // clang-format off
     findMaster(m_PBattleEntity)->ForAlliance([&found, &PTarget](CBattleEntity* PMember)
     {
-        if (PMember->id == PTarget->m_OwnerID.id)
+        if (PMember->id == PTarget->m_OwnerID.UniqueNo)
         {
             found = true;
         }
@@ -687,10 +687,13 @@ bool CTargetFind::isWithinRange(position_t* pos, float range)
     return distance(m_PBattleEntity->loc.p, *pos) <= range;
 }
 
-CBattleEntity* CTargetFind::getValidTarget(uint16 actionTargetID, uint16 validTargetFlags)
+auto CTargetFind::getValidTarget(const uint16 actionTargetID, const uint16 validTargetFlags) const -> CBattleEntity*
 {
-    CBattleEntity* PTarget = (CBattleEntity*)m_PBattleEntity->GetEntity(actionTargetID, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST);
+    return getValidTarget(dynamic_cast<CBattleEntity*>(m_PBattleEntity->GetEntity(actionTargetID, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_TRUST)), validTargetFlags);
+}
 
+auto CTargetFind::getValidTarget(CBattleEntity* PTarget, const uint16 validTargetFlags) const -> CBattleEntity*
+{
     if (PTarget == nullptr)
     {
         return nullptr;

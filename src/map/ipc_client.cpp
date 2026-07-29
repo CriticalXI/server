@@ -297,7 +297,7 @@ void IPCClient::handleMessage_ChatMessageParty(const IPP& ipp, const ipc::ChatMe
     });
     if (PParty)
     {
-        PParty->PushPacket(message.senderId, 0, std::make_unique<GP_SERV_COMMAND_CHAT_STD>(message.senderName, message.zoneId, message.messageType, message.message, message.gmLevel));
+        PParty->PushPacket(message.senderId, xi::ZoneId::Unknown, std::make_unique<GP_SERV_COMMAND_CHAT_STD>(message.senderName, message.zoneId, message.messageType, message.message, message.gmLevel));
     }
     // clang-format on
 }
@@ -332,7 +332,7 @@ void IPCClient::handleMessage_ChatMessageAlliance(const IPP& ipp, const ipc::Cha
     {
         for (const auto& currentParty : PAlliance->partyList)
         {
-            currentParty->PushPacket(message.senderId, 0, std::make_unique<GP_SERV_COMMAND_CHAT_STD>(message.senderName, message.zoneId, message.messageType, message.message, message.gmLevel));
+            currentParty->PushPacket(message.senderId, xi::ZoneId::Unknown, std::make_unique<GP_SERV_COMMAND_CHAT_STD>(message.senderName, message.zoneId, message.messageType, message.message, message.gmLevel));
         }
     }
     // clang-format on
@@ -446,7 +446,7 @@ void IPCClient::handleMessage_PartyInvite(const IPP& ipp, const ipc::PartyInvite
         // make sure invitee isn't dead or in jail, they aren't a party member and don't already have an invite pending, and your party is not full
         if (PInvitee->isDead() ||
             jailutils::InPrison(PInvitee) ||
-            PInvitee->InvitePending.id != 0 ||
+            PInvitee->InvitePending.UniqueNo != 0 ||
             (PInvitee->PParty && message.inviteType == PartyKind::Party) ||
             (message.inviteType == PartyKind::Alliance && (!PInvitee->PParty || PInvitee->PParty->GetLeader() != PInvitee || (PInvitee->PParty && PInvitee->PParty->m_PAlliance))))
         {
@@ -488,8 +488,8 @@ void IPCClient::handleMessage_PartyInvite(const IPP& ipp, const ipc::PartyInvite
             return;
         }
 
-        PInvitee->InvitePending.id     = message.inviterId;
-        PInvitee->InvitePending.targid = message.inviterTargId;
+        PInvitee->InvitePending.UniqueNo = message.inviterId;
+        PInvitee->InvitePending.ActIndex = message.inviterTargId;
 
         PInvitee->pushPacket(std::make_unique<GP_SERV_COMMAND_GROUP_SOLICIT_REQ>(message.inviterId, message.inviterTargId, message.inviterName, message.inviteType));
     }

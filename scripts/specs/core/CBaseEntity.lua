@@ -618,7 +618,7 @@ end
 function CBaseEntity:setWeather(weatherType)
 end
 
----@param blockID integer
+---@param blockID xi.musicSlot
 ---@param musicTrackID integer
 ---@return nil
 function CBaseEntity:changeMusic(blockID, musicTrackID)
@@ -1560,12 +1560,12 @@ function CBaseEntity:getTimeCreated()
 end
 
 ---@nodiscard
----@return integer
+---@return xi.job
 function CBaseEntity:getMainJob()
 end
 
 ---@nodiscard
----@return integer
+---@return xi.job
 function CBaseEntity:getSubJob()
 end
 

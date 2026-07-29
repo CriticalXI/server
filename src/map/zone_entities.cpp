@@ -420,7 +420,7 @@ void CZoneEntities::FindPartyForMob(CBaseEntity* PEntity)
     }
 }
 
-void CZoneEntities::TransportDepart(uint16 boundary, uint16 prevZoneId, uint16 transport)
+void CZoneEntities::TransportDepart(uint16 boundary, xi::ZoneId prevZoneId, uint16 transport)
 {
     TracyZoneScoped;
 
@@ -475,7 +475,7 @@ void CZoneEntities::WeatherChange(xi::Weather weather)
     }
 }
 
-void CZoneEntities::MusicChange(MusicSlot slotId, uint16 trackId)
+void CZoneEntities::MusicChange(xi::MusicSlot slotId, uint16 trackId)
 {
     TracyZoneScoped;
 
@@ -519,7 +519,7 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
             PChar->PPet->status = xi::Status::Disappear;
             if (static_cast<CPetEntity*>(PChar->PPet)->getPetType() == PET_TYPE::AVATAR)
             {
-                PChar->setModifier(Mod::AVATAR_PERPETUATION, 0);
+                PChar->setModifier(xi::Mod::AVATAR_PERPETUATION, 0);
             }
         }
 
@@ -564,12 +564,12 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
     FOR_EACH_PAIR_CAST_SECOND(CMobEntity*, PCurrentMob, m_mobList)
     {
         PCurrentMob->PEnmityContainer->LogoutReset(PChar->id);
-        if (PCurrentMob->m_OwnerID.id == PChar->id)
+        if (PCurrentMob->m_OwnerID.UniqueNo == PChar->id)
         {
             PCurrentMob->m_OwnerID.clean();
             PCurrentMob->updatemask |= UPDATE_STATUS;
         }
-        if (PCurrentMob->GetBattleTargetID() == PChar->targid)
+        if (PCurrentMob->battleTarget() == PChar)
         {
             PCurrentMob->setBattleTarget(std::nullopt);
         }
@@ -660,7 +660,7 @@ void CZoneEntities::AssignDynamicTargIDandLongID(CBaseEntity* PEntity)
     // We found our targid, the next dynamic entity will want to start searching at +1 of this.
     m_nextDynamicTargID = targid + 1;
 
-    auto id = 0x01000000 | (m_zone->GetID() << 0x0C) | (targid + 0x0100);
+    auto id = 0x01000000 | (static_cast<uint32>(m_zone->GetID()) << 0x0C) | (targid + 0x0100);
 
     m_dynamicTargIds.insert(targid);
 
@@ -847,7 +847,7 @@ void CZoneEntities::tapMobAggro(CCharEntity* PChar, CMobEntity* PCurrentMob)
     bool validAggro = mobCheck > EMobDifficulty::TooWeak || PChar->isSitting() || PCurrentMob->getMobMod(xi::MobMod::AlwaysAggro);
     if (validAggro && PController->CanAggroTarget(PChar))
     {
-        PCurrentMob->PAI->Engage(PChar->targid);
+        PCurrentMob->PAI->Engage(PChar->entityId());
     }
 }
 
@@ -1045,7 +1045,7 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
     TracyZoneScoped;
 
     // TODO: This is a temporary fix so that Feretory and Mog Garden _seem_ like a solo zones.
-    if (PChar->loc.zone->GetID() == ZONE_FERETORY || PChar->loc.zone->GetID() == ZONE_MOG_GARDEN)
+    if (PChar->loc.zone->GetID() == xi::ZoneId::Feretory || PChar->loc.zone->GetID() == xi::ZoneId::MogGarden)
     {
         return;
     }
@@ -1061,7 +1061,7 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
             continue;
         }
 
-        CBaseEntity* PTarget = PState->GetTarget();
+        CBaseEntity* PTarget = PState->target().resolve();
         if (PTarget && PTarget->objtype == TYPE_PC && PTarget->id != PChar->id)
         {
             scoreBonus[PTarget->id] += CHARACTER_SYNC_DISTANCE_SWAP_THRESHOLD;
@@ -1760,7 +1760,7 @@ auto CZoneEntities::mobAggroCheck(CMobEntity* PMob, timer::time_point tick) -> T
             CMobController* PController = static_cast<CMobController*>(PCurrentMob->PAI->GetController());
             if (PController != nullptr && PController->CanAggroTarget(PMob))
             {
-                PCurrentMob->PAI->Engage(PMob->targid);
+                PCurrentMob->PAI->Engage(PMob->entityId());
             }
         }
     };
@@ -2110,7 +2110,7 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
                 }
             }
         }
-        else if (PChar->loc.destination != 0xFFFF)
+        else if (PChar->loc.destination != ZONE_NO_DESTINATION)
         {
             const bool ready = co_await zoneutils::IsZoneReady(scheduler_, config_, PChar->loc.destination);
             if (ready)

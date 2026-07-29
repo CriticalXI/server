@@ -25,6 +25,7 @@
 #include "common/cbasetypes.h"
 #include "data/enums/entity_flags.h"
 #include "data/enums/mob_mod.h"
+#include "data/enums/music_slot.h"
 #include "enums/mission_log.h"
 #include "luautils.h"
 #include "packets/s2c/0x009_message.h"
@@ -33,7 +34,6 @@
 
 enum class QuestLog : uint8_t;
 enum class POSMODE : uint8;
-enum class MusicSlot : uint16_t;
 enum class ChocoboColor : uint8_t;
 enum class TerrainType : uint8;
 class CBaseEntity;
@@ -180,7 +180,7 @@ public:
     void setWeather(xi::Weather weatherType); // Set Weather condition (GM COMMAND)
 
     // PC Instructions
-    void changeMusic(MusicSlot slotId, uint16 trackId) const;                                                      // Sets the specified music Track for specified music block.
+    void changeMusic(xi::MusicSlot slotId, uint16 trackId) const;                                                  // Sets the specified music Track for specified music block.
     void sendMenu(uint32 menu);                                                                                    // Displays a menu (AH,Raise,Tractor,MH etc)
     auto sendGuild(uint16 guildId, uint8 open, uint8 close, uint8 holiday) const -> bool;                          // Sends guild shop menu
     auto openGuildShop(CLuaBaseEntity* PNpc, uint8 open, uint8 close, sol::optional<uint8> holiday) const -> bool; // Opens a lua guild shop and remembers the NPC the PC opened it with
@@ -201,10 +201,10 @@ public:
     auto  isToEntitysRight(const CLuaBaseEntity* target, const sol::object& angleArg) -> bool; // true if you're to the right side of the input target (from target's perspective)
 
     auto   getZone(const sol::object& arg0) -> CZone*;
-    uint16 getZoneID();
+    auto   getZoneID() -> xi::ZoneId;
     auto   getZoneName() -> std::string;
     bool   hasVisitedZone(uint16 zone);
-    uint16 getPreviousZone();
+    auto   getPreviousZone() -> xi::ZoneId;
     uint32 getPreviousZoneLineID();
     uint8  getCurrentRegion();
     uint8  getContinentID();
@@ -298,7 +298,7 @@ public:
     int8  getShieldSize();
     int16 getShieldDefense();
 
-    void addGearSetMod(uint8 setId, Mod modId, uint16 modValue);
+    void addGearSetMod(uint8 setId, xi::Mod modId, uint16 modValue);
     void clearGearSetMods();
 
     // Storing
@@ -374,12 +374,12 @@ public:
     uint32 getTimeCreated();
 
     // Player Jobs and Levels
-    uint8 getMainJob();
-    uint8 getSubJob();
-    void  changeJob(uint8 newJob);
-    void  changesJob(uint8 subJob);
-    void  unlockJob(uint8 JobID);
-    bool  hasJob(uint8 job);
+    auto getMainJob() -> xi::Job;
+    auto getSubJob() -> xi::Job;
+    void changeJob(uint8 newJob);
+    void changesJob(uint8 subJob);
+    void unlockJob(uint8 JobID);
+    bool hasJob(uint8 job);
 
     uint8 getMainLvl();
     uint8 getSubLvl();
@@ -478,7 +478,7 @@ public:
     void   setJobPoints(uint16 amount);
     void   addJobPoints(uint8 jobID, uint16 amount);
     void   delJobPoints(uint8 jobID, uint16 amount);
-    uint16 getJobPoints(JOBTYPE jobID);
+    auto   getJobPoints(xi::Job jobID) -> uint16;
     void   setCapacityPoints(uint16 amount);
     void   masterJob();
 
@@ -721,8 +721,8 @@ public:
     void  setMod(uint16 modID, int16 value);
     void  delMod(uint16 modID, int16 value);
     void  printAllMods();
-    int16 getMaxGearMod(Mod modId);
-    int16 getGearModFromSlot(uint8 slot, Mod modId);
+    int16 getMaxGearMod(xi::Mod modId);
+    int16 getGearModFromSlot(uint8 slot, xi::Mod modId);
 
     void addLatent(uint16 condID, uint16 conditionValue, uint16 mID, int16 modValue);
     auto delLatent(uint16 condID, uint16 conditionValue, uint16 mID, int16 modValue) -> bool;
