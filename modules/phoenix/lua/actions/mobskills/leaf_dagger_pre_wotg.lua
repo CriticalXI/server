@@ -9,18 +9,14 @@
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
+local moduleName = 'leaf_dagger_adjust'
 
-local moduleName = 'toau_leaf_dagger'
-
-if xi.module.isContentEnabled('TOAU') then
+if xi.module.isContentEnabled('WOTG') then
     return { name = moduleName }
 end
 
 local m = Module:new(moduleName)
 
------------------------------------
--- Leaf Dagger
------------------------------------
 m:addOverride('xi.actions.mobskills.leaf_dagger.onMobWeaponSkill', function(mob, target, skill, action)
     local params = {}
 
