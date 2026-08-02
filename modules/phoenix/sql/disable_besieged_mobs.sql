@@ -1,0 +1,40 @@
+-- ------------------------------------------------------------
+-- Tags Besieged mobs with WOTG content tags so they will not spawn until we implement the Besieged system.
+-- This module covers the beastman generals and their guards, the stronghold NMs, and the Astral Candescence recovery BCNM mobs.
+-- ------------------------------------------------------------
+
+-- Arrapago Reef (Zone 54)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 54 AND `groupid` = 23; -- Lamie No.8 (16998481)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 54 AND `groupid` = 30; -- Lamie No.7 (16998520)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 54 AND `groupid` = 35; -- Merrow No.5 (16998560)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 54 AND `groupid` = 63; -- Lamie No.9 (16998742)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 54 AND `groupid` = 78; -- Lamia No.11 (16998835, Astral Candescence Recovery BCNM)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 54 AND `groupid` = 79; -- Lamia No.24 (16998836, Astral Candescence Recovery BCNM)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 54 AND `groupid` = 80; -- Lamia No.18 (16998837, Astral Candescence Recovery BCNM)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 54 AND `groupid` = 83; -- Medusa (16998862)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 54 AND `groupid` = 84; -- Lamia Exon (16998863-16998866)
+
+-- Halvung (Zone 62)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 35; -- Mythril Mouth Monamaq (17031440)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 37; -- Kirlirger the Abhorrent (17031446)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 38; -- Farlarder the Shrewd (17031481)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 39; -- Dorgerwor the Astute (17031482)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 41; -- Chiliarch Gordarvor (17031565, Astral Candescence Recovery BCNM)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 42; -- Hetairoi Vuryargur (17031566, Astral Candescence Recovery BCNM)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 43; -- Hetairoi Zarwarkur (17031567, Astral Candescence Recovery BCNM)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 47; -- Gurfurlur the Menacing (17031592)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 48; -- Hilltroll Elite Guard (17031593-17031594)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 62 AND `groupid` = 49; -- Woodtroll Elite Guard (17031595-17031596)
+
+-- Mamook (Zone 65)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 19; -- Devout Radol Ja (17043532)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 26; -- Dragonscaled Bugaal Ja (17043626)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 29; -- Hundredfaced Hapool Ja (17043665)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 41; -- Darting Kachaal Ja (17043736)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 51; -- Sagelord Molaal Ja (17043872, Astral Candescence Recovery BCNM)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 52; -- Shadelurking Zolool Ja (17043873, Astral Candescence Recovery BCNM)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 53; -- Forbidding Koheel Ja (17043874, Astral Candescence Recovery BCNM)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 54; -- Gulool Ja Ja (17043875)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 55; -- Mamool Ja Chamberlain (17043876-17043877)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 56; -- Mamool Ja Palatine (17043878-17043879)
+UPDATE `mob_groups` SET `content_tag` = 'WOTG' WHERE `zoneid` = 65 AND `groupid` = 72; -- Hundredfaced Hapool Ja clones (17043666-17043669)
