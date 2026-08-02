@@ -293,11 +293,6 @@ local shieldedEntities =
         'Bonnacon',
     },
 
-    ['Upper_Delkfutts_Tower'] =
-    {
-        'Pallas',
-    },
-
     ['Valkurm_Dunes'] =
     {
         'Valkurm_Emperor',
