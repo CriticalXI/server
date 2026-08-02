@@ -602,7 +602,10 @@ REPLACE INTO `mob_spawn_points` VALUES (17101103, 0, 'Elder_Treant', 'Elder Trea
 REPLACE INTO `mob_spawn_points` VALUES (17101104, 0, 'Treant_Sapling', 'Treant Sapling', 8, 61, 63, -250.6606, 6.6251, -525.5054, 99, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17101105, 0, 'Elder_Treant', 'Elder Treant', 23, 80, 82, -255.4327, 6.0000, -537.7132, 72, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17101106, 0, 'Elder_Treant', 'Elder Treant', 23, 80, 82, -241.9578, 4.3564, -540.6875, 22, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17101197, 0, 'Khimaira', 'Khimaira', 59, 85, 85, 841.8593, 0.0000, 359.1881, 211, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17101197, 0, 'Khimaira', 'Khimaira', 59, 85, 85, 840.1741, 0.2318, 354.0881, 190, NULL, NULL);
+
+-- The Boyahda Tree (Zone 153)
+REPLACE INTO `mob_spawn_points` VALUES (17404290, 0, 'Ancient_Goobbue', 'Ancient Goobbue', 28, 80, 80, -230.0585, 9.8375, -271.3131, 232, NULL, NULL);
 
 -- Ranguemont Pass (Zone 166)
 REPLACE INTO `mob_spawn_points` VALUES (17457248, 0, 'Seeker_Bats', 'Seeker Bats', 9, 25, 28, -26.2220, -0.1952, -105.9189, 31, NULL, NULL);
@@ -668,7 +671,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17461347, 0, 'Hecatomb_Hound', 'Hecatomb
 REPLACE INTO `mob_spawn_points` VALUES (17461348, 0, 'Hecatomb_Hound', 'Hecatomb Hound', 5, 56, 59, -60.5307, 0.0000, -242.7588, 21, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461349, 0, 'Hecatomb_Hound', 'Hecatomb Hound', 5, 56, 59, -76.0632, 0.0274, -221.6351, 200, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461350, 0, 'Hecatomb_Hound', 'Hecatomb Hound', 5, 56, 59, -100.4187, -0.0075, -243.2255, 29, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17461315, 0, 'Shii', 'Shii', 12, 70, 71, -38.1610, 1.0000, -100.2451, 15, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17461315, 0, 'Shii', 'Shii', 12, 70, 71, 26.5113, 0.0000, -145.5199, 193, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461351, 0, 'Hecatomb_Hound', 'Hecatomb Hound', 5, 56, 59, -54.6545, 0.0415, -136.7523, 135, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461352, 0, 'Hecatomb_Hound', 'Hecatomb Hound', 5, 56, 59, -65.7660, -0.0062, -139.3490, 65, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461353, 0, 'Hecatomb_Hound', 'Hecatomb Hound', 5, 56, 59, -65.6474, 0.0000, -144.8382, 83, NULL, NULL);
@@ -719,11 +722,11 @@ REPLACE INTO `mob_spawn_points` VALUES (17461376, 0, 'Haunt', 'Haunt', 7, 60, 63
 REPLACE INTO `mob_spawn_points` VALUES (17461377, 0, 'Haunt', 'Haunt', 7, 60, 63, 99.4546, 1.1029, -105.6469, 172, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461308, 0, 'Garm', 'Garm', 8, 64, 66, 99.6145, 0.0587, -56.8596, 153, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461309, 0, 'Garm', 'Garm', 8, 64, 66, 111.4890, 0.0464, -63.0559, 113, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17461310, 0, 'Garm', 'Garm', 8, 64, 66, 125.4085, 0.2500, -53.1145, 96, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17461310, 0, 'Garm', 'Garm', 8, 64, 66, 23.2438, 0.0000, -140.7054, 249, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461311, 0, 'Garm', 'Garm', 8, 64, 66, 134.6818, 0.3392, -46.6022, 94, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17461312, 0, 'Garm', 'Garm', 8, 64, 66, 140.5622, -0.0118, -34.0912, 59, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17461313, 0, 'Garm', 'Garm', 8, 64, 66, 119.9706, 0.2500, -25.4225, 254, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17461314, 0, 'Garm', 'Garm', 8, 64, 66, 104.0457, 0.0000, -21.1151, 251, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17461312, 0, 'Garm', 'Garm', 8, 64, 66, 15.9523, 0.0452, -145.4426, 248, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17461313, 0, 'Garm', 'Garm', 8, 64, 66, 38.6035, 1.0000, -140.0112, 253, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17461314, 0, 'Garm', 'Garm', 8, 64, 66, 22.0210, -0.0011, -137.4182, 24, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461378, 0, 'Gespenst', 'Gespenst', 22, 68, 70, 84.7598, 0.2788, -24.6701, 22, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461433, 0, 'Arioch', 'Arioch', 20, 56, 62, 67.6032, 0.0378, -23.8788, 188, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461429, 0, 'Werebat', 'Werebat', 6, 55, 59, 152.1099, 0.0000, -20.5140, 254, NULL, NULL);
@@ -921,6 +924,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17490121, 0, 'Greater_Cockatrice', 'Grea
 REPLACE INTO `mob_spawn_points` VALUES (17490122, 0, 'Greater_Cockatrice', 'Greater Cockatrice', 19, 78, 80, 41.4112, 29.8508, -203.9773, 230, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17490123, 0, 'Greater_Cockatrice', 'Greater Cockatrice', 19, 78, 80, 43.3091, 30.0000, -202.0315, 227, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17490124, 0, 'Ladon', 'Ladon', 20, 80, 82, 45.7475, 30.0000, -195.1464, 205, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17490101, 0, 'Pelican', 'Pelican', 21, 80, 81, 39.3958, 30.0000, -200.9464, 231, NULL, NULL);
 
 -- The_Shrine_of_RuAvitau (Zone 178)
 REPLACE INTO `mob_spawn_points` VALUES (17506646, 0, 'Aura_Pot', 'Aura Pot', 2, 75, 80, 91.9273, 32.5758, 2.1176, 13, NULL, NULL);
@@ -1759,6 +1763,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17596727, 0, 'Hellmine', 'Hellmine', 28,
 REPLACE INTO `mob_spawn_points` VALUES (17596717, 0, 'Wraith', 'Wraith', 25, 60, 62, -159.000, 19.000, 217.000, 127, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17596718, 0, 'Wraith', 'Wraith', 25, 60, 62, -152.174, 19.138, 193.684, 5, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17596719, 0, 'Wraith', 'Wraith', 25, 60, 62, -115.204, 19.038, 192.837, 87, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17596720, 0, 'Serket', 'Serket', 41, 70, 70, -262.0567, 19.7364, 281.5403, 134, NULL, NULL);
 
 -- FeiYin (Zone 204)
 REPLACE INTO `mob_spawn_points` VALUES (17612870, 8, 'Shadow', 'Shadow', 12, 44, 46, 165.6687, -23.8901, -88.6394, 56, NULL, NULL);
@@ -1833,6 +1838,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17645692, 0, 'Doom_Warlock', 'Doom Warlo
 REPLACE INTO `mob_spawn_points` VALUES (17645693, 0, 'Doom_Warlock', 'Doom Warlock', 24, 76, 78, 125.1375, 0.7196, 183.9395, 195, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17645694, 0, 'Typhoon_Wyvern', 'Typhoon Wyvern', 26, 78, 80, 101.9661, 0.4457, 194.4424, 228, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17645695, 0, 'Typhoon_Wyvern', 'Typhoon Wyvern', 26, 78, 80, 118.8957, 0.9824, 180.8832, 59, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17645719, 0, 'Baobhan_Sith', 'Baobhan Sith', 29, 79, 81, 121.9407, 1.0000, 173.2505, 170, NULL, NULL);
 
 -- Labyrinth_of_Onzozo (Zone 213)
 REPLACE INTO `mob_spawn_points` VALUES (17649818, 0, 'Soulstealer_Skullnix', 'Soulstealer Skullnix', 24, 69, 72, 31.2074, 4.3716, 284.1980, 69, NULL, NULL);
