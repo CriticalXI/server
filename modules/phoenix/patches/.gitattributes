@@ -1,0 +1,2 @@
+# Keep patch files exactly as committed. Git may rewrite line endings, and a rewritten patch no longer matches the files it changes, so it fails to apply.
+*.patch -text
