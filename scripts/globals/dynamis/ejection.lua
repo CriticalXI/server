@@ -3,6 +3,7 @@
 --   Dynamis Eject Functions
 -----------------------------------
 local ejectWarningTimer      = 2000
+local ejectDeadDelay   = 10000
 local ejectWarningVar        = 'Received_Eject_Warning'
 local ejectCutsceneQueuedVar = '[DYNA]EjectCutsceneQueued'
 
@@ -32,6 +33,22 @@ xi.dynamis.performEjectActions = function(player, zoneId, cutsceneDelayMs)
         if playerArg:getCurrentRegion() == xi.region.DYNAMIS then
             playerArg:startCutscene(100)
         end
+    end)
+
+    -- The eject cutscene cannot run for dead players so we need to ejec them afterwards
+    -- Add 10 seconds to the 30 second grace timer
+    player:timer(cutsceneDelayMs + ejectDeadDelay, function(playerArg)
+        if playerArg:getZoneID() ~= zoneId then
+            return
+        end
+
+        local dynaInfo = xi.dynamis.dynaInfoEra[zoneId]
+        if dynaInfo and dynaInfo.ejectPos then
+            playerArg:setPos(unpack(dynaInfo.ejectPos))
+        end
+
+        -- Reset after timer
+        xi.dynamis.resetEjectState(playerArg)
     end)
 end
 

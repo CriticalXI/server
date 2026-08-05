@@ -119,7 +119,6 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
 
         -- 1. GM bypass - allow direct entry and registration
         if xi.dynamis.isGM(player) then
-            xi.dynamis.registerPlayer(player)
             player:startEvent(entryInfo.csDyna, entryInfo.csBit, playerEntered == 1 and 0 or 1, xi.dynamis.settings.RESERVATION_TIMEOUT, xi.dynamis.settings.REENTRY_DAYS, entryInfo.maxCapacity, xi.ki.VIAL_OF_SHROUDED_SAND, dynamisTimelessHourglass, dynamisPerpetual)
             return
         end
@@ -158,8 +157,7 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
                 return
             end
 
-            -- Register player and allow entry
-            xi.dynamis.registerPlayer(player)
+            -- Registration (and its 72h lockout) happens in entryNpcOnEventFinishEra, only after the player confirms entry with !Ready (the first option)
             player:startEvent(entryInfo.csDyna, entryInfo.csBit, playerEntered == 1 and 0 or 1, xi.dynamis.settings.RESERVATION_TIMEOUT, xi.dynamis.settings.REENTRY_DAYS, entryInfo.maxCapacity, xi.ki.VIAL_OF_SHROUDED_SAND, dynamisTimelessHourglass, dynamisPerpetual)
             return
         end
@@ -364,6 +362,23 @@ xi.dynamis.entryNpcOnEventFinishEra = function(player, csid, option)
         if option ~= 0 then
             return
         end
+
+        -- Register the player now that they have confirmed entry.
+        -- Capacity was not reserved at trade time, so re-check it here
+        local dynaZoneId   = entryInfo.dynaZone
+        local instanceId   = GetServerVariable(string.format('[DYNA]InstanceID_%s', dynaZoneId))
+        local dynaCapacity = GetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', dynaZoneId))
+
+        if
+            not xi.dynamis.isGM(player) and
+            not xi.dynamis.isParticipant(instanceId, player:getID()) and
+            dynaCapacity >= entryInfo.maxCapacity
+        then
+            player:printToPlayer('The Dynamis instance has reached its maximum capacity of ' .. entryInfo.maxCapacity .. ' registrants.', 29)
+            return
+        end
+
+        xi.dynamis.registerPlayer(player)
 
         player:setCharVar(entryInfo.enteredVar, 1) -- Mark the player as having entered at least once
         player:setPos(unpack(entryInfo.enterPos))  -- Teleport to entry position

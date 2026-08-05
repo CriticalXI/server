@@ -23,23 +23,26 @@ xi.dynamis.checkEntryRequirements = function(player, entryZoneID)
 
     xi.dynamis.debugPrint('Checking player charvar ' .. entryInfo.enteredVar .. ' for previous Dynamis entry.')
 
-    -- 1. GMs and players who have previously entered this zone bypass all requirements
-    --    This allows GMs to test content and returning players to enter freely
-    if
-        xi.dynamis.isGM(player) or
-        player:getCharVar(entryInfo.enteredVar) ~= 0
-    then
-        xi.dynamis.debugPrint('Player is GM or has already entered this Dynamis before, skipping requirements.')
+    -- 1. GMs bypass all requirements so they can test content
+    if xi.dynamis.isGM(player) then
+        xi.dynamis.debugPrint('Player is GM, skipping requirements.')
         return true
     end
 
     -- 2. Player must be at least level 65 to enter Dynamis
+    -- Checked on EVERY entry - players can leave, change jobs and try to come back
     if player:getMainLvl() < xi.dynamis.settings.MIN_LEVEL then
         player:printToPlayer('Players who have not reached 65 are prohibited from entering Dynamis.', xi.msg.channel.NS_SAY)
         return false
     end
 
-    -- 3. Dreamlands Dynamis (zones 7+) requires completion of "Darkness Named" CoP mission
+    -- 3. Players who have previously skip the other checks
+    if player:getCharVar(entryInfo.enteredVar) ~= 0 then
+        xi.dynamis.debugPrint('Player has already entered this Dynamis before, skipping one-time requirements.')
+        return true
+    end
+
+    -- 4. Dreamlands Dynamis (zones 7+) requires completion of "Darkness Named" CoP mission
     if
         entryInfo.csBit >= 7 and
         not player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.DARKNESS_NAMED)
@@ -49,7 +52,7 @@ xi.dynamis.checkEntryRequirements = function(player, entryZoneID)
         return false
     end
 
-    -- 4. Player must possess all zone-specific key items (e.g., past expansion items, progress flags)
+    -- 5. Player must possess all zone-specific key items (e.g., past expansion items, progress flags)
     for _, keyItemID in ipairs(entryInfo.reqs) do
         if not player:hasKeyItem(keyItemID) then
             xi.dynamis.debugPrint('Missing required key item to enter Dynamis: ' .. keyItemID)
