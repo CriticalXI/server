@@ -300,7 +300,7 @@ entity.onTrade = function(player, npc, trade)
     if trade:hasItemQty(xi.item.ANCIENT_BEASTCOIN, count) then
         local total = player:getCurrency('ancient_beastcoin') + count
 
-        if total < 9999 then -- store max 9999 ancient beastcoins
+        if total <= 250 then -- Phoenix: store in era max 250 ancient beastcoins
             player:addCurrency('ancient_beastcoin', count)
             player:tradeComplete()
             player:startEvent(311, count, 0, 0, 0, 0, 0, 0, total)
@@ -347,7 +347,7 @@ entity.onTrade = function(player, npc, trade)
         if tradedCombo > 0 then
             player:confirmTrade()
             player:setCharVar('AFupgrade', tradedCombo)
-            player:setCharVar('AFupgradeDay', getVanaMidnight()) -- Current time + Remaining minutes in the hour in seconds (Day Change)
+            player:setCharVar('AFupgradeDay', NextConquestTally()) -- Phoenix: ready after the next weekly conquest tally (upstream uses next Vanadiel midnight)
             player:startEvent(312)
         end
     end
@@ -394,9 +394,7 @@ entity.onTrigger = function(player, npc)
         -- bit 11 - ??? (this bit was set in some captures)
         menu = utils.mask.setBit(menu, 11, true)
         -- bit 12 - show "Retrieve ancient beastcoins" option
-        if storedABCs > 0 then
-            menu = utils.mask.setBit(menu, 12, true)
-        end
+        -- Phoenix: left unset; stored beastcoins cannot be retrieved
 
         -- bit 13 - player has RHAPSODY_IN_MAUVE (lowers Cosmo Cleanse cost)
         if player:hasKeyItem(xi.ki.RHAPSODY_IN_MAUVE) then
@@ -462,17 +460,9 @@ local handleMainEvent = function(player, option, coinAmount)
             npcUtil.giveKeyItem(player, xi.ki.COSMO_CLEANSE)
         end
 
-    -- retrieve stored ABCs
-    elseif option == 4 then
-        if
-            player:getCurrency('ancient_beastcoin') >= coinAmount and
-            npcUtil.giveItem(player, { { xi.item.ANCIENT_BEASTCOIN, coinAmount } })
-        then
-            player:delCurrency('ancient_beastcoin', coinAmount)
-        end
-
     -- Relic restoration exited
-    elseif option == 5 then
+    -- Phoenix: coin retrieval removed; the 2008 DAT returns option 4 here
+    elseif option == 4 then
         player:setCharVar('SagheeraInteractions', utils.mask.setBit(player:getCharVar('SagheeraInteractions'), 2, false))
 
     -- purchase item using ancient beastcoins

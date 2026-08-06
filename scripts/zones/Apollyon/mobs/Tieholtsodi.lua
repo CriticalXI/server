@@ -23,7 +23,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            { id = xi.jsa.HUNDRED_FISTS, hpp = math.randomInt(50, 75) },
+            { id = xi.mobSkill.HUNDRED_FISTS_1, hpp = math.randomInt(50, 75) },
         },
     })
 end
