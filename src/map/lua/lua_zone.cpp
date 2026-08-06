@@ -227,6 +227,34 @@ void CLuaZone::rebuildNavmesh(const sol::table& table)
     config.filterLowHangingObstacles    = table.get_or("filterLowHangingObstacles", config.filterLowHangingObstacles);
     config.filterLedgeSpans             = table.get_or("filterLedgeSpans", config.filterLedgeSpans);
     config.filterWalkableLowHeightSpans = table.get_or("filterWalkableLowHeightSpans", config.filterWalkableLowHeightSpans);
+    config.generateOffMeshLinks         = table.get_or("generateOffMeshLinks", config.generateOffMeshLinks);
+    config.offMeshMaxDrop               = table.get_or("offMeshMaxDrop", config.offMeshMaxDrop);
+    config.offMeshHorizReach            = table.get_or("offMeshHorizReach", config.offMeshHorizReach);
+
+    if (const auto ySkipPlanes = table.get<sol::optional<sol::table>>("ySkipPlanes"))
+    {
+        for (const auto& [_, value] : *ySkipPlanes)
+        {
+            config.ySkipPlanes.push_back(value.as<float>());
+        }
+    }
+
+    if (const auto skipSpheres = table.get<sol::optional<sol::table>>("skipSpheres"))
+    {
+        for (const auto& [_, value] : *skipSpheres)
+        {
+            const auto sphere = value.as<sol::table>();
+
+            config.skipSpheres.push_back(NavMeshSkipSphere{
+                .center = {
+                    sphere.get_or("x", 0.0f),
+                    sphere.get_or("y", 0.0f),
+                    sphere.get_or("z", 0.0f),
+                },
+                .radius = sphere.get_or("radius", 0.0f),
+            });
+        }
+    }
 
     m_pLuaZone->RebuildNavMesh(config);
 }
