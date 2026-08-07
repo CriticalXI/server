@@ -34,3 +34,36 @@ INSERT INTO `mob_groups` VALUES (203,1683,191,'Goblin_Leecher',300,0,1101,0,0,0,
 
 -- Ranguemont Pass (Zone 166)
 INSERT INTO `mob_groups` VALUES (200,1715,166,'Goblin_Smithy',720,0,1162,0,0,0,NULL);
+
+-----------------------------------
+-- Dungeon respawn timers
+--   Level  1-19 ->  8 minutes (480s)
+--   Level 20-29 -> 10 minutes (600s)
+--   Level 30-39 -> 12 minutes (720s)
+--   Level 40-49 -> 14 minutes (840s)
+--   Level 50+   -> 16 minutes (960s)
+-----------------------------------
+
+UPDATE `mob_groups`
+INNER JOIN `zone_settings` ON `zone_settings`.zoneid = `mob_groups`.zoneid
+INNER JOIN `mob_pools` ON `mob_pools`.poolid = `mob_groups`.poolid
+INNER JOIN (
+    SELECT
+        ((mobid >> 12) & 0xFFF) AS zoneid, -- zone id is encoded in the mobid
+        groupid,
+        CASE
+            WHEN MAX(GREATEST(minLevel, maxLevel)) <= 19 THEN 480
+            WHEN MAX(GREATEST(minLevel, maxLevel)) <= 29 THEN 600
+            WHEN MAX(GREATEST(minLevel, maxLevel)) <= 39 THEN 720
+            WHEN MAX(GREATEST(minLevel, maxLevel)) <= 49 THEN 840
+            ELSE 960
+        END AS rule_respawn
+    FROM mob_spawn_points
+    WHERE GREATEST(minLevel, maxLevel) > 0 -- ignore the level 0 placeholder mobs
+    GROUP BY ((mobid >> 12) & 0xFFF), groupid
+) spawn_levels ON spawn_levels.zoneid = mob_groups.zoneid AND spawn_levels.groupid = mob_groups.groupid
+SET mob_groups.respawntime = spawn_levels.rule_respawn
+WHERE (zone_settings.zonetype & 0x04) > 0            -- dungeon zones only
+  AND (mob_groups.spawntype & 0xE0) = 0              -- skip lottery (0x20), windowed (0x40), and scripted (0x80) spawns
+  AND (mob_pools.mobType & 0x02) = 0                 -- skip notorious monsters
+  AND mob_groups.respawntime > 0;                    -- skip mobs that never respawn on a timer
