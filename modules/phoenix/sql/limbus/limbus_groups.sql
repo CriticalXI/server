@@ -161,10 +161,10 @@ INSERT INTO `mob_groups` VALUES (326,10677,37,'Armoury_Crate',0,128,0,1,0,0,NULL
 
 -- SW Apollyon
 INSERT INTO `mob_groups` VALUES (200,10615,38,'Fir_Bholg_thf_ev',0,128,2856,4250,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (201,10616,38,'Fir_Bholg_pld_gk',0,128,2856,4250,100,0,NULL);
+INSERT INTO `mob_groups` VALUES (201,10616,38,'Fir_Bholg_pld_gk',0,128,2856,4250,2000,0,NULL);
 INSERT INTO `mob_groups` VALUES (202,10617,38,'Fir_Bholg_sam_hm',0,128,2856,4250,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (203,10618,38,'Fir_Bholg_rdm_mr',0,128,2856,4250,500,0,NULL);
-INSERT INTO `mob_groups` VALUES (204,10619,38,'Fir_Bholg_blm_tt',0,128,2856,4250,500,0,NULL);
+INSERT INTO `mob_groups` VALUES (203,10618,38,'Fir_Bholg_rdm_mr',0,128,2856,4250,2000,0,NULL);
+INSERT INTO `mob_groups` VALUES (204,10619,38,'Fir_Bholg_blm_tt',0,128,2856,4250,2000,0,NULL);
 INSERT INTO `mob_groups` VALUES (205,10620,38,'Jidra',0,128,0,6000,0,0,NULL); -- leafless
 INSERT INTO `mob_groups` VALUES (206,10678,38,'Jidra',0,128,0,6000,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (207,10621,38,'Arboricole_Beetle',0,128,2860,6000,500,0,NULL);
