@@ -633,20 +633,13 @@ xi.dynamis.onBossDeath = function(mob, player, optParams)
 end
 
 -- ---------------------
--- Summoner masters and their avatar pets
+-- Summoner and Beastmaster 2 hour functions
 -- ---------------------
 -- Dynamis summon mechanics:
--- Call a random avatar shortly after spawning
--- Summonm stays out and fights. Once the master goes below a certain % it uses astral flow
-local summonerCallPetParams =
-{
-    callPetJob   = xi.job.SMN,
-    inactiveTime = 3000, -- Casting animation time
-    superLink    = true,
-    dieWithOwner = true,
-    maxSpawns    = 1,
-}
-
+-- SMN: Call a random avatar shortly after spawning
+--      Summon stays out and fights. Once the master goes below a certain % it uses astral flow
+-- BST: Call its pet shortly after spawning (same summoning animation as SMN masters)
+--      The pet is never resummoned. 2hr is Familiar if the pet is alive, Charm if it is dead
 local possibleAvatars =
 {
     xi.pets.summon.type.CARBUNCLE,
@@ -658,8 +651,8 @@ local possibleAvatars =
     xi.pets.summon.type.RAMUH,
 }
 
--- A master counts as a summoner when the pet slotted after it is an avatar
-local function getAvatarPet(master)
+-- pet is master + 1
+local function getMasterPet(master)
     local pet = GetMobByID(master:getID() + 1)
     if pet then
         return pet
@@ -668,51 +661,72 @@ local function getAvatarPet(master)
     return nil
 end
 
--- Retry the summon until it goes off (callPets fails while slept/stunned)
--- Once the avatar is out, death is permanent - thank you BO
-local function trySummonAvatar(mob)
+-- Retry the summon until it goes off (note: callPets fails while slept/stunned)
+-- Once the pet is out, death is permanent - thank you BO
+local function trySummonPet(mob)
     if not mob:isSpawned() or mob:isDead() then
         return
     end
 
-    local pet = getAvatarPet(mob)
+    local pet = getMasterPet(mob)
     if not pet or pet:isAlive() then
         return
     end
 
-    if not xi.mob.callPets(mob, pet:getID(), summonerCallPetParams) then
+    local callPetParams =
+    {
+        callPetJob   = xi.job.SMN, -- BST masters use the SMN summoning animation too
+        inactiveTime = 3000, -- Casting animation time
+        superLink    = true,
+        dieWithOwner = mob:getMainJob() == xi.job.SMN, -- BST pets stay alive if master dies
+        maxSpawns    = 1,
+    }
+
+    if not xi.mob.callPets(mob, pet:getID(), callPetParams) then
         mob:timer(3000, function(mobArg)
-            trySummonAvatar(mobArg)
+            trySummonPet(mobArg)
         end)
     end
 end
 
-xi.dynamis.summonerOnSpawn = function(mob)
-    local pet = getAvatarPet(mob)
+-- Shared spawn logic for SMN and BST masters
+xi.dynamis.masterOnSpawn = function(mob)
+    local masterJob = mob:getMainJob()
+    if masterJob ~= xi.job.SMN and masterJob ~= xi.job.BST then
+        return
+    end
+
+    local pet = getMasterPet(mob)
     if not pet then
         return
     end
 
-    -- Remove the spell list because when it casts a spell the entire summons dont work
-    mob:setSpellList(0)
+    if masterJob == xi.job.SMN then
+        -- Remove the spell list because when it casts a spell the entire summons dont work
+        mob:setSpellList(0)
 
-    -- Our avatar is at mob ID + 1; the astral_flow mobskill defaults to +2
-    mob:setMobMod(xi.mobMod.ASTRAL_PET_OFFSET, 1)
+        -- avatar is +1
+        mob:setMobMod(xi.mobMod.ASTRAL_PET_OFFSET, 1)
+    else
+        -- Removes call beast from the skill list
+        mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0)
+    end
 
-    -- Randomize the HP% that triggers Astral Flow for this pop
-    mob:setLocalVar('astralFlowHPP', math.randomInt(25, 75))
+    -- Randomize the HP% that triggers the 2hr
+    mob:setLocalVar('twoHourHPP', math.randomInt(25, 75))
 
-    -- Mute the job_special mixin's auto-2hr; our logic owns Astral Flow
+    -- Stop the job mixin
     mob:setLocalVar('[jobSpecial]chance', 0)
 
-    -- Summon the avatar shortly after spawning
+    -- Call the pet shortly after spawning
+    -- Might need tweaking
     mob:timer(2000, function(mobArg)
-        trySummonAvatar(mobArg)
+        trySummonPet(mobArg)
     end)
 end
 
 xi.dynamis.summonerOnFight = function(mob, target)
-    local pet = getAvatarPet(mob)
+    local pet = getMasterPet(mob)
     if not pet then
         return
     end
@@ -723,10 +737,10 @@ xi.dynamis.summonerOnFight = function(mob, target)
 
     -- Do the 2hr and set the var for astral flow
     if
-        mob:getLocalVar('astralFlowUsed') == 0 and
-        mob:getHPP() < mob:getLocalVar('astralFlowHPP')
+        mob:getLocalVar('twoHourUsed') == 0 and
+        mob:getHPP() < mob:getLocalVar('twoHourHPP')
     then
-        mob:setLocalVar('astralFlowUsed', 1)
+        mob:setLocalVar('twoHourUsed', 1)
 
         if pet:isAlive() then
             -- Engage the avatar and tell it to fire its flow ability
@@ -749,6 +763,36 @@ xi.dynamis.summonerOnFight = function(mob, target)
 
         mob:useMobAbility(xi.mobSkill.ASTRAL_FLOW_1)
         return
+    end
+end
+
+xi.dynamis.beastmasterOnFight = function(mob, target)
+    local pet = getMasterPet(mob)
+    if not pet then
+        return
+    end
+
+    if xi.combat.behavior.isEntityBusy(mob) then
+        return
+    end
+
+    -- Can only use the 2hrs once
+    -- Familiar if the pet is still alive
+    -- Charm if it is dead
+    if
+        mob:getLocalVar('twoHourUsed') == 0 and
+        mob:getLocalVar('twoHourHPP') > 0 and
+        mob:getHPP() < mob:getLocalVar('twoHourHPP')
+    then
+        mob:setLocalVar('twoHourUsed', 1)
+
+        if pet:isAlive() then
+            mob:useMobAbility(xi.mobSkill.FAMILIAR_1)
+            debugPrint('Master ' .. mob:getID() .. ' 2hr Familiar with pet ' .. pet:getID() .. ' alive')
+        else
+            mob:useMobAbility(xi.mobSkill.CHARM)
+            debugPrint('Master ' .. mob:getID() .. ' 2hr Charm, pet dead')
+        end
     end
 end
 

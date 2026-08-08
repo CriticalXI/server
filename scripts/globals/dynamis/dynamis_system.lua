@@ -322,7 +322,7 @@ xi.dynamis.addMinutesToDynamis = function(zone, minutes)
 
     -- Update Hourglasses for Players
     for _, player in pairs(playersInZone) do
-        player:messageSpecial(zones[zoneId].text.DYNAMIS_TIME_EXTEND, minutes)
+        player:messageSpecial(zones[zoneId].text.DYNAMIS_TIME_EXTEND, minutes, 1)
         xi.dynamis.updatePlayerHourglass(player)
     end
 
@@ -387,11 +387,6 @@ xi.dynamis.cleanupDynamis = function(zone)
     xi.dynamis.debugPrint('----------Cleaning up Dynamis zone: ' .. tostring(zone:getID()))
     xi.dynamis.debugPrint('Cleaning up Dynamis zone: ' .. tostring(zoneId))
 
-    if parentZone == nil then
-        xi.dynamis.debugPrint('Parent Zone is nil | xi.dynamis.cleanupDynamis')
-        return
-    end
-
     -- Reset server vars
     SetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', zoneId), 0)
     SetServerVariable(string.format('[DYNA]StartTime_%s', zoneId), 0)
@@ -401,7 +396,14 @@ xi.dynamis.cleanupDynamis = function(zone)
 
     -- Reset local vars
     zone:resetLocalVars()
-    parentZone:setLocalVar(string.format('[DYNA]CleanupScript_%s', zoneId), 1)
+
+    -- The parent zone can be nil when this runs from onInit
+    -- Everything above/below is zone-side, so only the parent zone is skipped
+    if parentZone then
+        parentZone:setLocalVar(string.format('[DYNA]CleanupScript_%s', zoneId), 1)
+    else
+        xi.dynamis.debugPrint('Parent Zone is nil | xi.dynamis.cleanupDynamis')
+    end
 
     -- Reset associated player vars
     local instanceId = GetServerVariable(string.format('[DYNA]InstanceID_%s', zoneId))
@@ -412,6 +414,23 @@ xi.dynamis.cleanupDynamis = function(zone)
 
     xi.dynamis.ejectAllPlayers(zone) -- Remove Players (This is precautionary but not necessary.)
     xi.dynamis.despawnAll(zone) -- Despawns all mobs / npcs in zone
+end
+
+-- Tick cleanup does not run when the server restarts
+-- Clear all the vars that dont get cleaned up
+xi.dynamis.clearOnInit = function(zone)
+    local zoneId = zone:getID()
+
+    if
+        GetServerVariable(string.format('[DYNA]StartTime_%s', zoneId)) == 0 and
+        GetServerVariable(string.format('[DYNA]ExpirationTime_%s', zoneId)) == 0
+    then
+        return
+    end
+
+    xi.dynamis.debugPrint('Found stale Dynamis run for zone ' .. zoneId .. ' after a restart, running full cleanup')
+
+    xi.dynamis.cleanupDynamis(zone)
 end
 
 xi.dynamis.despawnAll = function(zone)
@@ -425,6 +444,9 @@ xi.dynamis.despawnAll = function(zone)
 
     for _, npcEntity in pairs(npcsInZone) do
         npcEntity:setStatus(xi.status.DISAPPEAR)
+
+        -- Clear NPC local vars since they dont reset on cleanup
+        npcEntity:resetLocalVars()
         xi.dynamis.debugPrint('despawnAll DISAPPEAR NPC ID: ' .. tostring(npcEntity:getID()))
     end
 end
@@ -440,6 +462,29 @@ xi.dynamis.dynamisTimeWarning = function(zone, zoneExpiration)
         else
             player:messageSpecial(ID.text.DYNAMIS_TIME_UPDATE_2, timeRemaining, 1) -- Send [3/10] minutes warning.
         end
+    end
+end
+
+-- Applies weakness when a player re-enters dynamis
+local applyReentryWeakness = function(player, zoneId)
+    -- Ignore GMs
+    if xi.dynamis.isGM(player) then
+        return
+    end
+
+    local startTime = GetServerVariable(string.format('[DYNA]StartTime_%s', zoneId))
+    if startTime == 0 then
+        return
+    end
+
+    local playerEntered = string.format('[DYNA]EnteredRun_%s', zoneId)
+
+    if player:getCharVar(playerEntered) == startTime then
+        xi.dynamis.debugPrint('Player re-entered an active run, applying weakness')
+        player:addStatusEffect(xi.effect.WEAKNESS, { power = 1, duration = xi.dynamis.settings.REENTRY_WEAKNESS, origin = player })
+    else
+        -- On first zone in set the charvar and set expiry
+        player:setCharVar(playerEntered, startTime, startTime + 86400)
     end
 end
 
@@ -477,6 +522,9 @@ xi.dynamis.zoneOnZoneInEra = function(player, prevZone)
 
     -- Check for dreamland SJ restriction and apply if necessary
     xi.dynamis.applyEntryRestrictions(player, zoneId)
+
+    -- Re-entry/reconnect weakness
+    applyReentryWeakness(player, zoneId)
     return -1
 end
 

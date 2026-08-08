@@ -12,6 +12,7 @@ xi.dynamis.settings =
     REENTRY_DAYS            = 3,
     DEFAULT_TIME_LIMIT      = 3600, -- 60 minutes default
     TAVNAZIA_TIME_LIMIT     = 900, -- 15 minutes for Tavnazia
+    REENTRY_WEAKNESS        = 600, -- weakness duration when re-entering/reconnecting to an active run
 }
 
 -- Messages for hourglass trade states

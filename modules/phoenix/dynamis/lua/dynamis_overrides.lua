@@ -821,6 +821,9 @@ local mobNames =
 local function registerDynamisZoneOverrides(zoneID, zoneName, zoneNumber)
     m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', zoneName),
     function(zone)
+        -- Clean left over vars on restarts
+        xi.dynamis.clearOnInit(zone)
+
         if zoneID == xi.zone.DYNAMIS_TAVNAZIA then
             xi.dynamis.onZoneInitTav(zone)
         end
@@ -1155,9 +1158,14 @@ local mobOverrideHandlers =
             xi.dynamis.onMobDisengage(mob)
         end,
 
-        -- Summoner-type masters (avatar pet) 2hr and resummon; no-op for BST/DRG masters
+        -- Masters own their 2hr by main job: SMN = Astral Flow (+ avatar resummon), BST = Familiar/Charm
         onMobFight = function(mob, target)
-            xi.dynamis.summonerOnFight(mob, target)
+            local masterJob = mob:getMainJob()
+            if masterJob == xi.job.SMN then
+                xi.dynamis.summonerOnFight(mob, target)
+            elseif masterJob == xi.job.BST then
+                xi.dynamis.beastmasterOnFight(mob, target)
+            end
         end,
 
         onMobDeath = function(mob, player, optParams)
@@ -1276,7 +1284,7 @@ local function registerMobOverrides(zoneName, mobName, overrideMobType, modelSiz
             elseif overrideMobType == mobType.MASTER then
                 handler = function(mob)
                     xi.dynamis.onMobSpawn(mob, overrideMobType, modelSize)
-                    xi.dynamis.summonerOnSpawn(mob) -- No-op unless the master's pet is an avatar
+                    xi.dynamis.masterOnSpawn(mob)
                 end
             elseif overrideMobType == mobType.AVATAR then
                 handler = function(mob)
