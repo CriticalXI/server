@@ -28,9 +28,9 @@ INSERT INTO `mob_groups` VALUES (206,1514,190,'Lemures',960,0,1506,0,0,0,NULL);
 
 -- Dangruf Wadi (Zone 191)
 INSERT INTO `mob_groups` VALUES (200,6415,191,'Giant_Grub',300,0,2496,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (201,1666,191,'Goblin_Gambler',300,0,1084,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (201,1666,191,'Goblin_Gambler',300,0,1082,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (202,1690,191,'Goblin_Mugger',300,0,1120,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (203,1683,191,'Goblin_Leecher',300,0,1101,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (203,1683,191,'Goblin_Leecher',300,0,1099,0,0,0,NULL);
 
 -- Ranguemont Pass (Zone 166)
 INSERT INTO `mob_groups` VALUES (200,1715,166,'Goblin_Smithy',720,0,1162,0,0,0,NULL);
