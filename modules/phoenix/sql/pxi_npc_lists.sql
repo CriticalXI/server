@@ -16,3 +16,6 @@ UPDATE `npc_list` SET `content_tag` = 'COP'  WHERE `npcid` = 17531245 AND `name`
 UPDATE `npc_list` SET `content_tag` = 'ACP'  WHERE `npcid` = 17781072 AND `name` = 'Tales_Beginning'; -- Lower Jeuno (Zone 245), A Crystalline Prophecy
 UPDATE `npc_list` SET `content_tag` = 'ROTZ' WHERE `npcid` = 17809554 AND `name` = 'Tales_Beginning'; -- Norg (Zone 252), Rise of the Zilart
 UPDATE `npc_list` SET `content_tag` = 'ASA'  WHERE `npcid` = 17756512 AND `name` = 'Tales_Beginning'; -- Windurst Walls (Zone 239), A Shantotto Ascension
+
+-- Enable Linkshell Concierge NPCs
+UPDATE `npc_list` SET `content_tag` = NULL WHERE `name` = 'Linkshell_Concierge';
