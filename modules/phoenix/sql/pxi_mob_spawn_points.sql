@@ -1590,7 +1590,34 @@ REPLACE INTO `mob_spawn_points` VALUES (17101106, 0, 'Elder_Treant', 'Elder Trea
 REPLACE INTO `mob_spawn_points` VALUES (17101197, 0, 'Khimaira', 'Khimaira', 59, 85, 85, 840.1741, 0.2318, 354.0881, 190, NULL, NULL);
 
 -- The Boyahda Tree (Zone 153)
-REPLACE INTO `mob_spawn_points` VALUES (17404290, 0, 'Ancient_Goobbue', 'Ancient Goobbue', 28, 80, 80, -230.0585, 9.8375, -271.3131, 232, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404236, 0, 'Processionaire', 'Processionaire', 22, 72, 75, -190.6061, 8.5107, -231.4875, 90, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404237, 0, 'Processionaire', 'Processionaire', 22, 72, 75, -208.6704, 8.7353, -236.4288, 90, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404238, 0, 'Processionaire', 'Processionaire', 22, 72, 75, -204.5490, 8.7809, -248.1364, 16, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404239, 0, 'Darter', 'Darter', 23, 75, 78, -202.2665, 8.8618, -230.9517, 114, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404240, 0, 'Darter', 'Darter', 23, 75, 78, -210.9335, 8.6582, -243.3551, 74, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404241, 0, 'Darter', 'Darter', 23, 75, 78, -191.5125, 8.6882, -246.4187, 247, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404242, 0, 'Blood_Ball', 'Blood Ball', 24, 75, 78, -191.9026, 10.0252, -258.5216, 54, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404243, 0, 'Blood_Ball', 'Blood Ball', 24, 75, 78, -195.5711, 9.8566, -262.9397, 80, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404244, 0, 'Darter', 'Darter', 23, 75, 78, -201.6143, 9.8626, -258.6720, 129, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404245, 0, 'Darter', 'Darter', 23, 75, 78, -208.7552, 9.9139, -260.0841, 121, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404246, 0, 'Processionaire', 'Processionaire', 22, 72, 75, -205.1038, 8.8505, -274.2123, 51, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404247, 0, 'Processionaire', 'Processionaire', 22, 72, 75, -213.5928, 8.8994, -276.5744, 105, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404248, 0, 'Darter', 'Darter', 23, 75, 78, -205.7858, 8.8665, -283.2097, 19, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404249, 0, 'Darter', 'Darter', 23, 75, 78, -194.7587, 8.6717, -278.4793, 225, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404250, 0, 'Blood_Ball', 'Blood Ball', 24, 75, 78, -232.7862, 9.8655, -270.1425, 166, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404251, 0, 'Blood_Ball', 'Blood Ball', 24, 75, 78, -238.8828, 9.7379, -275.9166, 111, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404252, 0, 'Darter', 'Darter', 23, 75, 78, -240.4450, 9.7761, -285.4390, 82, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404253, 0, 'Darter', 'Darter', 23, 75, 78, -247.9642, 9.8712, -279.8810, 132, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404254, 0, 'Blood_Ball', 'Blood Ball', 24, 75, 78, -212.9003, 9.6769, -300.4886, 20, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404255, 0, 'Blood_Ball', 'Blood Ball', 24, 75, 78, -204.1875, 9.8097, -302.6866, 54, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404256, 0, 'Darter', 'Darter', 23, 75, 78, -193.5453, 9.9497, -304.3528, 240, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404257, 0, 'Darter', 'Darter', 23, 75, 78, -188.6125, 9.9854, -296.9195, 225, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404258, 0, 'Processionaire', 'Processionaire', 22, 72, 75, -196.7738, 8.8999, -312.2942, 81, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404259, 0, 'Processionaire', 'Processionaire', 22, 72, 75, -206.2741, 8.5019, -327.6125, 57, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404260, 0, 'Processionaire', 'Processionaire', 22, 72, 75, -189.1214, 8.5735, -324.5366, 188, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404261, 0, 'Darter', 'Darter', 23, 75, 78, -204.7941, 8.6628, -316.0890, 101, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404262, 0, 'Darter', 'Darter', 23, 75, 78, -196.5760, 8.5953, -330.8930, 2, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17404290, 0, 'Ancient_Goobbue', 'Ancient Goobbue', 28, 80, 80, -230.0585, 9.8375, -271.3131, 232, NULL, NULL); -- NM position
 
 -- Ranguemont Pass (Zone 166)
 REPLACE INTO `mob_spawn_points` VALUES (17457248, 0, 'Seeker_Bats', 'Seeker Bats', 9, 25, 28, -26.2220, -0.1952, -105.9189, 31, NULL, NULL);
@@ -1691,9 +1718,9 @@ REPLACE INTO `mob_spawn_points` VALUES (17461470, 0, 'Gespenst', 'Gespenst', 22,
 REPLACE INTO `mob_spawn_points` VALUES (17461471, 0, 'Manes', 'Manes', 23, 72, 73, 81.7055, 0.2500, -293.8189, 240, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461368, 0, 'Werebat', 'Werebat', 6, 55, 59, 60.1616, 1.0130, -176.3586, 193, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461369, 0, 'Mousse', 'Mousse', 10, 58, 62, 60.3497, 1.0000, -163.1166, 192, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17461370, 0, 'Garm', 'Garm', 8, 64, 66, 60.5678, 1.1319, -148.1701, 192, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17461371, 0, 'Garm', 'Garm', 8, 64, 66, 48.8691, 1.1263, -139.9161, 123, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17461372, 0, 'Garm', 'Garm', 8, 64, 66, 38.8857, 1.0000, -138.5874, 136, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17461370, 0, 'Garm', 'Garm', 8, 64, 66, 24.6990, 0.0000, -139.4669, 132, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17461371, 0, 'Garm', 'Garm', 8, 64, 66, 37.9182, 1.0000, -139.9666, 254, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17461372, 0, 'Garm', 'Garm', 8, 64, 66, 15.9041, 0.0466, -145.4900, 45, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461423, 0, 'Werebat', 'Werebat', 6, 55, 59, 72.7028, 0.9781, -180.2023, 244, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461424, 0, 'Werebat', 'Werebat', 6, 55, 59, 91.7171, 0.9822, -181.4751, 3, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17461425, 0, 'Werebat', 'Werebat', 6, 55, 59, 96.9982, 0.9774, -178.7184, 245, NULL, NULL);
@@ -1907,7 +1934,6 @@ REPLACE INTO `mob_spawn_points` VALUES (17490119, 0, 'Greater_Cockatrice', 'Grea
 REPLACE INTO `mob_spawn_points` VALUES (17490120, 0, 'Greater_Cockatrice', 'Greater Cockatrice', 19, 78, 80, 40.7748, 30.0000, -193.7173, 162, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17490121, 0, 'Greater_Cockatrice', 'Greater Cockatrice', 19, 78, 80, 34.1801, 29.9435, -201.9794, 28, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17490122, 0, 'Greater_Cockatrice', 'Greater Cockatrice', 19, 78, 80, 41.4112, 29.8508, -203.9773, 230, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17490123, 0, 'Greater_Cockatrice', 'Greater Cockatrice', 19, 78, 80, 43.3091, 30.0000, -202.0315, 227, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17490124, 0, 'Ladon', 'Ladon', 20, 80, 82, 45.7475, 30.0000, -195.1464, 205, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17490101, 0, 'Pelican', 'Pelican', 21, 80, 81, 39.3958, 30.0000, -200.9464, 231, NULL, NULL);
 
@@ -2442,6 +2468,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17567856, 0, 'Goblin_Leecher', 'Goblin L
 REPLACE INTO `mob_spawn_points` VALUES (17567857, 0, 'Goblin_Mugger', 'Goblin Mugger', 15, 22, 26, -145.7583, 29.0000, -41.9412, 34, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17567858, 0, 'Jelly', 'Jelly', 22, 26, 28, -146.3420, 28.6980, -76.9556, 237, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17567859, 0, 'Stroper', 'Stroper', 39, 31, 34, -162.6529, 28.1391, -45.2268, 1, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17567860, 0, 'Stroper_Chyme', 'Stroper Chyme', 32, 33, 35, -121.2141, 28.0000, -43.9985, 35, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17567869, 0, 'Stink_Bats', 'Stink Bats', 5, 15, 18, -13.4567, 33.1781, 172.2799, 84, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17567870, 0, 'Stink_Bats', 'Stink Bats', 5, 15, 18, -9.1793, 32.2916, 149.3253, 41, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17567871, 0, 'Hognosed_Bat', 'Hognosed Bat', 11, 17, 20, -33.8278, 32.5555, 169.1220, 180, NULL, NULL);
@@ -2651,8 +2678,12 @@ REPLACE INTO `mob_spawn_points` VALUES (17584213, 0, 'Exoray', 'Exoray', 15, 51,
 REPLACE INTO `mob_spawn_points` VALUES (17584389, 0, 'Rumble_Crawler', 'Rumble Crawler', 31, 53, 55, 0, 0, 0, 0, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584390, 0, 'Rumble_Crawler', 'Rumble Crawler', 31, 53, 55, 0, 0, 0, 0, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584257, 0, 'HelmBeetle', 'HelmBeetle', 0, 59, 62, -218.4542, -0.1733, -275.8495, 65, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584258, 0, 'CrawlerHunter', 'CrawlerHunter', 0, 60, 62, -247.5350, -0.4927, -251.0122, 109, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584259, 0, 'CrawlerHunter', 'CrawlerHunter', 0, 60, 62, -243.2216, -0.1676, -234.5039, 185, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584258, 0, 'Crawler_Hunter', 'Crawler Hunter', 35, 60, 62, -247.5350, -0.4927, -251.0122, 109, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584259, 0, 'Crawler_Hunter', 'Crawler Hunter', 35, 60, 62, -243.2216, -0.1676, -234.5039, 185, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584260, 0, 'Soldier_Crawler', 'Soldier Crawler', 13, 47, 49, 59.0828, -0.4188, 98.6679, 212, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584261, 0, 'Soldier_Crawler', 'Soldier Crawler', 13, 47, 49, 58.4020, -0.2681, 104.9931, 28, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584262, 0, 'Soldier_Crawler', 'Soldier Crawler', 13, 47, 49, 65.4267, -0.4197, 99.6887, 22, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584263, 0, 'Soldier_Crawler', 'Soldier Crawler', 13, 47, 49, 60.4861, -0.5918, 93.0771, 189, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584378, 0, 'Mushussu', 'Mushussu', 30, 56, 57, 48.3845, -0.4743, 367.8715, 177, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584321, 0, 'KnightCrawler', 'KnightCrawler', 0, 60, 63, -297.8918, -0.4755, -256.9619, 116, NULL, NULL);
 
@@ -2827,6 +2858,5 @@ REPLACE INTO `mob_spawn_points` VALUES (17645719, 0, 'Baobhan_Sith', 'Baobhan Si
 
 -- Labyrinth_of_Onzozo (Zone 213)
 REPLACE INTO `mob_spawn_points` VALUES (17649818, 0, 'Soulstealer_Skullnix', 'Soulstealer Skullnix', 24, 69, 72, 31.2074, 4.3716, 284.1980, 69, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17649847, 0, 'Goblin_Alchemist', 'Goblin Alchemist', 26, 66, 69, 12.8011, 5.2616, 275.8424, 84, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17649848, 0, 'Goblin_Mercenary', 'Goblin Mercenary', 29, 66, 69, 2.6014, 5.0599, 287.1281, 170, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17649849, 0, 'Labyrinth_Manticore', 'Labyrinth Manticore', 20, 71, 74, 28.5821, 5.3896, 269.4547, 134, NULL, NULL);
