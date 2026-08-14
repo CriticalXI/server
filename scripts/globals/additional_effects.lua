@@ -564,5 +564,42 @@ xi.additionalEffect.linearProcRate = function(dStat, dStatCap, startingRate, cap
     local rate = ((cappedRate - startingRate) / dStatCap) * math.min(dStat, dStatCap) + startingRate
 
     -- Minimum of 1% is observed on drain weapons. Needs more testing.
-    return math.max(math.floor(rate), 1) -- Rate is ultimately used against a random roll of integers so this is mostly just to indicate it's a whole percent.
+    return math.max(rate, 1)
+end
+
+---@param element xi.element
+---@param ammoID xi.item|number
+---@return table<integer, integer>?
+xi.additionalEffect.getConsumableAmmoItemDamageRange = function(element, ammoID)
+    local elements =
+    {
+        [xi.element.THUNDER] =
+        {
+            [xi.item.BATTERY]      = { 18, 25 }, -- range on these seems to be 18*N+X, 25*N where N = tier (1, 2, 3) and X = tier-1 (0, 1, 2)
+            [xi.item.KILO_BATTERY] = { 37, 50 },
+            [xi.item.MEGA_BATTERY] = { 56, 75 },
+        },
+
+        -- Tiers 2 and 3 of pumps/fans aren't tested very well but seem to have the same range as above.
+        [xi.element.WIND] =
+        {
+            [xi.item.WIND_FAN] = { 18, 25 },
+            [xi.item.KILO_FAN] = { 37, 50 },
+            [xi.item.MEGA_FAN] = { 56, 75 },
+        },
+
+        [xi.element.WATER] =
+        {
+            [xi.item.HYDRO_PUMP] = { 18, 25 },
+            [xi.item.KILO_PUMP]  = { 37, 50 },
+            [xi.item.MEGA_PUMP]  = { 56, 75 },
+        },
+    }
+
+    if elements[element] then
+        -- returns nil if ammoID is not in the table. This will signal 0% proc rate in the weapon script.
+        return elements[element][ammoID]
+    end
+
+    return nil
 end

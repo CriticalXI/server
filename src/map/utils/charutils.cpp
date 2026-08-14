@@ -28,10 +28,14 @@
 #include "common/vana_time.h"
 #include <fmt/ranges.h>
 
+#include <common/database.h>
 #include <common/types/hash_map.h>
 
 #include <array>
 #include <chrono>
+
+#include "map_constants.h"
+#include "persist_batch.h"
 
 #include "lua/luautils.h"
 
@@ -166,16 +170,6 @@ const std::set skillupIncreaseKeyItems = {
     KeyItem::RHAPSODY_IN_FUCHSIA
 };
 
-// Key items granting an increase to earned experience points
-const std::set experienceBonusKeyItems = {
-    KeyItem::RHAPSODY_IN_WHITE,
-    KeyItem::RHAPSODY_IN_UMBER,
-    KeyItem::RHAPSODY_IN_AZURE,
-    KeyItem::RHAPSODY_IN_CRIMSON,
-    KeyItem::RHAPSODY_IN_EMERALD,
-    KeyItem::RHAPSODY_IN_MAUVE,
-};
-
 // Key items granting an increase to earned capacity points
 const std::set capacityBonusKeyItems = {
     KeyItem::RHAPSODY_IN_FUCHSIA,
@@ -218,11 +212,11 @@ void CalculateStats(CCharEntity* PChar)
 
     uint8 grade = 0;
 
-    uint8      mlvl        = PChar->GetMLevel();
-    uint8      slvl        = PChar->GetSLevel();
-    xi::Job    mjob        = PChar->GetMJob();
-    xi::Job    sjob        = PChar->GetSJob();
-    MERIT_TYPE statMerit[] = { MERIT_STR, MERIT_DEX, MERIT_VIT, MERIT_AGI, MERIT_INT, MERIT_MND, MERIT_CHR };
+    uint8     mlvl        = PChar->GetMLevel();
+    uint8     slvl        = PChar->GetSLevel();
+    xi::Job   mjob        = PChar->GetMJob();
+    xi::Job   sjob        = PChar->GetSJob();
+    xi::Merit statMerit[] = { xi::Merit::Str, xi::Merit::Dex, xi::Merit::Vit, xi::Merit::Agi, xi::Merit::Int, xi::Merit::Mnd, xi::Merit::Chr };
 
     // We have to make sure we don't leave the job as JOB_MON - we CANNOT generate stats for it.
     if (mjob == xi::Job::MON || sjob == xi::Job::MON)
@@ -315,7 +309,7 @@ void CalculateStats(CCharEntity* PChar)
         sJobStat = sJobStat / 2;
     }
 
-    uint16 MeritBonus   = PChar->PMeritPoints->GetMeritValue(MERIT_MAX_HP, PChar);
+    uint16 MeritBonus   = PChar->PMeritPoints->GetMeritValue(xi::Merit::MaxHp, PChar);
     PChar->health.maxhp = (int16)(raceStat + jobStat + bonusStat + sJobStat + MeritBonus);
 
     // The beginning of the MP
@@ -358,7 +352,7 @@ void CalculateStats(CCharEntity* PChar)
         sJobStat = (grade::GetMPScale(grade, 0) + grade::GetMPScale(grade, scaleTo60Column) * (slvl - 1)) / settings::get<float>("map.SJ_MP_DIVISOR");
     }
 
-    MeritBonus          = PChar->PMeritPoints->GetMeritValue(MERIT_MAX_MP, PChar);
+    MeritBonus          = PChar->PMeritPoints->GetMeritValue(xi::Merit::MaxMp, PChar);
     PChar->health.maxmp = (int16)(raceStat + jobStat + sJobStat + MeritBonus); // MP calculation result
 
     // Start calculating Stats
@@ -2284,15 +2278,6 @@ void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, Recalculate recalculate)
                     }
                 }
 
-                if (PChar->PAI->IsEngaged())
-                {
-                    auto* state = dynamic_cast<CAttackState*>(PChar->PAI->GetCurrentState());
-                    if (state)
-                    {
-                        state->ResetAttackTimer();
-                    }
-                }
-
                 // If main hand is empty, figure out which UnarmedItem to give the player.
                 if (!PChar->getEquip(SLOT_MAIN) || !PChar->getEquip(SLOT_MAIN)->isType(ITEM_EQUIPMENT))
                 {
@@ -2310,6 +2295,8 @@ void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, Recalculate recalculate)
         luautils::OnItemUnequip(PChar, PItem);
 
         PChar->inventorySyncState().queueEquipChange(LOC_INVENTORY, 0, static_cast<SLOTTYPE>(equipSlotID), PItem, Equipping::No);
+
+        PChar->setPersist(CharPersist::Equip | CharPersist::Look);
 
         if (recalculate)
         {
@@ -2458,14 +2445,6 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
                             }
                         }
                         break;
-                    }
-                    if (PChar->PAI->IsEngaged())
-                    {
-                        auto* state = dynamic_cast<CAttackState*>(PChar->PAI->GetCurrentState());
-                        if (state)
-                        {
-                            state->ResetAttackTimer();
-                        }
                     }
                     PChar->m_Weapons[SLOT_MAIN] = PItem;
                 }
@@ -2782,6 +2761,20 @@ void UpdateWeaponStyle(CCharEntity* PChar, uint8 equipSlotID, CItemEquipment* PI
             else
             {
                 PChar->mainlook.ranged = PChar->look.ranged;
+            }
+
+            break;
+        case SLOT_AMMO:
+            if (!PChar->getEquip(SLOT_RANGED))
+            {
+                if (hasValidStyle(PChar, PItem, appearance))
+                {
+                    PChar->mainlook.ranged = appearanceModel;
+                }
+                else
+                {
+                    PChar->mainlook.ranged = PChar->look.ranged;
+                }
             }
 
             break;
@@ -3440,6 +3433,8 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
 
     PChar->updatemask |= UPDATE_HP;
     PChar->updatemask |= UPDATE_LOOK;
+
+    PChar->setPersist(CharPersist::Equip | CharPersist::Look);
 }
 
 /************************************************************************
@@ -3490,7 +3485,6 @@ void CheckValidEquipment(CCharEntity* PChar)
     }
 
     BuildingCharWeaponSkills(PChar);
-    PChar->RequestPersist(CHAR_PERSIST::EQUIP);
 }
 
 void RemoveAllEquipment(CCharEntity* PChar)
@@ -3510,7 +3504,6 @@ void RemoveAllEquipment(CCharEntity* PChar)
     CheckUnarmedWeapon(PChar);
 
     BuildingCharWeaponSkills(PChar);
-    PChar->RequestPersist(CHAR_PERSIST::EQUIP);
 }
 
 /************************************************************************
@@ -3683,7 +3676,7 @@ void BuildingCharAbilityTable(CCharEntity* PChar)
                 auto            maxCharges = 0;
                 if (charge)
                 {
-                    chargeTime = charge->chargeTime - std::chrono::seconds(PChar->PMeritPoints->GetMeritValue((MERIT_TYPE)charge->merit, PChar));
+                    chargeTime = charge->chargeTime - std::chrono::seconds(PChar->PMeritPoints->GetMeritValue(static_cast<xi::Merit>(charge->merit), PChar));
                     maxCharges = charge->maxCharges;
                 }
                 if (!PChar->PRecastContainer->Has(RECAST_ABILITY, PAbility->getRecastId()))
@@ -3723,7 +3716,7 @@ void BuildingCharAbilityTable(CCharEntity* PChar)
                     auto            maxCharges = 0;
                     if (charge)
                     {
-                        chargeTime = charge->chargeTime - std::chrono::seconds(PChar->PMeritPoints->GetMeritValue((MERIT_TYPE)charge->merit, PChar));
+                        chargeTime = charge->chargeTime - std::chrono::seconds(PChar->PMeritPoints->GetMeritValue(static_cast<xi::Merit>(charge->merit), PChar));
                         maxCharges = charge->maxCharges;
                     }
                     if (!PChar->PRecastContainer->Has(RECAST_ABILITY, PAbility->getRecastId()))
@@ -3826,45 +3819,6 @@ int16 ArtsBonusSkill(CCharEntity* PChar, xi::SkillType SkillID)
 // TODO: This whole thing should eventually get a refactored to be less dependent on arbitrary ordering of modifier IDs and conditionals on skill ranges.
 void BuildingCharSkillsTable(CCharEntity* PChar)
 {
-    MERIT_TYPE skillMerit[] = { MERIT_H2H,
-                                MERIT_DAGGER,
-                                MERIT_SWORD,
-                                MERIT_GSWORD,
-                                MERIT_AXE,
-                                MERIT_GAXE,
-                                MERIT_SCYTHE,
-                                MERIT_POLEARM,
-                                MERIT_KATANA,
-                                MERIT_GKATANA,
-                                MERIT_CLUB,
-                                MERIT_STAFF,
-                                MERIT_AUTOMATON_SKILLS,
-                                MERIT_AUTOMATON_SKILLS,
-                                MERIT_AUTOMATON_SKILLS,
-                                MERIT_ARCHERY,
-                                MERIT_MARKSMANSHIP,
-                                MERIT_THROWING,
-                                MERIT_GUARDING,
-                                MERIT_EVASION,
-                                MERIT_SHIELD,
-                                MERIT_PARRYING,
-                                MERIT_DIVINE,
-                                MERIT_HEALING,
-                                MERIT_ENHANCING,
-                                MERIT_ENFEEBLING,
-                                MERIT_ELEMENTAL,
-                                MERIT_DARK,
-                                MERIT_SUMMONING,
-                                MERIT_NINJITSU,
-                                MERIT_SINGING,
-                                MERIT_STRING,
-                                MERIT_WIND,
-                                MERIT_BLUE,
-                                MERIT_GEO,
-                                MERIT_HANDBELL };
-
-    uint8 meritIndex = 0;
-
     bool automatonSkillUpdated = false;
 
     // Iterate over skill IDs (offsetting by 79 to get modifier ID)
@@ -3891,8 +3845,10 @@ void BuildingCharSkillsTable(CCharEntity* PChar)
             maxMainSkill = battleutils::GetMaxSkill(1, PChar->GetMLevel()); // A+ capped down to the Automaton's rating
         }
 
-        skillBonus += PChar->PMeritPoints->GetMeritValue(skillMerit[meritIndex], PChar);
-        meritIndex++;
+        if (const auto skillMerit = meritNameSpace::GetSkillMerit(static_cast<xi::SkillType>(i)))
+        {
+            skillBonus += PChar->PMeritPoints->GetMeritValue(*skillMerit, PChar);
+        }
 
         // Add 79 to get the modifier ID
         skillBonus += PChar->getMod(static_cast<xi::Mod>(i + 79)); // This can be a negative value. Example: Shiva's Shotel.
@@ -3972,9 +3928,14 @@ void BuildingCharSkillsTable(CCharEntity* PChar)
         {
             if (auto PAutomaton = dynamic_cast<CAutomatonEntity*>(PChar->PPet))
             {
+                // Recalculate skills
+                auto& tempSkills = puppetutils::CalculateAutomatonSkills(PChar, PAutomaton->GetMLevel());
+
                 switch (static_cast<xi::SkillType>(i))
                 {
                     case xi::SkillType::AutomatonMagic:
+                        PChar->WorkingSkills.skill[i] = tempSkills.skill[i];
+
                         PAutomaton->WorkingSkills.skill[i] = PChar->WorkingSkills.skill[i];
 
                         PAutomaton->WorkingSkills.skill[static_cast<uint8>(xi::SkillType::HealingMagic)]    = PChar->WorkingSkills.skill[i];
@@ -3985,6 +3946,8 @@ void BuildingCharSkillsTable(CCharEntity* PChar)
                         break;
 
                     default:
+                        PChar->WorkingSkills.skill[i] = tempSkills.skill[i];
+
                         PAutomaton->WorkingSkills.skill[i] = PChar->WorkingSkills.skill[i];
                         break;
                 }
@@ -4631,24 +4594,14 @@ void LoadExpTable()
 {
     TracyZoneScoped;
 
-    auto rset = db::preparedStmt("SELECT r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r20 "
-                                 "FROM exp_table "
-                                 "ORDER BY level ASC "
-                                 "LIMIT ?",
-                                 ExpTableRowCount);
-
-    uint32 x = 0;
-    FOR_DB_MULTIPLE_RESULTS(rset)
+    // Base experience by level difference, from scripts/globals/experience_points.lua.
+    if (const auto baseTable = luautils::SetupExperiencePoints())
     {
-        for (uint32 y = 0; y < 20; ++y)
-        {
-            g_ExpTable[x][y] = rset->get<uint16>(y);
-        }
-
-        ++x;
+        g_ExpTable = *baseTable;
     }
 
-    rset = db::preparedStmt("SELECT level, exp FROM exp_base LIMIT 100");
+    // Load the TNL (To Next Level) experience values from the database.
+    auto rset = db::preparedStmt("SELECT level, exp FROM exp_base LIMIT 100");
     FOR_DB_MULTIPLE_RESULTS(rset)
     {
         if (const auto level = rset->get<uint8>("level") - 1; level < 100)
@@ -4657,20 +4610,20 @@ void LoadExpTable()
         }
     }
 
-    // run the function to fetch the /check difficulty curve.
+    // Load the /check experience difficulty curve
     auto expDifficultyCurveFunction = lua["xi"]["expDifficultyCurve"]["loadExpDifficultyCurve"];
 
     if (!expDifficultyCurveFunction.valid())
     {
-        ShowCritical("xi.expDifficultyCurve.loadExpDifficultyCurve function is not valid. Terminating.");
-        std::terminate();
+        ShowError("xi.expDifficultyCurve.loadExpDifficultyCurve function is not valid.");
     }
-
-    auto res = expDifficultyCurveFunction();
-    if (!res.valid())
+    else
     {
-        ShowCritical("xi.expDifficultyCurve.loadExpDifficultyCurve function failed to execute. Terminating.");
-        std::terminate();
+        auto res = expDifficultyCurveFunction();
+        if (!res.valid())
+        {
+            ShowError("xi.expDifficultyCurve.loadExpDifficultyCurve function failed to execute.");
+        }
     }
 }
 
@@ -4874,62 +4827,6 @@ void DistributeItem(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uin
     }
 }
 
-double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
-{
-    if (settings::get<bool>("main.DISABLE_PARTY_EXP_PENALTY"))
-    {
-        return 1.00;
-    }
-
-    // Alliance share
-    if (membersInZone > 6)
-    {
-        return 1.8f / membersInZone;
-    }
-
-    // Party share
-    if (regionBuff)
-    {
-        switch (membersInZone)
-        {
-            case 1:
-                return 1.00;
-            case 2:
-                return 0.75;
-            case 3:
-                return 0.55;
-            case 4:
-                return 0.45;
-            case 5:
-                return 0.39;
-            case 6:
-                return 0.35;
-            default:
-                return 1.8 / membersInZone;
-        }
-    }
-    else
-    {
-        switch (membersInZone)
-        {
-            case 1:
-                return 1.00;
-            case 2:
-                return 0.60;
-            case 3:
-                return 0.45;
-            case 4:
-                return 0.40;
-            case 5:
-                return 0.37;
-            case 6:
-                return 0.35;
-            default:
-                return 1.8 / membersInZone;
-        }
-    }
-}
-
 /************************************************************************
  *                                                                       *
  *  Allocate experience points                                           *
@@ -5006,333 +4903,56 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                 return;
             }
 
-            bool chainactive = false;
-
             const int16 moblevel    = PMob->GetMLevel() + PMob->getMod(xi::Mod::EXP_LVL_MOD);
             const uint8 memberlevel = GetExpLevel(PMember);
 
             EMobDifficulty mobCheck = CheckMob(maxlevel, PMob);
-            float          exp      = static_cast<float>(GetBaseExp(maxlevel, moblevel));
 
-            if (mobCheck > EMobDifficulty::TooWeak)
+            if (mobCheck == EMobDifficulty::TooWeak || PMember->getZone() != PMob->getZone())
             {
-                if (PMember->getZone() == PMob->getZone())
+                return;
+            }
+
+            if (distance(PMember->loc.p, PMob->loc.p) > 100)
+            {
+                PMember->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PMember, PMember, 0, 0, MsgBasic::TooFarForExp);
+                return;
+            }
+
+            const bool chainActive = PMember->expChain.chainTime > timer::now() || PMember->expChain.chainTime == timer::time_point::min();
+
+            luautils::CalcExpInput input{};
+            input.baseExp            = GetBaseExp(maxlevel, moblevel);
+            input.mobDifficulty      = static_cast<uint8>(mobCheck);
+            input.memberLevel        = memberlevel;
+            input.highestMemberLevel = maxlevel;
+            input.partySize          = pcinzone;
+            input.memberTNL          = GetExpNEXTLevel(memberlevel);
+            input.highestMemberTNL   = GetExpNEXTLevel(maxlevel);
+            input.regionId           = static_cast<uint8>(region);
+            input.chainNumber        = PMember->expChain.chainNumber;
+            input.chainActive        = chainActive;
+
+            const auto calcExpResult = luautils::CalculateExperiencePoints(PMember, PMob, input);
+            if (!calcExpResult)
+            {
+                return;
+            }
+
+            const uint32 exp         = calcExpResult->exp;
+            const bool   wasChained  = calcExpResult->wasChained;
+            const uint16 chainWindow = calcExpResult->chainWindow;
+
+            if (chainWindow > 0)
+            {
+                PMember->expChain.chainTime = timer::now() + std::chrono::seconds(chainWindow);
+                if (!wasChained)
                 {
-                    if (settings::get<bool>("map.EXP_PARTY_GAP_PENALTIES"))
-                    {
-                        uint8 partyGapNoExp = settings::get<uint8>("map.EXP_PARTY_GAP_NO_EXP");
-
-                        if (partyGapNoExp > 0 && maxlevel >= (memberlevel + partyGapNoExp))
-                        {
-                            exp = 0;
-                        }
-                        else if (maxlevel > 50 || maxlevel > (memberlevel + 7))
-                        {
-                            exp *= memberlevel / (float)maxlevel;
-                        }
-                        else
-                        {
-                            exp *= GetExpNEXTLevel(memberlevel) / (float)GetExpNEXTLevel(maxlevel);
-                        }
-                    }
-
-                    bool isInSignetZone =
-                        PMember->StatusEffectContainer->HasStatusEffect(xi::StatusEffect::Signet) &&
-                        region >= REGION_TYPE::RONFAURE &&
-                        region <= REGION_TYPE::JEUNO;
-
-                    bool isInSanctionZone =
-                        PMember->StatusEffectContainer->HasStatusEffect(xi::StatusEffect::Sanction) &&
-                        region >= REGION_TYPE::WEST_AHT_URHGAN &&
-                        region <= REGION_TYPE::ALZADAAL;
-
-                    exp *= GetPlayerShareMultiplier(pcinzone, isInSignetZone || isInSanctionZone);
-
-                    if (PMob->getMobMod(xi::MobMod::ExpBonus))
-                    {
-                        const float monsterbonus = 1.0f + PMob->getMobMod(xi::MobMod::ExpBonus) / 100.0f;
-                        exp *= monsterbonus;
-                    }
-
-                    // Per monster caps pulled from: https://ffxiclopedia.fandom.com/wiki/Experience_Points
-                    if (memberlevel <= 50)
-                    {
-                        exp = std::fmin(exp, 400.0f);
-                    }
-                    else if (memberlevel <= 60)
-                    {
-                        exp = std::fmin(exp, 500.0f);
-                    }
-                    else
-                    {
-                        exp = std::fmin(exp, 600.0f);
-                    }
-
-                    if (mobCheck > EMobDifficulty::DecentChallenge)
-                    {
-                        if (PMember->expChain.chainTime > timer::now() || PMember->expChain.chainTime == timer::time_point::min())
-                        {
-                            chainactive = true;
-                            switch (PMember->expChain.chainNumber)
-                            {
-                                case 0:
-                                    exp *= 1.0f;
-                                    break;
-                                case 1:
-                                    exp *= 1.2f;
-                                    break;
-                                case 2:
-                                    exp *= 1.25f;
-                                    break;
-                                case 3:
-                                    exp *= 1.3f;
-                                    break;
-                                case 4:
-                                    exp *= 1.4f;
-                                    break;
-                                case 5:
-                                    exp *= 1.5f;
-                                    break;
-                                default:
-                                    exp *= 1.55f;
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            if (memberlevel <= 10)
-                            {
-                                PMember->expChain.chainTime = timer::now() + 50s;
-                            }
-                            else if (memberlevel <= 20)
-                            {
-                                PMember->expChain.chainTime = timer::now() + 100s;
-                            }
-                            else if (memberlevel <= 30)
-                            {
-                                PMember->expChain.chainTime = timer::now() + 150s;
-                            }
-                            else if (memberlevel <= 40)
-                            {
-                                PMember->expChain.chainTime = timer::now() + 200s;
-                            }
-                            else if (memberlevel <= 50)
-                            {
-                                PMember->expChain.chainTime = timer::now() + 250s;
-                            }
-                            else if (memberlevel <= 60)
-                            {
-                                PMember->expChain.chainTime = timer::now() + 300s;
-                            }
-                            else
-                            {
-                                PMember->expChain.chainTime = timer::now() + 360s;
-                            }
-                            PMember->expChain.chainNumber = 1;
-                        }
-
-                        if (chainactive && memberlevel <= 10)
-                        {
-                            switch (PMember->expChain.chainNumber)
-                            {
-                                case 0:
-                                    PMember->expChain.chainTime = timer::now() + 50s;
-                                    break;
-                                case 1:
-                                    PMember->expChain.chainTime = timer::now() + 40s;
-                                    break;
-                                case 2:
-                                    PMember->expChain.chainTime = timer::now() + 30s;
-                                    break;
-                                case 3:
-                                    PMember->expChain.chainTime = timer::now() + 20s;
-                                    break;
-                                case 4:
-                                    PMember->expChain.chainTime = timer::now() + 10s;
-                                    break;
-                                case 5:
-                                    PMember->expChain.chainTime = timer::now() + 6s;
-                                    break;
-                                default:
-                                    PMember->expChain.chainTime = timer::now() + 2s;
-                                    break;
-                            }
-                        }
-                        else if (chainactive && memberlevel <= 20)
-                        {
-                            switch (PMember->expChain.chainNumber)
-                            {
-                                case 0:
-                                    PMember->expChain.chainTime = timer::now() + 100s;
-                                    break;
-                                case 1:
-                                    PMember->expChain.chainTime = timer::now() + 80s;
-                                    break;
-                                case 2:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
-                                    break;
-                                case 3:
-                                    PMember->expChain.chainTime = timer::now() + 40s;
-                                    break;
-                                case 4:
-                                    PMember->expChain.chainTime = timer::now() + 20s;
-                                    break;
-                                case 5:
-                                    PMember->expChain.chainTime = timer::now() + 8s;
-                                    break;
-                                default:
-                                    PMember->expChain.chainTime = timer::now() + 4s;
-                                    break;
-                            }
-                        }
-                        else if (chainactive && memberlevel <= 30)
-                        {
-                            switch (PMember->expChain.chainNumber)
-                            {
-                                case 0:
-                                    PMember->expChain.chainTime = timer::now() + 150s;
-                                    break;
-                                case 1:
-                                    PMember->expChain.chainTime = timer::now() + 120s;
-                                    break;
-                                case 2:
-                                    PMember->expChain.chainTime = timer::now() + 90s;
-                                    break;
-                                case 3:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
-                                    break;
-                                case 4:
-                                    PMember->expChain.chainTime = timer::now() + 30s;
-                                    break;
-                                case 5:
-                                    PMember->expChain.chainTime = timer::now() + 10s;
-                                    break;
-                                default:
-                                    PMember->expChain.chainTime = timer::now() + 5s;
-                                    break;
-                            }
-                        }
-                        else if (chainactive && memberlevel <= 40)
-                        {
-                            switch (PMember->expChain.chainNumber)
-                            {
-                                case 0:
-                                    PMember->expChain.chainTime = timer::now() + 200s;
-                                    break;
-                                case 1:
-                                    PMember->expChain.chainTime = timer::now() + 160s;
-                                    break;
-                                case 2:
-                                    PMember->expChain.chainTime = timer::now() + 120s;
-                                    break;
-                                case 3:
-                                    PMember->expChain.chainTime = timer::now() + 80s;
-                                    break;
-                                case 4:
-                                    PMember->expChain.chainTime = timer::now() + 40s;
-                                    break;
-                                case 5:
-                                    PMember->expChain.chainTime = timer::now() + 40s;
-                                    break;
-                                default:
-                                    PMember->expChain.chainTime = timer::now() + 30s;
-                                    break;
-                            }
-                        }
-                        else if (chainactive && memberlevel <= 50)
-                        {
-                            switch (PMember->expChain.chainNumber)
-                            {
-                                case 0:
-                                    PMember->expChain.chainTime = timer::now() + 250s;
-                                    break;
-                                case 1:
-                                    PMember->expChain.chainTime = timer::now() + 200s;
-                                    break;
-                                case 2:
-                                    PMember->expChain.chainTime = timer::now() + 150s;
-                                    break;
-                                case 3:
-                                    PMember->expChain.chainTime = timer::now() + 100s;
-                                    break;
-                                case 4:
-                                    PMember->expChain.chainTime = timer::now() + 50s;
-                                    break;
-                                case 5:
-                                    PMember->expChain.chainTime = timer::now() + 50s;
-                                    break;
-                                default:
-                                    PMember->expChain.chainTime = timer::now() + 50s;
-                                    break;
-                            }
-                        }
-                        else if (chainactive && memberlevel <= 60)
-                        {
-                            switch (PMember->expChain.chainNumber)
-                            {
-                                case 0:
-                                    PMember->expChain.chainTime = timer::now() + 300s;
-                                    break;
-                                case 1:
-                                    PMember->expChain.chainTime = timer::now() + 240s;
-                                    break;
-                                case 2:
-                                    PMember->expChain.chainTime = timer::now() + 180s;
-                                    break;
-                                case 3:
-                                    PMember->expChain.chainTime = timer::now() + 120s;
-                                    break;
-                                case 4:
-                                    PMember->expChain.chainTime = timer::now() + 90s;
-                                    break;
-                                case 5:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
-                                    break;
-                                default:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
-                                    break;
-                            }
-                        }
-                        else if (chainactive)
-                        {
-                            switch (PMember->expChain.chainNumber)
-                            {
-                                case 0:
-                                    PMember->expChain.chainTime = timer::now() + 360s;
-                                    break;
-                                case 1:
-                                    PMember->expChain.chainTime = timer::now() + 300s;
-                                    break;
-                                case 2:
-                                    PMember->expChain.chainTime = timer::now() + 240s;
-                                    break;
-                                case 3:
-                                    PMember->expChain.chainTime = timer::now() + 165s;
-                                    break;
-                                case 4:
-                                    PMember->expChain.chainTime = timer::now() + 105s;
-                                    break;
-                                case 5:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
-                                    break;
-                                default:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
-                                    break;
-                            }
-                        }
-                    }
-                    // pet or companion exp penalty needs to be added here
-                    if (distance(PMember->loc.p, PMob->loc.p) > 100)
-                    {
-                        PMember->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PMember, PMember, 0, 0, MsgBasic::TooFarForExp);
-                        return;
-                    }
-
-                    exp = charutils::AddExpBonus(PMember, exp);
-
-                    charutils::AddExperiencePoints(false, true, false, PMember, PMob, (uint32)exp, mobCheck, chainactive);
+                    PMember->expChain.chainNumber = 1;
                 }
             }
+
+            charutils::AddExperiencePoints(false, true, false, PMember, PMob, exp, mobCheck, wasChained);
         });
     // clang-format on
 }
@@ -5916,6 +5536,48 @@ void SaveCharPosition(CCharEntity* PChar)
                      PChar->id);
 }
 
+void PersistCharVars(const std::vector<CharVarChange>& rows)
+{
+    TracyZoneScoped;
+
+    if (rows.empty())
+    {
+        return;
+    }
+
+    db::transaction(
+        [&]()
+        {
+            for (const auto& row : rows)
+            {
+                PersistCharVar(row.charid, row.name, row.value, row.expiry);
+            }
+        });
+}
+
+void SaveCharPositions(const std::vector<CharPosition>& rows)
+{
+    TracyZoneScoped;
+
+    if (rows.empty())
+    {
+        return;
+    }
+
+    db::transaction(
+        [&]()
+        {
+            // not an upsert: `chars` has a BEFORE INSERT trigger that fires even on update
+            db::executeBulk(
+                "UPDATE chars SET pos_rot = ?, pos_x = ?, pos_y = ?, pos_z = ?, boundary = ? WHERE charid = ?",
+                rows,
+                [](const CharPosition& row)
+                {
+                    return std::make_tuple(row.rotation, row.x, row.y, row.z, row.boundary, row.charid);
+                });
+        });
+}
+
 /* TODO: Move linkshell persistence here
 void SaveCharLinkshells(CCharEntity* PChar)
 {
@@ -6171,66 +5833,124 @@ void SavePrevZoneLineID(CCharEntity* PChar, uint32 ZoneLineID)
                      PChar->id);
 }
 
+auto BuildCharEquipSlots(const CCharEntity* PChar) -> std::vector<CharEquipSlot>
+{
+    std::vector<CharEquipSlot> rows;
+
+    for (uint8 i = 0; i < 18; ++i)
+    {
+        if (const auto eloc = PChar->equipLocation(i))
+        {
+            rows.push_back({ .charid = PChar->id, .equipSlotId = i, .slotId = eloc->Slot, .containerId = static_cast<uint8>(eloc->Container) });
+        }
+    }
+
+    return rows;
+}
+
 void SaveCharEquip(CCharEntity* PChar)
 {
     TracyZoneScoped;
 
-    for (uint8 i = 0; i < 18; ++i)
-    {
-        auto eloc = PChar->equipLocation(i);
-        if (!eloc)
-        {
-            db::preparedStmt("DELETE FROM char_equip WHERE charid = ? AND equipslotid = ? LIMIT 1", PChar->id, i);
-        }
-        else
-        {
-            db::preparedStmt("INSERT INTO char_equip "
-                             "SET charid = ?, equipslotid = ?, slotid = ?, containerid = ? "
-                             "ON DUPLICATE KEY UPDATE slotid  = ?, containerid = ?",
-                             PChar->id,
-                             i,
-                             eloc->Slot,
-                             static_cast<uint8>(eloc->Container),
-                             eloc->Slot,
-                             static_cast<uint8>(eloc->Container));
-        }
-    }
+    SaveCharEquips({ PChar->id }, BuildCharEquipSlots(PChar));
 }
 
-void SaveCharLook(CCharEntity* PChar)
+void SaveCharEquips(const std::vector<uint32>& replaceFor, const std::vector<CharEquipSlot>& rows)
 {
     TracyZoneScoped;
 
-    look_t* look = (PChar->getStyleLocked() ? &PChar->mainlook : &PChar->look);
-    db::preparedStmt("UPDATE char_look "
-                     "SET head = ?, body = ?, hands = ?, legs = ?, feet = ?, main = ?, sub = ?, ranged = ? "
-                     "WHERE charid = ?",
-                     look->head,
-                     look->body,
-                     look->hands,
-                     look->legs,
-                     look->feet,
-                     look->main,
-                     look->sub,
-                     look->ranged,
-                     PChar->id);
+    if (replaceFor.empty())
+    {
+        return;
+    }
 
-    db::preparedStmt("UPDATE chars SET isstylelocked = ? WHERE charid = ?", PChar->getStyleLocked() ? 1 : 0, PChar->id);
+    db::transaction(
+        [&]()
+        {
+            db::executeBulk(
+                "DELETE FROM char_equip WHERE charid = ?",
+                replaceFor,
+                [](uint32 charid)
+                {
+                    return std::make_tuple(charid);
+                });
 
-    db::preparedStmt("INSERT INTO char_style (charid, head, body, hands, legs, feet, main, sub, ranged) "
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE "
-                     "charid = VALUES(charid), head = VALUES(head), body = VALUES(body), "
-                     "hands = VALUES(hands), legs = VALUES(legs), feet = VALUES(feet), "
-                     "main = VALUES(main), sub = VALUES(sub), ranged = VALUES(ranged)",
-                     PChar->id,
-                     PChar->styleItems[SLOT_HEAD],
-                     PChar->styleItems[SLOT_BODY],
-                     PChar->styleItems[SLOT_HANDS],
-                     PChar->styleItems[SLOT_LEGS],
-                     PChar->styleItems[SLOT_FEET],
-                     PChar->styleItems[SLOT_MAIN],
-                     PChar->styleItems[SLOT_SUB],
-                     PChar->styleItems[SLOT_RANGED]);
+            db::executeBulk(
+                "INSERT INTO char_equip (charid, equipslotid, slotid, containerid) VALUES (?,?,?,?)",
+                rows,
+                [](const CharEquipSlot& row)
+                {
+                    return std::make_tuple(row.charid, row.equipSlotId, row.slotId, row.containerId);
+                });
+        });
+}
+
+auto BuildCharAppearance(const CCharEntity* PChar) -> CharAppearance
+{
+    const look_t* look = [&]()
+    {
+        if (PChar->getStyleLocked())
+        {
+            return &PChar->mainlook;
+        }
+
+        return &PChar->look;
+    }();
+
+    return {
+        .charid      = PChar->id,
+        .look        = { look->head, look->body, look->hands, look->legs, look->feet, look->main, look->sub, look->ranged },
+        .styleItems  = { PChar->styleItems[SLOT_HEAD], PChar->styleItems[SLOT_BODY], PChar->styleItems[SLOT_HANDS], PChar->styleItems[SLOT_LEGS], PChar->styleItems[SLOT_FEET], PChar->styleItems[SLOT_MAIN], PChar->styleItems[SLOT_SUB], PChar->styleItems[SLOT_RANGED] },
+        .styleLocked = PChar->getStyleLocked(),
+    };
+}
+
+void SaveCharAppearances(const std::vector<CharAppearance>& rows)
+{
+    TracyZoneScoped;
+
+    if (rows.empty())
+    {
+        return;
+    }
+
+    const auto slotRow = [](uint32 charid, const std::array<uint16, 8>& slots)
+    {
+        return std::make_tuple(charid, slots[0], slots[1], slots[2], slots[3], slots[4], slots[5], slots[6], slots[7]);
+    };
+
+    db::transaction(
+        [&]()
+        {
+            // upsert, not update: char_look rows aren't created by the char_insert trigger
+            db::executeBulk(
+                "INSERT INTO char_look (charid, head, body, hands, legs, feet, main, sub, ranged) VALUES (?,?,?,?,?,?,?,?,?) "
+                "ON DUPLICATE KEY UPDATE head = VALUES(head), body = VALUES(body), hands = VALUES(hands), "
+                "legs = VALUES(legs), feet = VALUES(feet), main = VALUES(main), sub = VALUES(sub), ranged = VALUES(ranged)",
+                rows,
+                [&](const CharAppearance& row)
+                {
+                    return slotRow(row.charid, row.look);
+                });
+
+            db::executeBulk(
+                "UPDATE chars SET isstylelocked = ? WHERE charid = ?",
+                rows,
+                [](const CharAppearance& row)
+                {
+                    return std::make_tuple(row.styleLocked, row.charid);
+                });
+
+            db::executeBulk(
+                "INSERT INTO char_style (charid, head, body, hands, legs, feet, main, sub, ranged) VALUES (?,?,?,?,?,?,?,?,?) "
+                "ON DUPLICATE KEY UPDATE head = VALUES(head), body = VALUES(body), hands = VALUES(hands), "
+                "legs = VALUES(legs), feet = VALUES(feet), main = VALUES(main), sub = VALUES(sub), ranged = VALUES(ranged)",
+                rows,
+                [&](const CharAppearance& row)
+                {
+                    return slotRow(row.charid, row.styleItems);
+                });
+        });
 }
 
 /************************************************************************
@@ -6761,48 +6481,6 @@ void SaveLastLogout(const CCharEntity* PChar)
                      PChar->id);
 }
 
-float AddExpBonus(CCharEntity* PChar, float exp)
-{
-    TracyZoneScoped;
-
-    int32 bonus = 0;
-    if (PChar->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Dedication) && PChar->loc.zone->GetRegionID() != REGION_TYPE::ABYSSEA)
-    {
-        CStatusEffect* dedication = PChar->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Dedication);
-        int16          percentage = dedication->GetPower();
-        int16          cap        = dedication->GetSubPower();
-        bonus += std::clamp<int32>((int32)((exp * percentage) / 100), 0, cap);
-        dedication->SetSubPower(cap -= bonus);
-
-        if (cap <= 0)
-        {
-            PChar->StatusEffectContainer->DelStatusEffect(xi::StatusEffect::Dedication);
-        }
-    }
-
-    int16 rovBonus = 0;
-    for (const auto experienceBonusKeyItem : experienceBonusKeyItems)
-    {
-        if (hasKeyItem(PChar, experienceBonusKeyItem))
-        {
-            rovBonus += 30;
-        }
-    }
-
-    bonus += (int32)(exp * ((PChar->getMod(xi::Mod::EXP_BONUS) + rovBonus) / 100.0f));
-
-    if (bonus + (int32)exp < 0)
-    {
-        exp = 0;
-    }
-    else
-    {
-        exp = exp + bonus;
-    }
-
-    return exp;
-}
-
 auto hasMogLockerAccess(const CCharEntity* PChar) -> bool
 {
     TracyZoneScoped;
@@ -6911,13 +6589,13 @@ auto CheckAbilityAddtype(CCharEntity* PChar, const CAbility* PAbility) -> bool
 {
     if (PAbility->getAddType() & ADDTYPE_MERIT)
     {
-        if (!PChar->PMeritPoints->GetMerit(static_cast<MERIT_TYPE>(PAbility->getMeritModID())))
+        if (!PChar->PMeritPoints->GetMerit(static_cast<xi::Merit>(PAbility->getMeritModID())))
         {
             ShowWarning("charutils::CheckAbilityAddtype: Attempt to add invalid Merit Ability (%d).", PAbility->getMeritModID());
             return false;
         }
 
-        if (!(PChar->PMeritPoints->GetMerit(static_cast<MERIT_TYPE>(PAbility->getMeritModID()))->count > 0))
+        if (!(PChar->PMeritPoints->GetMerit(static_cast<xi::Merit>(PAbility->getMeritModID()))->count > 0))
         {
             return false;
         }
@@ -7471,6 +7149,14 @@ auto HomePoint(CCharEntity* PChar, bool resetHPMP) -> bool
 
         PChar->health.hp = PChar->GetMaxHP();
         PChar->health.mp = PChar->GetMaxMP();
+
+        // Homepointing increases beastmen influence.
+        const REGION_TYPE deathRegion = PChar->loc.zone->GetRegionID();
+        if (deathRegion <= REGION_TYPE::TAVNAZIA &&
+            PChar->GetMLevel() >= settings::get<uint8>("map.MINIMUM_LEVEL_CONQUEST_INFUENCE_LOSS"))
+        {
+            conquest::AddPlayerHomepoints(1, deathRegion);
+        }
     }
 
     PChar->loc.boundary    = 0;
@@ -8150,8 +7836,7 @@ void removeCharFromZone(CCharEntity* PChar)
         PChar->loc.zone->DecreaseZoneCounter(PChar);
     }
 
-    PChar->StatusEffectContainer->SaveStatusEffects(PChar->PSession->shuttingDown == 1);
-    PChar->PersistData();
+    persist::flush(PChar, IsLogout(PChar->PSession->shuttingDown == 1));
     charutils::SavePlayTime(PChar);
     charutils::SaveCharStats(PChar);
     charutils::SaveCharExp(PChar, PChar->GetMJob());

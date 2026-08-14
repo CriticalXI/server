@@ -4686,28 +4686,28 @@ INSERT INTO `mob_spawn_points` VALUES (16867505,0,'Stray','Stray',12,43,44,160.0
 INSERT INTO `mob_spawn_points` VALUES (16867506,0,'Stray','Stray',12,43,44,160.000,-1.000,-160.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867507,0,'Stray','Stray',12,43,44,160.000,-1.000,-160.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867508,0,'Stray','Stray',12,43,44,160.000,-1.000,-160.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867509,0,'Stray','Stray',12,43,44,160.000,-1.000,-160.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867509,0,'Stray_Weeper','Stray',13,43,44,160.000,-1.000,-160.000,0,NULL,NULL);
 -- 16867510 see npc_list.sql -> Teleporter
 INSERT INTO `mob_spawn_points` VALUES (16867511,0,'Memory_Receptacle','Memory Receptacle',11,50,50,240.000,-1.000,-40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867512,0,'Stray','Stray',12,43,44,240.000,-1.000,-40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867513,0,'Stray','Stray',12,43,44,240.000,-1.000,-40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867514,0,'Stray','Stray',12,43,44,240.000,-1.000,-40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867515,0,'Stray','Stray',12,43,44,240.000,-1.000,-40.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867516,0,'Stray','Stray',12,43,44,240.000,-1.000,-40.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867516,0,'Stray_Weeper','Stray',13,43,44,240.000,-1.000,-40.000,0,NULL,NULL);
 -- 16867517 see npc_list.sql -> Teleporter
 INSERT INTO `mob_spawn_points` VALUES (16867518,0,'Memory_Receptacle','Memory Receptacle',11,50,50,240.000,-1.000,-240.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867519,0,'Stray','Stray',12,43,44,240.000,-1.000,-240.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867520,0,'Stray','Stray',12,43,44,240.000,-1.000,-240.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867521,0,'Stray','Stray',12,43,44,240.000,-1.000,-240.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867522,0,'Stray','Stray',12,43,44,240.000,-1.000,-240.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867523,0,'Stray','Stray',12,43,44,240.000,-1.000,-240.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867523,0,'Stray_Weeper','Stray',13,43,44,240.000,-1.000,-240.000,0,NULL,NULL);
 -- 16867524 see npc_list.sql -> Teleporter
 INSERT INTO `mob_spawn_points` VALUES (16867525,0,'Memory_Receptacle','Memory Receptacle',11,50,50,360.000,-1.000,-80.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867526,0,'Stray','Stray',12,43,44,360.000,-1.000,-80.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867527,0,'Stray','Stray',12,43,44,360.000,-1.000,-80.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867528,0,'Stray','Stray',12,43,44,360.000,-1.000,-80.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867529,0,'Stray','Stray',12,43,44,360.000,-1.000,-80.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867530,0,'Stray','Stray',12,43,44,360.000,-1.000,-80.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867530,0,'Stray_Weeper','Stray',13,43,44,360.000,-1.000,-80.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867531,0,'Wanderer','Wanderer',39,46,48,262.331,-0.496,171.836,70,NULL,NULL); -- Level 4
 INSERT INTO `mob_spawn_points` VALUES (16867532,0,'Weeper','Weeper',40,52,54,265.335,-0.471,185.426,178,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867533,0,'Weeper','Weeper',40,52,54,301.310,-0.500,141.955,112,NULL,NULL);
@@ -4781,29 +4781,29 @@ INSERT INTO `mob_spawn_points` VALUES (16867599,0,'Craver','Craver',10,56,58,345
 INSERT INTO `mob_spawn_points` VALUES (16867601,0,'Memory_Receptacle','Memory Receptacle',11,50,50,120.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867602,0,'Stray','Stray',12,45,46,120.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867603,0,'Stray','Stray',12,45,46,120.000,-1.000,40.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867604,0,'Stray','Stray',12,45,46,120.000,-1.000,40.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867604,0,'Stray_Weeper','Stray',13,45,46,120.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867605,0,'Stray','Stray',12,45,46,120.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867606,0,'Stray','Stray',12,45,46,120.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867607,0,'Stray','Stray',12,45,46,120.000,-1.000,40.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867608,0,'Stray','Stray',12,45,46,120.000,-1.000,40.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867608,0,'Stray_Seether','Stray',14,45,46,120.000,-1.000,40.000,0,NULL,NULL);
 -- 16867609 see npc_list.sql -> Teleporter
 INSERT INTO `mob_spawn_points` VALUES (16867610,0,'Memory_Receptacle','Memory Receptacle',11,50,50,440.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867611,0,'Stray','Stray',12,45,46,440.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867612,0,'Stray','Stray',12,45,46,440.000,-1.000,40.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867613,0,'Stray','Stray',12,45,46,440.000,-1.000,40.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867613,0,'Stray_Weeper','Stray',13,45,46,440.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867614,0,'Stray','Stray',12,45,46,440.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867615,0,'Stray','Stray',12,45,46,440.000,-1.000,40.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867616,0,'Stray','Stray',12,45,46,440.000,-1.000,40.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867617,0,'Stray','Stray',12,45,46,440.000,-1.000,40.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867617,0,'Stray_Seether','Stray',14,45,46,440.000,-1.000,40.000,0,NULL,NULL);
 -- 16867618 see npc_list.sql -> Teleporter
 INSERT INTO `mob_spawn_points` VALUES (16867619,0,'Memory_Receptacle','Memory Receptacle',11,50,50,440.000,-1.000,280.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867620,0,'Stray','Stray',12,45,46,440.000,-1.000,280.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867621,0,'Stray','Stray',12,45,46,440.000,-1.000,280.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867622,0,'Stray','Stray',12,45,46,440.000,-1.000,280.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867622,0,'Stray_Weeper','Stray',13,45,46,440.000,-1.000,280.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867623,0,'Stray','Stray',12,45,46,440.000,-1.000,280.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867624,0,'Stray','Stray',12,45,46,440.000,-1.000,280.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867625,0,'Stray','Stray',12,45,46,440.000,-1.000,280.000,0,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16867626,0,'Stray','Stray',12,45,46,440.000,-1.000,280.000,0,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16867626,0,'Stray_Seether','Stray',14,45,46,440.000,-1.000,280.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867627,0,'Seether','Seether',15,54,56,18.422,-1.914,14.039,68,NULL,NULL); -- Level 5
 INSERT INTO `mob_spawn_points` VALUES (16867628,0,'Wanderer','Wanderer',39,50,52,15.250,-2.478,16.606,91,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16867629,0,'Weeper','Weeper',40,52,54,23.445,-1.392,6.323,26,NULL,NULL);
@@ -6640,22 +6640,22 @@ INSERT INTO `mob_spawn_points` VALUES (16908290,0,'Mammet-22_Zeta','Mammet-22 Ze
 INSERT INTO `mob_spawn_points` VALUES (16908291,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,-642.548,-231.348,510.748,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908292,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,-644.464,-231.148,511.386,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908293,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,-635.540,-231.148,511.712,191,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16908294,0,'Omega','Omega',2,63,64,-640.000,-231.000,516.000,191,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16908295,0,'Ultima','Ultima',3,63,64,-640.000,-231.000,516.000,191,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16908294,0,'Omega','Omega',2,63,64,-640.000,-231.847,514.000,192,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16908295,0,'Ultima','Ultima',3,63,64,-640.000,-231.847,514.000,192,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908296,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,-0.050,-151.348,150.723,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908297,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,2.574,-151.605,150.495,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908298,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,-2.567,-151.348,150.699,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908299,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,-4.483,-151.148,151.337,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908300,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,4.441,-151.148,151.663,191,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16908301,0,'Omega','Omega',2,63,64,-0.019,-151.000,155.951,191,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16908302,0,'Ultima','Ultima',3,63,64,-0.019,-151.000,155.951,191,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16908301,0,'Omega','Omega',2,63,64,0.000,-151.847,154.000,192,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16908302,0,'Ultima','Ultima',3,63,64,0.000,-151.847,154.000,192,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908303,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,639.926,-71.348,-209.201,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908304,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,642.550,-71.605,-209.429,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908305,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,637.409,-71.348,-209.225,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908306,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,635.493,-71.148,-208.587,191,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16908307,0,'Mammet-22_Zeta','Mammet-22 Zeta',1,55,56,644.417,-71.148,-208.261,191,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16908308,0,'Omega','Omega',2,63,64,639.957,-71.000,-203.973,191,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (16908309,0,'Ultima','Ultima',3,63,64,639.957,-71.000,-203.973,191,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16908308,0,'Omega','Omega',2,63,64,640.000,-71.847,-206.000,192,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (16908309,0,'Ultima','Ultima',3,63,64,640.000,-71.847,-206.000,192,NULL,NULL);
 
 -- The Warrior's Path
 INSERT INTO `mob_spawn_points` VALUES (16908310,0,'Tenzen','Tenzen',4,70,70,-639.985,-231.347,525.910,65,NULL,NULL);
@@ -38993,7 +38993,7 @@ INSERT INTO `mob_spawn_points` VALUES (17215491,0,'Land_Crab','Land Crab',3,5,8,
 INSERT INTO `mob_spawn_points` VALUES (17215492,0,'Mole_Crab','Mole Crab',4,7,8,1.000,1.000,1.000,0,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17215493,0,'Passage_Crab','Passage Crab',5,9,10,1.000,1.000,1.000,0,NULL,NULL);
 
-INSERT INTO `mob_spawn_points` VALUES (17215494,0,'Bubbly_Bernie','Bubbly Bernie',6,9,10,745.000,-2.000,-671.000,22,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (17215494,0,'Bubbly_Bernie','Bubbly Bernie',6,9,10,758.276,-1.579,-688.066,22,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17215495,1,'Huge_Hornet','Huge Hornet',7,1,1,519.620,-1.317,-330.270,37,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17215496,2,'Huge_Hornet','Huge Hornet',7,1,1,540.734,-0.629,-333.375,127,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17215497,0,'Huge_Hornet','Huge Hornet',7,1,1,566.213,2.295,-374.238,98,NULL,NULL);
@@ -78891,7 +78891,7 @@ INSERT INTO `mob_spawn_points` VALUES (17678347,0,'Phantom','Phantom',9,22,25,-7
 INSERT INTO `mob_spawn_points` VALUES (17678348,0,'Thunder_Elemental','Thunder Elemental',10,0,0,-8.090,-7.270,16.010,152,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17678349,0,'Water_Elemental','Water Elemental',11,27,29,4.930,-7.270,16.550,148,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17678350,0,'Sea_Horror','Sea Horror',12,60,62,-0.230,-7.660,2.860,7,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (17678351,0,'Enagakure','Enagakure',13,55,55,1.000,-7.000,13.000,60,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (17678351,0,'Enagakure','Enagakure',13,55,55,8.199,-7.663,19.189,0,20,4);
 
 -- ------------------------------------------------------------
 -- Ship Bound for Mhaura (Zone 221)
@@ -78990,7 +78990,7 @@ INSERT INTO `mob_spawn_points` VALUES (17707022,0,'Crossbones','Crossbones',11,2
 INSERT INTO `mob_spawn_points` VALUES (17707023,0,'Crossbones','Crossbones',11,28,31,7.177,-7.309,17.648,54,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17707024,0,'Ship_Wight','Ship Wight',12,36,39,-0.725,-7.312,23.111,60,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (17707025,0,'Blackbeard','Blackbeard',13,67,68,-0.725,-7.312,23.111,60,NULL,NULL);
-INSERT INTO `mob_spawn_points` VALUES (17707026,0,'Enagakure','Enagakure',14,55,55,1.000,-7.000,13.000,60,NULL,NULL);
+INSERT INTO `mob_spawn_points` VALUES (17707026,0,'Enagakure','Enagakure',14,55,55,8.199,-7.663,19.189,0,20,4);
 
 -- ------------------------------------------------------------
 -- Ship Bound for Mhaura Pirates (Zone 228)

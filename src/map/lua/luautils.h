@@ -33,7 +33,12 @@
 //
 
 #include <common/cbasetypes.h>
+#include <common/types/flag.h>
 #include <common/types/maybe.h>
+
+#include <string>
+#include <string_view>
+#include <type_traits>
 
 #include "common/lua.h"
 extern sol::state lua;
@@ -137,6 +142,18 @@ namespace detail
 // void cacheObject(const std::string& objName, sol::reference obj);
 auto findGlobalLuaFunction(const std::string& funcName) -> sol::function;
 
+// Whether a data lookup should create the entity's table, or report its absence.
+using CreateEntityData = xi::Flag<struct CreateEntityDataTag>;
+
+// The entity's data table itself. Kept in detail deliberately: handing a sol::table to general
+// callers leaks Lua impl details.
+auto getEntityDataTable(CBaseEntity* PEntity, CreateEntityData create) -> sol::table;
+
+// Walk `table` along the given keys and convert the value at the end to T. Also in detail: the
+// intermediate levels are sol::tables and must not escape.
+template <typename T, typename Key, typename... Rest>
+auto readEntityDataPath(const sol::table& table, const Key& key, const Rest&... rest) -> Maybe<T>;
+
 } // namespace detail
 
 //
@@ -186,9 +203,44 @@ auto GetLuaObjectFromFilename(const std::string& filename) -> sol::table;
 auto getEntityCachedFunction(CBaseEntity* PEntity, const std::string& funcName) -> sol::function;
 auto getCachedFileFunction(const std::string& filename, const std::string& funcName) -> sol::function;
 
+//
+// Freeform per-entity Lua data
+//
+
+template <typename T, typename... Keys>
+auto getEntityData(CBaseEntity* PEntity, const Keys&... keys) -> Maybe<T>;
+void resetEntityData(CBaseEntity* PEntity);
+
 void OnEntityLoad(CBaseEntity* PEntity);
 
 void LoadExpDifficultyCurves(const sol::table& expToDifficultyTable, const uint8 incrediblyEasyPreyLevel, const uint16 incrediblyEasyPreyMinExp);
+
+// Base experience values, indexed by [levelDifference + 44][(charLevel - 1) / 5] for level differences -44 to +15.
+using ExperiencePointsTable = std::array<std::array<uint16, 20>, 60>;
+
+struct CalcExpInput
+{
+    uint32 baseExp            = 0;
+    uint8  mobDifficulty      = 0;
+    uint8  memberLevel        = 0;
+    uint8  highestMemberLevel = 0;
+    uint8  partySize          = 0;
+    uint32 memberTNL          = 0;
+    uint32 highestMemberTNL   = 0;
+    uint8  regionId           = 0;
+    uint16 chainNumber        = 0;
+    bool   chainActive        = false;
+};
+
+struct CalcExpResult
+{
+    uint32 exp         = 0;
+    bool   wasChained  = false;
+    uint16 chainWindow = 0;
+};
+
+auto SetupExperiencePoints() -> Maybe<ExperiencePointsTable>; // Validate functions and set up the base experience points table.
+auto CalculateExperiencePoints(CCharEntity* PMember, CMobEntity* PMob, const CalcExpInput& input) -> Maybe<CalcExpResult>;
 
 void PopulateIDLookupsByFilename(Maybe<std::string> maybeFilename = std::nullopt);
 void PopulateIDLookupsByZone(Maybe<xi::ZoneId> maybeZoneId = std::nullopt);
@@ -468,6 +520,49 @@ auto GetSynergyRecipeByTrade(CLuaTradeContainer luaTradeContainer) -> sol::table
 //
 // template impls
 //
+
+template <typename T, typename Key, typename... Rest>
+auto luautils::detail::readEntityDataPath(const sol::table& table, const Key& key, const Rest&... rest) -> Maybe<T>
+{
+    if constexpr (sizeof...(Rest) == 0)
+    {
+        // sol::optional yields an empty optional on a type mismatch rather than throwing.
+        if (const auto value = table[key].template get<sol::optional<T>>())
+        {
+            return *value;
+        }
+
+        return std::nullopt;
+    }
+    else
+    {
+        const auto next = table[key];
+        if (!next.valid() || next.get_type() != sol::type::table)
+        {
+            return std::nullopt;
+        }
+
+        return readEntityDataPath<T>(next.template get<sol::table>(), rest...);
+    }
+}
+
+template <typename T, typename... Keys>
+auto luautils::getEntityData(CBaseEntity* PEntity, const Keys&... keys) -> Maybe<T>
+{
+    static_assert(std::is_integral_v<T> || std::is_floating_point_v<T> || std::is_same_v<T, std::string>,
+                  "getEntityData<T> only returns scalars and strings. Lua types must not escape luautils.");
+    static_assert(sizeof...(Keys) > 0, "getEntityData needs at least one key");
+    static_assert((!std::is_same_v<std::decay_t<Keys>, std::string_view> && ...),
+                  "A key reaches sol's deferred lookup, which stores a string_view without owning it. See the GOTCHA at the top of this header.");
+
+    const auto table = detail::getEntityDataTable(PEntity, detail::CreateEntityData::No);
+    if (!table.valid())
+    {
+        return std::nullopt;
+    }
+
+    return detail::readEntityDataPath<T>(table, keys...);
+}
 
 template <typename T, typename... Targs>
 auto luautils::callGlobal(const std::string& funcName, Targs... args)
