@@ -7,13 +7,7 @@
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
-local moduleName = 'queasyshroom_adjust'
-
-if xi.module.isContentEnabled('WOTG') then
-    return { name = moduleName }
-end
-
-local m = Module:new(moduleName)
+local m = Module:new('queasyshroom_adjust', xi.pre(xi.expansion.WOTG))
 
 m:addOverride('xi.actions.mobskills.queasyshroom.onMobWeaponSkill', function(mob, target, skill, action)
     local params = {}
@@ -41,5 +35,3 @@ m:addOverride('xi.actions.mobskills.queasyshroom.onMobWeaponSkill', function(mob
 
     return info.damage
 end)
-
-return m

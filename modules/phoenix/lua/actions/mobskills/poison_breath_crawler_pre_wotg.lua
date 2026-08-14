@@ -7,13 +7,7 @@
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
-local moduleName = 'poison_breath_crawler'
-
-if xi.module.isContentEnabled('WOTG') then
-    return { name = moduleName }
-end
-
-local m = Module:new(moduleName)
+local m = Module:new('poison_breath_crawler', xi.pre(xi.expansion.WOTG))
 
 m:addOverride('xi.actions.mobskills.poison_breath_crawler.onMobWeaponSkill', function(mob, target, skill, action)
     local params = {}
@@ -41,5 +35,3 @@ m:addOverride('xi.actions.mobskills.poison_breath_crawler.onMobWeaponSkill', fun
 
     return info.damage
 end)
-
-return m

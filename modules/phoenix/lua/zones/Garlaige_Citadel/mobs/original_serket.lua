@@ -35,5 +35,3 @@ m:addOverride('xi.zones.Garlaige_Citadel.mobs.Serket.onMobInitialize', function(
         end
     end)
 end)
-
-return m

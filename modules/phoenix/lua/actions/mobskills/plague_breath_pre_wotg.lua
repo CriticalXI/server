@@ -7,13 +7,7 @@
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
-local moduleName = 'plague_breath_adjust'
-
-if xi.module.isContentEnabled('WOTG') then
-    return { name = moduleName }
-end
-
-local m = Module:new(moduleName)
+local m = Module:new('plague_breath_adjust', xi.pre(xi.expansion.WOTG))
 
 m:addOverride('xi.actions.mobskills.plague_breath.onMobWeaponSkill', function(mob, target, skill, action)
     local params = {}
@@ -41,5 +35,3 @@ m:addOverride('xi.actions.mobskills.plague_breath.onMobWeaponSkill', function(mo
 
     return info.damage
 end)
-
-return m

@@ -36,4 +36,4 @@ commandObj.onTrigger = function(player)
     end
 end
 
-return commandObj
+xi.module.registerCommand('debuginfo', commandObj)

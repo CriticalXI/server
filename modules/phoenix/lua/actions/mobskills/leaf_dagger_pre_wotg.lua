@@ -9,13 +9,7 @@
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
-local moduleName = 'leaf_dagger_adjust'
-
-if xi.module.isContentEnabled('WOTG') then
-    return { name = moduleName }
-end
-
-local m = Module:new(moduleName)
+local m = Module:new('leaf_dagger_adjust', xi.pre(xi.expansion.WOTG))
 
 m:addOverride('xi.actions.mobskills.leaf_dagger.onMobWeaponSkill', function(mob, target, skill, action)
     local params = {}
@@ -42,5 +36,3 @@ m:addOverride('xi.actions.mobskills.leaf_dagger.onMobWeaponSkill', function(mob,
 
     return info.damage
 end)
-
-return m

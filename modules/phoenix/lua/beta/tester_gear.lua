@@ -778,5 +778,3 @@ m:addOverride('xi.player.charCreate', function(player)
     -- Add consumables to inventory
     addConsumables(player, inventoryItems)
 end)
-
-return m

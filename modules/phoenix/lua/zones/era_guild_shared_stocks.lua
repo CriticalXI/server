@@ -108,5 +108,3 @@ m:addOverride('xi.zones.Lower_Jeuno.npcs.Amalasanda.onTrigger', function(player,
         player:showText(npc, zones[xi.zone.LOWER_JEUNO].text.AMALASANDA_SHOP_DIALOG)
     end
 end)
-
-return m

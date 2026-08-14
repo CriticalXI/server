@@ -17,5 +17,3 @@ end)
 m:addOverride('xi.chocoboDig.updateFatigue', function(player, newValue)
     player:setAccountVar('[DIG]DigCount', newValue, NextJstDay())
 end)
-
-return m

@@ -15,5 +15,3 @@ end)
 m:addOverride('xi.items.perpetual_hourglass.onItemUse', function(target, user, item, action)
     xi.dynamis.onGlassUse(target, item)
 end)
-
-return m
