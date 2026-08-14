@@ -48,5 +48,3 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
         attacker:updateEnmityFromDamage(playerEntity, 1)
     end)
 end)
-
-return m

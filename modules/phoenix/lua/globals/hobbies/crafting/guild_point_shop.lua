@@ -68,99 +68,100 @@ m:addOverride('xi.crafting.guildPointOnEventUpdate', function(player, option, ta
     return super(player, option, target, guildId)
 end)
 
------------------------------------
--- HQ Crystals - Set Aurora and Twilight to 500 GP
------------------------------------
+m:addOverride('xi.server.onServerStart', function()
+    super()
 
-xi.crafting.hqCrystals[7].cost = 500 -- Aurora Crystal
-xi.crafting.hqCrystals[8].cost = 500 -- Twilight Crystal
+    -----------------------------------
+    -- HQ Crystals - Set Aurora and Twilight to 500 GP
+    -----------------------------------
+    xi.crafting.hqCrystals[7].cost = 500 -- Aurora Crystal
+    xi.crafting.hqCrystals[8].cost = 500 -- Twilight Crystal
 
--- TODO: Disable analysis crystals when they are implemented on LSB
+    -- TODO: Disable analysis crystals when they are implemented on LSB
 
------------------------------------
--- FISHING
------------------------------------
-xi.crafting.guildKeyItemTable[xi.guild.FISHING][3].rank = disabledRank -- Angler's Almanac
-xi.crafting.guildItemTable[xi.guild.FISHING][6].rank    = disabledRank -- Net and Lure
-xi.crafting.guildItemTable[xi.guild.FISHING][7].rank    = disabledRank -- Fishermens' Emblem
+    -----------------------------------
+    -- FISHING
+    -----------------------------------
+    xi.crafting.guildKeyItemTable[xi.guild.FISHING][3].rank = disabledRank -- Angler's Almanac
+    xi.crafting.guildItemTable[xi.guild.FISHING][6].rank    = disabledRank -- Net and Lure
+    xi.crafting.guildItemTable[xi.guild.FISHING][7].rank    = disabledRank -- Fishermens' Emblem
 
------------------------------------
--- WOODWORKING
------------------------------------
-xi.crafting.guildKeyItemTable[xi.guild.WOODWORKING][4].rank = disabledRank -- Way of the Carpenter
-xi.crafting.guildItemTable[xi.guild.WOODWORKING][6].rank    = disabledRank -- Carpenter's Kit
-xi.crafting.guildItemTable[xi.guild.WOODWORKING][7].rank    = disabledRank -- Carpenters' Emblem
+    -----------------------------------
+    -- WOODWORKING
+    -----------------------------------
+    xi.crafting.guildKeyItemTable[xi.guild.WOODWORKING][4].rank = disabledRank -- Way of the Carpenter
+    xi.crafting.guildItemTable[xi.guild.WOODWORKING][6].rank    = disabledRank -- Carpenter's Kit
+    xi.crafting.guildItemTable[xi.guild.WOODWORKING][7].rank    = disabledRank -- Carpenters' Emblem
 
------------------------------------
--- SMITHING
------------------------------------
-xi.crafting.guildKeyItemTable[xi.guild.SMITHING][4].rank = disabledRank -- Way of the Blacksmith
-xi.crafting.guildItemTable[xi.guild.SMITHING][6].rank    = disabledRank -- Stone Hearth
-xi.crafting.guildItemTable[xi.guild.SMITHING][7].rank    = disabledRank -- Blacksmiths' Emblem
+    -----------------------------------
+    -- SMITHING
+    -----------------------------------
+    xi.crafting.guildKeyItemTable[xi.guild.SMITHING][4].rank = disabledRank -- Way of the Blacksmith
+    xi.crafting.guildItemTable[xi.guild.SMITHING][6].rank    = disabledRank -- Stone Hearth
+    xi.crafting.guildItemTable[xi.guild.SMITHING][7].rank    = disabledRank -- Blacksmiths' Emblem
 
------------------------------------
--- GOLDSMITHING
------------------------------------
-xi.crafting.guildKeyItemTable[xi.guild.GOLDSMITHING][5].rank = disabledRank -- Way of the Goldsmith
-xi.crafting.guildItemTable[xi.guild.GOLDSMITHING][6].rank    = disabledRank -- Gemscope
-xi.crafting.guildItemTable[xi.guild.GOLDSMITHING][7].rank    = disabledRank -- Goldsmiths' Emblem
+    -----------------------------------
+    -- GOLDSMITHING
+    -----------------------------------
+    xi.crafting.guildKeyItemTable[xi.guild.GOLDSMITHING][5].rank = disabledRank -- Way of the Goldsmith
+    xi.crafting.guildItemTable[xi.guild.GOLDSMITHING][6].rank    = disabledRank -- Gemscope
+    xi.crafting.guildItemTable[xi.guild.GOLDSMITHING][7].rank    = disabledRank -- Goldsmiths' Emblem
 
------------------------------------
--- CLOTHCRAFT
------------------------------------
-xi.crafting.guildKeyItemTable[xi.guild.CLOTHCRAFT][4].rank = disabledRank -- Way of the Weaver
-xi.crafting.guildItemTable[xi.guild.CLOTHCRAFT][6].rank    = disabledRank -- Spinning Wheel
-xi.crafting.guildItemTable[xi.guild.CLOTHCRAFT][7].rank    = disabledRank -- Weavers' Emblem
+    -----------------------------------
+    -- CLOTHCRAFT
+    -----------------------------------
+    xi.crafting.guildKeyItemTable[xi.guild.CLOTHCRAFT][4].rank = disabledRank -- Way of the Weaver
+    xi.crafting.guildItemTable[xi.guild.CLOTHCRAFT][6].rank    = disabledRank -- Spinning Wheel
+    xi.crafting.guildItemTable[xi.guild.CLOTHCRAFT][7].rank    = disabledRank -- Weavers' Emblem
 
------------------------------------
--- LEATHERCRAFT
------------------------------------
-xi.crafting.guildKeyItemTable[xi.guild.LEATHERCRAFT][3].rank = disabledRank -- Way of the Tanner
-xi.crafting.guildItemTable[xi.guild.LEATHERCRAFT][6].rank    = disabledRank -- Hide Stretcher
-xi.crafting.guildItemTable[xi.guild.LEATHERCRAFT][7].rank    = disabledRank -- Tanners' Emblem
+    -----------------------------------
+    -- LEATHERCRAFT
+    -----------------------------------
+    xi.crafting.guildKeyItemTable[xi.guild.LEATHERCRAFT][3].rank = disabledRank -- Way of the Tanner
+    xi.crafting.guildItemTable[xi.guild.LEATHERCRAFT][6].rank    = disabledRank -- Hide Stretcher
+    xi.crafting.guildItemTable[xi.guild.LEATHERCRAFT][7].rank    = disabledRank -- Tanners' Emblem
 
------------------------------------
--- BONECRAFT
------------------------------------
-xi.crafting.guildKeyItemTable[xi.guild.BONECRAFT][3].rank = disabledRank -- Way of the Boneworker
-xi.crafting.guildItemTable[xi.guild.BONECRAFT][6].rank    = disabledRank -- Bonecraft Tools
-xi.crafting.guildItemTable[xi.guild.BONECRAFT][7].rank    = disabledRank -- Boneworkers' Emblem
+    -----------------------------------
+    -- BONECRAFT
+    -----------------------------------
+    xi.crafting.guildKeyItemTable[xi.guild.BONECRAFT][3].rank = disabledRank -- Way of the Boneworker
+    xi.crafting.guildItemTable[xi.guild.BONECRAFT][6].rank    = disabledRank -- Bonecraft Tools
+    xi.crafting.guildItemTable[xi.guild.BONECRAFT][7].rank    = disabledRank -- Boneworkers' Emblem
 
------------------------------------
--- ALCHEMY
------------------------------------
-xi.crafting.guildKeyItemTable[xi.guild.ALCHEMY][6].rank = disabledRank -- Way of the Alchemist
-xi.crafting.guildItemTable[xi.guild.ALCHEMY][6].rank    = disabledRank -- Alembic
-xi.crafting.guildItemTable[xi.guild.ALCHEMY][7].rank    = disabledRank -- Alchemists' Emblem
+    -----------------------------------
+    -- ALCHEMY
+    -----------------------------------
+    xi.crafting.guildKeyItemTable[xi.guild.ALCHEMY][6].rank = disabledRank -- Way of the Alchemist
+    xi.crafting.guildItemTable[xi.guild.ALCHEMY][6].rank    = disabledRank -- Alembic
+    xi.crafting.guildItemTable[xi.guild.ALCHEMY][7].rank    = disabledRank -- Alchemists' Emblem
 
------------------------------------
--- COOKING
------------------------------------
-xi.crafting.guildKeyItemTable[xi.guild.COOKING][4].rank = disabledRank -- Way of the Culinarian
-xi.crafting.guildItemTable[xi.guild.COOKING][6].rank    = disabledRank -- Brass Crock
-xi.crafting.guildItemTable[xi.guild.COOKING][7].rank    = disabledRank -- Culinarians' Emblem
+    -----------------------------------
+    -- COOKING
+    -----------------------------------
+    xi.crafting.guildKeyItemTable[xi.guild.COOKING][4].rank = disabledRank -- Way of the Culinarian
+    xi.crafting.guildItemTable[xi.guild.COOKING][6].rank    = disabledRank -- Brass Crock
+    xi.crafting.guildItemTable[xi.guild.COOKING][7].rank    = disabledRank -- Culinarians' Emblem
 
------------------------------------
--- Signboards (11/20/2007) and Rings (06/09/2008) - disabled when WoTG is not enabled
------------------------------------
-if xi.settings.main.ENABLE_WOTG == 0 then
-    xi.crafting.guildItemTable[xi.guild.FISHING][4].rank      = disabledRank -- Fisherman's Signboard
-    xi.crafting.guildItemTable[xi.guild.WOODWORKING][4].rank  = disabledRank -- Carpenter's Signboard
-    xi.crafting.guildItemTable[xi.guild.WOODWORKING][5].rank  = disabledRank -- Carpenter's Ring
-    xi.crafting.guildItemTable[xi.guild.SMITHING][4].rank     = disabledRank -- Blacksmith's Signboard
-    xi.crafting.guildItemTable[xi.guild.SMITHING][5].rank     = disabledRank -- Smith's Ring
-    xi.crafting.guildItemTable[xi.guild.GOLDSMITHING][4].rank = disabledRank -- Goldsmith's Signboard
-    xi.crafting.guildItemTable[xi.guild.GOLDSMITHING][5].rank = disabledRank -- Goldsmith's Ring
-    xi.crafting.guildItemTable[xi.guild.CLOTHCRAFT][4].rank   = disabledRank -- Weaver's Signboard
-    xi.crafting.guildItemTable[xi.guild.CLOTHCRAFT][5].rank   = disabledRank -- Tailor's Ring
-    xi.crafting.guildItemTable[xi.guild.LEATHERCRAFT][4].rank = disabledRank -- Tanner's Signboard
-    xi.crafting.guildItemTable[xi.guild.LEATHERCRAFT][5].rank = disabledRank -- Tanner's Ring
-    xi.crafting.guildItemTable[xi.guild.BONECRAFT][4].rank    = disabledRank -- Boneworker's Signboard
-    xi.crafting.guildItemTable[xi.guild.BONECRAFT][5].rank    = disabledRank -- Bonecrafter's Ring
-    xi.crafting.guildItemTable[xi.guild.ALCHEMY][4].rank      = disabledRank -- Alchemist's Signboard
-    xi.crafting.guildItemTable[xi.guild.ALCHEMY][5].rank      = disabledRank -- Alchemist's Ring
-    xi.crafting.guildItemTable[xi.guild.COOKING][4].rank      = disabledRank -- Culinarian's Signboard
-    xi.crafting.guildItemTable[xi.guild.COOKING][5].rank      = disabledRank -- Chef's Ring
-end
-
-return m
+    -----------------------------------
+    -- Signboards (11/20/2007) and Rings (06/09/2008) - disabled when WoTG is not enabled
+    -----------------------------------
+    if xi.settings.main.ENABLE_WOTG == 0 then
+        xi.crafting.guildItemTable[xi.guild.FISHING][4].rank      = disabledRank -- Fisherman's Signboard
+        xi.crafting.guildItemTable[xi.guild.WOODWORKING][4].rank  = disabledRank -- Carpenter's Signboard
+        xi.crafting.guildItemTable[xi.guild.WOODWORKING][5].rank  = disabledRank -- Carpenter's Ring
+        xi.crafting.guildItemTable[xi.guild.SMITHING][4].rank     = disabledRank -- Blacksmith's Signboard
+        xi.crafting.guildItemTable[xi.guild.SMITHING][5].rank     = disabledRank -- Smith's Ring
+        xi.crafting.guildItemTable[xi.guild.GOLDSMITHING][4].rank = disabledRank -- Goldsmith's Signboard
+        xi.crafting.guildItemTable[xi.guild.GOLDSMITHING][5].rank = disabledRank -- Goldsmith's Ring
+        xi.crafting.guildItemTable[xi.guild.CLOTHCRAFT][4].rank   = disabledRank -- Weaver's Signboard
+        xi.crafting.guildItemTable[xi.guild.CLOTHCRAFT][5].rank   = disabledRank -- Tailor's Ring
+        xi.crafting.guildItemTable[xi.guild.LEATHERCRAFT][4].rank = disabledRank -- Tanner's Signboard
+        xi.crafting.guildItemTable[xi.guild.LEATHERCRAFT][5].rank = disabledRank -- Tanner's Ring
+        xi.crafting.guildItemTable[xi.guild.BONECRAFT][4].rank    = disabledRank -- Boneworker's Signboard
+        xi.crafting.guildItemTable[xi.guild.BONECRAFT][5].rank    = disabledRank -- Bonecrafter's Ring
+        xi.crafting.guildItemTable[xi.guild.ALCHEMY][4].rank      = disabledRank -- Alchemist's Signboard
+        xi.crafting.guildItemTable[xi.guild.ALCHEMY][5].rank      = disabledRank -- Alchemist's Ring
+        xi.crafting.guildItemTable[xi.guild.COOKING][4].rank      = disabledRank -- Culinarian's Signboard
+        xi.crafting.guildItemTable[xi.guild.COOKING][5].rank      = disabledRank -- Chef's Ring
+    end
+end)

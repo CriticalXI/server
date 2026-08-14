@@ -43,5 +43,3 @@ m:addOverride('xi.commands.changesjob.onTrigger', function(player, jobId, level)
 
     super(player, jobId, level)
 end)
-
-return m

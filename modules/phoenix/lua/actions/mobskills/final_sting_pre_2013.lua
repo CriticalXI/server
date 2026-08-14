@@ -38,5 +38,3 @@ m:addOverride('xi.actions.mobskills.final_sting.onMobWeaponSkill', function(mob,
 
     return info.damage
 end)
-
-return m

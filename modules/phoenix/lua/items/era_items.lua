@@ -62,5 +62,3 @@ end)
 m:addOverride('xi.items.warp_cudgel.onItemUse', function(target, user)
     target:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.WARP, duration = 30, origin = user, icon = 0 })
 end)
-
-return m

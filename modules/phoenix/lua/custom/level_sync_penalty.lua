@@ -135,5 +135,3 @@ m:addOverride('xi.effects.level_sync.onEffectLose', function(target, effect)
         removePenalty(target)
     end
 end)
-
-return m

@@ -27,5 +27,3 @@ m:addOverride('xi.server.onServerStart', function()
         apollyon.text.CONQUEST_BASE                 = 7377
     end
 end)
-
-return m

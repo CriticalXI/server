@@ -1,6 +1,8 @@
 -----------------------------------
 -- Phoenix Beta GM Commands
 -----------------------------------
+local m = Module:new('beta_gm_commands')
+
 local commands =
 {
     'return',
@@ -32,10 +34,15 @@ local commands =
     'gotoname'
 }
 
-for _, name in ipairs(commands) do
-    if xi.commands[name] and xi.commands[name].cmdprops then
-        xi.commands[name].cmdprops.permission = 0
-    end
-end
+m:addOverride('xi.server.onServerStart', function()
+    super()
 
-return {}
+    for _, name in ipairs(commands) do
+        if
+            xi.commands[name] and
+            xi.commands[name].cmdprops
+        then
+            xi.commands[name].cmdprops.permission = 0
+        end
+    end
+end)

@@ -98,5 +98,3 @@ m:addOverride('xi.conquest.overseerOnEventFinish', function(player, csid, option
         player:messageSpecial(zones[player:getZoneID()].text.CONQUEST + 62, 0, 0, itemId)
     end
 end)
-
-return m

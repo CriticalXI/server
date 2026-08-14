@@ -230,5 +230,3 @@ m:addOverride('xi.zones.Garlaige_Citadel.mobs.Serket.onMobDespawn', function(mob
     xi.zones.Garlaige_Citadel.mobs.Serket.spawnPoints = serketSpawnPoints
     super(mob)
 end)
-
-return m
