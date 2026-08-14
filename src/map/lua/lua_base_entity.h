@@ -90,6 +90,10 @@ public:
     void   setLocalVar(const std::string& var, uint32 val);
     void   clearLocalVarsWithPrefix(const std::string& prefix);
     void   resetLocalVars();
+
+    auto getData() const -> sol::table;
+    void resetData() const;
+
     void   clearVarsWithPrefix(const std::string& prefix);
     uint32 getLastOnline(); // Returns the unix timestamp of last time the player logged out or zoned
 
@@ -875,6 +879,7 @@ public:
     void setSpawn(float x, float y, float z, const sol::object& rot);
     auto getRespawnTime() const -> uint32;
     void setRespawnTime(uint32 seconds) const;
+    auto getSpawnSlotMobs() -> sol::table;
 
     void instantiateMob(uint32 groupID);
 

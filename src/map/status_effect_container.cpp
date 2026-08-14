@@ -32,12 +32,17 @@ When a status effect is gained twice on a player. It can do one or more of the f
 #include "common/logging.h"
 
 #include "common/timer.h"
+#include "data/datasets/status_effects/dataset.h"
 #include "data/enums/weather.h"
 
+#include <common/database.h>
 #include <common/types/hash_map.h>
 
+#include <algorithm>
 #include <array>
 #include <cstring>
+
+#include "map_constants.h"
 
 #include "data/loader.h"
 #include "lua/luautils.h"
@@ -68,6 +73,8 @@ When a status effect is gained twice on a player. It can do one or more of the f
 namespace effects
 {
 
+using StatusEffectsDataset = xi::data::datasets::status_effects::Dataset;
+
 // Default effect of statuses are overwrite if equal or higher
 struct EffectParams_t
 {
@@ -93,7 +100,7 @@ void LoadEffectsParameters()
         EffectsParams[static_cast<uint16>(i)].Flag = xi::StatusEffectFlag::None;
     }
 
-    for (const auto& [id, data] : LoadStatusEffects())
+    for (const auto& [id, data] : xi::data::loadDataset<StatusEffectsDataset>())
     {
         if (id >= MAX_EFFECTID)
         {
@@ -325,6 +332,18 @@ bool CStatusEffectContainer::CanGainStatusEffect(CStatusEffect* PStatusEffect)
                 return false;
             }
             break;
+        case xi::StatusEffect::CurseI:
+            if (m_POwner->hasImmunity(xi::Immunity::Curse))
+            {
+                return false;
+            }
+            break;
+        case xi::StatusEffect::CurseIi:
+            if (m_POwner->hasImmunity(xi::Immunity::Curse))
+            {
+                return false;
+            }
+            break;
         case xi::StatusEffect::BlazeSpikes:
         case xi::StatusEffect::IceSpikes:
         case xi::StatusEffect::ShockSpikes:
@@ -530,6 +549,8 @@ bool CStatusEffectContainer::AddStatusEffect(std::unique_ptr<CStatusEffect> PSta
         {
             CCharEntity* PChar = (CCharEntity*)m_POwner;
 
+            PChar->setPersist(CharPersist::Effects);
+
             if (PStatusEffect->GetIcon() != 0)
             {
                 UpdateStatusIcons();
@@ -619,6 +640,8 @@ void CStatusEffectContainer::RemoveStatusEffect(CStatusEffect* PStatusEffect, co
         if (m_POwner->objtype == TYPE_PC)
         {
             auto* PChar = static_cast<CCharEntity*>(m_POwner);
+
+            PChar->setPersist(CharPersist::Effects);
 
             if (notice != EffectNotice::Silent && PStatusEffect->GetIcon() != 0 && !(PStatusEffect->HasEffectFlag(xi::StatusEffectFlag::NoLossMessage)))
             {
@@ -1613,6 +1636,9 @@ void CStatusEffectContainer::LoadStatusEffects()
         AddStatusEffect(std::move(PStatusEffect));
     }
 
+    // nothing changed since the read
+    static_cast<CCharEntity*>(m_POwner)->clearPersist(CharPersist::Effects);
+
     m_POwner->UpdateHealth(); // after loading the effects, recalculate the maximum amount of HP/MP
 }
 
@@ -1622,23 +1648,19 @@ void CStatusEffectContainer::LoadStatusEffects()
  *                                                                       *
  ************************************************************************/
 
-void CStatusEffectContainer::SaveStatusEffects(bool logout)
+auto CStatusEffectContainer::BuildPersistRows(const IsLogout logout) -> std::vector<PersistedEffect>
 {
-    // Print entity name and bail out if entity isn't a player.
+    std::vector<PersistedEffect> rows;
+
     if (m_POwner->objtype != TYPE_PC)
     {
-        ShowDebug("Non-player entity %s (ID: %d) attempt to save Status Effect.", m_POwner->getName(), m_POwner->id);
-
-        return;
+        return rows;
     }
-
-    db::preparedStmt("DELETE FROM char_effects WHERE charid = ?", m_POwner->id);
 
     for (const auto& PStatusEffect : m_StatusEffectSet)
     {
         if ((logout && PStatusEffect->HasEffectFlag(xi::StatusEffectFlag::Logout)) || (!logout && PStatusEffect->HasEffectFlag(xi::StatusEffectFlag::OnZone)))
         {
-            RemoveStatusEffect(PStatusEffect.get(), EffectNotice::Silent);
             continue;
         }
 
@@ -1650,61 +1672,113 @@ void CStatusEffectContainer::SaveStatusEffects(bool logout)
         const auto durationSeconds     = timer::count_seconds(PStatusEffect->GetDuration());
         const auto realDurationSeconds = timer::count_seconds(PStatusEffect->GetStartTime() + PStatusEffect->GetDuration() - timer::now());
 
-        if (realDurationSeconds > 0 || durationSeconds == 0)
+        if (!(realDurationSeconds > 0 || durationSeconds == 0))
         {
-            // save power of utsusemi and blink
-            if (PStatusEffect->GetStatusID() == xi::StatusEffect::CopyImage)
-            {
-                PStatusEffect->SetSubPower(m_POwner->getMod(xi::Mod::UTSUSEMI));
-            }
-            else if (PStatusEffect->GetStatusID() == xi::StatusEffect::Blink)
-            {
-                PStatusEffect->SetPower(m_POwner->getMod(xi::Mod::BLINK));
-            }
+            continue;
+        }
 
-            uint32 duration = 0;
+        // save power of utsusemi and blink
+        if (PStatusEffect->GetStatusID() == xi::StatusEffect::CopyImage)
+        {
+            PStatusEffect->SetSubPower(m_POwner->getMod(xi::Mod::UTSUSEMI));
+        }
+        else if (PStatusEffect->GetStatusID() == xi::StatusEffect::Blink)
+        {
+            PStatusEffect->SetPower(m_POwner->getMod(xi::Mod::BLINK));
+        }
 
-            if (durationSeconds > 0)
+        uint32 duration = 0;
+
+        if (durationSeconds > 0)
+        {
+            if (PStatusEffect->HasEffectFlag(xi::StatusEffectFlag::OfflineTick))
             {
-                if (PStatusEffect->HasEffectFlag(xi::StatusEffectFlag::OfflineTick))
+                duration = static_cast<uint32>(durationSeconds);
+            }
+            else
+            {
+                if (realDurationSeconds > 0)
                 {
-                    duration = static_cast<uint32>(durationSeconds);
+                    duration = static_cast<uint32>(realDurationSeconds);
                 }
                 else
                 {
-                    if (realDurationSeconds > 0)
-                    {
-                        duration = static_cast<uint32>(realDurationSeconds);
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    continue;
                 }
             }
+        }
 
-            uint32 tick      = static_cast<uint32>(timer::count_seconds(PStatusEffect->GetTickTime()));
-            auto   timestamp = earth_time::timestamp(timer::to_utc(PStatusEffect->GetStartTime()));
+        rows.push_back({
+            .charid          = m_POwner->id,
+            .effectId        = static_cast<uint16>(PStatusEffect->GetStatusID()),
+            .icon            = PStatusEffect->GetIcon(),
+            .power           = PStatusEffect->GetPower(),
+            .tick            = static_cast<uint32>(timer::count_seconds(PStatusEffect->GetTickTime())),
+            .duration        = duration,
+            .subId           = PStatusEffect->GetSubID(),
+            .subPower        = PStatusEffect->GetSubPower(),
+            .tier            = PStatusEffect->GetTier(),
+            .flags           = static_cast<uint32>(PStatusEffect->GetEffectFlags()),
+            .timestamp       = earth_time::timestamp(timer::to_utc(PStatusEffect->GetStartTime())),
+            .sourceType      = PStatusEffect->GetSourceType(),
+            .sourceTypeParam = PStatusEffect->GetSourceTypeParam(),
+            .originId        = PStatusEffect->GetOriginID(),
+        });
+    }
 
-            db::preparedStmt("INSERT INTO char_effects (charid, effectid, icon, power, tick, duration, subid, subpower, tier, flags, timestamp, sourcetype, sourcetypeparam, originid) "
-                             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                             m_POwner->id,
-                             static_cast<uint16>(PStatusEffect->GetStatusID()),
-                             PStatusEffect->GetIcon(),
-                             PStatusEffect->GetPower(),
-                             tick,
-                             duration,
-                             PStatusEffect->GetSubID(),
-                             PStatusEffect->GetSubPower(),
-                             PStatusEffect->GetTier(),
-                             static_cast<uint32>(PStatusEffect->GetEffectFlags()),
-                             timestamp,
-                             PStatusEffect->GetSourceType(),
-                             PStatusEffect->GetSourceTypeParam(),
-                             PStatusEffect->GetOriginID());
+    return rows;
+}
+
+void CStatusEffectContainer::DropEffectsForTransition(const IsLogout logout)
+{
+    // Print entity name and bail out if entity isn't a player.
+    if (m_POwner->objtype != TYPE_PC)
+    {
+        ShowDebug("Non-player entity %s (ID: %d) attempt to drop Status Effects.", m_POwner->getName(), m_POwner->id);
+
+        return;
+    }
+
+    for (const auto& PStatusEffect : m_StatusEffectSet)
+    {
+        if ((logout && PStatusEffect->HasEffectFlag(xi::StatusEffectFlag::Logout)) || (!logout && PStatusEffect->HasEffectFlag(xi::StatusEffectFlag::OnZone)))
+        {
+            RemoveStatusEffect(PStatusEffect.get(), EffectNotice::Silent);
         }
     }
+
     DeleteStatusEffects();
+}
+
+void effects::SaveEffectRows(const std::vector<uint32>& replaceFor, const std::vector<PersistedEffect>& rows)
+{
+    TracyZoneScoped;
+
+    if (replaceFor.empty())
+    {
+        return;
+    }
+
+    db::transaction(
+        [&]()
+        {
+            db::executeBulk(
+                "DELETE FROM char_effects WHERE charid = ?",
+                replaceFor,
+                [](uint32 charid)
+                {
+                    return std::make_tuple(charid);
+                });
+
+            db::executeBulk(
+                "INSERT INTO char_effects (charid, effectid, icon, power, tick, duration, subid, subpower, tier, flags, timestamp, sourcetype, sourcetypeparam, originid) "
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                rows,
+                [](const PersistedEffect& row)
+                {
+                    return std::make_tuple(row.charid, row.effectId, row.icon, row.power, row.tick, row.duration, row.subId, row.subPower, row.tier, row.flags, row.timestamp, row.sourceType, row.sourceTypeParam, row.originId);
+                });
+        });
 }
 
 /************************************************************************
@@ -1997,9 +2071,13 @@ void CStatusEffectContainer::TickRegen(timer::time_point tick)
             PChar = (CCharEntity*)m_POwner;
         }
 
-        int16 regen   = m_POwner->getMod(xi::Mod::REGEN);
+        // Regen / Refresh are clamped to 0 so that negative values don't drain HP/MP from the player.
+        // A busted Dancer(Regen) or Evoker(Refresh) carry negative values but do not cause the player to lose HP/MP.
+        // Negative values will only counteract a positive regen or refresh value.
+        // This is an abnormal way of handling this, for intentional degens, use REGEN_DOWN or REFRESH_DOWN instead.
+        int16 regen   = std::max<int16>(m_POwner->getMod(xi::Mod::REGEN), 0);
         int16 poison  = m_POwner->getMod(xi::Mod::REGEN_DOWN);
-        int16 refresh = m_POwner->getMod(xi::Mod::REFRESH) - m_POwner->getMod(xi::Mod::REFRESH_DOWN);
+        int16 refresh = std::max<int16>(m_POwner->getMod(xi::Mod::REFRESH), 0) - m_POwner->getMod(xi::Mod::REFRESH_DOWN);
         int16 regain  = m_POwner->getMod(xi::Mod::REGAIN) - m_POwner->getMod(xi::Mod::REGAIN_DOWN);
         m_POwner->addHP(regen);
 

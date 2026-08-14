@@ -68,12 +68,6 @@ xi.settings.map =
     -- Misc EXP related settings
     EXP_RATE                = 1.0,
     EXP_LOSS_RATE           = 1.0,
-    EXP_PARTY_GAP_PENALTIES = true,
-
-    -- A party member's experience points are nullified if the level difference with the highest-level party member exceeds this value.
-    -- When set to 0, there is no nullification of EXP regardless of how wide the gap is between party members.
-    -- When set to 10, if you are level 65 or below in a party with a level 75, you will receive no EXP.
-    EXP_PARTY_GAP_NO_EXP = 0,
 
     -- Capacity Point Settings
     CAPACITY_RATE = 1.0,
@@ -134,8 +128,7 @@ xi.settings.map =
     CRAFT_CHANCE_MULTIPLIER   = 1.0,
 
     -- Multiplier for skillup amounts. Using anything above 1 will break the 0.5 cap, the cap will become 0.9 (For maximum, set to 5)
-    SKILLUP_AMOUNT_MULTIPLIER = 1,
-    CRAFT_AMOUNT_MULTIPLIER   = 1,
+    SKILLUP_AMOUNT_MULTIPLIER = 1, -- This is for combat skills, not synthesis.
 
     -- Gardening Factors. DO NOT change defaults without verifiable proof that your change IS how retail does it. Myths need to be optional.
     GARDEN_DAY_MATTERS       = false,

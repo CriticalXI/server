@@ -55,6 +55,7 @@
 #include "recast_container.h"
 #include "roe.h"
 #include "spawn_handler.h"
+#include "spawn_slot.h"
 #include "spell.h"
 #include "status_effect.h"
 #include "status_effect_container.h"
@@ -835,6 +836,51 @@ void CLuaBaseEntity::clearLocalVarsWithPrefix(const std::string& prefix)
 void CLuaBaseEntity::resetLocalVars()
 {
     m_PBaseEntity->ResetLocalVars();
+}
+
+/************************************************************************
+ *  Function: getData()
+ *  Purpose : Returns this entity's data table, to read and write freely
+ *  Example : local data    = mob:getData()
+ *            data.duration = 150
+ *  Notes   : Reading creates the table. Mobs, pets and trusts lose it on
+ *            spawn, so onMobInitialize is too early to write to it.
+ ************************************************************************/
+
+auto CLuaBaseEntity::getData() const -> sol::table
+{
+    if (m_PBaseEntity == nullptr)
+    {
+        ShowError("CLuaBaseEntity::getData() - Entity called is nullptr.");
+        return sol::lua_nil;
+    }
+
+    // Not const: that would block the move on return and copy the registry reference.
+    auto table = luautils::detail::getEntityDataTable(m_PBaseEntity, luautils::detail::CreateEntityData::Yes);
+    if (!table.valid())
+    {
+        // Returning an empty table here would swallow every write the caller makes.
+        ShowError("CLuaBaseEntity::getData: no data store for %s (objtype %d)",
+                  m_PBaseEntity->getName(),
+                  static_cast<int>(m_PBaseEntity->objtype));
+
+        return sol::lua_nil;
+    }
+
+    return table;
+}
+
+/************************************************************************
+ *  Function: resetData()
+ *  Purpose : Drops everything stored for this entity
+ *  Example : mob:resetData()
+ *  Notes   : Done automatically when a mob, pet or trust spawns, and when
+ *            any entity is destroyed.
+ ************************************************************************/
+
+void CLuaBaseEntity::resetData() const
+{
+    luautils::resetEntityData(m_PBaseEntity);
 }
 
 /************************************************************************
@@ -5266,7 +5312,8 @@ void CLuaBaseEntity::confirmTrade() const
                 uint32 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
                 auto   quantity       = (int32)std::min<uint32>(PChar->TradeContainer->getQuantity(slotID), confirmedItems);
 
-                PItem->setReserve(PItem->getReserve() - quantity);
+                PItem->setReserve(0);
+
                 if (confirmedItems > 0)
                 {
                     uint8 invSlotID = PChar->TradeContainer->getInvSlotID(slotID);
@@ -5419,7 +5466,6 @@ void CLuaBaseEntity::equipItem(const uint16 itemID, const sol::object& container
         if (const auto* PItem = dynamic_cast<CItemEquipment*>(PChar->getStorage(containerID)->GetItem(slotId)))
         {
             charutils::EquipItem(PChar, slotId, equipSlot.is<uint8>() ? equipSlot.as<uint8>() : PItem->getSlotType(), containerID);
-            PChar->RequestPersist(CHAR_PERSIST::EQUIP);
         }
     }
 }
@@ -9403,7 +9449,7 @@ int32 CLuaBaseEntity::getMerit(uint16 merit)
     {
         auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-        return PChar->PMeritPoints->GetMeritValue(static_cast<MERIT_TYPE>(merit), PChar);
+        return PChar->PMeritPoints->GetMeritValue(static_cast<xi::Merit>(merit), PChar);
     }
 
     return 0;
@@ -18052,6 +18098,37 @@ void CLuaBaseEntity::setRespawnTime(const uint32 seconds) const
 }
 
 /************************************************************************
+ *  Function: getSpawnSlotMobs()
+ *  Purpose : Returns a table of all the mobs that share a slot. Used for NM lottery mobs
+ *  Example : mob:getSpawnSlotMobs()
+ *  Notes   : Returns an empty table if the mob is not in a spawn slot
+ ************************************************************************/
+
+auto CLuaBaseEntity::getSpawnSlotMobs() -> sol::table
+{
+    sol::table table = lua.create_table();
+
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        ShowWarning("Attempting to get spawn slot members for invalid entity type (%s).", m_PBaseEntity->getName());
+        return table;
+    }
+
+    if (SpawnSlot* slot = static_cast<CMobEntity*>(m_PBaseEntity)->GetSpawnSlot())
+    {
+        for (const auto& entry : slot->GetEntries())
+        {
+            if (entry.mob)
+            {
+                table.add(entry.mob->id);
+            }
+        }
+    }
+
+    return table;
+}
+
+/************************************************************************
  *  Function: instantiateMob()
  *  Purpose : Used for spawning a new mob - is this for Monstrosity prep?
  *  Example : None available
@@ -20320,6 +20397,8 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setLocalVar", CLuaBaseEntity::setLocalVar);
     SOL_REGISTER("clearLocalVarsWithPrefix", CLuaBaseEntity::clearLocalVarsWithPrefix);
     SOL_REGISTER("resetLocalVars", CLuaBaseEntity::resetLocalVars);
+    SOL_REGISTER("getData", CLuaBaseEntity::getData);
+    SOL_REGISTER("resetData", CLuaBaseEntity::resetData);
     SOL_REGISTER("clearVarsWithPrefix", CLuaBaseEntity::clearVarsWithPrefix);
     SOL_REGISTER("getLastOnline", CLuaBaseEntity::getLastOnline);
 
@@ -21080,6 +21159,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setSpawn", CLuaBaseEntity::setSpawn);
     SOL_REGISTER("getRespawnTime", CLuaBaseEntity::getRespawnTime);
     SOL_REGISTER("setRespawnTime", CLuaBaseEntity::setRespawnTime);
+    SOL_REGISTER("getSpawnSlotMobs", CLuaBaseEntity::getSpawnSlotMobs);
 
     SOL_REGISTER("instantiateMob", CLuaBaseEntity::instantiateMob);
 

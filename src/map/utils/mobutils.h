@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -25,9 +25,9 @@
 
 #include <common/types/hash_map.h>
 
+#include "data/datasets/ecosystems/dataset.h"
 #include "data/enums/ecosystem.h"
 #include "data/enums/family.h"
-#include "data/mob_attributes.h"
 #include "entities/mob_entity.h"
 #include "modifier.h"
 
@@ -105,8 +105,7 @@ void   InitializeMob(CMobEntity* PMob);
 void   LoadSqlModifiers();
 void   Cleanup();
 
-// get modifiers for species / pool / spawn
-ModsList_t* GetMobSpeciesMods(uint16 speciesId, bool create = false);
+// get modifiers for pool / spawn
 ModsList_t* GetMobPoolMods(uint32 poolId, bool create = false);
 ModsList_t* GetMobSpawnMods(uint32 mobId, bool create = false);
 

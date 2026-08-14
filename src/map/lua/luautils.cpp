@@ -64,7 +64,9 @@
 #include "packets/s2c/0x05a_motionmes.h"
 #include "packets/s2c/0x0f9_res.h"
 
+#include "persist_batch.h"
 #include "utils/battleutils.h"
+
 #include "utils/charutils.h"
 #include "utils/instanceutils.h"
 #include "utils/itemutils.h"
@@ -155,6 +157,26 @@ HashMap<uint32, sol::table>  customMenuContext;
 
 LuaCache luaCache;
 
+// The xi.entityData root, or nil when nothing has been stored yet. Every step is type checked:
+// a script is free to leave a non-table at either name, and raising out of ~CBaseEntity() would
+// take the process with it.
+auto entityDataRoot() -> sol::table
+{
+    const auto xiTable = lua["xi"].get<sol::optional<sol::table>>();
+    if (!xiTable)
+    {
+        return sol::lua_nil;
+    }
+
+    const auto root = (*xiTable)["entityData"].get<sol::optional<sol::table>>();
+    if (!root)
+    {
+        return sol::lua_nil;
+    }
+
+    return *root;
+}
+
 } // namespace
 
 namespace detail
@@ -184,6 +206,39 @@ auto findGlobalLuaFunction(const std::string& funcName) -> sol::function
     }
 
     return sol::lua_nil;
+}
+
+auto getEntityDataTable(CBaseEntity* PEntity, CreateEntityData create) -> sol::table
+{
+    TracyZoneScoped;
+
+    if (PEntity == nullptr || !lua.lua_state())
+    {
+        return sol::lua_nil;
+    }
+
+    if (create)
+    {
+        // The no-argument get_or_create only builds a table when the key is missing.
+        auto xiTable = lua["xi"].get_or_create<sol::table>();
+        auto root    = xiTable["entityData"].get_or_create<sol::table>();
+
+        return root[PEntity->serial()].get_or_create<sol::table>();
+    }
+
+    const auto root = entityDataRoot();
+    if (!root.valid())
+    {
+        return sol::lua_nil;
+    }
+
+    const auto bucket = root[PEntity->serial()].get<sol::optional<sol::table>>();
+    if (!bucket)
+    {
+        return sol::lua_nil;
+    }
+
+    return *bucket;
 }
 
 } // namespace detail
@@ -335,6 +390,7 @@ void init(IPP mapIPP, bool isRunningInCI)
     lua.set_function("GetSynergyRecipeByTrade", &luautils::GetSynergyRecipeByTrade);
     lua.set_function("ReloadSynthRecipes", &synthutils::LoadSynthRecipes);
     lua.set_function("LoadExpDifficultyCurves", &luautils::LoadExpDifficultyCurves);
+    lua.set_function("ReloadExperienceData", &charutils::LoadExpTable);
 
     // Fishing Contest Functions
     lua.set_function("GetFishingContest", &luautils::GetFishingContest);
@@ -689,6 +745,27 @@ sol::function getEntityCachedFunction(CBaseEntity* PEntity, const std::string& f
         });
 }
 
+void resetEntityData(CBaseEntity* PEntity)
+{
+    TracyZoneScoped;
+
+    // Runs from ~CBaseEntity(). Zone teardown frees entities before the state is closed, so the
+    // state check is belt and braces rather than the thing that makes this safe.
+    if (PEntity == nullptr || !lua.lua_state())
+    {
+        return;
+    }
+
+    // Not const: sol only exposes the assigning proxy on a mutable table.
+    auto root = entityDataRoot();
+    if (!root.valid())
+    {
+        return;
+    }
+
+    root[PEntity->serial()] = sol::lua_nil;
+}
+
 sol::function getSpellCachedFunction(CSpell* PSpell, std::string funcName)
 {
     TracyZoneScoped;
@@ -832,12 +909,9 @@ void LoadLuaObjectFromFile(const std::string& filename, bool overwriteCurrentEnt
             return;
         }
 
-        // Commands are a special case, since they are not a "true" module
-        const sol::table cmdTable = result;
-        if (cmdTable["cmdprops"].valid() && cmdTable["onTrigger"].valid())
-        {
-            lua[sol::create_if_nil]["xi"]["commands"][parts.back()] = cmdTable;
-        }
+        // Modules self-register on execution, and the registries were drained
+        // at startup, so drop this re-run's entries.
+        moduleutils::ClearLuaModuleRegistries();
 
         ShowInfo("[FileWatcher] RE-RUNNING MODULE FILE %s", filename);
         return;
@@ -1142,6 +1216,62 @@ void LoadExpDifficultyCurves(const sol::table& expToDifficultyTable, const uint8
     std::pair<uint16, uint8> iep = { incrediblyEasyPreyLevel, incrediblyEasyPreyMinExp };
 
     charutils::SetExpDifficultyCurve(expDifficultyTable, iep);
+}
+
+auto SetupExperiencePoints() -> Maybe<ExperiencePointsTable>
+{
+    TracyZoneScoped;
+
+    if (!detail::findGlobalLuaFunction("xi.experiencePoints.calculate").valid())
+    {
+        ShowError("xi.experiencePoints.calculate function is not valid; experience points will not be calculated!");
+        return std::nullopt;
+    }
+
+    const sol::table baseTable = lua["xi"]["experiencePoints"]["baseTable"];
+    if (!baseTable.valid())
+    {
+        ShowError("xi.experiencePoints.baseTable is not valid; experience points will not be calculated!");
+        return std::nullopt;
+    }
+
+    ExperiencePointsTable expTable{};
+    for (int32 dLevel = -44; dLevel <= 15; ++dLevel)
+    {
+        const sol::table row = baseTable[dLevel];
+        if (!row.valid() || row.size() != 20)
+        {
+            ShowError("xi.experiencePoints.baseTable is missing a valid row for level difference %d.", dLevel);
+            return std::nullopt;
+        }
+
+        for (uint32 y = 0; y < 20; ++y)
+        {
+            expTable[dLevel + 44][y] = row[y + 1].get<uint16>();
+        }
+    }
+
+    return expTable;
+}
+
+auto CalculateExperiencePoints(CCharEntity* PMember, CMobEntity* PMob, const CalcExpInput& input) -> Maybe<CalcExpResult>
+{
+    TracyZoneScoped;
+
+    auto data = lua.create_table_with("baseExp", input.baseExp, "mobDifficulty", input.mobDifficulty, "memberLevel", input.memberLevel, "highestMemberLevel", input.highestMemberLevel, "partySize", input.partySize);
+    data.set("memberTNL", input.memberTNL, "highestMemberTNL", input.highestMemberTNL, "regionId", input.regionId, "chainNumber", input.chainNumber, "chainActive", input.chainActive);
+
+    const auto result = callGlobal<sol::table>("xi.experiencePoints.calculate", PMember, PMob, data);
+    if (!result.valid())
+    {
+        return std::nullopt;
+    }
+
+    CalcExpResult calcResult{};
+    calcResult.exp         = result["exp"].get_or(0);
+    calcResult.wasChained  = result["chainActive"].get_or(false);
+    calcResult.chainWindow = result["chainWindow"].get_or(0);
+    return calcResult;
 }
 
 void PopulateIDLookups(const xi::ZoneId zoneId, const std::string& zoneName)
@@ -4789,8 +4919,7 @@ void Terminate()
             PZone->ForEachChar(
                 [](CCharEntity* PChar)
                 {
-                    PChar->PersistData();
-                    charutils::SaveCharPosition(PChar);
+                    persist::flush(PChar, IsLogout::Yes);
                     charutils::SaveCharStats(PChar);
                     charutils::SaveCharExp(PChar, PChar->GetMJob());
                 });
