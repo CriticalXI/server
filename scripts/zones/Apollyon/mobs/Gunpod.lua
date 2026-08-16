@@ -1,13 +1,20 @@
 -----------------------------------
 -- Area: Apollyon Central
 --  Mob: Gunpod
--- TODO: Gunpod has a special (non-standard) speed boost of 5x (40 to 200) when
--- target is out of range. This should be added eventually when such mods come to LSB
 -----------------------------------
 ---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
+    -- Unlike Proto-Omega, Bind lands on the Gunpod.
+    mob:addImmunity(xi.immunity.GRAVITY)
+    mob:addImmunity(xi.immunity.SILENCE)
+    mob:addImmunity(xi.immunity.BLIND)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.TERROR)
+    mob:addImmunity(xi.immunity.PLAGUE)
+
     mob:addListener('ITEM_DROPS', 'GUNPOD_ITEM_DROPS', function(mobArg, loot)
         local result = math.randomInt(1, 100)
         local group
@@ -15,24 +22,24 @@ entity.onMobInitialize = function(mob)
             -- Apollyon Chips
             group =
             {
-                { item = xi.item.SMALT_CHIP    }, -- SE Apollyon
-                { item = xi.item.SMOKY_CHIP    }, -- NE Apollyon
-                { item = xi.item.CHARCOAL_CHIP }, -- SW Apollyon
-                { item = xi.item.MAGENTA_CHIP  }, -- NW Apollyon
+                { item = xi.item.SMALT_CHIP                }, -- SE Apollyon
+                { item = xi.item.SMOKY_CHIP                }, -- NE Apollyon
+                { item = xi.item.CHARCOAL_CHIP             }, -- SW Apollyon
+                { item = xi.item.MAGENTA_CHIP              }, -- NW Apollyon
             }
         elseif result <= 50 then
             -- Crafting Materials
             group =
             {
-                { item = xi.item.CHUNK_OF_DARKSTEEL_ORE  },
-                { item = xi.item.CHUNK_OF_ADAMAN_ORE     },
-                { item = xi.item.DARKSTEEL_INGOT         },
-                { item = xi.item.DARKSTEEL_SHEET         },
-                { item = xi.item.SPOOL_OF_RAINBOW_THREAD },
-                { item = xi.item.PIECE_OF_OXBLOOD        },
-                { item = xi.item.HANDFUL_OF_CLOT_PLASMA  },
-                { item = xi.item.LIGHT_STEEL_INGOT       },
-                { item = xi.item.PONZE_OF_SHELL_POWDER   },
+                { item = xi.item.CHUNK_OF_DARKSTEEL_ORE    },
+                { item = xi.item.CHUNK_OF_ADAMAN_ORE       },
+                { item = xi.item.DARKSTEEL_INGOT           },
+                { item = xi.item.DARKSTEEL_SHEET           },
+                { item = xi.item.SPOOL_OF_RAINBOW_THREAD   },
+                { item = xi.item.PIECE_OF_OXBLOOD          },
+                { item = xi.item.HANDFUL_OF_CLOT_PLASMA    },
+                { item = xi.item.LIGHT_STEEL_INGOT         },
+                { item = xi.item.PONZE_OF_SHELL_POWDER     },
             }
         elseif result <= 86 then
             -- AF+1 Materials
@@ -68,6 +75,21 @@ entity.onMobInitialize = function(mob)
 
         loot:addGroup(xi.drop_rate.GUARANTEED, group)
     end)
+end
+
+entity.onMobSpawn = function(mob)
+    mob:setMod(xi.mod.DOUBLE_ATTACK, 20)
+    mob:setMobMod(xi.mobMod.RUN_SPEED_MULT, 500)
+end
+
+entity.onMobDeath = function(mob, player, optParams)
+    if optParams.isKiller or optParams.noKiller then
+        local omega = GetMobByID(mob:getID() - 1)
+
+        if omega then
+            omega:setLocalVar('podDeathTime', GetSystemTime())
+        end
+    end
 end
 
 return entity
