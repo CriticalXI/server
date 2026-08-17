@@ -100,6 +100,7 @@
 #include "blueutils.h"
 #include "charutils.h"
 #include "enums/item_lockflg.h"
+#include "items/transactions/player_trade.h"
 #include "items/transactions/synth.h"
 #include "itemutils.h"
 #include "job_points.h"
@@ -183,6 +184,23 @@ const std::set traverserStoneReductionKeyItems = {
     KeyItem::CRIMSON_ABYSSITE_OF_CELERITY,
     KeyItem::IVORY_ABYSSITE_OF_CELERITY
 };
+
+// Callers reach these from Lua, so validate against the schema before formatting into a query.
+// TODO: Extract this into some sort of database metadata system that's populated on startup.
+auto isCharPointsColumn(const char* type) -> bool
+{
+    static std::unordered_set<std::string> charPointsColumnNames;
+    if (charPointsColumnNames.empty())
+    {
+        const auto names = db::getTableColumnNames("char_points");
+        for (const auto& name : names)
+        {
+            charPointsColumnNames.insert(name);
+        }
+    }
+
+    return charPointsColumnNames.find(type) != charPointsColumnNames.end();
+}
 
 } // namespace
 
@@ -2027,78 +2045,6 @@ void DropItem(CCharEntity* PChar, uint8 container, uint8 slotID, int32 quantity,
         ShowInfo("Player %s DROPPING itemID: %s (%u) quantity: %u", PChar->getName(), xi::items::lookup(ItemID)->getName(), ItemID, quantity);
         PChar->pushPacket<GP_SERV_COMMAND_MESSAGE>(nullptr, ItemID, quantity, MsgStd::ThrowAway);
         PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
-    }
-}
-
-/************************************************************************
- *                                                                       *
- *  Check the possibility of trade between characters                    *
- *                                                                       *
- ************************************************************************/
-
-bool CanTrade(CCharEntity* PChar, CCharEntity* PTarget)
-{
-    if (PChar->m_PMonstrosity != nullptr || PTarget->m_PMonstrosity != nullptr)
-    {
-        return false;
-    }
-
-    if (PTarget->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() < PChar->UContainer->GetItemsCount())
-    {
-        ShowDebug("Unable to trade, %s doesn't have enough inventory space", PTarget->getName());
-        return false;
-    }
-
-    for (uint8 slotid = 0; slotid <= 8; ++slotid)
-    {
-        CItem* PItem = PChar->UContainer->GetItem(slotid);
-
-        if (PItem != nullptr && PItem->hasFlag(ItemFlag::Rare))
-        {
-            if (HasItem(PTarget, PItem->getID()))
-            {
-                ShowDebug("Unable to trade, %s has the rare item already (%s)", PTarget->getName(), PItem->getName());
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
-/************************************************************************
- *                                                                       *
- *  Do the exchange between characters                                   *
- *                                                                       *
- ************************************************************************/
-
-void DoTrade(CCharEntity* PChar, CCharEntity* PTarget)
-{
-    ShowDebug("%s->%s trade item movement started", PChar->getName(), PTarget->getName());
-    for (uint8 slotid = 0; slotid <= 8; ++slotid)
-    {
-        CItem* PItem = PChar->UContainer->GetItem(slotid);
-
-        if (PItem != nullptr)
-        {
-            if (PItem->getStackSize() == 1 && PItem->getReserve() == 1)
-            {
-                auto PNewItem = xi::items::clone(*PItem);
-                ShowDebug("Adding %s to %s inventory stacksize 1", PNewItem->getName(), PTarget->getName());
-                PNewItem->setReserve(0);
-                AddItem(PTarget, LOC_INVENTORY, std::move(PNewItem));
-            }
-            else
-            {
-                ShowDebug("Adding %s to %s inventory", PItem->getName(), PTarget->getName());
-                AddItem(PTarget, LOC_INVENTORY, PItem->getID(), PItem->getReserve());
-            }
-            ShowDebug("Removing %s from %s's inventory", PItem->getName(), PChar->getName());
-            auto amount = PItem->getReserve();
-            PItem->setReserve(0);
-            UpdateItem(PChar, LOC_INVENTORY, PItem->getSlotID(), (int32)(0 - amount));
-            PChar->UContainer->ClearSlot(slotid);
-        }
     }
 }
 
@@ -5980,17 +5926,22 @@ void SaveCharStats(CCharEntity* PChar)
                      PChar->id);
 
     // These two are jug only variables. We should probably move pet char stats into its own table, but in the meantime
-    // we use charvars for jug specific things
-    if (PChar->petZoningInfo.jugSpawnTime > timer::time_point{})
+    // we use charvars for jug specific things.
+    // setPetZoningInfo never populates jugSpawnTime unless the setting is on, and LoadChar clears
+    // the jugpet- vars as it reads them, so there is nothing to write or clear when it is off.
+    if (settings::get<bool>("map.KEEP_JUGPET_THROUGH_ZONING"))
     {
-        const auto jugTimestamp = earth_time::timestamp(timer::to_utc(PChar->petZoningInfo.jugSpawnTime));
-        PChar->setCharVar("jugpet-spawn-time", jugTimestamp);
-        PChar->setCharVar("jugpet-duration-seconds", static_cast<int32>(timer::count_seconds(PChar->petZoningInfo.jugDuration)));
-    }
-    else
-    {
-        PChar->setCharVar("jugpet-spawn-time", 0);
-        PChar->setCharVar("jugpet-duration-seconds", 0);
+        if (PChar->petZoningInfo.jugSpawnTime > timer::time_point{})
+        {
+            const auto jugTimestamp = earth_time::timestamp(timer::to_utc(PChar->petZoningInfo.jugSpawnTime));
+            PChar->setCharVar("jugpet-spawn-time", jugTimestamp);
+            PChar->setCharVar("jugpet-duration-seconds", static_cast<int32>(timer::count_seconds(PChar->petZoningInfo.jugDuration)));
+        }
+        else if (PChar->getCharVar("jugpet-spawn-time") != 0)
+        {
+            PChar->setCharVar("jugpet-spawn-time", 0);
+            PChar->setCharVar("jugpet-duration-seconds", 0);
+        }
     }
 }
 
@@ -6937,19 +6888,7 @@ void SetPoints(CCharEntity* PChar, const char* type, int32 amount)
 {
     TracyZoneScoped;
 
-    // TODO: Extract this into some sort of database metadata system
-    //     : that's populated on startup.
-    static std::unordered_set<std::string> charPointsColumnNames;
-    if (charPointsColumnNames.empty())
-    {
-        const auto names = db::getTableColumnNames("char_points");
-        for (const auto& name : names)
-        {
-            charPointsColumnNames.insert(name);
-        }
-    }
-
-    if (charPointsColumnNames.find(type) == charPointsColumnNames.end())
+    if (!isCharPointsColumn(type))
     {
         ShowErrorFmt("charutils::SetPoints: Invalid type {} for {}", type, PChar->getName());
         return;
@@ -6971,7 +6910,15 @@ int32 GetPoints(CCharEntity* PChar, const char* type)
 {
     TracyZoneScoped;
 
-    const auto rset = db::preparedStmt("SELECT * FROM char_points WHERE charid = ? LIMIT 1", PChar->id);
+    if (!isCharPointsColumn(type))
+    {
+        ShowErrorFmt("charutils::GetPoints: Invalid type {} for {}", type, PChar->getName());
+        return 0;
+    }
+
+    // char_points is 200 columns wide, so SELECT * bound and fetched all of them to read one.
+    const auto query = fmt::format("SELECT {} FROM char_points WHERE charid = ? LIMIT 1", type);
+    const auto rset  = db::preparedStmt(query, PChar->id);
     if (rset && rset->rowsCount() && rset->next())
     {
         return rset->get<int32>(type);
@@ -7754,6 +7701,11 @@ void removeCharFromZone(CCharEntity* PChar)
     if (PChar->PSession)
     {
         PChar->PSession->blowfish.status = BLOWFISH_PENDING_ZONE;
+    }
+
+    if (auto* tradeTransaction = PChar->activePlayerTradeTransaction())
+    {
+        tradeTransaction->abort(PChar);
     }
 
     PChar->TradePending.clean();

@@ -42,6 +42,7 @@
 #include "packets/pet_sync.h"
 #include "packets/s2c/0x029_battle_message.h"
 #include "recast_container.h"
+#include "roam_region.h"
 #include "roe.h"
 #include "spawn_slot.h"
 #include "status_effect_container.h"
@@ -360,7 +361,47 @@ bool CMobEntity::CanRoamHome()
         return true;
     }
 
-    return distance(m_SpawnPoint, loc.p) < roam_home_distance;
+    // a mob that left its region does not walk back, it despawns and respawns somewhere inside
+    if (roamRegion_)
+    {
+        return false;
+    }
+
+    return DistanceFromHome() < roam_home_distance;
+}
+
+auto CMobEntity::GetRoamAnchor() const -> position_t
+{
+    // inside a region it wanders on from where it stands, so it covers the whole thing instead of a disc around one spot
+    if (roamRegion_)
+    {
+        return loc.p;
+    }
+
+    return m_SpawnPoint;
+}
+
+auto CMobEntity::roamRegion() const -> const RoamRegion*
+{
+    return roamRegion_;
+}
+
+void CMobEntity::setRoamRegion(const RoamRegion* region)
+{
+    roamRegion_ = region;
+
+    // a region has no leeway: its edge is the limit, so nothing outside counts as home
+    m_maxRoamDistance = 0.0f;
+}
+
+auto CMobEntity::DistanceFromHome() const -> float
+{
+    if (roamRegion_)
+    {
+        return roamRegion_->distanceOutside(loc.p);
+    }
+
+    return distance(loc.p, m_SpawnPoint);
 }
 
 bool CMobEntity::CanRoam()
@@ -460,7 +501,7 @@ bool CMobEntity::CanDeaggro() const
 
 bool CMobEntity::IsFarFromHome()
 {
-    return distance(loc.p, m_SpawnPoint) > m_maxRoamDistance;
+    return DistanceFromHome() > m_maxRoamDistance;
 }
 
 bool CMobEntity::CanBeNeutral() const
@@ -605,19 +646,23 @@ void CMobEntity::PostTick()
     TracyZoneScoped;
 
     CBattleEntity::PostTick();
-    timer::time_point now = timer::now();
-    if (loc.zone && updatemask && now > m_nextUpdateTimer)
+
+    if (loc.zone && updatemask)
     {
-        m_nextUpdateTimer = now + 250ms;
-        loc.zone->UpdateEntityPacket(this, ENTITY_UPDATE, updatemask);
-
-        // If this mob is charmed, it should sync with its master
-        if (PMaster && PMaster->PPet == this && PMaster->objtype == TYPE_PC)
+        const auto now = timer::now();
+        if (now > m_nextUpdateTimer)
         {
-            ((CCharEntity*)PMaster)->pushPacket<CPetSyncPacket>((CCharEntity*)PMaster);
-        }
+            m_nextUpdateTimer = now + 250ms;
+            loc.zone->UpdateEntityPacket(this, ENTITY_UPDATE, updatemask);
 
-        updatemask = 0;
+            // If this mob is charmed, it should sync with its master
+            if (PMaster && PMaster->PPet == this && PMaster->objtype == TYPE_PC)
+            {
+                ((CCharEntity*)PMaster)->pushPacket<CPetSyncPacket>((CCharEntity*)PMaster);
+            }
+
+            updatemask = 0;
+        }
     }
 }
 
@@ -710,7 +755,21 @@ void CMobEntity::Spawn()
     mobutils::CalculateMobStats(this);
     mobutils::GetAvailableSpells(this);
 
-    // spawn somewhere around my point
+    // region mobs pick a fresh spawn point every life, and m_SpawnPoint keeps it for the point-based checks
+    if (roamRegion_ && loc.zone)
+    {
+        if (const auto point = roamRegion_->randomPoint(loc.zone->navMesh()))
+        {
+            m_SpawnPoint.x = point->x;
+            m_SpawnPoint.y = point->y;
+            m_SpawnPoint.z = point->z;
+        }
+        else
+        {
+            ShowWarningFmt("Mob {} ({}): roam region has no walkable point to spawn on", name, id);
+        }
+    }
+
     loc.p = m_SpawnPoint;
 
     if ((m_roamFlags & xi::RoamFlag::Stealth) != xi::RoamFlag::None)
