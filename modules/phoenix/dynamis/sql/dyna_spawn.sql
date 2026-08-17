@@ -5138,3 +5138,9 @@ INSERT INTO `mob_spawn_points` VALUES (16949649,0,'Nightmare_Cluster','Nightmare
 INSERT INTO `mob_spawn_points` VALUES (16949650,0,'Nightmare_Cluster','Nightmare Cluster',40,78,80,74.675,-24.925,-22.850,34,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16949651,0,'Nightmare_Cluster','Nightmare Cluster',40,78,80,1.000,1.000,1.000,164,NULL,NULL);
 INSERT INTO `mob_spawn_points` VALUES (16949652,0,'Nightmare_Cluster','Nightmare Cluster',40,78,80,1.000,1.000,1.000,1,NULL,NULL);
+
+-- ------------------------------
+-- Dynamis mobs are Notorious
+-- ------------------------------
+-- Set as NMs so they dont despawn ever or deaggro - needs to be updated AFTER everything else
+UPDATE `mob_pools` SET `mobType` = `mobType` | 2 WHERE `poolid` IN (SELECT DISTINCT `poolid` FROM `mob_groups` WHERE `zoneid` IN (39, 40, 41, 42, 134, 135, 185, 186, 187, 188));

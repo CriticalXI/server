@@ -8,11 +8,12 @@ xi.dynamis = xi.dynamis or {}
 xi.dynamis.settings =
 {
     MIN_LEVEL               = 65,
-    RESERVATION_TIMEOUT     = 180, -- seconds before auto-cleanup if no players enter
+    RESERVATION_TIMEOUT     = 180,     -- seconds before auto-cleanup if no players enter
     REENTRY_DAYS            = 3,
-    DEFAULT_TIME_LIMIT      = 3600, -- 60 minutes default
-    TAVNAZIA_TIME_LIMIT     = 900, -- 15 minutes for Tavnazia
-    REENTRY_WEAKNESS        = 600, -- weakness duration when re-entering/reconnecting to an active run
+    DEFAULT_TIME_LIMIT      = 3600,    -- 60 minutes default
+    TAVNAZIA_TIME_LIMIT     = 900,     -- 15 minutes for Tavnazia
+    REENTRY_WEAKNESS        = 600,     -- weakness duration when re-entering/reconnecting to an active run
+    TIMELESS_HOURGLASS_COST = 1000000, -- gil price at the beastmen stronghold goblins
 }
 
 -- Messages for hourglass trade states
