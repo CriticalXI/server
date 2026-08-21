@@ -48,7 +48,6 @@ era/sql/wotg
 
 # CPP
 custom/cpp/ah_pagination.cpp
-era/cpp
 
 # YAML
 era/data
