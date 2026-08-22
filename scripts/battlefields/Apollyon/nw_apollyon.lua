@@ -34,18 +34,21 @@ function content:onBattlefieldInitialize(battlefield)
     end
 end
 
-local empowerBoss = function(battlefield, mobs)
-    local boss = mobs[1]
-    boss:addMod(xi.mod.ATTP, 100)
-    boss:addMod(xi.mod.ACC, 50)
-end
+local damageReduction = { [0] = -7500, -6000, -4500, -3000, -1500, 0 }
+local attackDelay     = { [0] = 160, 180, 200, 220, 240, 260 }
 
-local depowerBoss = function(bossID)
-    local boss = GetMobByID(bossID)
-    if boss then
-        boss:delMod(xi.mod.ATTP, 100)
-        boss:delMod(xi.mod.ACC, 50)
+local weakenBoss = function(count)
+    local boss = GetMobByID(ID.mob.NW_CYNOPROSOPI)
+
+    if boss == nil then
+        return
     end
+
+    boss:setMod(xi.mod.UDMGPHYS, damageReduction[count])
+    boss:setMod(xi.mod.UDMGMAGIC, damageReduction[count])
+    boss:setMod(xi.mod.UDMGBREATH, damageReduction[count])
+    boss:setMod(xi.mod.UDMGRANGE, damageReduction[count])
+    boss:setDelay(attackDelay[count])
 end
 
 content.paths =
@@ -100,7 +103,7 @@ content.paths =
 
     [ID.mob.NW_ZLATOROG] =
     {
-        { x = -384.0, y = 0.0,  z = 268.0, wait = 5000 },
+        { x = -384.0, y =  0.0, z = 268.0, wait = 5000 },
         { x = -336.0, y = -0.5, z = 320.0, wait = 5000 },
     },
 
@@ -124,7 +127,7 @@ content.paths =
 
     [ID.mob.NW_MOUNTAIN_BUFFALO_OFFSET + 3] =
     {
-        { x = -334.0, y = 0.0,  z = 233.0, wait = 5000 },
+        { x = -334.0, y =  0.0, z = 233.0, wait = 5000 },
         { x = -345.0, y = -1.0, z = 246.0, wait = 5000 },
     },
 
@@ -239,13 +242,6 @@ content.groups =
 {
     {
         mobs = { 'Pluto' },
-        mods =
-        {
-            [xi.mod.GRAVITY_MEVA] = -25,
-            [xi.mod.BIND_MEVA   ] = -25,
-        },
-
-        setup = empowerBoss,
         death = function(battlefield, mob, count)
             xi.limbus.spawnFrom(mob, ID.NW_APOLLYON.npc.ITEM_CRATES[1])
         end,
@@ -253,17 +249,6 @@ content.groups =
 
     {
         mobs = { 'Bardha' },
-        mods =
-        {
-            [xi.mod.GRAVITY_MEVA] = -25,
-            [xi.mod.BIND_MEVA   ] = -25,
-            [xi.mod.SLEEP_MEVA  ] = -25,
-        },
-
-        allDeath = function(battlefield, mob)
-            depowerBoss(ID.mob.NW_PLUTO)
-        end,
-
         randomDeath = function(battlefield, mob)
             content:openDoor(battlefield, 1)
         end,
@@ -272,14 +257,6 @@ content.groups =
     -- Floor 2
     {
         mobs = { 'Zlatorog' },
-        mods =
-        {
-            [xi.mod.GRAVITY_MEVA] = -25,
-            [xi.mod.BIND_MEVA   ] = -25,
-            [xi.mod.SLEEP_MEVA  ] = -25,
-        },
-
-        setup = empowerBoss,
         death = function(battlefield, mob, count)
             xi.limbus.spawnFrom(mob, ID.NW_APOLLYON.npc.ITEM_CRATES[2])
         end,
@@ -287,17 +264,6 @@ content.groups =
 
     {
         mobs = { 'Mountain_Buffalo' },
-        mods =
-        {
-            [xi.mod.GRAVITY_MEVA] = -25,
-            [xi.mod.BIND_MEVA   ] = -25,
-            [xi.mod.SLEEP_MEVA  ] = -25,
-        },
-
-        allDeath = function(battlefield, mob)
-            depowerBoss(ID.mob.NW_ZLATOROG)
-        end,
-
         randomDeath = function(battlefield, mob)
             content:openDoor(battlefield, 2)
         end,
@@ -305,9 +271,8 @@ content.groups =
 
     -- Floor 3
     {
-        mobs       = { 'Millenary_Mossback' },
+        mobs = { 'Millenary_Mossback' },
         stationary = true,
-        setup      = empowerBoss,
         death      = function(battlefield, mob, count)
             xi.limbus.spawnFrom(mob, ID.NW_APOLLYON.npc.ITEM_CRATES[3])
         end,
@@ -315,18 +280,7 @@ content.groups =
 
     {
         mobs = { 'Apollyon_Scavenger' },
-        mods =
-        {
-            [xi.mod.GRAVITY_MEVA] = -25,
-            [xi.mod.BIND_MEVA   ] = -25,
-            [xi.mod.SLEEP_MEVA  ] = -25,
-        },
-
         stationary = true,
-        allDeath   = function(battlefield, mob)
-            depowerBoss(ID.mob.NW_MILLENARY_MOSSBACK)
-        end,
-
         randomDeath = function(battlefield, mob)
             content:openDoor(battlefield, 3)
         end,
@@ -335,29 +289,20 @@ content.groups =
     -- Floor 4
     {
         mobs = { 'Cynoprosopi' },
-        mods =
-        {
-            [xi.mod.GRAVITY_MEVA] = -25,
-            [xi.mod.BIND_MEVA   ] = -25,
-        },
+        setup = function(battlefield, mobs)
+            weakenBoss(0)
+        end,
 
-        setup = empowerBoss,
         death = function(battlefield, mob, count)
             xi.limbus.spawnFrom(mob, ID.NW_APOLLYON.npc.ITEM_CRATES[4])
         end,
     },
-    {
-        --
-        mobs = { 'Gorynich' },
-        mods =
-        {
-            [xi.mod.GRAVITY_MEVA] = -25,
-            [xi.mod.BIND_MEVA   ] = -25,
-            [xi.mod.SLEEP_MEVA  ] = -25,
-        },
 
-        allDeath = function(battlefield, mob)
-            depowerBoss(ID.mob.NW_CYNOPROSOPI)
+    {
+        mobs = { 'Gorynich' },
+
+        death = function(battlefield, mob, count)
+            weakenBoss(count)
         end,
 
         randomDeath = function(battlefield, mob)
@@ -367,15 +312,7 @@ content.groups =
 
     -- Floor 5
     {
-        mobs    = { 'Kaiser_Behemoth' },
-        mobMods =
-        {
-            [xi.mobMod.ALLI_HATE          ] = 50,
-            [xi.mobMod.MAGIC_COOL         ] = 30,
-            [xi.mobMod.SEVERE_SPELL_CHANCE] = 100,
-        },
-
-        setup = empowerBoss,
+        mobs = { 'Kaiser_Behemoth' },
         death = function(battlefield, mob, count)
             npcUtil.showCrate(GetNPCByID(ID.npc.NW_LOOT_CRATE))
         end,
@@ -383,18 +320,8 @@ content.groups =
 
     {
         mobs = { 'Kronprinz_Behemoth' },
-        mods =
-        {
-            [xi.mod.GRAVITY_MEVA] = -25,
-            [xi.mod.BIND_MEVA   ] = 25,
-            [xi.mod.SLEEP_MEVA  ] = 25,
-        },
-
         mobMods    = { [xi.mobMod.ALLI_HATE] = 50 },
         stationary = false,
-        allDeath   = function(battlefield, mob)
-            depowerBoss(ID.mob.NW_KAISER_BEHEMOTH)
-        end,
     },
 }
 
@@ -404,27 +331,40 @@ content.loot =
     {
         {
             quantity = 2,
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight = 10000 },
         },
 
         {
-            { itemId = xi.item.NONE,              weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  5000 },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight =  5000 },
         },
 
         {
-            { itemId = xi.item.ARGYRO_RIVET,              weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SPOOL_OF_LIGHT_FILAMENT,   weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SQUARE_OF_BROWN_DOESKIN,   weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SQUARE_OF_FLAMESHUN_CLOTH, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.ARGYRO_RIVET,              weight =  1000 }, -- WAR
+            { itemId = xi.item.ANCIENT_BRASS_INGOT,       weight =  1000 }, -- MNK
+            { itemId = xi.item.SPOOL_OF_BENEDICT_YARN,    weight =  1000 }, -- WHM
+            { itemId = xi.item.SPOOL_OF_DIABOLIC_YARN,    weight =  1000 }, -- BLM
+            { itemId = xi.item.SQUARE_OF_CARDINAL_CLOTH,  weight =  1000 }, -- RDM
+            { itemId = xi.item.SPOOL_OF_LIGHT_FILAMENT,   weight =  1000 }, -- THF
+            { itemId = xi.item.WHITE_RIVET,               weight =  1000 }, -- PLD
+            { itemId = xi.item.BLACK_RIVET,               weight =  1000 }, -- DRK
+            { itemId = xi.item.FETID_LANOLIN_CUBE,        weight =  1000 }, -- BST
+         -- { itemId = xi.item.GOLD_STUD,                 weight =  1000 }, -- DNC
         },
 
         {
-            { itemId = xi.item.NONE,                     weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.SPOOL_OF_DIABOLIC_YARN,   weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.BLACK_RIVET,              weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_ASTRAL_LEATHER, weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.GOLD_STUD,                weight = xi.loot.weight.LOW       },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.SQUARE_OF_BROWN_DOESKIN,   weight =  1000 }, -- BRD
+            { itemId = xi.item.SQUARE_OF_CHARCOAL_COTTON, weight =  1000 }, -- RNG
+            { itemId = xi.item.SHEET_OF_KUROGANE,         weight =  1000 }, -- SAM
+            { itemId = xi.item.POT_OF_EBONY_LACQUER,      weight =  1000 }, -- NIN
+            { itemId = xi.item.BLUE_RIVET,                weight =  1000 }, -- DRG
+            { itemId = xi.item.SQUARE_OF_ASTRAL_LEATHER,  weight =  1000 }, -- SMN
+            { itemId = xi.item.SQUARE_OF_FLAMESHUN_CLOTH, weight =  1000 }, -- BLU
+            { itemId = xi.item.SQUARE_OF_CANVAS_TOILE,    weight =  1000 }, -- COR
+            { itemId = xi.item.SQUARE_OF_CORDUROY_CLOTH,  weight =  1000 }, -- PUP
+         -- { itemId = xi.item.ELECTRUM_STUD,             weight =  1000 }, -- SCH
         },
     },
 
@@ -432,22 +372,35 @@ content.loot =
     {
         {
             quantity = 3,
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight = 10000 },
         },
 
         {
-            { itemId = xi.item.SPOOL_OF_BENEDICT_YARN, weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SPOOL_OF_DIABOLIC_YARN, weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.POT_OF_EBONY_LACQUER,   weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SQUARE_OF_CANVAS_TOILE, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.ARGYRO_RIVET,              weight =  1000 }, -- WAR
+            { itemId = xi.item.ANCIENT_BRASS_INGOT,       weight =  1000 }, -- MNK
+            { itemId = xi.item.SPOOL_OF_BENEDICT_YARN,    weight =  1000 }, -- WHM
+            { itemId = xi.item.SPOOL_OF_DIABOLIC_YARN,    weight =  1000 }, -- BLM
+            { itemId = xi.item.SQUARE_OF_CARDINAL_CLOTH,  weight =  1000 }, -- RDM
+            { itemId = xi.item.SPOOL_OF_LIGHT_FILAMENT,   weight =  1000 }, -- THF
+            { itemId = xi.item.WHITE_RIVET,               weight =  1000 }, -- PLD
+            { itemId = xi.item.BLACK_RIVET,               weight =  1000 }, -- DRK
+            { itemId = xi.item.FETID_LANOLIN_CUBE,        weight =  1000 }, -- BST
+         -- { itemId = xi.item.GOLD_STUD,                 weight =  1000 }, -- DNC
         },
 
         {
-            { itemId = xi.item.NONE,                weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.ANCIENT_BRASS_INGOT, weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.WHITE_RIVET,         weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.BLUE_RIVET,          weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.ELECTRUM_STUD,       weight = xi.loot.weight.LOW       },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.SQUARE_OF_BROWN_DOESKIN,   weight =  1000 }, -- BRD
+            { itemId = xi.item.SQUARE_OF_CHARCOAL_COTTON, weight =  1000 }, -- RNG
+            { itemId = xi.item.SHEET_OF_KUROGANE,         weight =  1000 }, -- SAM
+            { itemId = xi.item.POT_OF_EBONY_LACQUER,      weight =  1000 }, -- NIN
+            { itemId = xi.item.BLUE_RIVET,                weight =  1000 }, -- DRG
+            { itemId = xi.item.SQUARE_OF_ASTRAL_LEATHER,  weight =  1000 }, -- SMN
+            { itemId = xi.item.SQUARE_OF_FLAMESHUN_CLOTH, weight =  1000 }, -- BLU
+            { itemId = xi.item.SQUARE_OF_CANVAS_TOILE,    weight =  1000 }, -- COR
+            { itemId = xi.item.SQUARE_OF_CORDUROY_CLOTH,  weight =  1000 }, -- PUP
+         -- { itemId = xi.item.ELECTRUM_STUD,             weight =  1000 }, -- SCH
         },
     },
 
@@ -455,45 +408,58 @@ content.loot =
     {
         {
             quantity = 4,
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight = 10000 },
         },
 
         {
-            { itemId = xi.item.NONE,              weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  5000 },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight =  5000 },
         },
 
         {
-            { itemId = xi.item.ANCIENT_BRASS_INGOT,       weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SQUARE_OF_CHARCOAL_COTTON, weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.BLUE_RIVET,                weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SQUARE_OF_CORDUROY_CLOTH,  weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.ARGYRO_RIVET,              weight =  1000 }, -- WAR
+            { itemId = xi.item.ANCIENT_BRASS_INGOT,       weight =  1000 }, -- MNK
+            { itemId = xi.item.SPOOL_OF_BENEDICT_YARN,    weight =  1000 }, -- WHM
+            { itemId = xi.item.SPOOL_OF_DIABOLIC_YARN,    weight =  1000 }, -- BLM
+            { itemId = xi.item.SQUARE_OF_CARDINAL_CLOTH,  weight =  1000 }, -- RDM
+            { itemId = xi.item.SPOOL_OF_LIGHT_FILAMENT,   weight =  1000 }, -- THF
+            { itemId = xi.item.WHITE_RIVET,               weight =  1000 }, -- PLD
+            { itemId = xi.item.BLACK_RIVET,               weight =  1000 }, -- DRK
+            { itemId = xi.item.FETID_LANOLIN_CUBE,        weight =  1000 }, -- BST
+         -- { itemId = xi.item.GOLD_STUD,                 weight =  1000 }, -- DNC
         },
 
         {
-            { itemId = xi.item.NONE,                    weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.SPOOL_OF_BENEDICT_YARN,  weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SPOOL_OF_LIGHT_FILAMENT, weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_BROWN_DOESKIN, weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_CANVAS_TOILE,  weight = xi.loot.weight.LOW       },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.SQUARE_OF_BROWN_DOESKIN,   weight =  1000 }, -- BRD
+            { itemId = xi.item.SQUARE_OF_CHARCOAL_COTTON, weight =  1000 }, -- RNG
+            { itemId = xi.item.SHEET_OF_KUROGANE,         weight =  1000 }, -- SAM
+            { itemId = xi.item.POT_OF_EBONY_LACQUER,      weight =  1000 }, -- NIN
+            { itemId = xi.item.BLUE_RIVET,                weight =  1000 }, -- DRG
+            { itemId = xi.item.SQUARE_OF_ASTRAL_LEATHER,  weight =  1000 }, -- SMN
+            { itemId = xi.item.SQUARE_OF_FLAMESHUN_CLOTH, weight =  1000 }, -- BLU
+            { itemId = xi.item.SQUARE_OF_CANVAS_TOILE,    weight =  1000 }, -- COR
+            { itemId = xi.item.SQUARE_OF_CORDUROY_CLOTH,  weight =  1000 }, -- PUP
+         -- { itemId = xi.item.ELECTRUM_STUD,             weight =  1000 }, -- SCH
         },
 
         {
             quantity = 2,
-            { itemId = xi.item.NONE,                    weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.CHUNK_OF_ADAMAN_ORE,     weight = xi.loot.weight.VERY_LOW  },
-            { itemId = xi.item.HANDFUL_OF_CLOT_PLASMA,  weight = xi.loot.weight.VERY_LOW  },
-            { itemId = xi.item.DARKSTEEL_SHEET,         weight = xi.loot.weight.VERY_LOW  },
-            { itemId = xi.item.CHUNK_OF_DARKSTEEL_ORE,  weight = xi.loot.weight.VERY_LOW  },
-            { itemId = xi.item.PIECE_OF_OXBLOOD,        weight = xi.loot.weight.VERY_LOW  },
-            { itemId = xi.item.LIGHT_STEEL_INGOT,       weight = xi.loot.weight.VERY_LOW  },
-            { itemId = xi.item.SPOOL_OF_RAINBOW_THREAD, weight = xi.loot.weight.VERY_LOW  },
-            { itemId = xi.item.PONZE_OF_SHELL_POWDER,   weight = xi.loot.weight.VERY_LOW  },
+            { itemId = xi.item.NONE,                      weight = 10000 },
+            { itemId = xi.item.CHUNK_OF_ADAMAN_ORE,       weight =  1000 },
+            { itemId = xi.item.HANDFUL_OF_CLOT_PLASMA,    weight =  1000 },
+            { itemId = xi.item.DARKSTEEL_SHEET,           weight =  1000 },
+            { itemId = xi.item.CHUNK_OF_DARKSTEEL_ORE,    weight =  1000 },
+            { itemId = xi.item.PIECE_OF_OXBLOOD,          weight =  1000 },
+            { itemId = xi.item.LIGHT_STEEL_INGOT,         weight =  1000 },
+            { itemId = xi.item.SPOOL_OF_RAINBOW_THREAD,   weight =  1000 },
+            { itemId = xi.item.PONZE_OF_SHELL_POWDER,     weight =  1000 },
         },
 
         {
-            { itemId = xi.item.NONE,              weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  5000 },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight =  5000 },
         },
     },
 
@@ -501,28 +467,41 @@ content.loot =
     {
         {
             quantity = 5,
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight = 10000 },
         },
 
         {
             quantity = 2,
-            { itemId = xi.item.NONE,              weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  5000 },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight =  5000 },
         },
 
         {
-            { itemId = xi.item.SQUARE_OF_CARDINAL_CLOTH, weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.FETID_LANOLIN_CUBE,       weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SHEET_OF_KUROGANE,        weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.ELECTRUM_STUD,            weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.ARGYRO_RIVET,              weight =  1000 }, -- WAR
+            { itemId = xi.item.ANCIENT_BRASS_INGOT,       weight =  1000 }, -- MNK
+            { itemId = xi.item.SPOOL_OF_BENEDICT_YARN,    weight =  1000 }, -- WHM
+            { itemId = xi.item.SPOOL_OF_DIABOLIC_YARN,    weight =  1000 }, -- BLM
+            { itemId = xi.item.SQUARE_OF_CARDINAL_CLOTH,  weight =  1000 }, -- RDM
+            { itemId = xi.item.SPOOL_OF_LIGHT_FILAMENT,   weight =  1000 }, -- THF
+            { itemId = xi.item.WHITE_RIVET,               weight =  1000 }, -- PLD
+            { itemId = xi.item.BLACK_RIVET,               weight =  1000 }, -- DRK
+            { itemId = xi.item.FETID_LANOLIN_CUBE,        weight =  1000 }, -- BST
+         -- { itemId = xi.item.GOLD_STUD,                 weight =  1000 }, -- DNC
         },
 
         {
-            { itemId = xi.item.NONE,                      weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.ARGYRO_RIVET,              weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.POT_OF_EBONY_LACQUER,      weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_CHARCOAL_COTTON, weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_FLAMESHUN_CLOTH, weight = xi.loot.weight.LOW       },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.SQUARE_OF_BROWN_DOESKIN,   weight =  1000 }, -- BRD
+            { itemId = xi.item.SQUARE_OF_CHARCOAL_COTTON, weight =  1000 }, -- RNG
+            { itemId = xi.item.SHEET_OF_KUROGANE,         weight =  1000 }, -- SAM
+            { itemId = xi.item.POT_OF_EBONY_LACQUER,      weight =  1000 }, -- NIN
+            { itemId = xi.item.BLUE_RIVET,                weight =  1000 }, -- DRG
+            { itemId = xi.item.SQUARE_OF_ASTRAL_LEATHER,  weight =  1000 }, -- SMN
+            { itemId = xi.item.SQUARE_OF_FLAMESHUN_CLOTH, weight =  1000 }, -- BLU
+            { itemId = xi.item.SQUARE_OF_CANVAS_TOILE,    weight =  1000 }, -- COR
+            { itemId = xi.item.SQUARE_OF_CORDUROY_CLOTH,  weight =  1000 }, -- PUP
+         -- { itemId = xi.item.ELECTRUM_STUD,             weight =  1000 }, -- SCH
         },
     },
 
@@ -530,31 +509,44 @@ content.loot =
     {
         {
             quantity = 6,
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.ANCIENT_BEASTCOIN,         weight = 10000 },
         },
 
         {
-            { itemId = xi.item.WHITE_RIVET,              weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.BLACK_RIVET,              weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.SQUARE_OF_ASTRAL_LEATHER, weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.GOLD_STUD,                weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.ARGYRO_RIVET,              weight =  1000 }, -- WAR
+            { itemId = xi.item.ANCIENT_BRASS_INGOT,       weight =  1000 }, -- MNK
+            { itemId = xi.item.SPOOL_OF_BENEDICT_YARN,    weight =  1000 }, -- WHM
+            { itemId = xi.item.SPOOL_OF_DIABOLIC_YARN,    weight =  1000 }, -- BLM
+            { itemId = xi.item.SQUARE_OF_CARDINAL_CLOTH,  weight =  1000 }, -- RDM
+            { itemId = xi.item.SPOOL_OF_LIGHT_FILAMENT,   weight =  1000 }, -- THF
+            { itemId = xi.item.WHITE_RIVET,               weight =  1000 }, -- PLD
+            { itemId = xi.item.BLACK_RIVET,               weight =  1000 }, -- DRK
+            { itemId = xi.item.FETID_LANOLIN_CUBE,        weight =  1000 }, -- BST
+         -- { itemId = xi.item.GOLD_STUD,                 weight =  1000 }, -- DNC
         },
 
         {
-            { itemId = xi.item.NONE,                     weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.SQUARE_OF_CARDINAL_CLOTH, weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.FETID_LANOLIN_CUBE,       weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SHEET_OF_KUROGANE,        weight = xi.loot.weight.LOW       },
-            { itemId = xi.item.SQUARE_OF_CORDUROY_CLOTH, weight = xi.loot.weight.LOW       },
+            { itemId = xi.item.NONE,                      weight =  3000 },
+            { itemId = xi.item.SQUARE_OF_BROWN_DOESKIN,   weight =  1000 }, -- BRD
+            { itemId = xi.item.SQUARE_OF_CHARCOAL_COTTON, weight =  1000 }, -- RNG
+            { itemId = xi.item.SHEET_OF_KUROGANE,         weight =  1000 }, -- SAM
+            { itemId = xi.item.POT_OF_EBONY_LACQUER,      weight =  1000 }, -- NIN
+            { itemId = xi.item.BLUE_RIVET,                weight =  1000 }, -- DRG
+            { itemId = xi.item.SQUARE_OF_ASTRAL_LEATHER,  weight =  1000 }, -- SMN
+            { itemId = xi.item.SQUARE_OF_FLAMESHUN_CLOTH, weight =  1000 }, -- BLU
+            { itemId = xi.item.SQUARE_OF_CANVAS_TOILE,    weight =  1000 }, -- COR
+            { itemId = xi.item.SQUARE_OF_CORDUROY_CLOTH,  weight =  1000 }, -- PUP
+         -- { itemId = xi.item.ELECTRUM_STUD,             weight =  1000 }, -- SCH
         },
 
         {
-            { itemId = xi.item.MAGENTA_CHIP, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.MAGENTA_CHIP,              weight = 10000 },
         },
 
         {
-            { itemId = xi.item.NONE,       weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.METAL_CHIP, weight = xi.loot.weight.VERY_LOW  },
+            { itemId = xi.item.NONE,                      weight = 10000 },
+            { itemId = xi.item.METAL_CHIP,                weight =  1000 },
         },
     },
 }
