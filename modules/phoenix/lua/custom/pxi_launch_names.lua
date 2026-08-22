@@ -34,3 +34,32 @@ for zoneName, names in pairs(eventMobNames) do
         end
     end)
 end
+
+-- Stop starter mobs from granting items if killer gets no exp
+local starterMobs =
+{
+    West_Ronfaure     = { 'Wild_Rabbit',     'Tunnel_Worm' },
+    East_Ronfaure     = { 'Wild_Rabbit',     'Tunnel_Worm' },
+    North_Gustaberg   = { 'Huge_Hornet',     'Tunnel_Worm' },
+    South_Gustaberg   = { 'Huge_Hornet',     'Tunnel_Worm' },
+    West_Sarutabaruta = { 'Tiny_Mandragora', 'Bumblebee'   },
+    East_Sarutabaruta = { 'Tiny_Mandragora', 'Bumblebee'   },
+}
+
+for zoneName, mobNames in pairs(starterMobs) do
+    for _, mobName in ipairs(mobNames) do
+        m:addOverride(string.format('xi.zones.%s.mobs.%s.onMobDeath', zoneName, mobName), function(mob, player, optParams)
+            super(mob, player, optParams)
+
+            -- Only run for killer
+            if not optParams.isKiller then
+                return
+            end
+
+            -- No drops if killer does not get xp
+            if not player:checkKillCredit(mob) then
+                mob:setMobMod(xi.mobMod.NO_DROPS, 1)
+            end
+        end)
+    end
+end
