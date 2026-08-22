@@ -9,9 +9,8 @@
  ************************************************************************/
 
 #include "map/entities/char_entity.h"
-#include "map/item_container.h"
+#include "map/items/transactions/item_claim.h"
 #include "map/lua/lua_base_entity.h"
-#include "map/utils/charutils.h"
 #include "map/utils/moduleutils.h"
 
 class TesterGearModule : public CPPModule
@@ -31,7 +30,13 @@ class TesterGearModule : public CPPModule
                              uint32 quantity = qty.value_or(1);
                              bool   silence  = silent.value_or(false);
 
-                             return charutils::AddItem(PChar, locationId, itemId, quantity, silence) != ERROR_SLOTID;
+                             auto transaction = ItemClaimTransaction::start(PChar);
+                             if (!transaction)
+                             {
+                                 return false;
+                             }
+
+                             return transaction->give(locationId, itemId, quantity, Silence(silence)).has_value() && transaction->commit();
                          });
     }
 };
