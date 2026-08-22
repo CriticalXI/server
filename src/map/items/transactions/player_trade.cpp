@@ -21,7 +21,9 @@
 
 #include "player_trade.h"
 
+#include "common/earth_time.h"
 #include "common/logging.h"
+#include "common/settings.h"
 
 #include "entities/char_entity.h"
 #include "enums/item_flag.h"
@@ -52,12 +54,37 @@ auto withinTradeRange(const CCharEntity* initiator, const CCharEntity* target) -
     return distance(initiator->loc.p, target->loc.p) <= TradeRange && initiator->m_moghouseID == target->m_moghouseID;
 }
 
+const auto auditTrade = [](CCharEntity* PChar, const CCharEntity* PTarget, const uint16 itemId, const uint32 quantity)
+{
+    // TODO: Don't pass around Scheduler& through PSession
+    if (!settings::get<bool>("map.AUDIT_PLAYER_TRADES") || !PChar->PSession || !PChar->PSession->scheduler)
+    {
+        return;
+    }
+
+    PChar->PSession->scheduler->postToWorkerThread(
+        [itemId,
+         quantity,
+         sender        = PChar->id,
+         sender_name   = PChar->getName(),
+         receiver      = PTarget->id,
+         receiver_name = PTarget->getName(),
+         date          = earth_time::timestamp()]()
+        {
+            const auto query = "INSERT INTO audit_trade(itemid, quantity, sender, sender_name, receiver, receiver_name, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            if (!db::preparedStmt(query, itemId, quantity, sender, sender_name, receiver, receiver_name, date))
+            {
+                ShowErrorFmt("Failed to log trade transaction (item: {}, quantity: {}, sender: {}, receiver: {}, date: {})", itemId, quantity, sender, receiver, date);
+            }
+        });
+};
+
 } // namespace
 
 PlayerTradeTransaction::PlayerTradeTransaction(xi::Badge<PlayerTradeTransaction>, CCharEntity* initiator, CCharEntity* target)
 {
-    this->sides_[0].PChar = initiator;
-    this->sides_[1].PChar = target;
+    this->sides_[0].who = EntityId(initiator);
+    this->sides_[1].who = EntityId(target);
 }
 
 PlayerTradeTransaction::~PlayerTradeTransaction()
@@ -100,27 +127,6 @@ void PlayerTradeTransaction::cancel(CCharEntity* leaving)
     partner->pushPacket<GP_SERV_COMMAND_ITEM_TRADE_RES>(leaving, GP_ITEM_TRADE_RES_KIND::Cancell);
 }
 
-auto PlayerTradeTransaction::holds(const CItem* item) const -> bool
-{
-    if (!item)
-    {
-        return false;
-    }
-
-    for (const auto& side : this->sides_)
-    {
-        for (const auto& slot : side.slots)
-        {
-            if (slot.item == item)
-            {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
 auto PlayerTradeTransaction::sideOf(const CCharEntity* who) -> Side*
 {
     if (!who)
@@ -128,12 +134,12 @@ auto PlayerTradeTransaction::sideOf(const CCharEntity* who) -> Side*
         return nullptr;
     }
 
-    if (this->sides_[0].PChar == who)
+    if (this->sides_[0].who == who)
     {
         return &this->sides_[0];
     }
 
-    if (this->sides_[1].PChar == who)
+    if (this->sides_[1].who == who)
     {
         return &this->sides_[1];
     }
@@ -141,16 +147,21 @@ auto PlayerTradeTransaction::sideOf(const CCharEntity* who) -> Side*
     return nullptr;
 }
 
+auto PlayerTradeTransaction::charOf(const Side& side) -> CCharEntity*
+{
+    return side.who.resolve<CCharEntity>();
+}
+
 auto PlayerTradeTransaction::partnerOf(const CCharEntity* who) const -> CCharEntity*
 {
-    if (this->sides_[0].PChar == who)
+    if (this->sides_[0].who == who)
     {
-        return this->sides_[1].PChar;
+        return charOf(this->sides_[1]);
     }
 
-    if (this->sides_[1].PChar == who)
+    if (this->sides_[1].who == who)
     {
-        return this->sides_[0].PChar;
+        return charOf(this->sides_[0]);
     }
 
     return nullptr;
@@ -166,15 +177,11 @@ auto PlayerTradeTransaction::accept(const CCharEntity* who) -> bool
     return this->sides_[0].accepted && this->sides_[1].accepted;
 }
 
-// Runs from the destructor too, so it must not touch either character
-void PlayerTradeTransaction::releaseSlot(Slot& slot) const
+// also runs from the destructor, so it must not touch either character
+void PlayerTradeTransaction::releaseSlot(Slot& slot)
 {
-    if (!slot.item)
-    {
-        return;
-    }
+    this->release(slot.staged);
 
-    exitTx(slot.item);
     slot = Slot{};
 }
 
@@ -201,7 +208,7 @@ auto PlayerTradeTransaction::setSlot(CCharEntity* who, const uint8 transactionSl
 
     const auto releaseAndRestore = [&](Slot& target)
     {
-        auto* released = target.item;
+        auto* released = target.staged.resolve();
 
         this->releaseSlot(target);
 
@@ -234,7 +241,7 @@ auto PlayerTradeTransaction::setSlot(CCharEntity* who, const uint8 transactionSl
             }
 
             auto& candidate = side->slots[slotIdx];
-            if (candidate.item && candidate.invSlot == fromInvSlot)
+            if (candidate.staged.isSet() && candidate.staged.slot == fromInvSlot)
             {
                 return &candidate;
             }
@@ -258,31 +265,55 @@ auto PlayerTradeTransaction::setSlot(CCharEntity* who, const uint8 transactionSl
 
     const bool wrongItem     = !item || item->getID() != expectedItemId;
     const bool exclusiveItem = item && item->hasFlag(ItemFlag::Exclusive);
-    const bool qtyExceeds    = item && qty + item->getReserve() > item->getQuantity();
+    const bool qtyExceeds    = item && qty > item->getQuantity();
     const bool rareOnPartner = item && item->hasFlag(ItemFlag::Rare) && charutils::HasItem(other, item->getID());
 
-    if (wrongItem || exclusiveItem || qtyExceeds || rareOnPartner || !enterTx(item))
+    const auto staged = (wrongItem || exclusiveItem || qtyExceeds || rareOnPartner) ? ItemId{} : this->claim(who, item);
+
+    if (!staged.isSet())
     {
         pushSlotView(transactionSlot);
         return nullptr;
     }
 
     who->pushPacket<GP_SERV_COMMAND_ITEM_LIST>(item, ItemLockFlg::NoSelect);
-    slot = Slot{ .item = item, .invSlot = inventorySlot, .qty = qty };
+    slot = Slot{ .staged = staged, .qty = qty };
     pushSlotView(transactionSlot, item, qty);
     return item;
 }
 
 void PlayerTradeTransaction::closeAndRemove()
 {
-    auto* initiator = this->sides_[0].PChar;
-    auto* target    = this->sides_[1].PChar;
+    auto* initiator = charOf(this->sides_[0]);
 
-    initiator->TradePending.clean();
-    target->TradePending.clean();
+    // a side that no longer resolves has nothing to clean up; the other side still does
+    for (const auto& side : this->sides_)
+    {
+        auto* PChar = charOf(side);
+        if (!PChar)
+        {
+            continue;
+        }
+
+        PChar->TradePending.clean();
+
+        // staging greys the item out on the client, so it has to be told when the trade ends
+        for (const auto& slot : side.slots)
+        {
+            if (auto* PItem = slot.staged.resolve())
+            {
+                PChar->pushPacket<GP_SERV_COMMAND_ITEM_LIST>(PItem, ItemLockFlg::Normal);
+            }
+        }
+    }
 
     this->rollbackIfOpen();
-    initiator->removeTransaction(this);
+
+    // owned by the initiator, so if they are gone the transaction went with them
+    if (initiator)
+    {
+        initiator->removeTransaction(this);
+    }
 }
 
 void PlayerTradeTransaction::abort(CCharEntity* leaving)
@@ -301,8 +332,16 @@ void PlayerTradeTransaction::abort(CCharEntity* leaving)
 
 void PlayerTradeTransaction::commitAndClose()
 {
-    auto* initiator = this->sides_[0].PChar;
-    auto* target    = this->sides_[1].PChar;
+    auto* initiator = charOf(this->sides_[0]);
+    auto* target    = charOf(this->sides_[1]);
+
+    if (!initiator || !target)
+    {
+        ShowWarningFmt("PlayerTradeTransaction::commitAndClose: a side left before the trade closed");
+        this->closeAndRemove();
+
+        return;
+    }
 
     const bool ok = this->commit();
     if (!ok)
@@ -338,14 +377,14 @@ auto PlayerTradeTransaction::canReceive(const Side& sender, CCharEntity* receive
     uint32 gilOffered  = 0;
     for (const auto& slot : sender.slots)
     {
-        if (!slot.item)
+        if (!slot.staged.isSet())
         {
             continue;
         }
 
         ++slotsNeeded;
 
-        if (slot.item->isType(ITEM_CURRENCY))
+        if (slot.staged.itemId == 0xFFFF)
         {
             gilOffered += slot.qty;
         }
@@ -378,15 +417,23 @@ auto PlayerTradeTransaction::canReceive(const Side& sender, CCharEntity* receive
     return std::ranges::none_of(sender.slots,
                                 [receiver](const Slot& slot)
                                 {
-                                    return slot.item && slot.item->hasFlag(ItemFlag::Rare) && charutils::HasItem(receiver, slot.item->getID());
+                                    const CItem* PStaged = slot.staged.resolve();
+
+                                    return PStaged && PStaged->hasFlag(ItemFlag::Rare) && charutils::HasItem(receiver, PStaged->getID());
                                 });
 }
 
 // Deliver to both sides before consuming either, so a failed delivery can be undone
 auto PlayerTradeTransaction::doCommit() -> bool
 {
-    auto* initiator = this->sides_[0].PChar;
-    auto* target    = this->sides_[1].PChar;
+    auto* initiator = charOf(this->sides_[0]);
+    auto* target    = charOf(this->sides_[1]);
+
+    // one side no longer resolves, so there is nothing to exchange
+    if (!initiator || !target)
+    {
+        return false;
+    }
 
     const bool bothAccepted   = this->sides_[0].accepted && this->sides_[1].accepted;
     const bool partnerCanRecv = canReceive(this->sides_[0], target) && canReceive(this->sides_[1], initiator);
@@ -397,87 +444,99 @@ auto PlayerTradeTransaction::doCommit() -> bool
         return false;
     }
 
-    struct Delivery
-    {
-        CCharEntity* receiver{};
-        uint8        invSlot{};
-        uint32       qty{};
-    };
-
-    std::vector<Delivery> delivered;
-    delivered.reserve(MaxSlots * 2);
-
     const auto deliverSide = [&](const Side& sender, CCharEntity* receiver) -> bool
     {
         for (const auto& slot : sender.slots)
         {
-            if (!slot.item)
+            const CItem* PStaged = slot.staged.resolve();
+            if (!PStaged)
             {
                 continue;
             }
 
-            // Cloned rather than spawned by id so exdata, signature and augments survive the trade
-            auto clone = xi::items::clone(*slot.item);
+            // cloned rather than spawned by id, so exdata, signature and augments survive the trade
+            auto clone = xi::items::clone(*PStaged);
             if (!clone)
             {
                 return false;
             }
 
             clone->setQuantity(slot.qty);
-            clone->setReserve(0);
 
-            const uint8 deliveredSlot = charutils::AddItem(receiver, LOC_INVENTORY, std::move(clone));
-            if (deliveredSlot == ERROR_SLOTID)
+            if (!this->give(receiver, LOC_INVENTORY, std::move(clone)))
             {
                 return false;
             }
-
-            delivered.push_back({ .receiver = receiver, .invSlot = deliveredSlot, .qty = slot.qty });
         }
 
         return true;
     };
 
-    const auto undoDeliveries = [&]()
-    {
-        for (const auto& delivery : delivered)
-        {
-            charutils::UpdateItem(delivery.receiver, LOC_INVENTORY, delivery.invSlot, -static_cast<int32>(delivery.qty));
-        }
-    };
-
-    const auto consumeSide = [&](Side& sender)
+    const auto consumeSide = [&](Side& sender) -> bool
     {
         for (auto& slot : sender.slots)
         {
-            if (!slot.item)
+            if (!slot.staged.isSet())
             {
                 continue;
             }
 
-            const auto invSlot = slot.invSlot;
-            const auto qty     = slot.qty;
-            const auto itemID  = slot.item->getID();
+            auto* PSender = charOf(sender);
+            if (!PSender || !slot.staged.resolve() || !this->take(PSender, LOC_INVENTORY, slot.staged.slot, slot.qty))
+            {
+                ShowErrorFmt("PlayerTradeTransaction::doCommit: {} kept item {} after it was handed over", PSender ? PSender->getName() : "?", slot.staged.itemId);
+                return false;
+            }
 
             this->releaseSlot(slot);
+        }
 
-            if (charutils::UpdateItem(sender.PChar, LOC_INVENTORY, invSlot, -static_cast<int32>(qty)) == 0)
+        return true;
+    };
+
+    // consumeSide wipes the slots, so we need a way to save what changed hands now and log it only once the trade is successful
+    const auto traded = this->tradedItems(initiator, target);
+
+    // is the trade successfully executed?
+    const auto exchanged = deliverSide(this->sides_[0], target) &&
+                           deliverSide(this->sides_[1], initiator) &&
+                           consumeSide(this->sides_[0]) &&
+                           consumeSide(this->sides_[1]);
+
+    // If anything is not successful, trade fails
+    if (!exchanged)
+    {
+        return false;
+    }
+
+    // Log every item if it was successful AFTER the trade has been completed
+    for (const auto& item : traded)
+    {
+        auditTrade(item.sender, item.receiver, item.itemId, item.qty);
+    }
+
+    return true;
+}
+
+auto PlayerTradeTransaction::tradedItems(CCharEntity* initiator, CCharEntity* target) const -> std::vector<TradedItem>
+{
+    std::vector<TradedItem> traded;
+
+    const auto collect = [&](const Side& side, CCharEntity* sender, CCharEntity* receiver)
+    {
+        for (const auto& slot : side.slots)
+        {
+            if (const CItem* PStaged = slot.staged.resolve())
             {
-                ShowErrorFmt("PlayerTradeTransaction::doCommit: {} kept item {} after it was handed over", sender.PChar->getName(), itemID);
+                traded.push_back({ .sender = sender, .receiver = receiver, .itemId = PStaged->getID(), .qty = slot.qty });
             }
         }
     };
 
-    if (!deliverSide(this->sides_[0], target) || !deliverSide(this->sides_[1], initiator))
-    {
-        undoDeliveries();
-        return false;
-    }
+    collect(this->sides_[0], initiator, target);
+    collect(this->sides_[1], target, initiator);
 
-    consumeSide(this->sides_[0]);
-    consumeSide(this->sides_[1]);
-
-    return true;
+    return traded;
 }
 
 void PlayerTradeTransaction::doRollback()
