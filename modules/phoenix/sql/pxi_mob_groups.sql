@@ -34,6 +34,11 @@ INSERT INTO `mob_groups` VALUES (203,1683,191,'Goblin_Leecher',300,0,1099,0,0,0,
 
 -- Ranguemont Pass (Zone 166)
 INSERT INTO `mob_groups` VALUES (200,1715,166,'Goblin_Smithy',720,0,1162,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (201,1665,166,'Goblin_Furrier',720,0,1064,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (202,1710,166,'Goblin_Shaman',720,0,1148,0,0,0,NULL);
+
+-- Toraimarai Canal (Zone 169)
+INSERT INTO `mob_groups` VALUES (200,871,169,'Cutlass_Scorpion',960,0,549,0,0,0,NULL);
 
 -----------------------------------
 -- Dungeon respawn timers
