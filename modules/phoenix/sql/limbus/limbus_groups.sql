@@ -225,7 +225,7 @@ INSERT INTO `mob_groups` VALUES (255,10669,38,'Flying_Spear',0,128,2862,4800,600
 INSERT INTO `mob_groups` VALUES (256,10670,38,'Evil_Armory',0,128,0,12000,0,0,NULL);
 
 -- Central Apollyon
-INSERT INTO `mob_groups` VALUES (257,10671,38,'Proto-Omega',0,128,0,26000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (257,10671,38,'Proto-Omega',0,128,0,20000,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (258,10672,38,'Gunpod',0,128,0,2000,600,0,NULL);
 
 -- CS Apollyon
