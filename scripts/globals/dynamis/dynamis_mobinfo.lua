@@ -651,6 +651,18 @@ local possibleAvatars =
     xi.pets.summon.type.RAMUH,
 }
 
+-- Regular TP skill lists (Mob_Avatar_* in mob_skill_lists); the shared pool only carries Carbuncle's.
+local avatarSkillLists =
+{
+    [xi.pets.summon.type.CARBUNCLE] = 721,
+    [xi.pets.summon.type.IFRIT    ] = 715,
+    [xi.pets.summon.type.TITAN    ] = 716,
+    [xi.pets.summon.type.LEVIATHAN] = 717,
+    [xi.pets.summon.type.GARUDA   ] = 718,
+    [xi.pets.summon.type.SHIVA    ] = 719,
+    [xi.pets.summon.type.RAMUH    ] = 720,
+}
+
 -- pet is master + 1
 local function getMasterPet(master)
     local pet = GetMobByID(master:getID() + 1)
@@ -802,8 +814,10 @@ xi.dynamis.avatarOnSpawn = function(mob)
     mob:removeListener('AVATAR_ENGAGE')
     mob:removeListener('AVATAR_MOBSKILL_FINISHED')
 
-    -- Random avatar appearance, spell list and astral flow ability
-    xi.pets.summon.setupSummon(mob, possibleAvatars)
+    -- Random avatar appearance, spell list, astral flow ability and TP skill list
+    local avatar = possibleAvatars[math.randomInt(1, #possibleAvatars)]
+    xi.pets.summon.setupSummon(mob, { avatar })
+    mob:setMobMod(xi.mobMod.SKILL_LIST, avatarSkillLists[avatar])
 
     xi.combat.behavior.enableAllActions(mob)
 

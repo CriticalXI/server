@@ -465,8 +465,8 @@ xi.dynamis.dynamisTimeWarning = function(zone, zoneExpiration)
     end
 end
 
--- Applies weakness when a player re-enters dynamis
-local applyReentryWeakness = function(player, zoneId)
+-- First zone-in of a run records the lockout; re-entry applies weakness
+local onRunEntry = function(player, zoneId)
     -- Ignore GMs
     if xi.dynamis.isGM(player) then
         return
@@ -485,6 +485,9 @@ local applyReentryWeakness = function(player, zoneId)
     else
         -- On first zone in set the charvar and set expiry
         player:setCharVar(playerEntered, startTime, startTime + 86400)
+
+        -- The 72h lockout starts on actual entry, never at registration
+        xi.dynamis.recordLockout(player)
     end
 end
 
@@ -524,7 +527,7 @@ xi.dynamis.zoneOnZoneInEra = function(player, prevZone)
     xi.dynamis.applyEntryRestrictions(player, zoneId)
 
     -- Re-entry/reconnect weakness
-    applyReentryWeakness(player, zoneId)
+    onRunEntry(player, zoneId)
     return -1
 end
 
@@ -630,9 +633,6 @@ xi.dynamis.registerPlayer = function(player)
 
     local dynaCapacity = GetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', dynaInfo.dynaZone))
     SetServerVariable(string.format('[DYNA]#OfRegisteredPlayers_%s', dynaInfo.dynaZone), dynaCapacity + 1)
-
-    -- Set lockout.
-    xi.dynamis.recordLockout(player)
 end
 
 -- Reset all player-related dynamis charvars
