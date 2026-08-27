@@ -476,8 +476,8 @@ xi.dynamis.timeExtension[zoneID] =
     [xi.windurst.mobs.AVATAR_ICON_18]    =  20, --Avatar Icon
     [xi.windurst.mobs.AVATAR_ICON_31]    =  10, --Avatar Icon
     [xi.windurst.mobs.AVATAR_ICON_41]    =  20, --Avatar Icon
-    [xi.windurst.mobs.AVATAR_ICON_58]    =  20, --Avatar Icon
+    [xi.windurst.mobs.AVATAR_ICON_58]    =  10, --Avatar Icon
     [xi.windurst.mobs.MANIFEST_ICON_66]  =  20, --Avatar Icon
-    [xi.windurst.mobs.MANIFEST_ICON_101] =  10, --Avatar Icon
+    [xi.windurst.mobs.MANIFEST_ICON_101] =  20, --Avatar Icon
     [xi.windurst.mobs.TZEE_XICU_IDOL]    =  30, --Tzee_Xicu_Idol
 }

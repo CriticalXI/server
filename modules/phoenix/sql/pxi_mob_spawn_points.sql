@@ -56,8 +56,8 @@ REPLACE INTO `mob_spawn_points` VALUES (16797929, 0, 'Molech', 'Molech', 36, 79,
 REPLACE INTO `mob_spawn_points` VALUES (16797930, 0, 'Smolenkos', 'Smolenkos', 31, 80, 82, -196.0439, -176.0033, 241.6865, 107, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16797931, 0, 'Kindred_Warrior', 'Kindred Warrior', 32, 81, 84, -206.6191, -175.8701, 243.0708, 0, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16797932, 0, 'Kindred_Dark_Knight', 'Kindred Dark Knight', 34, 81, 84, -218.2464, -176.6426, 222.8609, 18, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (16797933, 0, 'Kindred_Summone', 'Kindred Summone', 0, 81, 84, -201.5562, -175.2420, 224.3783, 209, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (16797934, 0, 'Demons_Elemental', 'Demon\'s Elemental', 0, 0, 0, 1.000, 1.000, 1.000, 1, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (16797933, 0, 'Kindred_Summoner', 'Kindred Summoner', 35, 81, 84, -201.5562, -175.2420, 224.3783, 209, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (16797934, 0, 'Demons_Elemental', 'Demon\'s Elemental', 26, 72, 74, 1.000, 1.000, 1.000, 1, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16797935, 0, 'Molech', 'Molech', 36, 79, 82, -199.2303, -176.0058, 283.9061, 226, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16797936, 0, 'Molech', 'Molech', 36, 79, 82, -230.3706, -177.0149, 331.1444, 217, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16797937, 0, 'Smolenkos', 'Smolenkos', 31, 80, 82, -209.6414, -176.0000, 292.1495, 219, NULL, NULL);
@@ -67,7 +67,7 @@ REPLACE INTO `mob_spawn_points` VALUES (16797940, 0, 'Kindred_Dark_Knight', 'Kin
 REPLACE INTO `mob_spawn_points` VALUES (16797941, 0, 'Molech', 'Molech', 36, 79, 82, -206.9297, -176.0000, 357.1663, 214, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16797942, 0, 'Kindred_Warrior', 'Kindred Warrior', 32, 81, 84, -190.6962, -180.9422, 377.5090, 150, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16797943, 0, 'Kindred_Summoner', 'Kindred Summoner', 35, 81, 84, -164.7628, -183.4956, 391.0568, 216, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (16797944, 0, 'Demons_Elemental', 'Demon\'s Elemental', 26, 0, 0, 1.000, 1.000, 1.000, 1, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (16797944, 0, 'Demons_Elemental', 'Demon\'s Elemental', 26, 72, 74, 1.000, 1.000, 1.000, 1, NULL, NULL);
 
 -- Promvion - Holla (Zone 16)
 REPLACE INTO `mob_spawn_points` VALUES (16842765, 0, 'Weeper', 'Weeper', 2, 37, 38, 73.9332, 0.0000, -280.9321, 215, NULL, NULL);
@@ -1453,7 +1453,7 @@ REPLACE INTO `mob_spawn_points` VALUES (16998606, 0, 'Soulflayer', 'Soulflayer',
 REPLACE INTO `mob_spawn_points` VALUES (16998607, 0, 'Nipper', 'Nipper', 20, 72, 73, 273.3258, -3.4856, 335.2846, 104, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16998608, 0, 'Nipper', 'Nipper', 20, 72, 73, 258.8872, -3.8732, 333.9828, 87, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16998609, 0, 'Soulflayer', 'Soulflayer', 43, 82, 83, 282.6903, -6.7322, 343.3832, 98, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (16998610, 0, 'Phasma', 'Phasma', 12, 0, 0, 225.7804, -4.2998, 182.0707, 65, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (16998610, 0, 'Phasma', 'Phasma', 12, 73, 74, 225.7804, -4.2998, 182.0707, 65, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16998611, 0, 'Heraldic_Imp', 'Heraldic Imp', 29, 72, 74, 261.8622, -7.7309, 138.5360, 148, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16998612, 0, 'Heraldic_Imp', 'Heraldic Imp', 29, 72, 74, 260.9121, -7.6336, 127.8855, 79, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (16998613, 0, 'Arrapago_Apkallu', 'Arrapago Apkallu', 10, 70, 72, 269.1217, -3.1710, 190.9961, 215, NULL, NULL);
@@ -1623,8 +1623,8 @@ REPLACE INTO `mob_spawn_points` VALUES (17404290, 0, 'Ancient_Goobbue', 'Ancient
 REPLACE INTO `mob_spawn_points` VALUES (17457248, 0, 'Seeker_Bats', 'Seeker Bats', 9, 25, 28, -26.2220, -0.1952, -105.9189, 31, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457249, 0, 'Seeker_Bats', 'Seeker Bats', 9, 25, 28, -19.1506, 2.3974, -114.8920, 36, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457250, 0, 'Seeker_Bats', 'Seeker Bats', 9, 25, 28, -20.5950, 7.2953, -129.4178, 65, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17457251, 0, 'Goblin_Furrier', 'Goblin Furrier', 0, 32, 36, -88.8855, -14.8636, 21.9986, 4, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17457252, 0, 'Goblin_Shaman', 'Goblin Shaman', 0, 32, 36, -76.0534, -15.5657, 22.9333, 229, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17457251, 0, 'Goblin_Furrier', 'Goblin Furrier', 201, 32, 36, -88.8855, -14.8636, 21.9986, 4, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17457252, 0, 'Goblin_Shaman', 'Goblin Shaman', 202, 32, 36, -76.0534, -15.5657, 22.9333, 229, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457253, 0, 'Stirge', 'Stirge', 12, 30, 33, -155.9784, -35.1884, 63.0287, 247, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457254, 0, 'Stirge', 'Stirge', 12, 30, 33, -148.9520, -31.6946, 53.9392, 40, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457255, 0, 'Stirge', 'Stirge', 12, 30, 33, -137.6052, -26.4986, 42.1791, 90, NULL, NULL);
@@ -1644,12 +1644,12 @@ REPLACE INTO `mob_spawn_points` VALUES (17457266, 0, 'Stirge', 'Stirge', 12, 30,
 REPLACE INTO `mob_spawn_points` VALUES (17457213, 0, 'Taisai', 'Taisai', 14, 35, 38, -89.5105, -55.3447, 218.7658, 125, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457214, 0, 'Taisai', 'Taisai', 14, 35, 38, -101.0716, -55.8463, 224.5455, 119, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457215, 0, 'Taisai', 'Taisai', 14, 35, 38, -109.7134, -56.8567, 219.0001, 113, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17457216, 0, 'Taisaijin', 'Taisaijin', 15, 0, 0, -125.8988, -56.0000, 219.0324, 112, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17457216, 0, 'Taisaijin', 'Taisaijin', 15, 60, 60, -125.8988, -56.0000, 219.0324, 112, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457267, 0, 'Stirge', 'Stirge', 12, 30, 33, -45.5495, -37.7236, 180.0970, 22, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457268, 0, 'Stirge', 'Stirge', 12, 30, 33, -51.3711, -41.5250, 187.7084, 205, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457269, 0, 'Stirge', 'Stirge', 12, 30, 33, -61.8223, -44.0691, 193.1590, 146, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457225, 0, 'Giant_Scorpion', 'Giant Scorpion', 16, 38, 40, -0.6791, -36.0000, 161.5287, 165, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17457226, 0, 'Bat_Eye', 'Bat Eye', 17, 0, 0, 4.2853, -35.9241, 153.0072, 183, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17457226, 0, 'Bat_Eye', 'Bat Eye', 17, 42, 44, 4.2853, -35.9241, 153.0072, 183, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457270, 0, 'Stirge', 'Stirge', 12, 30, 33, 61.1870, -26.0000, 119.9271, 189, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457271, 0, 'Stirge', 'Stirge', 12, 30, 33, 49.6939, -32.3339, 139.2163, 119, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17457272, 0, 'Stirge', 'Stirge', 12, 30, 33, -44.6529, -16.0000, 19.8875, 155, NULL, NULL);
@@ -1787,9 +1787,9 @@ REPLACE INTO `mob_spawn_points` VALUES (17469612, 0, 'Stygian_Pugil', 'Stygian P
 REPLACE INTO `mob_spawn_points` VALUES (17469613, 0, 'Stygian_Pugil', 'Stygian Pugil', 22, 63, 65, 327.9066, 16.5000, -90.3834, 120, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469614, 0, 'Stygian_Pugil', 'Stygian Pugil', 22, 63, 65, 314.4317, 18.0000, -69.2372, 135, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469615, 0, 'Stygian_Pugil', 'Stygian Pugil', 22, 63, 65, 299.0826, 21.5020, -66.3292, 204, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17469616, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 0, 64, 66, 279.4657, 14.0000, -79.8099, 126, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17469617, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 0, 64, 66, 222.3636, 17.0000, -60.7191, 131, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17469618, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 0, 64, 66, 216.6616, 17.0000, -62.6320, 28, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17469616, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 200, 64, 66, 279.4657, 14.0000, -79.8099, 126, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17469617, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 200, 64, 66, 222.3636, 17.0000, -60.7191, 131, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17469618, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 200, 64, 66, 216.6616, 17.0000, -62.6320, 28, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469619, 0, 'Impish_Bats', 'Impish Bats', 33, 58, 60, 83.6706, 16.0003, 61.7494, 247, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469620, 0, 'Impish_Bats', 'Impish Bats', 33, 58, 60, 129.5772, 16.0000, 55.8373, 160, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469549, 0, 'Fleshcraver', 'Fleshcraver', 16, 60, 62, 134.1876, 15.9991, 63.8978, 3, NULL, NULL);
@@ -1800,7 +1800,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17469623, 0, 'Fleshcraver', 'Fleshcraver
 REPLACE INTO `mob_spawn_points` VALUES (17469624, 0, 'Fleshcraver', 'Fleshcraver', 16, 60, 62, 145.1838, 17.0000, 19.2340, 222, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469625, 0, 'Mindcraver', 'Mindcraver', 17, 60, 62, 145.0929, 16.5000, 25.2834, 157, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469626, 0, 'Mindcraver', 'Mindcraver', 17, 60, 62, 135.2423, 16.5000, 26.7931, 123, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17469627, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 0, 64, 66, 140.0245, 17.0000, 21.1941, 175, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17469627, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 200, 64, 66, 140.0245, 17.0000, 21.1941, 175, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469628, 0, 'Impish_Bats', 'Impish Bats', 33, 58, 60, 15.2815, 16.0000, -59.0301, 62, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469633, 0, 'Impish_Bats', 'Impish Bats', 33, 58, 60, 24.3052, 16.0000, -102.7989, 159, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469634, 0, 'Fleshcraver', 'Fleshcraver', 16, 60, 62, 35.9539, 16.0000, -59.0150, 133, NULL, NULL);
@@ -1818,7 +1818,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17469645, 0, 'Fleshcraver', 'Fleshcraver
 REPLACE INTO `mob_spawn_points` VALUES (17469646, 0, 'Fleshcraver', 'Fleshcraver', 16, 60, 62, 104.4002, 17.0000, -262.0293, 220, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469647, 0, 'Mindcraver', 'Mindcraver', 17, 60, 62, 102.7156, 17.0000, -255.1982, 181, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469648, 0, 'Mindcraver', 'Mindcraver', 17, 60, 62, 95.7012, 16.5000, -253.2278, 131, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17469649, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 0, 64, 66, 97.7169, 17.0000, -260.7005, 97, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17469649, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 200, 64, 66, 97.7169, 17.0000, -260.7005, 97, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469650, 0, 'Canal_Pugil', 'Canal Pugil', 22, 57, 59, 29.6919, 16.5000, -150.7888, 127, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469651, 0, 'Canal_Pugil', 'Canal Pugil', 22, 57, 59, 51.2960, 18.0000, -164.9418, 140, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469652, 0, 'Canal_Pugil', 'Canal Pugil', 22, 57, 59, 28.9187, 16.5000, -210.3575, 62, NULL, NULL);
@@ -1833,7 +1833,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17469660, 0, 'Scavenger_Crab', 'Scavenge
 REPLACE INTO `mob_spawn_points` VALUES (17469670, 0, 'Scavenger_Crab', 'Scavenger Crab', 15, 60, 62, 63.1616, 15.2504, -170.9847, 71, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469671, 0, 'Scavenger_Crab', 'Scavenger Crab', 15, 60, 62, 54.0827, 13.9998, -199.4869, 121, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469672, 0, 'Scavenger_Crab', 'Scavenger Crab', 15, 60, 62, 16.6005, 16.0000, -186.7638, 186, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17469673, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 0, 64, 66, 40.2918, 18.0007, -179.7016, 60, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17469673, 0, 'Cutlass_Scorpion', 'Cutlass Scorpion', 200, 64, 66, 40.2918, 18.0007, -179.7016, 60, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469674, 0, 'Stygian_Pugil', 'Stygian Pugil', 22, 63, 65, 299.6121, 21.5020, -35.4392, 189, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469675, 0, 'Stygian_Pugil', 'Stygian Pugil', 22, 63, 65, 298.4448, 21.5020, -25.6441, 183, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17469676, 0, 'Stygian_Pugil', 'Stygian Pugil', 22, 63, 65, 286.7729, 21.5020, -19.5262, 252, NULL, NULL);
@@ -2636,32 +2636,32 @@ REPLACE INTO `mob_spawn_points` VALUES (17584229, 0, 'Hornfly', 'Hornfly', 14, 5
 REPLACE INTO `mob_spawn_points` VALUES (17584230, 0, 'Hornfly', 'Hornfly', 14, 51, 53, 14.9297, -0.2547, -396.9289, 154, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584231, 0, 'Hornfly', 'Hornfly', 14, 51, 53, 6.1019, -0.1902, -401.7883, 112, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584232, 0, 'Exoray', 'Exoray', 15, 51, 53, 10.5448, -0.6253, -416.7654, 242, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584298, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, 64.1742, -0.5200, -411.3162, 127, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584299, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, 52.7669, -0.3802, -408.1842, 140, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584300, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, 32.9418, -1.1859, -415.2813, 107, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584298, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, 64.1742, -0.5200, -411.3162, 127, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584299, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, 52.7669, -0.3802, -408.1842, 140, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584300, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, 32.9418, -1.1859, -415.2813, 107, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584233, 0, 'Mushussu', 'Mushussu', 30, 56, 57, 20.7785, -0.6703, -391.8500, 202, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584234, 0, 'Hornfly', 'Hornfly', 14, 51, 53, -27.9478, -0.2826, -415.8047, 112, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584235, 0, 'Hornfly', 'Hornfly', 14, 51, 53, -29.8983, -0.6773, -369.5570, 183, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584236, 0, 'Hornfly', 'Hornfly', 14, 51, 53, -41.6739, -0.1005, -368.6927, 142, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584237, 0, 'Exoray', 'Exoray', 15, 51, 53, -44.7259, -0.4818, -376.2353, 98, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584303, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, -25.9000, -0.0382, -402.2396, 193, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584304, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, -18.2570, -1.7303, -379.1053, 254, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584303, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, -25.9000, -0.0382, -402.2396, 193, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584304, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, -18.2570, -1.7303, -379.1053, 254, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584238, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, -44.0674, -0.5193, -390.8338, 42, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584239, 0, 'Mushussu', 'Mushussu', 30, 56, 57, -56.5970, -0.8744, -367.4872, 172, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584240, 0, 'Hornfly', 'Hornfly', 14, 51, 53, -49.5033, -0.3954, -334.3723, 190, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584241, 0, 'Hornfly', 'Hornfly', 14, 51, 53, -21.8552, -0.9333, -313.5030, 233, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584242, 0, 'Hornfly', 'Hornfly', 14, 51, 53, -55.6436, -0.5442, -297.3746, 78, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584243, 0, 'Exoray', 'Exoray', 15, 51, 53, -48.0566, -1.0392, -326.6586, 200, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584307, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, -34.9521, -0.2810, -317.1544, 210, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584308, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, -34.7098, -0.5216, -295.5239, 152, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584309, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, -46.6150, -0.2047, -282.4393, 179, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584307, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, -34.9521, -0.2810, -317.1544, 210, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584308, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, -34.7098, -0.5216, -295.5239, 152, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584309, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, -46.6150, -0.2047, -282.4393, 179, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584244, 0, 'Mushussu', 'Mushussu', 30, 56, 57, -33.1268, -1.2648, -291.1161, 3, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584245, 0, 'Hornfly', 'Hornfly', 14, 51, 53, -46.2618, -0.3797, -265.2280, 198, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584246, 0, 'Hornfly', 'Hornfly', 14, 51, 53, -18.7028, -1.5399, -260.3474, 253, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584247, 0, 'Hornfly', 'Hornfly', 14, 51, 53, -12.2571, -0.2851, -245.3293, 195, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584248, 0, 'Exoray', 'Exoray', 15, 51, 53, -13.8862, -0.0593, -225.5699, 158, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584310, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, -1.2128, -0.0869, -226.9176, 12, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584311, 0, 'BlazerBeetle', 'BlazerBeetle', 0, 52, 54, -26.0541, -0.2829, -250.4424, 136, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584310, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, -1.2128, -0.0869, -226.9176, 12, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584311, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, -26.0541, -0.2829, -250.4424, 136, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584249, 0, 'Blazer_Beetle', 'Blazer Beetle', 22, 52, 54, -28.8292, -0.7758, -267.4775, 88, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584250, 0, 'Soldier_Crawler', 'Soldier Crawler', 13, 47, 49, 67.3385, -0.2200, -229.2056, 252, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584251, 0, 'Soldier_Crawler', 'Soldier Crawler', 13, 47, 49, 39.1476, -0.0695, -253.2754, 11, NULL, NULL);
@@ -2677,7 +2677,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17584212, 0, 'Exoray', 'Exoray', 15, 51,
 REPLACE INTO `mob_spawn_points` VALUES (17584213, 0, 'Exoray', 'Exoray', 15, 51, 53, 45.1757, -0.1785, -316.6555, 202, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584389, 0, 'Rumble_Crawler', 'Rumble Crawler', 31, 53, 55, 0, 0, 0, 0, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584390, 0, 'Rumble_Crawler', 'Rumble Crawler', 31, 53, 55, 0, 0, 0, 0, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584257, 0, 'HelmBeetle', 'HelmBeetle', 0, 59, 62, -218.4542, -0.1733, -275.8495, 65, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584257, 0, 'Helm_Beetle', 'Helm Beetle', 24, 59, 62, -218.4542, -0.1733, -275.8495, 65, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584258, 0, 'Crawler_Hunter', 'Crawler Hunter', 35, 60, 62, -247.5350, -0.4927, -251.0122, 109, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584259, 0, 'Crawler_Hunter', 'Crawler Hunter', 35, 60, 62, -243.2216, -0.1676, -234.5039, 185, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584260, 0, 'Soldier_Crawler', 'Soldier Crawler', 13, 47, 49, 59.0828, -0.4188, 98.6679, 212, NULL, NULL);
@@ -2685,7 +2685,7 @@ REPLACE INTO `mob_spawn_points` VALUES (17584261, 0, 'Soldier_Crawler', 'Soldier
 REPLACE INTO `mob_spawn_points` VALUES (17584262, 0, 'Soldier_Crawler', 'Soldier Crawler', 13, 47, 49, 65.4267, -0.4197, 99.6887, 22, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584263, 0, 'Soldier_Crawler', 'Soldier Crawler', 13, 47, 49, 60.4861, -0.5918, 93.0771, 189, NULL, NULL);
 REPLACE INTO `mob_spawn_points` VALUES (17584378, 0, 'Mushussu', 'Mushussu', 30, 56, 57, 48.3845, -0.4743, 367.8715, 177, NULL, NULL);
-REPLACE INTO `mob_spawn_points` VALUES (17584321, 0, 'KnightCrawler', 'KnightCrawler', 0, 60, 63, -297.8918, -0.4755, -256.9619, 116, NULL, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17584321, 0, 'Knight_Crawler', 'Knight Crawler', 25, 60, 63, -297.8918, -0.4755, -256.9619, 116, NULL, NULL);
 
 -- Maze_of_Shakhrami (Zone 198)
 REPLACE INTO `mob_spawn_points` VALUES (17588350, 0, 'Ghoul', 'Ghoul', 14, 22, 26, 72.6542, -0.9478, 32.4558, 219, NULL, NULL);

@@ -2,6 +2,11 @@
 -- Area: Dynamis - Bastok
 --  Mob: Effigy Shield
 -----------------------------------
+mixins =
+{
+    require('scripts/mixins/job_special')
+}
+-----------------------------------
 ---@type TMobEntity
 local entity = {}
 

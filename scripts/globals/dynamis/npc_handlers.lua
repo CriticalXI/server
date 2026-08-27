@@ -157,7 +157,7 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
                 return
             end
 
-            -- Registration (and its 72h lockout) happens in entryNpcOnEventFinishEra, only after the player confirms entry with !Ready (the first option)
+            -- Registration happens in entryNpcOnEventFinishEra once the player confirms with !Ready; the 72h lockout is recorded on zone-in
             player:startEvent(entryInfo.csDyna, entryInfo.csBit, playerEntered == 1 and 0 or 1, xi.dynamis.settings.RESERVATION_TIMEOUT, xi.dynamis.settings.REENTRY_DAYS, entryInfo.maxCapacity, xi.ki.VIAL_OF_SHROUDED_SAND, dynamisTimelessHourglass, dynamisPerpetual)
             return
         end
