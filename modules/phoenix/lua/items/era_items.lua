@@ -56,9 +56,3 @@ m:addOverride('xi.items.anniversary_ring.onItemUse', function(target)
 
     xi.itemUtils.addItemExpEffect(target, effect, power, duration, subpower)
 end)
-
--- Warp Cudgel
--- Duration: 3 seconds - > 30 seconds
-m:addOverride('xi.items.warp_cudgel.onItemUse', function(target, user)
-    target:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.WARP, duration = 30, origin = user, icon = 0 })
-end)
