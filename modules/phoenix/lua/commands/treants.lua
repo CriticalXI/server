@@ -171,4 +171,4 @@ commandObj.onTrigger = function(player, action)
     end
 end
 
-return commandObj
+xi.module.registerCommand('treants', commandObj)
