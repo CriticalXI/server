@@ -81,8 +81,13 @@ function content:onBattlefieldTick(battlefield, tick)
 
     local boss = GetMobByID(nextBoss)
     if player and boss then
+        local step      = battlefield:getLocalVar('AutoAggroStep') + 1
+        local start     = battlefield:getLocalVar('AutoAggroStart')
+        local nextTime  = step == 1 and start + utils.minutes(15) or now + utils.minutes(8)
+
         battlefield:setLocalVar('AutoAggro', boss:getID())
-        battlefield:setLocalVar('AutoAggroTime', GetSystemTime() + utils.minutes(7))
+        battlefield:setLocalVar('AutoAggroStep', step)
+        battlefield:setLocalVar('AutoAggroTime', nextTime)
         battlefield:setLocalVar('AutoAggroTarget', player:getID())
 
         if boss:isAlive() then
@@ -94,6 +99,8 @@ end
 function content:onBattlefieldWipe(battlefield, players)
     Battlefield.onBattlefieldWipe(self, battlefield, players)
     battlefield:setLocalVar('AutoAggro', 0)
+    battlefield:setLocalVar('AutoAggroStart', 0)
+    battlefield:setLocalVar('AutoAggroStep', 0)
     battlefield:setLocalVar('AutoAggroTime', 0)
     battlefield:setLocalVar('AutoAggroTarget', 0)
 end
@@ -102,6 +109,34 @@ function content.handleBossCombatTick(boss, supportOffsets, otherSupportOffsets)
     local group   = boss:getLocalVar('supportGroup')
     local offsets = group == 1 and supportOffsets or otherSupportOffsets
     local bossID  = boss:getID()
+    local now     = GetSystemTime()
+
+    if boss:getLocalVar('waveCount') > 0 then
+        local waveTime = boss:getLocalVar('waveTime')
+
+        if waveTime == 0 then
+            for _, offset in ipairs(offsets) do
+                local support = GetMobByID(bossID + offset)
+                if not support then
+                    return
+                end
+
+                local pet     = support:getPet()
+
+                if
+                    support:isAlive() or
+                    (pet and pet:isAlive())
+                then
+                    return
+                end
+            end
+
+            boss:setLocalVar('waveTime', now + 17)
+            return
+        elseif now < waveTime then
+            return
+        end
+    end
 
     for _, offset in ipairs(offsets) do
         if GetMobByID(bossID + offset):getStatus() ~= xi.status.DISAPPEAR then
@@ -109,6 +144,8 @@ function content.handleBossCombatTick(boss, supportOffsets, otherSupportOffsets)
         end
     end
 
+    boss:setLocalVar('waveTime', 0)
+    boss:setLocalVar('waveCount', boss:getLocalVar('waveCount') + 1)
     boss:injectActionPacket(boss:getID(), 11, 432, 0, 24, 0, 603, 0)
 
     local bossX = boss:getXPos()
@@ -136,8 +173,12 @@ function content.handleBossAutoAggro(mob, target)
         return
     end
 
+    local now = GetSystemTime()
+
     mobBattlefield:setLocalVar('AutoAggro', mob:getID())
-    mobBattlefield:setLocalVar('AutoAggroTime', GetSystemTime() + utils.minutes(7))
+    mobBattlefield:setLocalVar('AutoAggroStart', now)
+    mobBattlefield:setLocalVar('AutoAggroStep', 0)
+    mobBattlefield:setLocalVar('AutoAggroTime', now + utils.minutes(7))
     mobBattlefield:setLocalVar('AutoAggroTarget', target:getID())
 end
 
@@ -170,13 +211,13 @@ content.groups =
             'Orcs_Wyvern',
         },
 
+        -- Resistance to Piercing, HTH & Impact, Weak to Slashing, Neutral to Magic
         mods =
         {
-            [xi.mod.SLASH_SDT ] = 2000,
-            [xi.mod.UDMGMAGIC ] = 2000,
-            [xi.mod.IMPACT_SDT] = 100,
-            [xi.mod.HTH_SDT   ] = 100,
-            [xi.mod.PIERCE_SDT] = 100,
+            [xi.mod.HTH_SDT   ] = -9500,
+            [xi.mod.IMPACT_SDT] = -9500,
+            [xi.mod.PIERCE_SDT] = -9500,
+            [xi.mod.SLASH_SDT ] = 2500,
         },
 
         isParty    = true,
@@ -201,13 +242,13 @@ content.groups =
             'Lightsteel_Quadav',
         },
 
-        mods = -- Supposedly weak to piercing and magic. Strong against Slash, Impact and H2h
+        -- Resistance to Slashing, HTH & Impact, Weak to Piercing, Neutral to Magic
+        mods =
         {
-            [xi.mod.PIERCE_SDT] = 2000,
-            [xi.mod.UDMGMAGIC ] = 2000,
-            [xi.mod.IMPACT_SDT] = -2000,
-            [xi.mod.HTH_SDT   ] = -2000,
-            [xi.mod.SLASH_SDT ] = -2000,
+            [xi.mod.HTH_SDT   ] = -9500,
+            [xi.mod.IMPACT_SDT] = -9500,
+            [xi.mod.PIERCE_SDT] = 2500,
+            [xi.mod.SLASH_SDT ] = -9500,
         },
 
         isParty    = true,
@@ -234,11 +275,12 @@ content.groups =
             'Yagudos_Elemental',
         },
 
+        -- Resistance to Magic, Weak to HTH and Impact, Neutral to Slashing and Piercing
         mods =
         {
-            [xi.mod.IMPACT_SDT] = 2000,
-            [xi.mod.HTH_SDT   ] = 2000,
-            [xi.mod.UDMGMAGIC ] = -2000,
+            [xi.mod.HTH_SDT   ] = 2500,
+            [xi.mod.IMPACT_SDT] = 2500,
+            [xi.mod.UDMGMAGIC ] = -9500,
         },
 
         isParty    = true,
@@ -279,18 +321,12 @@ content.loot =
     {
         {
             quantity = 5,
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = 10000 },
         },
 
         {
-            quantity = 2,
-            { itemId = xi.item.NONE,              weight = xi.loot.weight.NORMAL },
-            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
-        },
-
-        {
-            { itemId = xi.item.NONE,       weight = xi.loot.weight.VERY_HIGH },
-            { itemId = xi.item.METAL_CHIP, weight = xi.loot.weight.VERY_LOW  },
+            { itemId = xi.item.NONE,              weight =  9000 },
+            { itemId = xi.item.METAL_CHIP,        weight =  1000 },
         },
     },
 }
