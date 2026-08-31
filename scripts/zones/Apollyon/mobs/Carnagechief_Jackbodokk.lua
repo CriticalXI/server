@@ -37,23 +37,23 @@ entity.onMobFight = function(mob, target)
 
     content.handleBossCombatTick(mob, supportOffsets1, supportOffsets2)
 
-    if storedDelay == 140 then
+    if storedDelay == 120 then
         return
     end
 
     if
         timeInCombat >= 600 and
-        storedDelay ~= 140
+        storedDelay ~= 120
     then
-        mob:setDelay(140)
-        mob:setLocalVar('storedDelay', 140)
+        mob:setDelay(120)
+        mob:setLocalVar('storedDelay', 120)
     elseif
         timeInCombat >= 300 and
         timeInCombat < 600 and
-        storedDelay ~= 200
+        storedDelay ~= 180
     then
-        mob:setDelay(200)
-        mob:setLocalVar('storedDelay', 200)
+        mob:setDelay(180)
+        mob:setLocalVar('storedDelay', 180)
     end
 end
 
