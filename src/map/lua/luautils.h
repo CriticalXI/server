@@ -36,6 +36,8 @@
 #include <common/types/flag.h>
 #include <common/types/maybe.h>
 
+#include "data/enums/content.h"
+
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -69,6 +71,9 @@ extern sol::state lua;
 #include "lua_trade_container.h"
 #include "lua_trigger_area.h"
 #include "lua_zone.h"
+
+#include "data/datasets/zones/mobs/dataset.h"
+#include "data/datasets/zones/npcs/dataset.h"
 
 enum class SendToDBoxReturnCode : uint8
 {
@@ -243,7 +248,35 @@ auto SetupExperiencePoints() -> Maybe<ExperiencePointsTable>; // Validate functi
 auto CalculateExperiencePoints(CCharEntity* PMember, CMobEntity* PMob, const CalcExpInput& input) -> Maybe<CalcExpResult>;
 
 void PopulateIDLookupsByFilename(Maybe<std::string> maybeFilename = std::nullopt);
-void PopulateIDLookupsByZone(Maybe<xi::ZoneId> maybeZoneId = std::nullopt);
+
+// Records the zone loader already parsed, so the id lookups do not read the files a second time.
+// An optional record set is either there or it is not; the lookups only want the pointer.
+template <class T>
+auto pointerTo(const std::optional<T>& value) -> const T*
+{
+    if (!value)
+    {
+        return nullptr;
+    }
+
+    return &*value;
+}
+
+struct ZoneEntityRecords
+{
+    ZoneEntityRecords() = default;
+
+    ZoneEntityRecords(const std::optional<xi::data::Npcs>& npcs, const std::optional<xi::data::Mobs>& mobs)
+    : Npcs(pointerTo(npcs))
+    , Mobs(pointerTo(mobs))
+    {
+    }
+
+    const xi::data::Npcs* Npcs{};
+    const xi::data::Mobs* Mobs{};
+};
+
+void PopulateIDLookupsByZone(Maybe<xi::ZoneId> maybeZoneId = std::nullopt, const ZoneEntityRecords& preloaded = {});
 
 void SendEntityVisualPacket(uint32 npcId, const char* command);
 void InitInteractionGlobal();
@@ -313,8 +346,8 @@ uint8  VanadielMoonDirection();
 uint8  VanadielRSERace();
 uint8  VanadielRSELocation();
 void   SetTimeOffset(int32 offset); // Manipulate earth time forward or backward by offset seconds. Affects Vana'Diel time.
-void   StartElevator(uint32 ElevatorID);
-int16  GetElevatorState(uint8 id); // Returns -1 if elevator is not found. Otherwise, returns the uint8 state.
+void   StartElevator(xi::Elevator elevatorID);
+auto   GetElevatorState(xi::Elevator elevatorID) -> int16; // Reaches Lua as xi.elevatorState, or -1 when there is no such elevator.
 
 int32 GetServerVariable(const std::string& name);
 void  SetServerVariable(const std::string& name, int32 value, const sol::object& expiry);
@@ -326,7 +359,8 @@ void  ClearCharVarFromAll(const std::string& varName);                          
 void  Terminate();                                                                                   // Logs off all characters and terminates the server
 
 auto GetTextIDVariable(xi::ZoneId ZoneID, const char* variable) -> int32; // Load the value of the TextID variable of the specified zone
-bool IsContentEnabled(const std::string& content);
+auto IsContentEnabled(const std::string& content) -> bool;
+auto IsContentEnabled(xi::Content content) -> bool;
 
 void OnGameDay(CZone* PZone);
 void OnGameHour(CZone* PZone);
@@ -343,7 +377,7 @@ void OnZoneTick(CZone* PZone);
 void OnTriggerAreaEnter(CCharEntity* PChar, const std::unique_ptr<ITriggerArea>& PTriggerArea); // when player enters a trigger area in a zone
 void OnTriggerAreaLeave(CCharEntity* PChar, const std::unique_ptr<ITriggerArea>& PTriggerArea); // when player leaves a trigger area in a zone
 
-void OnTransportEvent(CCharEntity* PChar, xi::ZoneId prevZoneId, uint16 transportId);
+void OnTransportEvent(CCharEntity* PChar, xi::ZoneId prevZoneId, std::string_view transport);
 void OnTimeTrigger(CNpcEntity* PNpc, uint8 triggerID);
 void OnConquestUpdate(CZone* PZone, ConquestUpdate type, uint8 influence, uint8 owner, uint8 ranking, bool isConquestAlliance); // conquest update (hourly or tally)
 
@@ -448,12 +482,12 @@ bool OnCanUseSpell(CBattleEntity* PChar, CSpell* Spell); // triggers when CanUse
 auto GetCachedInstanceScript(uint16 instanceId) -> sol::table;
 
 void OnInstanceZoneIn(CCharEntity* PChar, CInstance* PInstance);
-void AfterInstanceRegister(CBaseEntity* PChar);                             // triggers after a character is registered and zoned into an instance (the first time)
-auto OnInstanceLoadFailed(CZone* PZone) -> xi::ZoneId;                      // triggers when an instance load is failed (ie. instance no longer exists)
-void OnInstanceTimeUpdate(CZone* PZone, CInstance* PInstance, uint32 time); // triggers every second for an instance
-void OnInstanceFailure(CInstance* PInstance);                               // triggers when an instance is failed
-void OnInstanceCreatedCallback(CCharEntity* PChar, CInstance* PInstance);   // triggers when an instance is created (per character - waiting outside for entry)
-void OnInstanceCreated(CInstance* PInstance);                               // triggers when an instance is created (instance setup)
+void AfterInstanceRegister(CBaseEntity* PChar);                                // triggers after a character is registered and zoned into an instance (the first time)
+auto OnInstanceLoadFailed(CZone* PZone) -> xi::ZoneId;                         // triggers when an instance load is failed (ie. instance no longer exists)
+void OnInstanceTimeUpdate(CZone* PZone, CInstance* PInstance, uint32 seconds); // triggers every second for an instance, with the elapsed seconds
+void OnInstanceFailure(CInstance* PInstance);                                  // triggers when an instance is failed
+void OnInstanceCreatedCallback(CCharEntity* PChar, CInstance* PInstance);      // triggers when an instance is created (per character - waiting outside for entry)
+void OnInstanceCreated(CInstance* PInstance);                                  // triggers when an instance is created (instance setup)
 void OnInstanceProgressUpdate(CInstance* PInstance);
 void OnInstanceStageChange(CInstance* PInstance);
 void OnInstanceComplete(CInstance* PInstance);

@@ -230,7 +230,6 @@ void CalculateStats(CCharEntity* PChar)
     int32 scaleOver60Column = 3; // Column number with modifier after level 60
     int32 scaleOver75Column = 4; // Column number with modifier after level 75
     int32 scaleOver60       = 2; // Column number with modifier for MP calculation after level 60
-    int32 scaleOver75       = 3; // The speaker number with the modifier to calculate the stats after the 75th level
 
     uint8 grade = 0;
 
@@ -383,50 +382,13 @@ void CalculateStats(CCharEntity* PChar)
 
     for (uint8 StatIndex = 2; StatIndex <= 8; ++StatIndex)
     {
-        // Calculation of race
-        grade    = grade::GetRaceGrades(race, StatIndex);
-        raceStat = grade::GetStatScale(grade, 0) + grade::GetStatScale(grade, scaleTo60Column) * mainLevelUpTo60;
-
-        if (mainLevelOver60 > 0)
-        {
-            raceStat += grade::GetStatScale(grade, scaleOver60) * mainLevelOver60;
-
-            if (mainLevelOver75 > 0)
-            {
-                raceStat += grade::GetStatScale(grade, scaleOver75) * mainLevelOver75 - (mlvl >= 75 ? 0.01f : 0);
-            }
-        }
-
-        // Calculation by profession
-        grade   = grade::GetJobGrade(mjob, StatIndex);
-        jobStat = grade::GetStatScale(grade, 0) + grade::GetStatScale(grade, scaleTo60Column) * mainLevelUpTo60;
-
-        if (mainLevelOver60 > 0)
-        {
-            jobStat += grade::GetStatScale(grade, scaleOver60) * mainLevelOver60;
-
-            if (mainLevelOver75 > 0)
-            {
-                jobStat += grade::GetStatScale(grade, scaleOver75) * mainLevelOver75 - (mlvl >= 75 ? 0.01f : 0);
-            }
-        }
-
-        // Calculation for an additional profession
-        if (slvl > 0)
-        {
-            grade    = grade::GetJobGrade(sjob, StatIndex);
-            sJobStat = (grade::GetStatScale(grade, 0) + grade::GetStatScale(grade, scaleTo60Column) * (slvl - 1)) / 2;
-        }
-        else
-        {
-            sJobStat = 0;
-        }
+        const auto baseStat = grade::GetBaseStat(grade::GetRaceGrades(race, StatIndex), grade::GetJobGrade(mjob, StatIndex), mlvl, grade::GetJobGrade(sjob, StatIndex), slvl);
 
         // get each merit bonus stat, str,dex,vit and so on...
         MeritBonus = PChar->PMeritPoints->GetMeritValue(statMerit[StatIndex - 2], PChar);
 
         // Value output
-        ref<uint16>(&PChar->stats, counter) = (uint16)(raceStat + jobStat + sJobStat + MeritBonus);
+        ref<uint16>(&PChar->stats, counter) = static_cast<uint16>(baseStat + MeritBonus);
         counter += 2;
     }
 }
@@ -438,7 +400,7 @@ void CalculateStats(CCharEntity* PChar)
  *                                                                       *
  ************************************************************************/
 
-auto LoadChar(Scheduler& scheduler, MapConfig config, const uint32 charId) -> std::unique_ptr<CCharEntity>
+auto LoadChar(const uint32 charId) -> std::unique_ptr<CCharEntity>
 {
     TracyZoneScoped;
 
@@ -845,6 +807,8 @@ auto LoadChar(Scheduler& scheduler, MapConfig config, const uint32 charId) -> st
 
     db::preparedStmt("UPDATE char_stats SET zoning = 0 WHERE charid = ? LIMIT 1", PChar->id);
 
+    PChar->arrivedByZoning = zoning == 1;
+
     if (zoning == 2)
     {
         ShowDebug("Player <%s> logging in to zone <%u>", PChar->name.c_str(), PChar->getZone());
@@ -993,18 +957,6 @@ auto LoadChar(Scheduler& scheduler, MapConfig config, const uint32 charId) -> st
     PChar->health.hp = canRestore ? PChar->GetMaxHP() : HP;
     PChar->health.mp = canRestore ? PChar->GetMaxMP() : MP;
     PChar->UpdateHealth();
-
-    // Lazy loading: ensure initial zone is loaded synchronously before OnZoneIn
-    // TODO: Hoist his block out of LoadChar() so we're guaranteeing that a char's zone exists
-    //     : before we try to put them in it.
-    if (zoneutils::IsLazyLoadingEnabled() && !zoneutils::GetZone(PChar->loc.destination))
-    {
-        // TODO: Remove this usage of blockOnMain, it's here to help with xi_test
-        scheduler.blockOnMainThread(zoneutils::LoadZones(scheduler, config, { PChar->loc.destination }));
-    }
-
-    luautils::OnZoneIn(PChar);
-    luautils::OnGameIn(PChar, zoning == 1);
 
     PChar->status = xi::Status::Disappear;
 
@@ -3380,7 +3332,7 @@ void BuildingCharPetAbilityTable(CCharEntity* PChar, CPetEntity* PPet, uint32 Pe
                 }
                 else if (PetID == PETID_DIABOLOS)
                 {
-                    if (PAbility->getID() >= ABILITY_CAMISADO && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
+                    if (PAbility->getID() >= ABILITY_CAMISADO && PAbility->getID() <= ABILITY_BLINDSIDE)
                     {
                         addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                     }
@@ -6341,8 +6293,9 @@ void SavePlayTime(CCharEntity* PChar)
 
     db::preparedStmt("UPDATE chars SET playtime = ? WHERE charid = ? LIMIT 1", playtime, PChar->id);
 
-    // Removes new player icon if played for more than 240 hours
-    if (PChar->isNewPlayer() && playDuration >= 240h)
+    // Removes new player icon if played for more than the configured number of hours
+    const uint32 playtimeLimit = settings::get<uint32>("main.NEW_ADVENTURER_PLAYTIME_LIMIT");
+    if (PChar->isNewPlayer() && playDuration >= std::chrono::hours(playtimeLimit))
     {
         PChar->playerConfig.NewAdventurerOffFlg = true;
         PChar->updatemask |= UPDATE_HP;

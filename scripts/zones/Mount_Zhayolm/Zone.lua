@@ -16,6 +16,8 @@ end
 zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
+    xi.helm.onZoneIn(player)
+
     if prevZone == xi.zone.LEBROS_CAVERN then
         player:setPos(681.950, -24.00, 369.936, 40)
     elseif
@@ -56,6 +58,10 @@ zoneObject.onEventFinish = function(player, csid, option, npc)
     if csid == 208 then
         player:setPos(0, 0, 0, 0, 63)
     end
+end
+
+zoneObject.onZoneOut = function(player)
+    xi.helm.onZoneOut(player)
 end
 
 return zoneObject

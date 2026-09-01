@@ -12,11 +12,13 @@ xi.assault.contentsByZone = xi.assault.contentsByZone or {}
 ---@field assaultID                integer
 ---@field instanceID               integer
 ---@field zoneID                   integer
+---@field suggestedLevel           integer
 ---@field loot                     table
 ---@field releasePos               table
 ---@field requiredProgress         integer?
 ---@field afterInstanceRegister    function
 ---@field onInstanceCreated        function
+---@field onInstanceTimeUpdate     function
 ---@field onInstanceProgressUpdate function
 ---@field onInstanceComplete       function
 ---@field onAssaultFail            function
@@ -39,7 +41,7 @@ end
 --  - requiredOrders:   (required) Key item orders needed to enter the assault
 --  - zoneID:           (required) ID of the zone
 --  - assaultArea:      (required) Area used for assault point currency
---  - suggestedLevel:   (required) Minimum level to enter; affects points rewarded
+--  - suggestedLevel:   (required) Recommended level; determines unappraised item eligibility
 --  - entranceParams:   (required) Table of zone-in event parameters
 --      - instanceID:   instanceID of the assault
 --      - entryEvent:   { csid, ... } args unpacked into player:startEvent() at the Runic Portal
@@ -62,6 +64,7 @@ end
 -- Call InstanceAssault.methodName(self, ...) within an override to utilize the default behavior of the functions.
 --  - function content:afterInstanceRegister(player)
 --  - function content:onInstanceCreated(instance)
+--  - function content:onInstanceTimeUpdate(instance, elapsed)
 --  - function content:onInstanceProgressUpdate(instance, progress)
 --  - function content:onEventUpdate(player, csid, option, npc)
 --  - function content:onEventFinish(player, csid, option, npc)
@@ -103,6 +106,10 @@ end
 
 function InstanceAssault:onInstanceCreated(instance)
     xi.assault.onInstanceSetup(instance, self)
+end
+
+function InstanceAssault:onInstanceTimeUpdate(instance, elapsed)
+    xi.instance.updateInstanceTime(instance, elapsed, zones[self.zoneID].text)
 end
 
 function InstanceAssault:onInstanceProgressUpdate(instance, progress)
@@ -173,7 +180,7 @@ function InstanceAssault:register()
     end
 
     instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
-        xi.instance.updateInstanceTime(instance, elapsed, zones[content.zoneID].text)
+        content:onInstanceTimeUpdate(instance, elapsed)
     end
 
     instanceObject.onInstanceFailure = function(instance)
@@ -208,7 +215,7 @@ xi.assault.checkRequirements = function(player, content)
         player:getCurrentAssault() == content.assaultID and
         player:getCharVar('assaultEntered') == 0 and
         player:getCharVar('AssaultFailed') == 0 and
-        player:getMainLvl() >= content.suggestedLevel
+        player:getMainLvl() >= 50
 end
 
 xi.assault.hasOrders = function(player)
@@ -348,11 +355,14 @@ xi.assault.afterInstanceRegistration = function(player, content)
 
     player:setCharVar('assaultEntered', assaultID)
     player:messageSpecial(ID.text.ASSAULT_START_OFFSET + assaultID, assaultID)
-    player:messageSpecial(ID.text.TIME_TO_COMPLETE, instance:getTimeLimit())
+    player:messageSpecial(ID.text.TIME_TO_COMPLETE, instance:getTimeLimit() / 60)
 
     local areaData = xi.assault.areaData[content.assaultArea]
     if areaData and areaData.firefly then
-        player:addTempItem(areaData.firefly)
+        -- Only add firefly if there's no entry event that will give it to prevent double items in inv.
+        if not content.entranceParams or not content.entranceParams.entryEvent then
+            player:addTempItem(areaData.firefly)
+        end
     end
 end
 

@@ -28,8 +28,8 @@
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
 
-CZoneInstance::CZoneInstance(Scheduler& scheduler, MapConfig config, xi::ZoneId ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction)
-: CZone(scheduler, config, ZoneID, RegionID, ContinentID, levelRestriction)
+CZoneInstance::CZoneInstance(Scheduler& scheduler, MapConfig config, xi::ZoneId ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction, const std::optional<xi::data::ZoneSettings>& settings)
+: CZone(scheduler, config, ZoneID, RegionID, ContinentID, levelRestriction, settings)
 {
     TracyZoneScoped;
 }
@@ -148,13 +148,23 @@ void CZoneInstance::FindPartyForMob(CBaseEntity* PEntity)
     }
 }
 
-void CZoneInstance::TransportDepart(uint16 boundary, xi::ZoneId prevZoneId, uint16 transportId)
+void CZoneInstance::TransportDepart(uint16 boundary, xi::ZoneId prevZoneId, std::string_view transport)
 {
     TracyZoneScoped;
 
     for (const auto& PInstance : m_InstanceList)
     {
-        PInstance->TransportDepart(boundary, prevZoneId, transportId);
+        PInstance->TransportDepart(boundary, prevZoneId, transport);
+    }
+}
+
+void CZoneInstance::DisembarkAll()
+{
+    TracyZoneScoped;
+
+    for (const auto& PInstance : m_InstanceList)
+    {
+        PInstance->DisembarkAll();
     }
 }
 
@@ -268,10 +278,7 @@ void CZoneInstance::IncreaseZoneCounter(CCharEntity* PChar)
             zoneutils::GetZone(zoneid)->IncreaseZoneCounter(PChar);
         }
 
-        // They are properly sent to zone, but bypassed the onZoneIn position fixup, do that now
-        PChar->loc.prevzone    = GetID();
-        PChar->loc.destination = zoneid;
-        luautils::OnZoneIn(PChar);
+        PChar->loc.prevzone = GetID();
         charutils::SaveCharPosition(PChar);
     }
 }

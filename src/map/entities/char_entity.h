@@ -47,6 +47,7 @@
 
 #include "persist_batch.h"
 
+#include "ai/states/death_state.h"
 #include "battle_entity.h"
 #include "linkshell.h"
 #include "maze.h"
@@ -463,6 +464,7 @@ public:
 
     WarpRequest requestedWarp       = WarpRequest::None; // see WarpRequest. This will be processed after the player's tick to warp.
     bool        requestedZoneChange = false;             // used in CLueBaseEntity::setPos(). This will be processed after the player's tick to change zones.
+    bool        arrivedByZoning     = false;             // set from char_stats.zoning by LoadChar, read by the 0x00A handler once the char is in its zone.
 
     uint8 GetGender();
 
@@ -709,8 +711,11 @@ public:
     bool IsMobOwner(CBattleEntity* PTarget);
 
     void Die() override;
-    void Die(timer::duration _duration);
+    void Die(timer::duration _duration, DeathParams params = {});
     void Raise();
+
+    auto nextDeath() const -> const Maybe<DeathParams>&;
+    void setNextDeath(Maybe<DeathParams> params);
 
     static constexpr timer::duration death_duration         = 60min;
     static constexpr timer::duration death_update_frequency = 16s;
@@ -782,6 +787,8 @@ protected:
 
 private:
     auto applyTargetRestrictions(CBaseEntity* PResolved, uint16 validTargetFlags, std::unique_ptr<CBasicPacket>& errMsg) -> CBattleEntity*;
+
+    Maybe<DeathParams> nextDeath_;
 
     CCraftState                               craftState_{};
     std::vector<std::unique_ptr<Transaction>> transactions_;

@@ -62,8 +62,8 @@ zoneObject.onTriggerAreaLeave = function(player, triggerArea)
     player:setLocalVar('[barge]aboard', 0)
 end
 
-zoneObject.onTransportEvent = function(player, prevZoneId, transportId)
-    xi.barge.onTransportEvent(player, prevZoneId, transportId)
+zoneObject.onTransportEvent = function(player, prevZoneId, transportName)
+    xi.barge.onTransportEvent(player, prevZoneId, transportName)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option, npc)
@@ -73,6 +73,10 @@ zoneObject.onEventFinish = function(player, csid, option, npc)
     if csid == 14 or csid == 16 or csid == 40 then -- Barge departing
         player:setPos(0, 0, 0, 0, xi.zone.PHANAUET_CHANNEL)
     end
+end
+
+zoneObject.onZoneOut = function(player)
+    xi.helm.onZoneOut(player)
 end
 
 return zoneObject

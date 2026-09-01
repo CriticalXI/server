@@ -166,6 +166,8 @@ xi.mobSkill =
     BERSERK_DHALMEL               =  286,
     HEALING_BREEZE                =  287,
 
+    WHISTLE_CALL                  =  293,
+
     ENTANGLE_DRAIN                =  299,
     HEAD_BUTT_1                   =  300,
     DREAM_FLOWER_1                =  301,
@@ -249,7 +251,10 @@ xi.mobSkill =
     WHISPERS_OF_IRE               =  398,
 
     HAMMER_BEAK                   =  406,
+    POISON_PICK                   =  407,
+    SOUND_VACUUM_COCKATRICE       =  408,
 
+    SOUND_BLAST                   =  410,
     BALEFUL_GAZE_COCKATRICE       =  411,
     RANGED_ATTACK_2               =  412,
     EAGLE_EYE_SHOT_HUMANOID       =  413,
@@ -427,6 +432,8 @@ xi.mobSkill =
     VENOM_1                       =  660,
     SNOW_CLOUD_1                  =  661,
 
+    ICE_ROAR_1                    =  663,
+    IMPACT_ROAR_1                 =  664,
     GRAND_SLAM_1                  =  665,
 
     POWER_ATTACK_ARMED_1          =  667,
@@ -493,6 +500,12 @@ xi.mobSkill =
 
     FISSION                       =  755,
 
+    DEADLY_HOLD_1                 =  797,
+    TAIL_SWING_1                  =  798,
+    TAIL_SMASH_1                  =  799,
+    HEAT_BREATH_1                 =  800,
+    RIDDLE_1                      =  801,
+    GREAT_SANDSTORM_1             =  802,
     GREAT_WHIRLWIND_1             =  803,
     TORTOISE_SONG_1               =  804,
     HEAD_BUTT_TURTLE_1            =  805,
@@ -719,6 +732,7 @@ xi.mobSkill =
     OBLIVION_SMASH_2              = 1133,
     TERA_SLASH_1                  = 1134,
     TERA_SLASH_2                  = 1135,
+    PET_CHARM                     = 1142,
 
     EES_KINDRED                   = 1151,
 

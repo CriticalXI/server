@@ -1,11 +1,12 @@
 -----------------------------------
 -- Area: Dynamis - Beaucedine
---  Mob: Fire Pukis
+--  Mob: Poison Pukis
 -----------------------------------
 ---@type TMobEntity
 local entity = {}
 
-entity.onMobDeath = function(mob, player, optParams)
+entity.onMobInitialize = function(mob)
+    mob:setSpawnAnimation(1)
 end
 
 return entity
