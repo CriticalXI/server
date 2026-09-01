@@ -229,14 +229,27 @@ std::string getTransportNPCName(CBaseEntity* PEntity)
     auto strSize    = isElevator ? 10 : 8;
 
     std::string str(strSize, '\0');
-    std::memcpy(str.data() + 0, PEntity->name.data(), std::min<size_t>(PEntity->name.size(), 4));
+
+    // Data-loaded entities state this id outright.
+    // SQL path still smuggles it through the name.
+    const auto* PTransport = dynamic_cast<CNpcEntity*>(PEntity);
+    if (PTransport && PTransport->door_id)
+    {
+        const auto doorId = *PTransport->door_id;
+        std::memcpy(str.data() + 0, &doorId, 4);
+    }
+    else
+    {
+        std::memcpy(str.data() + 0, PEntity->name.data(), std::min<size_t>(PEntity->name.size(), 4));
+    }
 
     auto timestamp = PEntity->GetLocalVar("TransportTimestamp");
     std::memcpy(str.data() + 4, &timestamp, 4);
 
     if (isElevator)
     {
-        std::memset(str.data() + 8, 8, 1);
+        // How long the client spends animating the platform between floors.
+        std::memset(str.data() + 8, static_cast<uint8>(PEntity->GetLocalVar("TransportTravel")), 1);
     }
 
     return str;
@@ -354,13 +367,20 @@ void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, ui
             }
 
             // TODO: Unify name logic
-            if (updatemask & UPDATE_NAME)
+            // A ship or lift puts its door id and phase stamp where a plain NPC puts its name, but retail sends them with no name bit set.
+            // Skip them and the client knows which animation to play but not when it started.
+            const auto isTransport = PNpc->look.size == MODEL_ELEVATOR || PNpc->look.size == MODEL_SHIP;
+            if (updatemask & UPDATE_NAME || isTransport)
             {
-                auto name = PNpc->getName();
-                if (PNpc->look.size == MODEL_ELEVATOR || PNpc->look.size == MODEL_SHIP)
+                const auto name = [&]() -> std::string
                 {
-                    name = getTransportNPCName(PNpc);
-                }
+                    if (isTransport)
+                    {
+                        return getTransportNPCName(PNpc);
+                    }
+
+                    return PNpc->getName();
+                }();
 
                 // depending on size of name, this can be 0x20, 0x22, or 0x24
                 this->setSize(0x48);
@@ -422,7 +442,14 @@ void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, ui
                 this->setSize(0x48);
                 if (PMob->packetName.empty())
                 {
-                    std::memcpy(buffer_.data() + 0x34, PEntity->getName().c_str(), std::min<size_t>(PEntity->getName().size(), PacketNameLength));
+                    if (const auto* PDoor = dynamic_cast<CNpcEntity*>(PEntity); PDoor && PDoor->door_id)
+                    {
+                        ref<uint32>(0x34) = *PDoor->door_id;
+                    }
+                    else
+                    {
+                        std::memcpy(buffer_.data() + 0x34, PEntity->getName().c_str(), std::min<size_t>(PEntity->getName().size(), PacketNameLength));
+                    }
                 }
                 else
                 {
@@ -465,7 +492,14 @@ void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, ui
         {
             this->setSize(0x48);
             ref<uint16>(0x30) = PEntity->look.size;
-            std::memcpy(buffer_.data() + 0x34, PEntity->getName().c_str(), (PEntity->getName().size() > 12 ? 12 : PEntity->getName().size()));
+            if (const auto* PDoor = dynamic_cast<CNpcEntity*>(PEntity); PDoor && PDoor->door_id)
+            {
+                ref<uint32>(0x34) = *PDoor->door_id;
+            }
+            else
+            {
+                std::memcpy(buffer_.data() + 0x34, PEntity->getName().c_str(), std::min<size_t>(PEntity->getName().size(), PacketNameLength));
+            }
         }
         break;
         case MODEL_SHIP:

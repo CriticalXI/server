@@ -45,6 +45,7 @@
 #include "attack.h"
 #include "attackutils.h"
 #include "charutils.h"
+#include "data/enums/claim_type.h"
 #include "data/enums/mob_mod.h"
 #include "data/enums/weather.h"
 #include "enmity_container.h"
@@ -3108,6 +3109,15 @@ bool IsAbsorbByShadow(CBattleEntity* PDefender, CBattleEntity* PAttacker)
             static_cast<CCharEntity*>(PDefender)->setPersist(CharPersist::Effects);
         }
 
+        // player loses 25 CE every time an attack is absorbed by an utsusemi shadow
+        if (xi::Mod::UTSUSEMI == modShadow && PDefender->objtype == TYPE_PC)
+        {
+            if (auto* PMob = dynamic_cast<CMobEntity*>(PAttacker))
+            {
+                PMob->PEnmityContainer->UpdateEnmity(PDefender, -25, 0);
+            }
+        }
+
         if (Shadow == 0)
         {
             switch (modShadow)
@@ -3139,11 +3149,6 @@ bool IsAbsorbByShadow(CBattleEntity* PDefender, CBattleEntity* PAttacker)
                         case 2:
                             icon = static_cast<uint16>(xi::StatusEffect::CopyImage2);
                             break;
-                    }
-                    // player loses 25 CE if attack absorbed by utsusemi shadow
-                    if (auto* PMob = dynamic_cast<CMobEntity*>(PAttacker))
-                    {
-                        PMob->PEnmityContainer->UpdateEnmity(PDefender, -25, 0);
                     }
                     PStatusEffect->SetIcon(icon);
                     PDefender->StatusEffectContainer->UpdateStatusIcons();

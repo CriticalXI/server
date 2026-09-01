@@ -57,6 +57,7 @@
 #include "ai/helpers/targetfind.h"
 #include "ai/states/ability_state.h"
 #include "ai/states/attack_state.h"
+#include "ai/states/death_state.h"
 #include "ai/states/item_state.h"
 #include "ai/states/magic_state.h"
 #include "ai/states/weaponskill_state.h"
@@ -70,6 +71,7 @@
 #include "action/interrupts.h"
 #include "blue_spell.h"
 #include "conquest_system.h"
+#include "data/enums/claim_type.h"
 #include "data/enums/mob_mod.h"
 #include "enums/recast.h"
 #include "ipc_client.h"
@@ -694,6 +696,12 @@ void CCharEntity::setAutomatonHead(const AutomatonHead head)
 
 void CCharEntity::setAutomatonAttachment(const uint8 slotid, const uint8 id)
 {
+    if (slotid >= automatonInfo_.equip.attachments.size())
+    {
+        ShowWarningFmt("setAutomatonAttachment: slot {} out of range", slotid);
+        return;
+    }
+
     automatonInfo_.equip.attachments[slotid] = id;
 }
 
@@ -735,6 +743,12 @@ auto CCharEntity::getAutomatonHead() const -> AutomatonHead
 
 auto CCharEntity::getAutomatonAttachment(const uint8 slotid) const -> uint8
 {
+    if (slotid >= automatonInfo_.equip.attachments.size())
+    {
+        ShowWarningFmt("getAutomatonAttachment: slot {} out of range", slotid);
+        return 0;
+    }
+
     return automatonInfo_.equip.attachments[slotid];
 }
 
@@ -2143,8 +2157,11 @@ void CCharEntity::OnRaise()
             m_weaknessLvl = 1;
         }
 
+        const auto* PDeathState = dynamic_cast<CDeathState*>(PAI->GetCurrentState());
+        const bool  mijin       = PDeathState && PDeathState->params().mijin;
+
         // add weakness effect (75% reduction in HP/MP)
-        if (GetLocalVar("MijinGakure") == 0)
+        if (!mijin)
         {
             auto weaknessTime = 5min;
 
@@ -2169,7 +2186,7 @@ void CCharEntity::OnRaise()
         auto& actionResult = actionTarget.addResult();
 
         // Mijin Gakure used with MIJIN_RERAISE MOD
-        if (GetLocalVar("MijinGakure") != 0 && getMod(xi::Mod::MIJIN_RERAISE) != 0)
+        if (mijin && getMod(xi::Mod::MIJIN_RERAISE) != 0)
         {
             actionResult.animation = ActionAnimation::Raise;
             hpReturned             = (uint16)(GetMaxHP());
@@ -2177,13 +2194,13 @@ void CCharEntity::OnRaise()
         else if (m_hasRaise == 1)
         {
             actionResult.animation = ActionAnimation::Raise;
-            hpReturned             = static_cast<uint16>((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5 : GetMaxHP() * 0.1);
+            hpReturned             = static_cast<uint16>(mijin ? GetMaxHP() * 0.5 : GetMaxHP() * 0.1);
             ratioReturned          = 0.50f * static_cast<double>(1 - settings::get<uint8>("map.EXP_RETAIN"));
         }
         else if (m_hasRaise == 2)
         {
             actionResult.animation = ActionAnimation::Raise2;
-            hpReturned             = static_cast<uint16>((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5 : GetMaxHP() * 0.25);
+            hpReturned             = static_cast<uint16>(mijin ? GetMaxHP() * 0.5 : GetMaxHP() * 0.25);
             ratioReturned          = ((GetMLevel() <= 50) ? 0.50f : 0.75f) * static_cast<double>(1 - settings::get<uint8>("map.EXP_RETAIN"));
         }
         else if (m_hasRaise == 3)
@@ -2221,7 +2238,6 @@ void CCharEntity::OnRaise()
             StatusEffectContainer->AddStatusEffect(xi::StatusEffect::Reraise, static_cast<uint16>(xi::StatusEffect::Reraise), 3, 0s, 1h);
         }
 
-        SetLocalVar("MijinGakure", 0);
         m_hasArise = false;
         m_hasRaise = 0;
     }
@@ -2408,12 +2424,21 @@ void CCharEntity::Die()
         petutils::DespawnPet(this);
     }
 
-    Die(death_duration);
+    const auto staged = nextDeath_.value_or(DeathParams{});
+    nextDeath_.reset();
+
+    // Retail stopped charging EXP for a KO while charmed in June 2007
+    const DeathParams params{
+        .losesExp = staged.losesExp && !isCharmed,
+        .mijin    = staged.mijin,
+    };
+
+    Die(death_duration, params);
     SetDeathTime(timer::now());
 
     setBlockingAid(false);
 
-    if (GetLocalVar("MijinGakure") == 0 &&
+    if (params.losesExp &&
         (PBattlefield == nullptr || (PBattlefield->GetRuleMask() & RULES_LOSE_EXP) == RULES_LOSE_EXP) &&
         GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
     {
@@ -2424,7 +2449,17 @@ void CCharEntity::Die()
     luautils::OnPlayerDeath(this);
 }
 
-void CCharEntity::Die(timer::duration _duration)
+auto CCharEntity::nextDeath() const -> const Maybe<DeathParams>&
+{
+    return nextDeath_;
+}
+
+void CCharEntity::setNextDeath(Maybe<DeathParams> params)
+{
+    nextDeath_ = params;
+}
+
+void CCharEntity::Die(timer::duration _duration, DeathParams params)
 {
     TracyZoneScoped;
 
@@ -2445,7 +2480,7 @@ void CCharEntity::Die(timer::duration _duration)
 
     m_deathSyncTime = timer::now() + death_update_frequency;
     PAI->ClearStateStack();
-    PAI->Internal_Die(_duration);
+    PAI->Internal_Die(_duration, params);
 
     // If player allegiance is not reset on death they will auto-homepoint
     allegiance = xi::Allegiance::Player;
