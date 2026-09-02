@@ -1,0 +1,61 @@
+# Old-school Dynamis NPCs for dynamis_xarcabard, generated from
+# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Applied to data/zones/dynamis_xarcabard/npcs.yaml as an RFC 7396 merge patch.
+
+npcs:
+
+  17330771: null
+  17330772: null
+  17330773: null
+  17330774: null
+  17330776: null
+  17330777: null
+  17330778: null
+  17330779: null
+  17330780: null
+  17330781: null
+  17330782: null
+  17330783: null
+  17330784: null
+  17330785: null
+  17330786: null
+  17330787: null
+  17330788: null
+  17330789: null
+  17330790: null
+  17330791: null
+  17330792: null
+  17330793: null
+  17330794: null
+  17330795: null
+  17330796: null
+  17330797: null
+  17330798: null
+  17330799: null
+  17330800: null
+  17330801: null
+  17330802: null
+  17330803: null
+  17330804: null
+  17330805: null
+  17330806: null
+  17330807: null
+  17330808: null
+  17330809: null
+  17330810: null
+  17330811: null
+  17330812: null
+  17330813: null
+  17330814: null
+  17330815: null
+
+  17330839:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal

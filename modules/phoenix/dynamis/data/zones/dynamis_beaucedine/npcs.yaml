@@ -1,0 +1,45 @@
+# Old-school Dynamis NPCs for dynamis_beaucedine, generated from
+# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Applied to data/zones/dynamis_beaucedine/npcs.yaml as an RFC 7396 merge patch.
+
+npcs:
+
+  17326616:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal
+
+  17326792: null
+  17326793: null
+  17326794: null
+  17326796: null
+  17326797: null
+  17326798: null
+  17326799: null
+  17326800: null
+  17326801: null
+  17326802: null
+  17326803: null
+  17326804: null
+  17326805: null
+  17326806: null
+  17326807: null
+  17326808: null
+  17326809: null
+  17326810: null
+  17326811: null
+  17326812: null
+  17326813: null
+  17326814: null
+  17326815: null
+  17326816: null
+  17326817: null
+  17326818: null
+  17326819: null
+  17326820: null

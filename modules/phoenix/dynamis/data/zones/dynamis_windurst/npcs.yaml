@@ -1,0 +1,40 @@
+# Old-school Dynamis NPCs for dynamis_windurst, generated from
+# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Applied to data/zones/dynamis_windurst/npcs.yaml as an RFC 7396 merge patch.
+
+npcs:
+
+  17543471: null
+  17543472: null
+  17543473: null
+  17543475: null
+  17543476: null
+  17543477: null
+  17543478: null
+  17543479: null
+  17543480: null
+  17543481: null
+  17543482: null
+  17543483: null
+  17543484: null
+  17543485: null
+  17543486: null
+  17543487: null
+  17543488: null
+  17543489: null
+  17543490: null
+  17543491: null
+  17543492: null
+  17543493: null
+  17543494: null
+
+  17543676:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal

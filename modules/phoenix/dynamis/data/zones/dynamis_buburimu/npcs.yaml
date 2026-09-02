@@ -1,0 +1,52 @@
+# Old-school Dynamis NPCs for dynamis_buburimu, generated from
+# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Applied to data/zones/dynamis_buburimu/npcs.yaml as an RFC 7396 merge patch.
+
+npcs:
+
+  16941489:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal
+
+  16941496:
+    script:       qm1
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal
+
+  16941667: null
+  16941668: null
+  16941669: null
+  16941670: null
+  16941672: null
+  16941673: null
+  16941674: null
+  16941675: null
+  16941676: null
+  16941677: null
+  16941678: null
+  16941679: null
+  16941680: null
+  16941681: null
+  16941682: null
+  16941683: null
+  16941684: null
+  16941685: null
+  16941686: null
+  16941687: null
+  16941688: null
+  16941689: null
+  16941690: null
+  16941691: null

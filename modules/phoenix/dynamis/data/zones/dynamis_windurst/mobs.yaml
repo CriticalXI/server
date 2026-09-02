@@ -1,0 +1,2795 @@
+# Old-school Dynamis spawn layout for dynamis_windurst, generated from
+# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Applied to data/zones/dynamis_windurst/mobs.yaml as an RFC 7396 merge patch.
+
+templates:
+
+  # -- Custom templates for mobs the core file lacks, scaffolded from the module's mob_groups/mob_pools inserts --
+
+  Manifest_Icon:
+    id:            5122
+    species:       yagudo_statue
+    type:          [notorious]
+    spell_list_id: 21
+    skill_list_id: 95
+    attributes:
+      combat:
+        skill: staff
+      jobs: [blm, blm]
+      resists:
+        immune_status: [silence, slow, elegy, light_sleep, dark_sleep]
+        dmg_physical:
+          slashing: -5000
+          piercing: -5000
+          blunt:    -5000
+          h2h:      -5000
+      render:
+        look:
+          type:  standard
+          model: 1060
+        entity_flags: 129
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 1000
+        mp: 10000
+
+  Avatar_Icon:
+    type: [notorious]
+
+  Haa_Pevi_the_Stentorian:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Loo_Hepe_the_Eyepiercer:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Assassin:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Chanter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Exemplar:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Inciter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Liberator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Ogresoother:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Oracle:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Partisan:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Persecutor:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Prelate:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Priest:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Salvager:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Sentinel:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Skirmisher:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Visionary:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguards_Avatar:
+    type: [called, notorious]
+
+  Vanguards_Crow:
+    type: [called, notorious]
+
+  Vanguards_Wyvern:
+    type: [called, notorious]
+
+  Wuu_Qoho_the_Razorclaw:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Xoo_Kaza_the_Solemn:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+spawns:
+
+  17543169:
+    template: Avatar_Icon
+    at:       [-191.359, -0.801, -119.423, 131]
+    level:    [65, 65]
+
+  17543170:
+    template: Vanguard_Exemplar
+    at:       [-189.594, -1.027, -122.020, 124]
+    level:    [75, 77]
+
+  17543171:
+    template: Vanguard_Inciter
+    at:       [-189.928, -0.936, -116.750, 124]
+    level:    [75, 77]
+
+  17543172:
+    template: Avatar_Icon
+    at:       [-157.133, -1.039, -132.586, 162]
+    level:    [65, 65]
+
+  17543173:
+    template: Vanguard_Priest
+    at:       [-155.614, -0.983, -133.995, 156]
+    level:    [75, 77]
+
+  17543174:
+    template: Vanguard_Prelate
+    at:       [-154.198, -1.025, -132.799, 156]
+    level:    [75, 77]
+
+  17543175:
+    template: Avatar_Icon
+    at:       [-152.954, -1.546, -129.006, 156]
+    level:    [65, 65]
+
+  17543176:
+    template: Vanguard_Visionary
+    at:       [-152.567, -1.130, -131.975, 156]
+    level:    [75, 77]
+
+  17543177:
+    template: Vanguard_Chanter
+    at:       [-151.713, -1.385, -130.749, 156]
+    level:    [75, 77]
+
+  17543178:
+    template: Manifest_Icon
+    at:       [-129.583, -2.640, -140.102, 128]
+    level:    [65, 65]
+
+  17543179:
+    template: Vanguard_Persecutor
+    at:       [-133.596, -3.009, -142.317, 145]
+    level:    [75, 77]
+
+  17543180:
+    template: Vanguard_Assassin
+    at:       [-134.190, -3.083, -138.373, 120]
+    level:    [75, 77]
+
+  17543181:
+    template: Avatar_Icon
+    at:       [-127.563, -2.447, -140.117, 128]
+    level:    [65, 65]
+
+  17543182:
+    template: Avatar_Icon
+    at:       [-124.164, -2.528, -139.977, 128]
+    level:    [65, 65]
+
+  17543183:
+    template: Vanguard_Salvager
+    at:       [-118.891, -2.471, -140.083, 128]
+    level:    [75, 77]
+
+  17543184:
+    template: Avatar_Icon
+    at:       [-107.723, -2.510, -130.218, 76]
+    level:    [65, 65]
+
+  17543185:
+    template: Vanguard_Sentinel
+    at:       [-106.235, -2.488, -134.976, 76]
+    level:    [75, 77]
+
+  17543186:
+    template: Vanguard_Sentinel
+    at:       [-110.693, -2.856, -133.850, 76]
+    level:    [75, 77]
+
+  17543187:
+    template: Manifest_Icon
+    at:       [-78.440, -2.500, -118.383, 115]
+    level:    [65, 65]
+
+  17543188:
+    template: Vanguard_Partisan
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543189:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543190:
+    template: Vanguard_Partisan
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543191:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543192:
+    template: Vanguard_Skirmisher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543193:
+    template: Avatar_Icon
+    at:       [-52.520, -2.500, -111.096, 115]
+    level:    [65, 65]
+
+  17543194:
+    template: Vanguard_Assassin
+    at:       [-53.215, -2.500, -107.720, 118]
+    level:    [75, 77]
+
+  17543195:
+    template: Vanguard_Assassin
+    at:       [-51.554, -2.500, -114.484, 118]
+    level:    [75, 77]
+
+  17543196:
+    template: Vanguard_Liberator
+    at:       [-72.223, -2.500, -118.649, 121]
+    level:    [75, 77]
+
+  17543197:
+    template: Vanguard_Liberator
+    at:       [-72.223, -2.500, -114.693, 121]
+    level:    [75, 77]
+
+  17543198:
+    template: Avatar_Icon
+    at:       [-37.198, -2.500, -84.025, 86]
+    level:    [65, 65]
+
+  17543199:
+    template: Avatar_Icon
+    at:       [-23.370, -2.500, -59.924, 87]
+    level:    [65, 65]
+
+  17543200:
+    template: Vanguard_Skirmisher
+    at:       [-24.343, -2.331, -56.125, 89]
+    level:    [75, 77]
+
+  17543201:
+    template: Vanguard_Skirmisher
+    at:       [-18.103, -2.459, -59.262, 89]
+    level:    [75, 77]
+
+  17543202:
+    template: Vanguard_Ogresoother
+    at:       [-14.031, -2.570, -56.386, 89]
+    level:    [75, 77]
+
+  17543203:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543204:
+    template: Vanguard_Ogresoother
+    at:       [-25.252, -2.250, -52.599, 89]
+    level:    [75, 77]
+
+  17543205:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543206:
+    template: Manifest_Icon
+    at:       [0.765, -3.964, -64.998, 196]
+    level:    [65, 65]
+
+  17543207:
+    template: Vanguard_Exemplar
+    at:       [-2.568, -3.970, -63.976, 196]
+    level:    [75, 77]
+
+  17543208:
+    template: Vanguard_Exemplar
+    at:       [3.980, -3.886, -64.956, 196]
+    level:    [75, 77]
+
+  17543209:
+    template: Avatar_Icon
+    at:       [3.200, -6.800, -34.800, 57]
+    level:    [65, 65]
+
+  17543210:
+    template: Vanguard_Inciter
+    at:       [0.701, -6.654, -33.363, 66]
+    level:    [75, 77]
+
+  17543211:
+    template: Vanguard_Persecutor
+    at:       [3.366, -6.941, -29.751, 66]
+    level:    [75, 77]
+
+  17543212:
+    template: Avatar_Icon
+    at:       [-4.085, -6.903, -34.486, 55]
+    level:    [65, 65]
+
+  17543213:
+    template: Vanguard_Inciter
+    at:       [-1.466, -6.666, -33.611, 66]
+    level:    [75, 77]
+
+  17543214:
+    template: Vanguard_Persecutor
+    at:       [-4.127, -6.957, -30.525, 66]
+    level:    [75, 77]
+
+  17543215:
+    template: Avatar_Icon
+    at:       [3.050, -33.390, -6.893, 66]
+    level:    [65, 65]
+
+  17543216:
+    template: Vanguard_Priest
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543217:
+    template: Vanguard_Priest
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543218:
+    template: Avatar_Icon
+    at:       [23.317, -2.536, -54.031, 128]
+    level:    [65, 65]
+
+  17543219:
+    template: Vanguard_Prelate
+    at:       [17.050, -3.880, -48.909, 128]
+    level:    [75, 77]
+
+  17543220:
+    template: Vanguard_Oracle
+    at:       [17.050, -3.755, -51.683, 128]
+    level:    [75, 77]
+    script:   null
+
+  17543221:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543222:
+    template: Vanguard_Oracle
+    at:       [17.468, -3.695, -53.885, 128]
+    level:    [75, 77]
+    script:   null
+
+  17543223:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543224:
+    template: Manifest_Icon
+    at:       [35.853, -1.740, -67.600, 192]
+    level:    [65, 65]
+    script:   null
+
+  17543225:
+    template: Vanguard_Visionary
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543226:
+    template: Vanguard_Liberator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543227:
+    template: Avatar_Icon
+    at:       [44.039, -2.500, -59.023, 56]
+    level:    [65, 65]
+
+  17543228:
+    template: Vanguard_Skirmisher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543229:
+    template: Vanguard_Persecutor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543230:
+    template: Manifest_Icon
+    at:       [52.083, -2.500, -67.600, 57]
+    level:    [65, 65]
+
+  17543231:
+    template: Vanguard_Assassin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543232:
+    template: Vanguard_Assassin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543233:
+    template: Avatar_Icon
+    at:       [35.929, -1.505, -73.749, 192]
+    level:    [65, 65]
+
+  17543234:
+    template: Vanguard_Chanter
+    at:       [37.909, -2.500, -60.189, 62]
+    level:    [75, 77]
+
+  17543235:
+    template: Vanguard_Sentinel
+    at:       [46.055, -2.500, -60.189, 62]
+    level:    [75, 77]
+
+  17543236:
+    template: Vanguard_Liberator
+    at:       [53.567, -2.500, -60.189, 62]
+    level:    [75, 77]
+
+  17543237:
+    template: Manifest_Icon
+    at:       [65.110, -2.500, -63.509, 62]
+    level:    [65, 65]
+
+  17543238:
+    template: Vanguard_Ogresoother
+    at:       [65.454, -2.500, -67.000, 62]
+    level:    [75, 77]
+
+  17543239:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543240:
+    template: Vanguard_Partisan
+    at:       [62.316, -2.500, -67.000, 62]
+    level:    [75, 77]
+
+  17543241:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543242:
+    template: Vanguard_Partisan
+    at:       [69.063, -2.475, -67.000, 62]
+    level:    [75, 77]
+
+  17543243:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543244:
+    template: Avatar_Icon
+    at:       [65.170, -7.500, -58.186, 188]
+    level:    [65, 65]
+    script:   null
+
+  17543245:
+    template: Vanguard_Prelate
+    at:       [61.974, -7.500, -55.116, 195]
+    level:    [75, 77]
+    script:   null
+
+  17543246:
+    template: Vanguard_Prelate
+    at:       [67.940, -7.500, -55.116, 195]
+    level:    [75, 77]
+    script:   null
+
+  17543247:
+    template: Avatar_Icon
+    at:       [49.759, -7.250, -50.288, 125]
+    level:    [65, 65]
+    script:   null
+
+  17543248:
+    template: Vanguard_Salvager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543249:
+    template: Vanguard_Salvager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543250:
+    template: Vanguard_Skirmisher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543251:
+    template: Vanguard_Skirmisher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543252:
+    template: Avatar_Icon
+    at:       [32.744, -6.555, -39.240, 133]
+    level:    [65, 65]
+    script:   null
+
+  17543253:
+    template: Vanguard_Inciter
+    at:       [27.638, -6.675, -37.720, 133]
+    level:    [75, 77]
+    script:   null
+
+  17543254:
+    template: Vanguard_Chanter
+    at:       [27.638, -6.500, -41.720, 133]
+    level:    [75, 77]
+    script:   null
+
+  17543255:
+    template: Vanguard_Salvager
+    at:       [33.030, -6.554, -41.945, 133]
+    level:    [75, 77]
+    script:   null
+
+  17543256:
+    template: Avatar_Icon
+    at:       [83.932, -2.500, -96.030, 159]
+    level:    [65, 65]
+    script:   null
+
+  17543257:
+    template: Vanguard_Exemplar
+    at:       [84.126, -2.500, -92.141, 159]
+    level:    [75, 77]
+
+  17543258:
+    template: Vanguard_Priest
+    at:       [80.291, -2.500, -96.131, 159]
+    level:    [75, 77]
+
+  17543259:
+    template: Avatar_Icon
+    at:       [71.924, -2.500, -81.113, 159]
+    level:    [65, 65]
+
+  17543260:
+    template: Vanguard_Inciter
+    at:       [68.620, -2.500, -78.202, 159]
+    level:    [75, 77]
+
+  17543261:
+    template: Avatar_Icon
+    at:       [69.234, -2.500, -83.564, 159]
+    level:    [65, 65]
+
+  17543262:
+    template: Vanguard_Prelate
+    at:       [66.296, -2.500, -80.526, 159]
+    level:    [75, 77]
+
+  17543263:
+    template: Manifest_Icon
+    at:       [96.584, -2.969, -150.943, 161]
+    level:    [65, 65]
+
+  17543264:
+    template: Vanguard_Liberator
+    at:       [91.807, -2.579, -146.951, 145]
+    level:    [75, 77]
+
+  17543265:
+    template: Vanguard_Liberator
+    at:       [94.360, -2.531, -143.909, 145]
+    level:    [75, 77]
+
+  17543266:
+    template: Vanguard_Salvager
+    at:       [99.511, -2.785, -147.631, 145]
+    level:    [75, 77]
+
+  17543267:
+    template: Manifest_Icon
+    at:       [-8.920, -9.149, -17.466, 193]
+    level:    [65, 65]
+
+  17543268:
+    template: Vanguard_Skirmisher
+    at:       [-13.298, -8.675, -17.701, 189]
+    level:    [75, 77]
+
+  17543269:
+    template: Vanguard_Sentinel
+    at:       [-16.984, -8.528, -17.701, 189]
+    level:    [75, 77]
+
+  17543270:
+    template: Vanguard_Liberator
+    at:       [-16.869, -9.693, -22.003, 189]
+    level:    [75, 77]
+
+  17543271:
+    template: Vanguard_Persecutor
+    at:       [-13.298, -9.750, -22.003, 189]
+    level:    [75, 77]
+
+  17543272:
+    template: Manifest_Icon
+    at:       [10.220, -9.310, -12.860, 188]
+    level:    [65, 65]
+
+  17543273:
+    template: Vanguard_Visionary
+    at:       [13.855, -9.662, -12.899, 192]
+    level:    [75, 77]
+
+  17543274:
+    template: Vanguard_Exemplar
+    at:       [13.855, -9.853, -17.851, 192]
+    level:    [75, 77]
+
+  17543275:
+    template: Vanguard_Inciter
+    at:       [17.144, -9.795, -17.851, 192]
+    level:    [75, 77]
+
+  17543276:
+    template: Vanguard_Assassin
+    at:       [17.144, -9.785, -12.899, 192]
+    level:    [75, 77]
+
+  17543277:
+    template: Avatar_Icon
+    at:       [29.457, -10.000, 9.842, 115]
+    level:    [65, 65]
+
+  17543278:
+    template: Vanguard_Liberator
+    at:       [31.365, -10.000, 11.017, 107]
+    level:    [75, 77]
+
+  17543279:
+    template: Vanguard_Liberator
+    at:       [35.156, -10.000, 13.247, 107]
+    level:    [75, 77]
+
+  17543280:
+    template: Vanguard_Oracle
+    at:       [39.206, -10.000, 15.584, 107]
+    level:    [75, 77]
+
+  17543281:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543282:
+    template: Manifest_Icon
+    at:       [36.472, -10.000, 14.181, 107]
+    level:    [65, 65]
+
+  17543283:
+    template: Vanguard_Visionary
+    at:       [34.759, -10.000, 12.826, 107]
+    level:    [75, 77]
+
+  17543284:
+    template: Vanguard_Visionary
+    at:       [27.214, -10.000, 8.595, 107]
+    level:    [75, 77]
+
+  17543285:
+    template: Vanguard_Ogresoother
+    at:       [21.516, -10.000, 5.385, 107]
+    level:    [75, 77]
+
+  17543286:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543287:
+    template: Avatar_Icon
+    at:       [47.158, -9.784, 26.454, 203]
+    level:    [65, 65]
+
+  17543288:
+    template: Vanguard_Partisan
+    at:       [43.541, -10.000, 29.936, 223]
+    level:    [75, 77]
+
+  17543289:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543290:
+    template: Vanguard_Partisan
+    at:       [43.138, -10.000, 32.059, 223]
+    level:    [75, 77]
+
+  17543291:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543292:
+    template: Vanguard_Partisan
+    at:       [43.610, -10.000, 35.317, 223]
+    level:    [75, 77]
+
+  17543293:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543294:
+    template: Avatar_Icon
+    at:       [51.258, -9.693, 42.993, 225]
+    level:    [65, 65]
+
+  17543295:
+    template: Vanguard_Ogresoother
+    at:       [50.746, -10.001, 39.991, 91]
+    level:    [75, 77]
+
+  17543296:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543297:
+    template: Vanguard_Ogresoother
+    at:       [48.316, -9.928, 41.803, 91]
+    level:    [75, 77]
+
+  17543298:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543299:
+    template: Manifest_Icon
+    at:       [66.235, -9.939, 27.063, 105]
+    level:    [65, 65]
+
+  17543300:
+    template: Avatar_Icon
+    at:       [47.109, -10.000, 17.905, 109]
+    level:    [65, 65]
+
+  17543301:
+    template: Vanguard_Priest
+    at:       [51.014, -10.000, 20.180, 109]
+    level:    [75, 77]
+
+  17543302:
+    template: Avatar_Icon
+    at:       [45.329, -10.000, 21.071, 109]
+    level:    [65, 65]
+
+  17543303:
+    template: Vanguard_Prelate
+    at:       [48.480, -9.790, 23.072, 109]
+    level:    [75, 77]
+
+  17543304:
+    template: Avatar_Icon
+    at:       [71.162, -8.288, 41.900, 96]
+    level:    [65, 65]
+
+  17543305:
+    template: Vanguard_Chanter
+    at:       [66.765, -9.431, 40.653, 92]
+    level:    [75, 77]
+
+  17543306:
+    template: Avatar_Icon
+    at:       [63.950, -9.332, 44.839, 85]
+    level:    [65, 65]
+
+  17543307:
+    template: Vanguard_Liberator
+    at:       [64.993, -9.431, 42.158, 92]
+    level:    [75, 77]
+
+  17543308:
+    template: Manifest_Icon
+    at:       [84.294, -5.175, 52.773, 139]
+    level:    [65, 65]
+
+  17543309:
+    template: Avatar_Icon
+    at:       [99.715, -2.500, 112.425, 134]
+    level:    [65, 65]
+
+  17543310:
+    template: Vanguard_Priest
+    at:       [105.301, -3.000, 114.755, 133]
+    level:    [75, 77]
+
+  17543311:
+    template: Vanguard_Oracle
+    at:       [101.722, -2.703, 115.386, 133]
+    level:    [75, 77]
+
+  17543312:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543313:
+    template: Avatar_Icon
+    at:       [100.517, -2.520, 118.660, 128]
+    level:    [65, 65]
+
+  17543314:
+    template: Vanguard_Prelate
+    at:       [107.426, -8.000, 114.450, 135]
+    level:    [75, 77]
+
+  17543315:
+    template: Manifest_Icon
+    at:       [109.759, -8.000, 114.064, 133]
+    level:    [65, 65]
+
+  17543316:
+    template: Vanguard_Exemplar
+    at:       [113.384, -7.500, 106.786, 135]
+    level:    [75, 77]
+
+  17543317:
+    template: Vanguard_Exemplar
+    at:       [115.766, -7.500, 120.343, 135]
+    level:    [75, 77]
+
+  17543318:
+    template: Vanguard_Sentinel
+    at:       [109.646, -8.000, 110.384, 135]
+    level:    [75, 77]
+
+  17543319:
+    template: Vanguard_Sentinel
+    at:       [110.681, -8.000, 117.703, 135]
+    level:    [75, 77]
+
+  17543320:
+    template: Avatar_Icon
+    at:       [90.306, -4.357, 89.147, 120]
+    level:    [65, 65]
+
+  17543321:
+    template: Vanguard_Skirmisher
+    at:       [88.679, -2.544, 92.336, 133]
+    level:    [75, 77]
+
+  17543322:
+    template: Vanguard_Priest
+    at:       [88.679, -2.470, 95.274, 133]
+    level:    [75, 77]
+
+  17543323:
+    template: Vanguard_Persecutor
+    at:       [88.679, -2.491, 97.649, 133]
+    level:    [75, 77]
+
+  17543324:
+    template: Manifest_Icon
+    at:       [79.559, -2.539, 101.270, 11]
+    level:    [65, 65]
+
+  17543325:
+    template: Vanguard_Assassin
+    at:       [82.159, -2.670, 100.479, 11]
+    level:    [75, 77]
+
+  17543326:
+    template: Vanguard_Assassin
+    at:       [82.159, -2.500, 96.724, 11]
+    level:    [75, 77]
+
+  17543327:
+    template: Manifest_Icon
+    at:       [115.368, -10.957, 157.790, 138]
+    level:    [65, 65]
+
+  17543328:
+    template: Vanguard_Skirmisher
+    at:       [112.222, -11.000, 165.871, 138]
+    level:    [75, 77]
+
+  17543329:
+    template: Vanguard_Partisan
+    at:       [114.082, -10.967, 161.400, 138]
+    level:    [75, 77]
+
+  17543330:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543331:
+    template: Avatar_Icon
+    at:       [111.934, -11.006, 151.898, 130]
+    level:    [65, 65]
+
+  17543332:
+    template: Avatar_Icon
+    at:       [99.564, -8.911, 152.057, 127]
+    level:    [65, 65]
+
+  17543333:
+    template: Avatar_Icon
+    at:       [104.031, -9.447, 175.374, 156]
+    level:    [65, 65]
+
+  17543334:
+    template: Manifest_Icon
+    at:       [115.244, -11.000, 146.646, 128]
+    level:    [65, 65]
+
+  17543335:
+    template: Vanguard_Persecutor
+    at:       [112.625, -11.000, 152.038, 128]
+    level:    [75, 77]
+
+  17543336:
+    template: Vanguard_Skirmisher
+    at:       [112.625, -11.000, 145.927, 128]
+    level:    [75, 77]
+
+  17543337:
+    template: Avatar_Idol
+    at:       [118.626, -11.500, 152.008, 128]
+    level:    [80, 80]
+
+  17543338:
+    template: Wuu_Qoho_the_Razorclaw
+    at:       [115.058, -11.360, 151.984, 128]
+    level:    [80, 80]
+
+  17543339:
+    template: Manifest_Icon
+    at:       [101.538, -10.296, 137.270, 228]
+    level:    [65, 65]
+
+  17543340:
+    template: Avatar_Icon
+    at:       [92.582, -7.598, 188.469, 97]
+    level:    [65, 65]
+
+  17543341:
+    template: Vanguard_Liberator
+    at:       [97.174, -8.000, 193.215, 96]
+    level:    [75, 77]
+
+  17543342:
+    template: Vanguard_Visionary
+    at:       [92.856, -8.000, 197.470, 132]
+    level:    [75, 77]
+
+  17543343:
+    template: Vanguard_Visionary
+    at:       [101.514, -8.000, 188.833, 64]
+    level:    [75, 77]
+
+  17543344:
+    template: Avatar_Icon
+    at:       [94.031, -8.000, 201.625, 84]
+    level:    [65, 65]
+
+  17543345:
+    template: Vanguard_Inciter
+    at:       [91.484, -7.500, 204.301, 93]
+    level:    [75, 77]
+
+  17543346:
+    template: Vanguard_Inciter
+    at:       [94.943, -7.552, 208.350, 93]
+    level:    [75, 77]
+
+  17543347:
+    template: Avatar_Icon
+    at:       [105.854, -8.000, 189.976, 101]
+    level:    [65, 65]
+
+  17543348:
+    template: Vanguard_Priest
+    at:       [103.027, -7.750, 187.947, 101]
+    level:    [75, 77]
+
+  17543349:
+    template: Vanguard_Chanter
+    at:       [99.454, -7.500, 185.775, 101]
+    level:    [75, 77]
+
+  17543350:
+    template: Manifest_Icon
+    at:       [99.948, -13.000, 195.726, 97]
+    level:    [65, 65]
+
+  17543351:
+    template: Vanguard_Prelate
+    at:       [99.948, -13.000, 195.726, 97]
+    level:    [75, 77]
+
+  17543352:
+    template: Vanguard_Prelate
+    at:       [101.449, -113.000, 192.745, 97]
+    level:    [75, 77]
+
+  17543353:
+    template: Vanguard_Exemplar
+    at:       [104.298, -12.500, 195.332, 97]
+    level:    [75, 77]
+
+  17543354:
+    template: Vanguard_Assassin
+    at:       [99.382, -12.500, 200.411, 97]
+    level:    [75, 77]
+
+  17543355:
+    template: Manifest_Icon
+    at:       [118.802, -12.500, 202.347, 103]
+    level:    [65, 65]
+
+  17543356:
+    template: Vanguard_Oracle
+    at:       [116.792, -12.500, 200.398, 103]
+    level:    [75, 77]
+
+  17543357:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543358:
+    template: Avatar_Icon
+    at:       [54.008, -7.500, 220.002, 128]
+    level:    [65, 65]
+
+  17543359:
+    template: Vanguard_Salvager
+    at:       [34.930, -7.500, 228.259, 153]
+    level:    [75, 77]
+
+  17543360:
+    template: Avatar_Icon
+    at:       [42.004, -7.500, 219.007, 255]
+    level:    [65, 65]
+
+  17543361:
+    template: Vanguard_Salvager
+    at:       [61.026, -7.500, 211.940, 153]
+    level:    [75, 77]
+
+  17543362:
+    template: Avatar_Icon
+    at:       [48.004, -7.500, 226.003, 64]
+    level:    [65, 65]
+
+  17543363:
+    template: Vanguard_Prelate
+    at:       [37.477, -7.500, 231.222, 153]
+    level:    [75, 77]
+
+  17543364:
+    template: Avatar_Icon
+    at:       [48.004, -7.500, 213.002, 192]
+    level:    [65, 65]
+
+  17543365:
+    template: Vanguard_Prelate
+    at:       [58.330, -7.500, 208.539, 153]
+    level:    [75, 77]
+
+  17543366:
+    template: Avatar_Idol
+    at:       [-25.944, -13.000, 259.902, 63]
+    level:    [80, 80]
+
+  17543367:
+    template: Haa_Pevi_the_Stentorian
+    at:       [-26.040, -18.000, 263.228, 65]
+    level:    [80, 80]
+
+  17543368:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543369:
+    template: Vanguard_Oracle
+    at:       [-30.702, -12.302, 247.916, 193]
+    level:    [75, 77]
+
+  17543370:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543371:
+    template: Vanguard_Oracle
+    at:       [-20.983, -12.394, 246.542, 193]
+    level:    [75, 77]
+
+  17543372:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543373:
+    template: Manifest_Icon
+    at:       [-28.297, -18.000, 265.824, 90]
+    level:    [65, 65]
+
+  17543374:
+    template: Vanguard_Oracle
+    at:       [-30.028, -12.360, 254.196, 194]
+    level:    [75, 77]
+
+  17543375:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543376:
+    template: Vanguard_Priest
+    at:       [-26.138, -12.265, 251.646, 193]
+    level:    [75, 77]
+    script:   null
+
+  17543377:
+    template: Vanguard_Oracle
+    at:       [-28.102, -18.000, 266.717, 67]
+    level:    [75, 77]
+    script:   null
+
+  17543378:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543379:
+    template: Manifest_Icon
+    at:       [-23.618, -18.000, 265.644, 42]
+    level:    [65, 65]
+    script:   null
+
+  17543380:
+    template: Vanguard_Oracle
+    at:       [-21.792, -12.259, 253.934, 193]
+    level:    [75, 77]
+    script:   null
+
+  17543381:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543382:
+    template: Vanguard_Oracle
+    at:       [-25.032, -18.000, 266.846, 65]
+    level:    [75, 77]
+    script:   null
+
+  17543383:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543384:
+    template: Manifest_Icon
+    at:       [-18.279, -15.813, 283.684, 64]
+    level:    [65, 65]
+    script:   null
+
+  17543385:
+    template: Avatar_Icon
+    at:       [14.952, -7.614, 258.525, 73]
+    level:    [65, 65]
+    script:   null
+
+  17543386:
+    template: Vanguard_Visionary
+    at:       [9.389, -7.356, 265.222, 13]
+    level:    [75, 77]
+
+  17543387:
+    template: Avatar_Icon
+    at:       [6.449, -7.372, 265.716, 2]
+    level:    [65, 65]
+    script:   null
+
+  17543388:
+    template: Vanguard_Inciter
+    at:       [-1.742, -9.570, 271.188, 23]
+    level:    [75, 77]
+    script:   null
+
+  17543389:
+    template: Avatar_Icon
+    at:       [-3.577, -9.812, 272.461, 22]
+    level:    [65, 65]
+    script:   null
+
+  17543390:
+    template: Vanguard_Ogresoother
+    at:       [-4.038, -10.016, 279.479, 67]
+    level:    [75, 77]
+    script:   null
+
+  17543391:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543392:
+    template: Manifest_Icon
+    at:       [-3.871, -10.010, 281.427, 66]
+    level:    [65, 65]
+
+  17543393:
+    template: Vanguard_Exemplar
+    at:       [-5.855, -10.273, 286.156, 62]
+    level:    [75, 77]
+
+  17543394:
+    template: Vanguard_Chanter
+    at:       [-1.500, -10.000, 286.610, 62]
+    level:    [75, 77]
+    script:   null
+
+  17543395:
+    template: Avatar_Icon
+    at:       [28.154, 0.861, 237.140, 97]
+    level:    [65, 65]
+    script:   null
+
+  17543396:
+    template: Vanguard_Partisan
+    at:       [31.732, 0.605, 240.161, 97]
+    level:    [75, 77]
+    script:   null
+
+  17543397:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543398:
+    template: Vanguard_Assassin
+    at:       [23.896, 0.539, 234.216, 97]
+    level:    [75, 77]
+    script:   null
+
+  17543399:
+    template: Avatar_Icon
+    at:       [22.676, 0.221, 242.481, 97]
+    level:    [65, 65]
+    script:   null
+
+  17543400:
+    template: Vanguard_Skirmisher
+    at:       [25.954, 0.083, 246.764, 97]
+    level:    [75, 77]
+    script:   null
+
+  17543401:
+    template: Vanguard_Assassin
+    at:       [18.088, 0.129, 238.758, 97]
+    level:    [75, 77]
+    script:   null
+
+  17543402:
+    template: Manifest_Icon
+    at:       [5.852, -2.500, 277.660, 225]
+    level:    [65, 65]
+    script:   null
+
+  17543403:
+    template: Vanguard_Salvager
+    at:       [0.992, -10.000, 286.290, 34]
+    level:    [75, 77]
+    script:   null
+
+  17543404:
+    template: Vanguard_Salvager
+    at:       [7.719, -10.000, 288.757, 65]
+    level:    [75, 77]
+    script:   null
+
+  17543405:
+    template: Vanguard_Sentinel
+    at:       [6.269, -2.603, 283.693, 47]
+    level:    [75, 77]
+    script:   null
+
+  17543406:
+    template: Avatar_Icon
+    at:       [-51.993, -12.500, 234.590, 232]
+    level:    [65, 65]
+    script:   null
+
+  17543407:
+    template: Avatar_Icon
+    at:       [-61.254, -12.500, 209.154, 202]
+    level:    [65, 65]
+
+  17543408:
+    template: Vanguard_Visionary
+    at:       [-60.527, -12.500, 212.149, 20]
+    level:    [75, 77]
+    script:   null
+
+  17543409:
+    template: Avatar_Icon
+    at:       [-57.148, -12.500, 226.798, 198]
+    level:    [65, 65]
+
+  17543410:
+    template: Avatar_Icon
+    at:       [-39.857, -12.500, 242.448, 108]
+    level:    [65, 65]
+
+  17543411:
+    template: Vanguard_Visionary
+    at:       [-37.826, -12.500, 243.753, 108]
+    level:    [75, 77]
+    script:   null
+
+  17543412:
+    template: Avatar_Idol
+    at:       [-102.370, -17.500, 199.809, 34]
+    level:    [80, 80]
+    script:   null
+
+  17543413:
+    template: Xoo_Kaza_the_Solemn
+    at:       [-96.597, -18.000, 193.445, 37]
+    level:    [80, 80]
+    script:   null
+
+  17543414:
+    template: Vanguard_Priest
+    at:       [-94.930, -18.000, 196.436, 6]
+    level:    [75, 77]
+    script:   null
+
+  17543415:
+    template: Vanguard_Visionary
+    at:       [-99.864, -18.000, 192.433, 68]
+    level:    [75, 77]
+    script:   null
+
+  17543416:
+    template: Avatar_Icon
+    at:       [-97.477, -18.000, 194.749, 38]
+    level:    [65, 65]
+
+  17543417:
+    template: Vanguard_Prelate
+    at:       [-91.967, -13.000, 192.530, 165]
+    level:    [75, 77]
+    script:   null
+
+  17543418:
+    template: Vanguard_Prelate
+    at:       [-96.696, -13.000, 188.644, 189]
+    level:    [75, 77]
+    script:   null
+
+  17543419:
+    template: Avatar_Icon
+    at:       [-91.441, -12.500, 187.256, 167]
+    level:    [65, 65]
+
+  17543420:
+    template: Vanguard_Inciter
+    at:       [-92.515, -12.474, 183.340, 168]
+    level:    [75, 77]
+
+  17543421:
+    template: Vanguard_Inciter
+    at:       [-87.180, -12.457, 186.909, 168]
+    level:    [75, 77]
+
+  17543422:
+    template: Manifest_Icon
+    at:       [-116.901, -17.500, 202.751, 26]
+    level:    [65, 65]
+    script:   null
+
+  17543423:
+    template: Manifest_Icon
+    at:       [-107.253, -13.012, 218.079, 229]
+    level:    [65, 65]
+    script:   null
+
+  17543424:
+    template: Vanguard_Exemplar
+    at:       [-103.587, -12.500, 221.336, 225]
+    level:    [75, 77]
+    script:   null
+
+  17543425:
+    template: Avatar_Icon
+    at:       [-97.884, -5.411, 131.316, 240]
+    level:    [65, 65]
+
+  17543426:
+    template: Vanguard_Skirmisher
+    at:       [-94.072, -5.083, 129.302, 247]
+    level:    [75, 77]
+    script:   null
+
+  17543427:
+    template: Vanguard_Skirmisher
+    at:       [-96.318, -5.000, 135.299, 247]
+    level:    [75, 77]
+    script:   null
+
+  17543428:
+    template: Avatar_Icon
+    at:       [-97.264, -5.250, 125.379, 9]
+    level:    [65, 65]
+    script:   null
+
+  17543429:
+    template: Avatar_Icon
+    at:       [-101.497, -5.250, 136.499, 220]
+    level:    [65, 65]
+    script:   null
+
+  17543430:
+    template: Manifest_Icon
+    at:       [-99.182, -5.250, 122.539, 26]
+    level:    [65, 65]
+    script:   null
+
+  17543431:
+    template: Vanguard_Skirmisher
+    at:       [-90.210, -5.811, 122.677, 255]
+    level:    [75, 77]
+    script:   null
+
+  17543432:
+    template: Vanguard_Sentinel
+    at:       [-93.138, -5.611, 122.179, 250]
+    level:    [75, 77]
+
+  17543433:
+    template: Vanguard_Ogresoother
+    at:       [-95.609, -5.354, 121.651, 253]
+    level:    [75, 77]
+    script:   null
+
+  17543434:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543435:
+    template: Avatar_Icon
+    at:       [-85.319, -7.281, 116.836, 191]
+    level:    [65, 65]
+    script:   null
+
+  17543436:
+    template: Vanguard_Assassin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543437:
+    template: Manifest_Icon
+    at:       [-103.941, -5.250, 137.203, 202]
+    level:    [65, 65]
+    script:   null
+
+  17543438:
+    template: Vanguard_Liberator
+    at:       [-103.785, -5.073, 141.329, 248]
+    level:    [75, 77]
+    script:   null
+
+  17543439:
+    template: Vanguard_Persecutor
+    at:       [-107.439, -5.000, 140.457, 248]
+    level:    [75, 77]
+    script:   null
+
+  17543440:
+    template: Vanguard_Partisan
+    at:       [-110.407, -5.000, 139.835, 248]
+    level:    [75, 77]
+    script:   null
+
+  17543441:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543442:
+    template: Avatar_Icon
+    at:       [-99.034, -5.465, 151.601, 77]
+    level:    [65, 65]
+    script:   null
+
+  17543443:
+    template: Vanguard_Salvager
+    at:       [-96.000, -5.380, 149.305, 77]
+    level:    [75, 77]
+
+  17543444:
+    template: Avatar_Icon
+    at:       [-94.257, -5.629, 148.055, 77]
+    level:    [65, 65]
+    script:   null
+
+  17543445:
+    template: Manifest_Icon
+    at:       [-68.230, -5.060, 123.100, 132]
+    level:    [65, 65]
+
+  17543446:
+    template: Vanguard_Chanter
+    at:       [-77.952, -6.062, 121.478, 132]
+    level:    [75, 77]
+
+  17543447:
+    template: Vanguard_Inciter
+    at:       [-77.820, -5.261, 126.793, 132]
+    level:    [75, 77]
+    script:   null
+
+  17543448:
+    template: Vanguard_Oracle
+    at:       [-77.867, -5.005, 131.925, 132]
+    level:    [75, 77]
+    script:   null
+
+  17543449:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17543450:
+    template: Avatar_Icon
+    at:       [-74.208, -5.681, 120.864, 137]
+    level:    [65, 65]
+    script:   null
+
+  17543451:
+    template: Vanguard_Priest
+    at:       [-73.850, -5.258, 123.824, 137]
+    level:    [75, 77]
+    script:   null
+
+  17543452:
+    template: Avatar_Icon
+    at:       [-72.888, -4.973, 129.934, 137]
+    level:    [65, 65]
+    script:   null
+
+  17543453:
+    template: Vanguard_Priest
+    at:       [-73.411, -5.175, 126.815, 137]
+    level:    [75, 77]
+    script:   null
+
+  17543454:
+    template: Avatar_Icon
+    at:       [-129.353, -5.508, 128.607, 175]
+    level:    [65, 65]
+    script:   null
+
+  17543455:
+    template: Vanguard_Exemplar
+    at:       [-130.533, -5.028, 131.639, 175]
+    level:    [75, 77]
+    script:   null
+
+  17543456:
+    template: Vanguard_Prelate
+    at:       [-125.693, -5.000, 133.919, 175]
+    level:    [75, 77]
+    script:   null
+
+  17543457:
+    template: Avatar_Icon
+    at:       [-113.147, -10.000, 117.673, 244]
+    level:    [65, 65]
+    script:   null
+
+  17543458:
+    template: Vanguard_Inciter
+    at:       [-110.894, -10.000, 118.202, 244]
+    level:    [75, 77]
+    script:   null
+
+  17543459:
+    template: Vanguard_Priest
+    at:       [-107.565, -10.000, 119.568, 244]
+    level:    [75, 77]
+    script:   null
+
+  17543460:
+    template: Manifest_Icon
+    at:       [-110.846, -10.000, 126.606, 244]
+    level:    [65, 65]
+
+  17543461:
+    template: Vanguard_Visionary
+    at:       [-108.235, -10.000, 128.225, 244]
+    level:    [75, 77]
+
+  17543462:
+    template: Vanguard_Visionary
+    at:       [-107.017, -10.000, 124.280, 244]
+    level:    [75, 77]
+
+  17543463:
+    template: Vanguard_Chanter
+    at:       [-109.783, -10.000, 131.782, 244]
+    level:    [75, 77]
+
+  17543464:
+    template: Avatar_Icon
+    at:       [-89.576, -9.456, 104.809, 254]
+    level:    [65, 65]
+
+  17543465:
+    template: Vanguard_Skirmisher
+    at:       [-88.532, -9.168, 111.292, 65]
+    level:    [75, 77]
+
+  17543466:
+    template: Vanguard_Sentinel
+    at:       [-80.339, -9.624, 110.694, 104]
+    level:    [75, 77]
+
+  17543467:
+    template: Vanguard_Priest
+    at:       [-80.340, -9.738, 104.433, 131]
+    level:    [75, 77]
+
+  17543468:
+    template: Vanguard_Prelate
+    at:       [-83.784, -9.285, 95.935, 179]
+    level:    [75, 77]
+
+  17543469:
+    template: Vanguard_Liberator
+    at:       [-89.354, -9.118, 96.404, 197]
+    level:    [75, 77]
+
+  17543470:
+    template: Manifest_Icon
+    at:       [-76.785, -9.801, 107.838, 108]
+    level:    [65, 65]
+
+  17543471:
+    template: Vanguard_Sentinel
+    at:       [-73.076, -10.000, 111.259, 106]
+    level:    [75, 77]
+
+  17543472:
+    template: Vanguard_Assassin
+    at:       [-69.581, -10.000, 113.226, 106]
+    level:    [75, 77]
+
+  17543473:
+    template: Vanguard_Prelate
+    at:       [-66.380, -10.000, 114.857, 106]
+    level:    [75, 77]
+
+  17543474:
+    template: Manifest_Icon
+    at:       [-79.253, -9.685, 112.843, 104]
+    level:    [65, 65]
+
+  17543475:
+    template: Vanguard_Persecutor
+    at:       [-75.339, -10.000, 114.288, 106]
+    level:    [75, 77]
+
+  17543476:
+    template: Vanguard_Ogresoother
+    at:       [-70.931, -10.000, 116.494, 106]
+    level:    [75, 77]
+
+  17543477:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543478:
+    template: Vanguard_Salvager
+    at:       [-68.471, -10.000, 118.132, 106]
+    level:    [75, 77]
+
+  17543479:
+    template: Manifest_Icon
+    at:       [-182.861, -2.395, 147.891, 1]
+    level:    [65, 65]
+
+  17543480:
+    template: Vanguard_Liberator
+    at:       [-179.365, -2.448, 145.139, 1]
+    level:    [75, 77]
+
+  17543481:
+    template: Vanguard_Exemplar
+    at:       [-179.527, -2.456, 147.885, 1]
+    level:    [75, 77]
+
+  17543482:
+    template: Vanguard_Chanter
+    at:       [-179.233, -2.600, 150.466, 1]
+    level:    [75, 77]
+
+  17543483:
+    template: Avatar_Icon
+    at:       [-163.908, -2.500, 148.000, 129]
+    level:    [65, 65]
+
+  17543484:
+    template: Vanguard_Visionary
+    at:       [-168.150, -2.500, 148.000, 129]
+    level:    [75, 77]
+
+  17543485:
+    template: Avatar_Icon
+    at:       [-152.220, -2.500, 148.000, 129]
+    level:    [65, 65]
+
+  17543486:
+    template: Vanguard_Prelate
+    at:       [-156.189, -2.500, 148.000, 129]
+    level:    [75, 77]
+
+  17543487:
+    template: Manifest_Icon
+    at:       [-143.988, -2.500, 148.000, 129]
+    level:    [65, 65]
+
+  17543488:
+    template: Vanguard_Oracle
+    at:       [-148.099, -2.500, 148.000, 129]
+    level:    [75, 77]
+
+  17543489:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543490:
+    template: Avatar_Icon
+    at:       [-53.248, -13.261, 121.713, 170]
+    level:    [65, 65]
+
+  17543491:
+    template: Avatar_Icon
+    at:       [-55.442, -13.269, 125.468, 42]
+    level:    [65, 65]
+
+  17543492:
+    template: Vanguard_Skirmisher
+    at:       [-54.429, -13.275, 123.857, 107]
+    level:    [75, 77]
+
+  17543493:
+    template: Manifest_Icon
+    at:       [-51.163, -13.500, 128.187, 42]
+    level:    [65, 65]
+
+  17543494:
+    template: Manifest_Icon
+    at:       [-48.955, -13.500, 124.294, 170]
+    level:    [65, 65]
+
+  17543495:
+    template: Vanguard_Skirmisher
+    at:       [-49.772, -13.500, 126.485, 107]
+    level:    [75, 77]
+
+  17543496:
+    template: Avatar_Icon
+    at:       [-43.118, -13.500, 127.953, 170]
+    level:    [65, 65]
+
+  17543497:
+    template: Avatar_Icon
+    at:       [-45.704, -13.500, 131.271, 42]
+    level:    [65, 65]
+
+  17543498:
+    template: Vanguard_Skirmisher
+    at:       [-44.216, -14.323, 129.713, 107]
+    level:    [75, 77]
+
+  17543499:
+    template: Manifest_Icon
+    at:       [-2.290, -16.250, 124.781, 63]
+    level:    [65, 65]
+
+  17543500:
+    template: Vanguard_Visionary
+    at:       [-4.985, -16.000, 125.134, 63]
+    level:    [75, 77]
+
+  17543501:
+    template: Vanguard_Prelate
+    at:       [-8.427, -16.000, 125.919, 63]
+    level:    [75, 77]
+
+  17543502:
+    template: Manifest_Icon
+    at:       [3.113, -16.250, 125.009, 63]
+    level:    [65, 65]
+
+  17543503:
+    template: Vanguard_Visionary
+    at:       [6.898, -16.000, 125.462, 63]
+    level:    [75, 77]
+
+  17543504:
+    template: Vanguard_Prelate
+    at:       [9.802, -16.000, 126.175, 63]
+    level:    [75, 77]
+
+  17543505:
+    template: Avatar_Idol
+    at:       [-0.126, -16.750, 135.310, 63]
+    level:    [80, 80]
+
+  17543506:
+    template: Loo_Hepe_the_Eyepiercer
+    at:       [0.038, -16.750, 132.475, 63]
+    level:    [80, 80]
+
+  17543507:
+    template: Vanguard_Chanter
+    at:       [-2.011, -16.750, 132.544, 63]
+    level:    [75, 77]
+
+  17543508:
+    template: Vanguard_Inciter
+    at:       [2.030, -16.750, 132.534, 63]
+    level:    [75, 77]
+
+  17543509:
+    template: Manifest_Icon
+    at:       [-29.633, -16.000, 180.463, 67]
+    level:    [65, 65]
+
+  17543510:
+    template: Vanguard_Liberator
+    at:       [-30.743, -16.000, 187.461, 78]
+    level:    [75, 77]
+
+  17543511:
+    template: Vanguard_Liberator
+    at:       [-25.650, -16.000, 185.277, 75]
+    level:    [75, 77]
+
+  17543512:
+    template: Manifest_Icon
+    at:       [30.144, -16.000, 180.091, 66]
+    level:    [65, 65]
+
+  17543513:
+    template: Vanguard_Assassin
+    at:       [31.498, -16.000, 187.078, 58]
+    level:    [75, 77]
+
+  17543514:
+    template: Vanguard_Assassin
+    at:       [25.609, -16.000, 185.433, 57]
+    level:    [75, 77]
+
+  17543515:
+    template: Avatar_Icon
+    at:       [-89.539, -2.500, 39.103, 223]
+    level:    [65, 65]
+
+  17543516:
+    template: Avatar_Icon
+    at:       [-87.950, -4.791, 63.201, 69]
+    level:    [65, 65]
+
+  17543517:
+    template: Avatar_Icon
+    at:       [-88.007, -5.000, 68.205, 67]
+    level:    [65, 65]
+
+  17543518:
+    template: Vanguard_Partisan
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543519:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543520:
+    template: Avatar_Icon
+    at:       [-88.073, -5.000, 71.930, 61]
+    level:    [65, 65]
+
+  17543521:
+    template: Avatar_Icon
+    at:       [-75.252, -2.500, 27.806, 32]
+    level:    [65, 65]
+
+  17543522:
+    template: Manifest_Icon
+    at:       [-65.955, -2.500, 19.051, 29]
+    level:    [65, 65]
+
+  17543523:
+    template: Vanguard_Ogresoother
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543524:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543525:
+    template: Avatar_Icon
+    at:       [-58.635, -2.500, 11.657, 30]
+    level:    [65, 65]
+
+  17543526:
+    template: Tzee_Xicu_Idol
+    at:       [43.618, -2.300, -65.493, 64]
+    level:    [85, 85]
+
+  17543527:
+    template: Maa_Febi_the_Steadfast
+    at:       [41.839, -1.552, -68.386, 64]
+    level:    [80, 80]
+
+  17543528:
+    template: Muu_Febi_the_Steadfast
+    at:       [45.972, -1.530, -68.749, 64]
+    level:    [80, 80]
+
+  17543529:
+    template: Vanguard_Salvager
+    at:       [45.982, -2.500, -62.003, 64]
+    level:    [75, 77]
+
+  17543530:
+    template: Vanguard_Salvager
+    at:       [41.840, -2.500, -62.518, 64]
+    level:    [75, 77]
+
+  17543531:
+    template: Manifest_Icon
+    at:       [46.883, -2.500, -59.432, 65]
+    level:    [65, 65]
+
+  17543532:
+    template: Vanguard_Prelate
+    at:       [52.042, -7.500, -55.036, 60]
+    level:    [75, 77]
+
+  17543533:
+    template: Vanguard_Sentinel
+    at:       [51.975, -2.500, -64.773, 60]
+    level:    [75, 77]
+
+  17543534:
+    template: Vanguard_Skirmisher
+    at:       [52.312, -1.412, -74.598, 60]
+    level:    [75, 77]
+
+  17543535:
+    template: Manifest_Icon
+    at:       [40.965, -2.500, -59.273, 67]
+    level:    [65, 65]
+
+  17543536:
+    template: Vanguard_Prelate
+    at:       [36.082, -7.500, -55.090, 60]
+    level:    [75, 77]
+
+  17543537:
+    template: Vanguard_Persecutor
+    at:       [36.433, -2.406, -65.289, 60]
+    level:    [75, 77]
+
+  17543538:
+    template: Vanguard_Ogresoother
+    at:       [37.008, -1.500, -74.161, 60]
+    level:    [75, 77]
+
+  17543539:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543540:
+    template: Manifest_Icon
+    at:       [26.966, -2.500, -62.680, 2]
+    level:    [65, 65]
+
+  17543541:
+    template: Manifest_Icon
+    at:       [58.172, -2.500, -63.473, 128]
+    level:    [65, 65]
+
+  17543542:
+    template: Manifest_Icon
+    at:       [-224.465, -0.250, -98.443, 3]
+    level:    [65, 65]
+
+  17543543:
+    template: Vanguard_Priest
+    at:       [-214.029, 0.000, -98.399, 0]
+    level:    [75, 77]
+
+  17543544:
+    template: Vanguard_Liberator
+    at:       [-219.573, -0.088, -98.521, 0]
+    level:    [75, 77]
+
+  17543545:
+    template: Avatar_Icon
+    at:       [-203.189, 0.000, -102.304, 139]
+    level:    [65, 65]
+
+  17543546:
+    template: Vanguard_Sentinel
+    at:       [-213.429, 0.000, -102.613, 128]
+    level:    [75, 77]
+
+  17543547:
+    template: Vanguard_Inciter
+    at:       [-209.582, 0.000, -102.609, 128]
+    level:    [75, 77]
+
+  17543548:
+    template: Vanguard_Chanter
+    at:       [-206.562, 0.000, -102.607, 128]
+    level:    [75, 77]
+
+  17543549:
+    template: Manifest_Icon
+    at:       [-224.653, -0.250, -142.750, 2]
+    level:    [65, 65]
+
+  17543550:
+    template: Vanguard_Assassin
+    at:       [-213.090, 0.000, -142.466, 3]
+    level:    [75, 77]
+
+  17543551:
+    template: Vanguard_Visionary
+    at:       [-217.041, 0.124, -142.526, 3]
+    level:    [75, 77]
+
+  17543552:
+    template: Vanguard_Skirmisher
+    at:       [-220.613, 0.168, -142.602, 3]
+    level:    [75, 77]
+
+  17543553:
+    template: Avatar_Icon
+    at:       [-203.798, -0.257, -139.760, 127]
+    level:    [65, 65]
+
+  17543554:
+    template: Vanguard_Exemplar
+    at:       [-207.360, -0.279, -140.077, 123]
+    level:    [75, 77]
+
+  17543555:
+    template: Vanguard_Partisan
+    at:       [-211.441, -0.037, -140.098, 123]
+    level:    [75, 77]
+
+  17543556:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543557:
+    template: Manifest_Icon
+    at:       [-93.850, -2.500, -122.149, 244]
+    level:    [65, 65]
+
+  17543558:
+    template: Vanguard_Visionary
+    at:       [-108.857, -2.501, -136.448, 202]
+    level:    [75, 77]
+
+  17543559:
+    template: Vanguard_Inciter
+    at:       [-107.655, -2.540, -132.314, 207]
+    level:    [75, 77]
+
+  17543560:
+    template: Vanguard_Partisan
+    at:       [-106.577, -2.330, -129.563, 207]
+    level:    [75, 77]
+
+  17543561:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543562:
+    template: Vanguard_Salvager
+    at:       [-105.425, -2.283, -125.591, 247]
+    level:    [75, 77]
+
+  17543563:
+    template: Vanguard_Prelate
+    at:       [-100.456, -2.425, -124.104, 244]
+    level:    [75, 77]
+
+  17543564:
+    template: Avatar_Icon
+    at:       [-24.736, -2.500, -62.622, 84]
+    level:    [65, 65]
+
+  17543565:
+    template: Vanguard_Persecutor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543566:
+    template: Vanguard_Sentinel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543567:
+    template: Vanguard_Ogresoother
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543568:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543569:
+    template: Manifest_Icon
+    at:       [-42.588, -2.500, -93.510, 82]
+    level:    [65, 65]
+
+  17543570:
+    template: Vanguard_Priest
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543571:
+    template: Vanguard_Chanter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543572:
+    template: Vanguard_Salvager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543573:
+    template: Avatar_Icon
+    at:       [-52.670, -2.500, -110.960, 114]
+    level:    [65, 65]
+
+  17543574:
+    template: Vanguard_Prelate
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543575:
+    template: Vanguard_Visionary
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543576:
+    template: Vanguard_Oracle
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543577:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543578:
+    template: Manifest_Icon
+    at:       [2.093, -9.661, 4.365, 52]
+    level:    [65, 65]
+
+  17543579:
+    template: Vanguard_Exemplar
+    at:       [0.151, -9.305, 2.270, 56]
+    level:    [75, 77]
+
+  17543580:
+    template: Vanguard_Inciter
+    at:       [2.544, -9.567, 2.665, 56]
+    level:    [75, 77]
+
+  17543581:
+    template: Vanguard_Assassin
+    at:       [5.229, -9.781, 3.102, 56]
+    level:    [75, 77]
+
+  17543582:
+    template: Manifest_Icon
+    at:       [-8.289, -8.175, 0.905, 61]
+    level:    [65, 65]
+
+  17543583:
+    template: Vanguard_Ogresoother
+    at:       [-10.882, -7.436, -1.736, 56]
+    level:    [75, 77]
+
+  17543584:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543585:
+    template: Vanguard_Salvager
+    at:       [-7.949, -7.942, -1.341, 56]
+    level:    [75, 77]
+
+  17543586:
+    template: Vanguard_Visionary
+    at:       [-5.189, -8.328, -0.511, 56]
+    level:    [75, 77]
+
+  17543587:
+    template: Vanguard_Liberator
+    at:       [-2.736, -8.680, 0.367, 56]
+    level:    [75, 77]
+
+  17543588:
+    template: Avatar_Icon
+    at:       [15.317, -9.744, -20.159, 199]
+    level:    [65, 65]
+
+  17543589:
+    template: Vanguard_Oracle
+    at:       [15.843, -9.702, -16.910, 199]
+    level:    [75, 77]
+
+  17543590:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543591:
+    template: Vanguard_Sentinel
+    at:       [15.127, -9.949, -23.242, 199]
+    level:    [75, 77]
+
+  17543592:
+    template: Avatar_Icon
+    at:       [-15.346, -9.462, -20.585, 200]
+    level:    [65, 65]
+
+  17543593:
+    template: Vanguard_Assassin
+    at:       [-15.031, -8.415, -17.225, 200]
+    level:    [75, 77]
+
+  17543594:
+    template: Vanguard_Sentinel
+    at:       [-15.786, -9.712, -24.042, 200]
+    level:    [75, 77]
+
+  17543595:
+    template: Manifest_Icon
+    at:       [83.476, -2.500, 78.548, 81]
+    level:    [65, 65]
+
+  17543596:
+    template: Vanguard_Persecutor
+    at:       [84.786, -2.500, 82.645, 206]
+    level:    [75, 77]
+
+  17543597:
+    template: Vanguard_Skirmisher
+    at:       [82.246, -2.500, 75.363, 206]
+    level:    [75, 77]
+
+  17543598:
+    template: Vanguard_Prelate
+    at:       [80.465, -2.500, 70.240, 206]
+    level:    [75, 77]
+
+  17543599:
+    template: Manifest_Icon
+    at:       [79.109, -2.500, 79.980, 78]
+    level:    [65, 65]
+
+  17543600:
+    template: Vanguard_Partisan
+    at:       [76.016, -2.500, 71.659, 206]
+    level:    [75, 77]
+
+  17543601:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543602:
+    template: Vanguard_Liberator
+    at:       [77.353, -2.500, 75.070, 206]
+    level:    [75, 77]
+
+  17543603:
+    template: Vanguard_Salvager
+    at:       [80.578, -2.500, 84.596, 206]
+    level:    [75, 77]
+
+  17543604:
+    template: Manifest_Icon
+    at:       [88.733, -5.264, 147.414, 141]
+    level:    [65, 65]
+
+  17543605:
+    template: Vanguard_Skirmisher
+    at:       [93.522, -6.740, 148.672, 130]
+    level:    [75, 77]
+
+  17543606:
+    template: Vanguard_Chanter
+    at:       [97.195, -8.414, 148.654, 130]
+    level:    [75, 77]
+
+  17543607:
+    template: Vanguard_Liberator
+    at:       [97.127, -8.195, 153.891, 130]
+    level:    [75, 77]
+
+  17543608:
+    template: Vanguard_Assassin
+    at:       [93.417, -7.202, 153.554, 130]
+    level:    [75, 77]
+
+  17543609:
+    template: Manifest_Icon
+    at:       [88.672, -5.465, 153.619, 129]
+    level:    [65, 65]
+
+  17543610:
+    template: Vanguard_Persecutor
+    at:       [88.477, -7.639, 179.932, 126]
+    level:    [75, 77]
+
+  17543611:
+    template: Vanguard_Priest
+    at:       [83.390, -7.633, 179.922, 126]
+    level:    [75, 77]
+
+  17543612:
+    template: Vanguard_Exemplar
+    at:       [82.797, -7.640, 175.572, 126]
+    level:    [75, 77]
+
+  17543613:
+    template: Vanguard_Assassin
+    at:       [88.199, -7.634, 175.418, 126]
+    level:    [75, 77]
+
+  17543614:
+    template: Manifest_Icon
+    at:       [101.907, -10.833, 162.412, 255]
+    level:    [65, 65]
+
+  17543615:
+    template: Vanguard_Prelate
+    at:       [106.250, -10.892, 166.733, 255]
+    level:    [75, 77]
+
+  17543616:
+    template: Vanguard_Visionary
+    at:       [106.250, -10.880, 164.711, 255]
+    level:    [75, 77]
+
+  17543617:
+    template: Vanguard_Partisan
+    at:       [106.250, -10.806, 162.530, 255]
+    level:    [75, 77]
+
+  17543618:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543619:
+    template: Vanguard_Ogresoother
+    at:       [106.250, -10.753, 160.283, 255]
+    level:    [75, 77]
+
+  17543620:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543621:
+    template: Vanguard_Inciter
+    at:       [106.250, -10.828, 157.381, 255]
+    level:    [75, 77]
+
+  17543622:
+    template: Manifest_Icon
+    at:       [-18.302, -12.424, 242.444, 165]
+    level:    [65, 65]
+
+  17543623:
+    template: Vanguard_Sentinel
+    at:       [-17.650, -12.500, 246.581, 163]
+    level:    [75, 77]
+
+  17543624:
+    template: Vanguard_Ogresoother
+    at:       [-19.601, -12.404, 244.445, 163]
+    level:    [75, 77]
+
+  17543625:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543626:
+    template: Vanguard_Assassin
+    at:       [-22.075, -12.607, 243.080, 163]
+    level:    [75, 77]
+
+  17543627:
+    template: Vanguard_Priest
+    at:       [-12.804, -12.498, 241.099, 163]
+    level:    [75, 77]
+
+  17543628:
+    template: Vanguard_Chanter
+    at:       [-18.837, -12.500, 237.902, 163]
+    level:    [75, 77]
+
+  17543629:
+    template: Manifest_Icon
+    at:       [-78.240, -8.345, 165.857, 110]
+    level:    [65, 65]
+
+  17543630:
+    template: Vanguard_Skirmisher
+    at:       [-81.281, -7.637, 164.597, 110]
+    level:    [75, 77]
+
+  17543631:
+    template: Vanguard_Prelate
+    at:       [-74.177, -8.865, 169.659, 101]
+    level:    [75, 77]
+
+  17543632:
+    template: Vanguard_Persecutor
+    at:       [-70.301, -9.354, 174.844, 97]
+    level:    [75, 77]
+
+  17543633:
+    template: Vanguard_Partisan
+    at:       [-67.844, -12.203, 185.470, 73]
+    level:    [75, 77]
+
+  17543634:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543635:
+    template: Avatar_Icon
+    at:       [-73.034, -8.937, 170.904, 218]
+    level:    [65, 65]
+
+  17543636:
+    template: Vanguard_Priest
+    at:       [-71.870, -9.068, 172.512, 91]
+    level:    [75, 77]
+
+  17543637:
+    template: Vanguard_Oracle
+    at:       [-69.209, -9.682, 176.467, 93]
+    level:    [75, 77]
+
+  17543638:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543639:
+    template: Vanguard_Ogresoother
+    at:       [-68.080, -10.704, 179.736, 81]
+    level:    [75, 77]
+
+  17543640:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543641:
+    template: Manifest_Icon
+    at:       [-67.738, -11.648, 182.589, 198]
+    level:    [65, 65]
+
+  17543642:
+    template: Vanguard_Sentinel
+    at:       [-67.480, -12.132, 184.698, 75]
+    level:    [75, 77]
+
+  17543643:
+    template: Vanguard_Exemplar
+    at:       [-68.614, -10.670, 179.603, 81]
+    level:    [75, 77]
+
+  17543644:
+    template: Vanguard_Inciter
+    at:       [-70.761, -9.301, 174.422, 85]
+    level:    [75, 77]
+
+  17543645:
+    template: Vanguard_Chanter
+    at:       [-76.748, -8.626, 167.361, 104]
+    level:    [75, 77]
+
+  17543646:
+    template: Manifest_Icon
+    at:       [-88.658, -12.461, 204.168, 34]
+    level:    [65, 65]
+
+  17543647:
+    template: Vanguard_Skirmisher
+    at:       [-101.000, -12.500, 218.178, 35]
+    level:    [75, 77]
+
+  17543648:
+    template: Vanguard_Liberator
+    at:       [-97.862, -12.500, 215.094, 35]
+    level:    [75, 77]
+
+  17543649:
+    template: Vanguard_Persecutor
+    at:       [-94.677, -12.500, 211.148, 35]
+    level:    [75, 77]
+
+  17543650:
+    template: Vanguard_Salvager
+    at:       [-91.557, -12.500, 207.365, 35]
+    level:    [75, 77]
+
+  17543651:
+    template: Vanguard_Oracle
+    at:       [-86.521, -12.482, 201.268, 35]
+    level:    [75, 77]
+
+  17543652:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543653:
+    template: Avatar_Icon
+    at:       [-151.780, -2.500, 148.119, 1]
+    level:    [65, 65]
+
+  17543654:
+    template: Vanguard_Exemplar
+    at:       [-164.264, -2.500, 148.074, 1]
+    level:    [75, 77]
+
+  17543655:
+    template: Vanguard_Inciter
+    at:       [-160.016, -2.500, 148.064, 1]
+    level:    [75, 77]
+
+  17543656:
+    template: Vanguard_Chanter
+    at:       [-156.030, -2.500, 148.081, 1]
+    level:    [75, 77]
+
+  17543657:
+    template: Vanguard_Visionary
+    at:       [-148.214, -2.500, 148.063, 1]
+    level:    [75, 77]
+
+  17543658:
+    template: Vanguard_Assassin
+    at:       [-143.981, -2.500, 148.101, 1]
+    level:    [75, 77]
+
+  17543659:
+    template: Manifest_Icon
+    at:       [35.090, -16.000, 160.117, 65]
+    level:    [65, 65]
+
+  17543660:
+    template: Vanguard_Sentinel
+    at:       [26.601, -16.000, 183.988, 58]
+    level:    [75, 77]
+
+  17543661:
+    template: Vanguard_Exemplar
+    at:       [28.986, -16.000, 179.001, 58]
+    level:    [75, 77]
+
+  17543662:
+    template: Vanguard_Skirmisher
+    at:       [31.372, -16.000, 174.681, 58]
+    level:    [75, 77]
+
+  17543663:
+    template: Vanguard_Prelate
+    at:       [33.509, -16.000, 169.589, 58]
+    level:    [75, 77]
+
+  17543664:
+    template: Vanguard_Salvager
+    at:       [34.598, -16.000, 165.329, 58]
+    level:    [75, 77]
+
+  17543665:
+    template: Manifest_Icon
+    at:       [-0.203, -16.000, 195.025, 63]
+    level:    [65, 65]
+
+  17543666:
+    template: Vanguard_Liberator
+    at:       [17.381, -16.000, 188.069, 88]
+    level:    [75, 77]
+
+  17543667:
+    template: Vanguard_Persecutor
+    at:       [12.816, -16.000, 189.890, 85]
+    level:    [75, 77]
+
+  17543668:
+    template: Vanguard_Oracle
+    at:       [8.967, -16.000, 191.583, 79]
+    level:    [75, 77]
+
+  17543669:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543670:
+    template: Vanguard_Ogresoother
+    at:       [4.836, -16.000, 192.857, 66]
+    level:    [75, 77]
+
+  17543671:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17543672:
+    template: Vanguard_Partisan
+    at:       [-0.182, -16.000, 192.300, 60]
+    level:    [75, 77]
+
+  17543673:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]

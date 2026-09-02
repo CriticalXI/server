@@ -1,0 +1,2386 @@
+# Old-school Dynamis spawn layout for dynamis_tavnazia, generated from
+# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Applied to data/zones/dynamis_tavnazia/mobs.yaml as an RFC 7396 merge patch.
+
+templates:
+
+  # -- Custom templates for mobs the core file lacks, scaffolded from the module's mob_groups/mob_pools inserts --
+
+  Nightmare_Antlion:
+    id:            104
+    display_name:  Ambusher_Antlion
+    species:       antlion
+    type:          [notorious]
+    roam:          [ambush]
+    skill_list_id: 357
+    attributes:
+      combat:
+        skill: great_axe
+        delay: 200
+      jobs: [war, war]
+      render:
+        look:
+          type:  standard
+          model: 1348
+        entity_flags: 3
+        model_size:   2
+        hitbox:       13
+      behaviors:
+        flags:      [aggro_ambush]
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 16000
+    loot:
+      drops:
+        - chance: very_rare
+          item: fiendish_tome_ii_chapter_16
+        - chance: very_rare
+          item: fiendish_tome_ii_chapter_17
+        - chance: uncommon
+          one_of: [forgotten_thought, forgotten_hope]
+        - chance: rare
+          one_of: [warriors_lorica_-1, melee_cyclas_-1, clerics_bliaut_-1, sorcerers_coat_-1, duelists_tabard_-1, assassins_vest_-1, valor_surcoat_-1, abyss_cuirass_-1, monster_jackcoat_-1, bards_justaucorps_-1, scouts_jerkin_-1, saotome_domaru_-1, koga_chainmail_-1, wyrm_mail_-1, summoners_doublet_-1]
+        - chance: very_rare
+          one_of: [mirage_jubbah_-1, commodore_frac_-1, pantin_tobe_-1, etoile_casaque_-1, argute_gown_-1]
+      steal: ordelle_bronzepiece
+
+  Umbral_Diabolos:
+    id:            1028
+    display_name:  Diabolos_Club
+    species:       diabolos
+    type:          [notorious]
+    spell_list_id: 108
+    skill_list_id: 35
+    attributes:
+      combat:
+        skill: staff
+      jobs: [smn, blm]
+      render:
+        look:
+          type:  standard
+          model: 1145
+        entity_flags: 157
+        name_prefix:  32
+        model_size:   2
+        hitbox:       13
+      behaviors:
+        aggressive:     true
+        links:          true
+        true_detection: true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 15000
+    loot:
+      drops:
+        - chance: always
+          item: fiendish_tome_ii_chapter_14
+        - chance: very_rare
+          one_of: [forgotten_thought, forgotten_hope]
+        - chance: very_rare
+          one_of: [lungo-nango_jadeshell, montiont_silverpiece, one_hundred_byne_bill]
+
+  Diaboloss_Shard:
+    type: [called, notorious]
+
+  Hydra_Bard:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Beastmaster:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Black_Mage:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Dark_Knight:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Dragoon:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Monk:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Ninja:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Paladin:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Ranger:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Red_Mage:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Samurai:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Summoner:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Thief:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Warrior:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_White_Mage:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydras_Avatar:
+    type: [called, notorious]
+
+  Hydras_Hound:
+    type: [called, notorious]
+
+  Hydras_Wyvern:
+    type: [called, notorious]
+
+  Kindred_Bard:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Beastmaster:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Black_Mage:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Dark_Knight:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Dragoon:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Monk:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Ninja:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Paladin:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Ranger:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Red_Mage:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Samurai:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Summoner:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Thief:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_Warrior:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindred_White_Mage:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Kindreds_Avatar:
+    type: [called, battlefield, notorious]
+
+  Kindreds_Vouivre:
+    type: [called, notorious]
+
+  Kindreds_Wyvern:
+    type: [called, notorious]
+
+  Nightmare_Bugard:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Cluster:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Hornet:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Leech:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Makara:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Taurus:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Worm:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+spawns:
+
+  16949249:
+    template: Nightmare_Bugard
+    at:       [27.963, -11.975, 41.412, 62]
+    level:    [78, 80]
+
+  16949250:
+    template: Nightmare_Worm
+    at:       [-0.492, -22.750, -26.778, 193]
+    level:    [78, 80]
+
+  16949251:
+    template: Nightmare_Worm
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [78, 80]
+
+  16949252:
+    template: Nightmare_Worm
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [78, 80]
+
+  16949253:
+    template: Nightmare_Worm
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [78, 80]
+
+  16949254:
+    template: Nightmare_Worm
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [78, 80]
+
+  16949255:
+    template: Nightmare_Antlion
+    at:       [-0.945, -36.710, 25.281, 122]
+    level:    [78, 80]
+
+  16949256:
+    template: Nightmare_Antlion
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [78, 80]
+
+  16949257:
+    template: Nightmare_Antlion
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [78, 80]
+
+  16949258:
+    template: Nightmare_Antlion
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [78, 80]
+
+  16949259:
+    template: Umbral_Diabolos
+    at:       [0.170, -24.770, 67.000, 70]
+    level:    [82, 82]
+
+  16949260:
+    template: Umbral_Diabolos
+    at:       [-12.290, -27.710, 89.710, 54]
+    level:    [82, 82]
+
+  16949261:
+    template: Umbral_Diabolos
+    at:       [-2.580, -27.950, 105.450, 127]
+    level:    [82, 82]
+
+  16949262:
+    template: Umbral_Diabolos
+    at:       [-15.710, -27.920, 110.710, 57]
+    level:    [82, 82]
+
+  16949263:
+    template: Diabolos_Spade
+    at:       [3.670, -29.690, 152.060, 103]
+    level:    [82, 82]
+
+  16949264:
+    template: Diabolos_Heart
+    at:       [-43.830, -29.670, 155.470, 33]
+    level:    [82, 82]
+
+  16949265:
+    template: Diabolos_Diamond
+    at:       [8.280, -26.280, 123.050, 143]
+    level:    [82, 82]
+
+  16949266:
+    template: Diabolos_Club
+    at:       [-35.940, -27.230, 119.300, 230]
+    level:    [82, 82]
+
+  16949267:
+    template: Diaboloss_Shard
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949268:
+    template: Diaboloss_Shard
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949269:
+    template: Nightmare_Hornet
+    at:       [-28.033, -22.028, 27.904, 161]
+    level:    [78, 80]
+
+  16949270:
+    template: Nightmare_Hornet
+    at:       [-38.946, -22.242, 39.275, 34]
+    level:    [78, 80]
+
+  16949271:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949272:
+    template: Nightmare_Hornet
+    at:       [-43.482, -22.004, 43.500, 129]
+    level:    [78, 80]
+
+  16949273:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 2]
+    level:    [78, 80]
+
+  16949274:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949275:
+    template: Nightmare_Hornet
+    at:       [-28.569, -22.034, -28.790, 97]
+    level:    [78, 80]
+
+  16949276:
+    template: Nightmare_Hornet
+    at:       [-40.042, -22.273, -39.838, 223]
+    level:    [78, 80]
+
+  16949277:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949278:
+    template: Nightmare_Hornet
+    at:       [-45.799, -22.004, -43.748, 128]
+    level:    [78, 80]
+
+  16949279:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 0]
+    level:    [78, 80]
+
+  16949280:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949281:
+    template: Nightmare_Hornet
+    at:       [-38.946, -22.242, 39.275, 34]
+    level:    [78, 80]
+
+  16949282:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 161]
+    level:    [78, 80]
+
+  16949283:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949284:
+    template: Nightmare_Hornet
+    at:       [-61.064, -22.037, 43.747, 2]
+    level:    [78, 80]
+
+  16949285:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 129]
+    level:    [78, 80]
+
+  16949286:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949287:
+    template: Nightmare_Hornet
+    at:       [-40.042, -22.273, -39.838, 223]
+    level:    [78, 80]
+
+  16949288:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 97]
+    level:    [78, 80]
+
+  16949289:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949290:
+    template: Nightmare_Hornet
+    at:       [-61.878, -22.016, -43.921, 0]
+    level:    [78, 80]
+
+  16949291:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 128]
+    level:    [78, 80]
+
+  16949292:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949293:
+    template: Vanguard_Eye
+    at:       [-77.672, -20.125, 63.109, 64]
+    level:    [70, 70]
+
+  16949294:
+    template: Hydra_Warrior
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949295:
+    template: Hydra_Red_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949296:
+    template: Hydra_Ranger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949297:
+    template: Vanguard_Eye
+    at:       [-98.080, -27.020, 7.020, 190]
+    level:    [70, 70]
+
+  16949298:
+    template: Hydra_Monk
+    at:       [-98.076, -27.111, 9.217, 192]
+    level:    [82, 82]
+
+  16949299:
+    template: Hydra_Bard
+    at:       [-97.984, -27.130, 12.228, 192]
+    level:    [82, 82]
+
+  16949300:
+    template: Hydra_Samurai
+    at:       [-97.896, -26.836, 15.107, 192]
+    level:    [82, 82]
+
+  16949301:
+    template: Hydra_Ninja
+    at:       [-97.800, -26.861, 18.269, 192]
+    level:    [82, 82]
+
+  16949302:
+    template: Vanguard_Eye
+    at:       [-96.590, -26.745, 24.928, 192]
+    level:    [70, 70]
+
+  16949303:
+    template: Hydra_Dark_Knight
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949304:
+    template: Hydra_Beastmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949305:
+    template: Hydras_Hound
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949306:
+    template: Hydra_Summoner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949307:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949308:
+    template: Vanguard_Eye
+    at:       [-112.802, -27.000, 41.735, 255]
+    level:    [70, 70]
+
+  16949309:
+    template: Hydra_White_Mage
+    at:       [-109.642, -27.007, 41.807, 0]
+    level:    [82, 82]
+
+  16949310:
+    template: Hydra_Black_Mage
+    at:       [-109.646, -27.084, 44.835, 0]
+    level:    [82, 82]
+
+  16949311:
+    template: Hydra_Thief
+    at:       [-109.650, -27.009, 47.851, 0]
+    level:    [82, 82]
+
+  16949312:
+    template: Hydra_Paladin
+    at:       [-109.638, -26.946, 38.779, 0]
+    level:    [82, 82]
+
+  16949313:
+    template: Hydra_Dragoon
+    at:       [-109.634, -26.911, 35.883, 0]
+    level:    [82, 82]
+
+  16949314:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949315:
+    template: Vanguard_Eye
+    at:       [-78.361, -20.000, -65.165, 192]
+    level:    [70, 70]
+
+  16949316:
+    template: Hydra_White_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949317:
+    template: Hydra_Black_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949318:
+    template: Hydra_Red_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949319:
+    template: Vanguard_Eye
+    at:       [-98.250, -27.020, -6.920, 63]
+    level:    [70, 70]
+
+  16949320:
+    template: Hydra_Beastmaster
+    at:       [-98.199, -27.114, -10.132, 64]
+    level:    [82, 82]
+
+  16949321:
+    template: Hydras_Hound
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949322:
+    template: Hydra_Dragoon
+    at:       [-98.223, -27.026, -13.016, 64]
+    level:    [82, 82]
+
+  16949323:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949324:
+    template: Hydra_Summoner
+    at:       [-98.249, -26.787, -16.160, 64]
+    level:    [82, 82]
+
+  16949325:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949326:
+    template: Vanguard_Eye
+    at:       [-96.408, -26.855, -22.018, 70]
+    level:    [70, 70]
+
+  16949327:
+    template: Hydra_Warrior
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949328:
+    template: Hydra_Monk
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949329:
+    template: Hydra_Thief
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949330:
+    template: Hydra_Samurai
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949331:
+    template: Vanguard_Eye
+    at:       [-112.867, -27.000, -42.330, 253]
+    level:    [70, 70]
+
+  16949332:
+    template: Hydra_Paladin
+    at:       [-109.539, -27.030, -42.359, 0]
+    level:    [82, 82]
+
+  16949333:
+    template: Hydra_Dark_Knight
+    at:       [-106.523, -27.089, -42.360, 0]
+    level:    [82, 82]
+
+  16949334:
+    template: Hydra_Bard
+    at:       [-103.507, -27.000, -42.360, 0]
+    level:    [82, 82]
+
+  16949335:
+    template: Hydra_Ranger
+    at:       [-100.468, -27.000, -42.360, 0]
+    level:    [82, 82]
+
+  16949336:
+    template: Hydra_Ninja
+    at:       [-97.572, -27.000, -42.361, 0]
+    level:    [82, 82]
+
+  16949337:
+    template: Vanguard_Eye
+    at:       [-77.779, -23.764, 29.454, 192]
+    level:    [70, 70]
+
+  16949338:
+    template: Hydra_Monk
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949339:
+    template: Hydra_Paladin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949340:
+    template: Hydra_Ranger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949341:
+    template: Hydra_Summoner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949342:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949343:
+    template: Vanguard_Eye
+    at:       [-98.026, -26.901, 5.717, 192]
+    level:    [70, 70]
+
+  16949344:
+    template: Hydra_Warrior
+    at:       [-98.076, -27.111, 9.217, 192]
+    level:    [82, 82]
+
+  16949345:
+    template: Hydra_White_Mage
+    at:       [-97.984, -27.130, 12.228, 192]
+    level:    [82, 82]
+
+  16949346:
+    template: Hydra_Red_Mage
+    at:       [-97.896, -26.836, 15.107, 192]
+    level:    [82, 82]
+
+  16949347:
+    template: Hydra_Thief
+    at:       [-97.800, -26.861, 18.269, 192]
+    level:    [82, 82]
+
+  16949348:
+    template: Vanguard_Eye
+    at:       [-96.472, -27.000, 53.235, 64]
+    level:    [70, 70]
+
+  16949349:
+    template: Hydra_Black_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949350:
+    template: Hydra_Dark_Knight
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949351:
+    template: Hydra_Ninja
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949352:
+    template: Vanguard_Eye
+    at:       [-115.147, -27.250, 41.990, 0]
+    level:    [70, 70]
+
+  16949353:
+    template: Hydra_Beastmaster
+    at:       [-109.642, -27.007, 41.807, 0]
+    level:    [82, 82]
+
+  16949354:
+    template: Hydras_Hound
+    at:       [-109.646, -27.084, 44.835, 0]
+    level:    [82, 82]
+
+  16949355:
+    template: Hydra_Bard
+    at:       [-109.650, -27.009, 47.851, 0]
+    level:    [82, 82]
+
+  16949356:
+    template: Hydra_Samurai
+    at:       [-109.638, -26.946, 38.779, 0]
+    level:    [82, 82]
+
+  16949357:
+    template: Hydra_Dragoon
+    at:       [-109.634, -26.911, 35.883, 0]
+    level:    [82, 82]
+
+  16949358:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949359:
+    template: Vanguard_Eye
+    at:       [-78.414, -23.135, -32.503, 64]
+    level:    [70, 70]
+
+  16949360:
+    template: Hydra_Monk
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949361:
+    template: Hydra_White_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949362:
+    template: Hydra_Bard
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949363:
+    template: Hydra_Ninja
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949364:
+    template: Vanguard_Eye
+    at:       [-98.262, -26.905, -5.626, 64]
+    level:    [70, 70]
+
+  16949365:
+    template: Hydra_Black_Mage
+    at:       [-98.199, -27.114, -10.132, 64]
+    level:    [82, 82]
+
+  16949366:
+    template: Hydra_Ranger
+    at:       [-98.223, -27.026, -13.016, 64]
+    level:    [82, 82]
+
+  16949367:
+    template: Hydra_Summoner
+    at:       [-98.249, -26.787, -16.160, 64]
+    level:    [82, 82]
+
+  16949368:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949369:
+    template: Vanguard_Eye
+    at:       [-101.247, -26.907, -54.398, 199]
+    level:    [70, 70]
+
+  16949370:
+    template: Hydra_Warrior
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949371:
+    template: Hydra_Paladin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949372:
+    template: Hydra_Dark_Knight
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949373:
+    template: Hydra_Samurai
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949374:
+    template: Vanguard_Eye
+    at:       [-115.173, -27.250, -42.064, 0]
+    level:    [70, 70]
+
+  16949375:
+    template: Hydra_Red_Mage
+    at:       [-109.539, -27.030, -42.359, 0]
+    level:    [82, 82]
+
+  16949376:
+    template: Hydra_Thief
+    at:       [-106.523, -27.089, -42.360, 0]
+    level:    [82, 82]
+
+  16949377:
+    template: Hydra_Beastmaster
+    at:       [-103.507, -27.000, -42.360, 0]
+    level:    [82, 82]
+
+  16949378:
+    template: Hydras_Hound
+    at:       [-100.468, -27.000, -42.360, 0]
+    level:    [82, 82]
+
+  16949379:
+    template: Hydra_Dragoon
+    at:       [-97.572, -27.000, -42.361, 0]
+    level:    [82, 82]
+
+  16949380:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  16949381:
+    template: Nightmare_Leech
+    at:       [-75.487, -20.000, 66.306, 128]
+    level:    [78, 80]
+
+  16949382:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 0]
+    level:    [78, 80]
+
+  16949383:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949384:
+    template: Nightmare_Leech
+    at:       [-89.054, -20.095, 71.007, 64]
+    level:    [78, 80]
+
+  16949385:
+    template: Nightmare_Leech
+    at:       [-89.168, -20.218, 74.161, 64]
+    level:    [78, 80]
+
+  16949386:
+    template: Nightmare_Leech
+    at:       [-85.198, -20.115, 74.295, 64]
+    level:    [78, 80]
+
+  16949387:
+    template: Nightmare_Leech
+    at:       [-88.291, -19.878, 63.399, 65]
+    level:    [78, 80]
+
+  16949388:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 192]
+    level:    [78, 80]
+
+  16949389:
+    template: Nightmare_Leech
+    at:       [-87.302, -14.000, 39.801, 36]
+    level:    [78, 80]
+
+  16949390:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 167]
+    level:    [78, 80]
+
+  16949391:
+    template: Nightmare_Leech
+    at:       [-88.398, -19.943, 66.149, 0]
+    level:    [78, 80]
+
+  16949392:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 128]
+    level:    [78, 80]
+
+  16949393:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949394:
+    template: Nightmare_Leech
+    at:       [-90.409, -20.214, 71.150, 64]
+    level:    [78, 80]
+
+  16949395:
+    template: Nightmare_Leech
+    at:       [-89.168, -20.218, 74.161, 64]
+    level:    [78, 80]
+
+  16949396:
+    template: Nightmare_Leech
+    at:       [-85.198, -20.115, 74.295, 64]
+    level:    [78, 80]
+
+  16949397:
+    template: Nightmare_Leech
+    at:       [-88.800, -14.326, 46.363, 192]
+    level:    [78, 80]
+
+  16949398:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 65]
+    level:    [78, 80]
+
+  16949399:
+    template: Nightmare_Leech
+    at:       [-74.946, -10.973, 22.593, 167]
+    level:    [78, 80]
+
+  16949400:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 36]
+    level:    [78, 80]
+
+  16949401:
+    template: Nightmare_Leech
+    at:       [-73.850, -11.183, 19.139, 64]
+    level:    [78, 80]
+
+  16949402:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 192]
+    level:    [78, 80]
+
+  16949403:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949404:
+    template: Nightmare_Leech
+    at:       [-70.704, -11.303, 6.900, 128]
+    level:    [78, 80]
+
+  16949405:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 0]
+    level:    [78, 80]
+
+  16949406:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949407:
+    template: Nightmare_Leech
+    at:       [-89.714, -12.785, 9.049, 68]
+    level:    [78, 80]
+
+  16949408:
+    template: Nightmare_Leech
+    at:       [-89.808, -12.706, 6.996, 68]
+    level:    [78, 80]
+
+  16949409:
+    template: Nightmare_Leech
+    at:       [-87.921, -12.683, 6.415, 64]
+    level:    [78, 80]
+
+  16949410:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 192]
+    level:    [78, 80]
+
+  16949411:
+    template: Nightmare_Leech
+    at:       [-73.905, -11.129, 7.183, 192]
+    level:    [78, 80]
+
+  16949412:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 64]
+    level:    [78, 80]
+
+  16949413:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949414:
+    template: Nightmare_Leech
+    at:       [-87.972, -12.658, 6.992, 0]
+    level:    [78, 80]
+
+  16949415:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 128]
+    level:    [78, 80]
+
+  16949416:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949417:
+    template: Nightmare_Leech
+    at:       [-90.072, -12.768, 6.824, 0]
+    level:    [78, 80]
+
+  16949418:
+    template: Nightmare_Leech
+    at:       [-89.808, -12.706, 6.996, 0]
+    level:    [78, 80]
+
+  16949419:
+    template: Nightmare_Leech
+    at:       [-87.922, -12.956, -3.517, 192]
+    level:    [78, 80]
+
+  16949420:
+    template: Nightmare_Leech
+    at:       [1.000, 1.000, 1.000, 64]
+    level:    [78, 80]
+
+  16949421:
+    template: Nightmare_Makara
+    at:       [-77.313, -20.000, -69.949, 128]
+    level:    [78, 80]
+
+  16949422:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 0]
+    level:    [78, 80]
+
+  16949423:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949424:
+    template: Nightmare_Makara
+    at:       [-89.551, -20.207, -73.441, 200]
+    level:    [78, 80]
+
+  16949425:
+    template: Nightmare_Makara
+    at:       [-88.078, -20.107, -73.649, 200]
+    level:    [78, 80]
+
+  16949426:
+    template: Nightmare_Makara
+    at:       [-86.508, -20.126, -74.052, 200]
+    level:    [78, 80]
+
+  16949427:
+    template: Nightmare_Makara
+    at:       [-89.022, -19.962, -65.367, 195]
+    level:    [78, 80]
+
+  16949428:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 68]
+    level:    [78, 80]
+
+  16949429:
+    template: Nightmare_Makara
+    at:       [-87.465, -14.000, -40.187, 216]
+    level:    [78, 80]
+
+  16949430:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 87]
+    level:    [78, 80]
+
+  16949431:
+    template: Nightmare_Makara
+    at:       [-90.229, -20.204, -69.921, 0]
+    level:    [78, 80]
+
+  16949432:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 128]
+    level:    [78, 80]
+
+  16949433:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949434:
+    template: Nightmare_Makara
+    at:       [-90.503, -20.268, -72.975, 200]
+    level:    [78, 80]
+
+  16949435:
+    template: Nightmare_Makara
+    at:       [-88.078, -20.107, -73.649, 200]
+    level:    [78, 80]
+
+  16949436:
+    template: Nightmare_Makara
+    at:       [-86.508, -20.126, -74.052, 200]
+    level:    [78, 80]
+
+  16949437:
+    template: Nightmare_Makara
+    at:       [-87.687, -14.115, -44.783, 68]
+    level:    [78, 80]
+
+  16949438:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 195]
+    level:    [78, 80]
+
+  16949439:
+    template: Nightmare_Makara
+    at:       [-74.174, -11.152, -20.675, 87]
+    level:    [78, 80]
+
+  16949440:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 216]
+    level:    [78, 80]
+
+  16949441:
+    template: Nightmare_Makara
+    at:       [-74.365, -11.132, -20.946, 192]
+    level:    [78, 80]
+
+  16949442:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 64]
+    level:    [78, 80]
+
+  16949443:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949444:
+    template: Nightmare_Makara
+    at:       [-70.991, -11.139, -7.089, 128]
+    level:    [78, 80]
+
+  16949445:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 0]
+    level:    [78, 80]
+
+  16949446:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949447:
+    template: Nightmare_Makara
+    at:       [-87.216, -12.672, -9.929, 187]
+    level:    [78, 80]
+
+  16949448:
+    template: Nightmare_Makara
+    at:       [-84.465, -12.489, -9.918, 187]
+    level:    [78, 80]
+
+  16949449:
+    template: Nightmare_Makara
+    at:       [-87.929, -12.688, -6.751, 192]
+    level:    [78, 80]
+
+  16949450:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 64]
+    level:    [78, 80]
+
+  16949451:
+    template: Nightmare_Makara
+    at:       [-74.305, -11.170, -7.046, 64]
+    level:    [78, 80]
+
+  16949452:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 192]
+    level:    [78, 80]
+
+  16949453:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949454:
+    template: Nightmare_Makara
+    at:       [-83.866, -12.399, -6.940, 0]
+    level:    [78, 80]
+
+  16949455:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 128]
+    level:    [78, 80]
+
+  16949456:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949457:
+    template: Nightmare_Makara
+    at:       [-87.006, -12.587, -8.893, 187]
+    level:    [78, 80]
+
+  16949458:
+    template: Nightmare_Makara
+    at:       [-84.465, -12.489, -9.918, 187]
+    level:    [78, 80]
+
+  16949459:
+    template: Nightmare_Makara
+    at:       [-88.016, -12.814, 3.973, 64]
+    level:    [78, 80]
+
+  16949460:
+    template: Nightmare_Makara
+    at:       [1.000, 1.000, 1.000, 192]
+    level:    [78, 80]
+
+  16949461:
+    template: Nightmare_Hornet
+    at:       [28.097, -36.021, 28.075, 223]
+    level:    [78, 80]
+
+  16949462:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 93]
+    level:    [78, 80]
+
+  16949463:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949464:
+    template: Nightmare_Hornet
+    at:       [44.895, -36.005, 43.671, 1]
+    level:    [78, 80]
+
+  16949465:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 129]
+    level:    [78, 80]
+
+  16949466:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949467:
+    template: Nightmare_Hornet
+    at:       [28.140, -36.018, -28.129, 34]
+    level:    [78, 80]
+
+  16949468:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 161]
+    level:    [78, 80]
+
+  16949469:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949470:
+    template: Nightmare_Hornet
+    at:       [45.364, -36.015, -43.568, 1]
+    level:    [78, 80]
+
+  16949471:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 129]
+    level:    [78, 80]
+
+  16949472:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949473:
+    template: Nightmare_Hornet
+    at:       [39.899, -36.255, 40.367, 93]
+    level:    [78, 80]
+
+  16949474:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 223]
+    level:    [78, 80]
+
+  16949475:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949476:
+    template: Nightmare_Hornet
+    at:       [60.800, -36.087, 43.341, 129]
+    level:    [78, 80]
+
+  16949477:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949478:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949479:
+    template: Nightmare_Hornet
+    at:       [39.863, -36.270, -40.884, 161]
+    level:    [78, 80]
+
+  16949480:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 34]
+    level:    [78, 80]
+
+  16949481:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949482:
+    template: Nightmare_Hornet
+    at:       [62.677, -36.010, -44.183, 129]
+    level:    [78, 80]
+
+  16949483:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949484:
+    template: Nightmare_Hornet
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949485:
+    template: Vanguard_Eye
+    at:       [79.261, -34.740, 57.925, 64]
+    level:    [70, 70]
+
+  16949486:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949487:
+    template: Kindred_Warrior
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949488:
+    template: Kindred_Thief
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949489:
+    template: Vanguard_Eye
+    at:       [96.404, -40.790, 25.555, 128]
+    level:    [70, 70]
+
+  16949490:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949491:
+    template: Kindred_Black_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949492:
+    template: Kindred_Beastmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949493:
+    template: Kindreds_Vouivre
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949494:
+    template: Kindred_Ninja
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949495:
+    template: Vanguard_Eye
+    at:       [74.329, -34.000, 63.960, 0]
+    level:    [70, 70]
+
+  16949496:
+    template: Nightmare_Taurus
+    at:       [77.473, -34.014, 63.948, 0]
+    level:    [78, 80]
+
+  16949497:
+    template: Kindred_Ranger
+    at:       [77.652, -34.340, 60.813, 0]
+    level:    [77, 80]
+
+  16949498:
+    template: Kindred_Samurai
+    at:       [77.823, -35.096, 57.802, 0]
+    level:    [77, 80]
+
+  16949499:
+    template: Vanguard_Eye
+    at:       [97.976, -40.739, 0.174, 192]
+    level:    [70, 70]
+
+  16949500:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949501:
+    template: Kindred_Monk
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949502:
+    template: Kindred_White_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949503:
+    template: Vanguard_Eye
+    at:       [99.841, -40.901, 34.953, 195]
+    level:    [70, 70]
+
+  16949504:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949505:
+    template: Kindred_Paladin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949506:
+    template: Kindred_Dark_Knight
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949507:
+    template: Kindred_Summoner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949508:
+    template: Kindreds_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949509:
+    template: Vanguard_Eye
+    at:       [113.120, -41.000, 41.790, 126]
+    level:    [70, 70]
+
+  16949510:
+    template: Nightmare_Taurus
+    at:       [110.038, -41.000, 41.746, 128]
+    level:    [78, 80]
+
+  16949511:
+    template: Kindred_Red_Mage
+    at:       [107.146, -41.061, 41.723, 128]
+    level:    [77, 80]
+
+  16949512:
+    template: Kindred_Bard
+    at:       [104.122, -41.005, 41.698, 128]
+    level:    [77, 80]
+
+  16949513:
+    template: Kindred_Dragoon
+    at:       [101.095, -41.000, 41.674, 128]
+    level:    [77, 80]
+
+  16949514:
+    template: Kindreds_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949515:
+    template: Vanguard_Eye
+    at:       [78.707, -38.100, -28.094, 64]
+    level:    [70, 70]
+
+  16949516:
+    template: Kindred_Black_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949517:
+    template: Kindred_Paladin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949518:
+    template: Kindred_Bard
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949519:
+    template: Kindred_Summoner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949520:
+    template: Kindreds_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949521:
+    template: Vanguard_Eye
+    at:       [95.289, -40.693, -23.559, 128]
+    level:    [70, 70]
+
+  16949522:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949523:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949524:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949525:
+    template: Vanguard_Eye
+    at:       [74.313, -34.000, -64.062, 0]
+    level:    [70, 70]
+
+  16949526:
+    template: Kindred_Warrior
+    at:       [78.293, -34.004, -64.025, 0]
+    level:    [77, 80]
+
+  16949527:
+    template: Kindred_Ninja
+    at:       [78.240, -34.257, -61.006, 0]
+    level:    [77, 80]
+
+  16949528:
+    template: Kindred_Dragoon
+    at:       [78.189, -34.928, -58.142, 0]
+    level:    [77, 80]
+
+  16949529:
+    template: Kindreds_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949530:
+    template: Vanguard_Eye
+    at:       [97.877, -40.748, -0.709, 64]
+    level:    [70, 70]
+
+  16949531:
+    template: Kindred_Red_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949532:
+    template: Kindred_Dark_Knight
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949533:
+    template: Kindred_Ranger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949534:
+    template: Vanguard_Eye
+    at:       [97.843, -40.872, -35.848, 64]
+    level:    [70, 70]
+
+  16949535:
+    template: Kindred_White_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949536:
+    template: Kindred_Thief
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949537:
+    template: Kindred_Beastmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949538:
+    template: Kindreds_Vouivre
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949539:
+    template: Kindred_Samurai
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949540:
+    template: Vanguard_Eye
+    at:       [112.950, -41.000, -42.220, 125]
+    level:    [70, 70]
+
+  16949541:
+    template: Nightmare_Taurus
+    at:       [110.135, -41.000, -42.146, 128]
+    level:    [78, 80]
+
+  16949542:
+    template: Nightmare_Taurus
+    at:       [107.103, -41.075, -42.118, 128]
+    level:    [78, 80]
+
+  16949543:
+    template: Nightmare_Taurus
+    at:       [107.088, -41.071, -45.110, 128]
+    level:    [78, 80]
+
+  16949544:
+    template: Kindred_Monk
+    at:       [110.129, -41.066, -45.106, 128]
+    level:    [77, 80]
+
+  16949545:
+    template: Vanguard_Eye
+    at:       [79.130, -37.304, 32.114, 192]
+    level:    [70, 70]
+
+  16949546:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949547:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949548:
+    template: Kindred_Warrior
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949549:
+    template: Kindred_Thief
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949550:
+    template: Vanguard_Eye
+    at:       [78.148, -38.568, 25.458, 0]
+    level:    [70, 70]
+
+  16949551:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949552:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949553:
+    template: Kindred_Black_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949554:
+    template: Kindred_Beastmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949555:
+    template: Kindreds_Vouivre
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949556:
+    template: Kindred_Ninja
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949557:
+    template: Vanguard_Eye
+    at:       [72.770, -34.250, 63.962, 0]
+    level:    [70, 70]
+
+  16949558:
+    template: Nightmare_Taurus
+    at:       [77.473, -34.014, 63.948, 0]
+    level:    [78, 80]
+
+  16949559:
+    template: Nightmare_Taurus
+    at:       [77.652, -34.340, 60.813, 0]
+    level:    [78, 80]
+
+  16949560:
+    template: Kindred_Ranger
+    at:       [77.823, -35.096, 57.802, 0]
+    level:    [77, 80]
+
+  16949561:
+    template: Kindred_Samurai
+    at:       [77.994, -35.495, 54.791, 0]
+    level:    [77, 80]
+
+  16949562:
+    template: Vanguard_Eye
+    at:       [44.083, -36.019, 43.754, 98]
+    level:    [70, 70]
+
+  16949563:
+    template: Nightmare_Taurus
+    at:       [41.019, -36.173, 41.012, 98]
+    level:    [78, 80]
+
+  16949564:
+    template: Nightmare_Taurus
+    at:       [38.155, -36.204, 38.448, 98]
+    level:    [78, 80]
+
+  16949565:
+    template: Kindred_Monk
+    at:       [35.297, -36.192, 35.889, 98]
+    level:    [77, 80]
+
+  16949566:
+    template: Kindred_White_Mage
+    at:       [32.132, -36.257, 33.055, 98]
+    level:    [77, 80]
+
+  16949567:
+    template: Vanguard_Eye
+    at:       [101.450, -40.946, 55.068, 67]
+    level:    [70, 70]
+
+  16949568:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949569:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949570:
+    template: Kindred_Paladin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949571:
+    template: Kindred_Dark_Knight
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949572:
+    template: Kindred_Summoner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949573:
+    template: Kindreds_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949574:
+    template: Vanguard_Eye
+    at:       [113.120, -41.000, 41.790, 126]
+    level:    [70, 70]
+
+  16949575:
+    template: Nightmare_Taurus
+    at:       [110.038, -41.000, 41.746, 128]
+    level:    [78, 80]
+
+  16949576:
+    template: Nightmare_Taurus
+    at:       [107.146, -41.061, 41.723, 128]
+    level:    [78, 80]
+
+  16949577:
+    template: Kindred_Red_Mage
+    at:       [104.122, -41.005, 41.698, 128]
+    level:    [77, 80]
+
+  16949578:
+    template: Kindred_Bard
+    at:       [101.095, -41.000, 41.674, 128]
+    level:    [77, 80]
+
+  16949579:
+    template: Kindred_Dragoon
+    at:       [98.075, -41.000, 41.650, 128]
+    level:    [77, 80]
+
+  16949580:
+    template: Kindreds_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949581:
+    template: Vanguard_Eye
+    at:       [78.369, -35.065, -57.441, 192]
+    level:    [70, 70]
+
+  16949582:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949583:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949584:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949585:
+    template: Vanguard_Eye
+    at:       [80.441, -39.268, -23.473, 0]
+    level:    [70, 70]
+
+  16949586:
+    template: Kindred_Beastmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949587:
+    template: Kindreds_Vouivre
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949588:
+    template: Kindred_Dragoon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949589:
+    template: Kindreds_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949590:
+    template: Kindred_Summoner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949591:
+    template: Kindreds_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949592:
+    template: Vanguard_Eye
+    at:       [72.683, -34.250, -64.000, 0]
+    level:    [70, 70]
+
+  16949593:
+    template: Kindred_Warrior
+    at:       [78.293, -34.004, -64.025, 0]
+    level:    [77, 80]
+
+  16949594:
+    template: Kindred_White_Mage
+    at:       [78.240, -34.257, -61.006, 0]
+    level:    [77, 80]
+
+  16949595:
+    template: Kindred_Bard
+    at:       [78.189, -34.928, -58.142, 0]
+    level:    [77, 80]
+
+  16949596:
+    template: Kindred_Ranger
+    at:       [78.138, -35.374, -55.263, 0]
+    level:    [77, 80]
+
+  16949597:
+    template: Vanguard_Eye
+    at:       [43.517, -36.007, -43.542, 162]
+    level:    [70, 70]
+
+  16949598:
+    template: Nightmare_Taurus
+    at:       [40.533, -36.225, -40.325, 162]
+    level:    [78, 80]
+
+  16949599:
+    template: Kindred_Black_Mage
+    at:       [37.526, -36.173, -37.085, 162]
+    level:    [77, 80]
+
+  16949600:
+    template: Vanguard_Eye
+    at:       [97.688, -41.000, -54.931, 192]
+    level:    [70, 70]
+
+  16949601:
+    template: Nightmare_Taurus
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949602:
+    template: Kindred_Thief
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949603:
+    template: Kindred_Samurai
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [77, 80]
+
+  16949604:
+    template: Vanguard_Eye
+    at:       [115.299, -41.250, -41.970, 128]
+    level:    [70, 70]
+
+  16949605:
+    template: Nightmare_Taurus
+    at:       [110.135, -41.000, -42.146, 128]
+    level:    [78, 80]
+
+  16949606:
+    template: Kindred_Monk
+    at:       [107.103, -41.075, -42.118, 128]
+    level:    [77, 80]
+
+  16949607:
+    template: Kindred_Red_Mage
+    at:       [104.072, -41.003, -42.090, 128]
+    level:    [77, 80]
+
+  16949608:
+    template: Kindred_Paladin
+    at:       [104.076, -40.942, -45.114, 128]
+    level:    [77, 80]
+
+  16949609:
+    template: Kindred_Dark_Knight
+    at:       [107.088, -41.071, -45.110, 128]
+    level:    [77, 80]
+
+  16949610:
+    template: Kindred_Ninja
+    at:       [110.129, -41.066, -45.106, 128]
+    level:    [77, 80]
+
+  16949611:
+    template: Nightmare_Cluster
+    at:       [86.817, -33.873, 64.448, 64]
+    level:    [78, 80]
+
+  16949612:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 192]
+    level:    [78, 80]
+
+  16949613:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949614:
+    template: Nightmare_Cluster
+    at:       [88.357, -28.000, 39.513, 95]
+    level:    [78, 80]
+
+  16949615:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 221]
+    level:    [78, 80]
+
+  16949616:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949617:
+    template: Nightmare_Cluster
+    at:       [86.714, -28.002, 42.887, 192]
+    level:    [78, 80]
+
+  16949618:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 64]
+    level:    [78, 80]
+
+  16949619:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949620:
+    template: Nightmare_Cluster
+    at:       [74.229, -24.829, 24.533, 221]
+    level:    [78, 80]
+
+  16949621:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 95]
+    level:    [78, 80]
+
+  16949622:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949623:
+    template: Nightmare_Cluster
+    at:       [75.733, -24.850, 25.553, 70]
+    level:    [78, 80]
+
+  16949624:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 197]
+    level:    [78, 80]
+
+  16949625:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949626:
+    template: Nightmare_Cluster
+    at:       [83.785, -25.000, -2.212, 145]
+    level:    [78, 80]
+
+  16949627:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 15]
+    level:    [78, 80]
+
+  16949628:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949629:
+    template: Nightmare_Cluster
+    at:       [74.279, -25.094, -21.215, 184]
+    level:    [78, 80]
+
+  16949630:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 51]
+    level:    [78, 80]
+
+  16949631:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949632:
+    template: Nightmare_Cluster
+    at:       [71.941, -24.908, 0.984, 197]
+    level:    [78, 80]
+
+  16949633:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 70]
+    level:    [78, 80]
+
+  16949634:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949635:
+    template: Nightmare_Cluster
+    at:       [69.972, -25.000, 3.957, 15]
+    level:    [78, 80]
+
+  16949636:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 145]
+    level:    [78, 80]
+
+  16949637:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949638:
+    template: Nightmare_Cluster
+    at:       [69.750, -25.000, 2.118, 51]
+    level:    [78, 80]
+
+  16949639:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 184]
+    level:    [78, 80]
+
+  16949640:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949641:
+    template: Nightmare_Cluster
+    at:       [87.364, -33.758, -61.003, 192]
+    level:    [78, 80]
+
+  16949642:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 64]
+    level:    [78, 80]
+
+  16949643:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949644:
+    template: Nightmare_Cluster
+    at:       [87.150, -28.000, -38.066, 164]
+    level:    [78, 80]
+
+  16949645:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 34]
+    level:    [78, 80]
+
+  16949646:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949647:
+    template: Nightmare_Cluster
+    at:       [87.128, -28.000, -39.833, 64]
+    level:    [78, 80]
+
+  16949648:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 192]
+    level:    [78, 80]
+
+  16949649:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16949650:
+    template: Nightmare_Cluster
+    at:       [74.675, -24.925, -22.850, 34]
+    level:    [78, 80]
+
+  16949651:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 164]
+    level:    [78, 80]
+
+  16949652:
+    template: Nightmare_Cluster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]

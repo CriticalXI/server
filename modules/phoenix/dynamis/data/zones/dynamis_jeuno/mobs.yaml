@@ -1,0 +1,2896 @@
+# Old-school Dynamis spawn layout for dynamis_jeuno, generated from
+# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Applied to data/zones/dynamis_jeuno/mobs.yaml as an RFC 7396 merge patch.
+
+templates:
+
+  Anvilix_Sootwrists:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Bandrix_Rockjaw:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Blazox_Boneybod:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Bootrix_Jaggedelbow:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Buffrix_Eargone:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Cloktix_Longnail:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Distilix_Stickytoes:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Elixmix_Hooknose:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Eremix_Snottynostril:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Gabblox_Magpietongue:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Goblin_Replica:
+    type: [notorious]
+
+  Hermitrix_Toothrot:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Humnox_Drumbelly:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Jabbrox_Grannyguise:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Jabkix_Pigeonpecs:
+    attributes:
+      jobs: [mnk, war]
+      spawn:
+        type: [scripted]
+
+  Karashix_Swollenskull:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Kikklix_Longlegs:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Lurklox_Dhalmelneck:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Mobpix_Mucousmouth:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Morgmox_Moldnoggin:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Mortilox_Wartpaws:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Prowlox_Barrelbelly:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Rutrix_Hamgams:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Scruffix_Shaggychest:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Slystix_Megapeepers:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Smeltix_Thickhide:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Snypestix_Eaglebeak:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Sparkspox_Sweatbrow:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Ticktox_Beadyeyes:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Trailblix_Goatmug:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Tufflix_Loglimbs:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Tymexox_Ninefingers:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Vanguard_Alchemist:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Ambusher:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Armorer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Dragontamer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Enchanter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Hitman:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Maestro:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Necromancer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Pathfinder:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Pitfighter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Ronin:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Shaman:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Smithy:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Tinkerer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Welldigger:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguards_Avatar:
+    type: [called, notorious]
+
+  Vanguards_Slime:
+    type: [called, notorious]
+
+  Vanguards_Wyvern:
+    type: [called, notorious]
+
+  Wasabix_Callusdigit:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Wyrmwix_Snakespecs:
+    attributes:
+      spawn:
+        type: [scripted]
+
+spawns:
+
+  17547265:
+    template: Goblin_Replica
+    at:       [43.351, 9.000, -52.484, 0]
+    level:    [65, 65]
+
+  17547266:
+    template: Vanguard_Smithy
+    at:       [38.828, 9.000, -54.046, 0]
+    level:    [75, 77]
+
+  17547267:
+    template: Vanguard_Pitfighter
+    at:       [39.016, 9.000, -50.076, 0]
+    level:    [75, 77]
+
+  17547268:
+    template: Goblin_Replica
+    at:       [38.270, 9.000, -52.484, 0]
+    level:    [65, 65]
+
+  17547269:
+    template: Vanguard_Enchanter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547270:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547271:
+    template: Goblin_Replica
+    at:       [20.018, 9.000, -51.949, 128]
+    level:    [65, 65]
+
+  17547272:
+    template: Vanguard_Tinkerer
+    at:       [17.098, 9.000, -52.005, 127]
+    level:    [75, 77]
+
+  17547273:
+    template: Vanguard_Ambusher
+    at:       [15.042, 9.000, -51.999, 127]
+    level:    [75, 77]
+
+  17547274:
+    template: Goblin_Replica
+    at:       [20.018, 9.000, -48.742, 128]
+    level:    [65, 65]
+
+  17547275:
+    template: Vanguard_Ronin
+    at:       [17.103, 9.000, -48.742, 127]
+    level:    [75, 77]
+
+  17547276:
+    template: Vanguard_Hitman
+    at:       [15.044, 9.000, -48.788, 127]
+    level:    [75, 77]
+
+  17547277:
+    template: Goblin_Replica
+    at:       [-0.021, 9.000, -49.958, 64]
+    level:    [65, 65]
+
+  17547278:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547279:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547280:
+    template: Goblin_Replica
+    at:       [-5.897, 9.000, -43.917, 128]
+    level:    [65, 65]
+
+  17547281:
+    template: Vanguard_Shaman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547282:
+    template: Goblin_Replica
+    at:       [0.019, 9.000, -38.635, 192]
+    level:    [65, 65]
+
+  17547283:
+    template: Vanguard_Necromancer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547284:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547285:
+    template: Goblin_Replica
+    at:       [5.975, 9.000, -43.983, 0]
+    level:    [65, 65]
+
+  17547286:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547287:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547288:
+    template: Goblin_Replica
+    at:       [4.031, 9.000, -65.028, 192]
+    level:    [65, 65]
+
+  17547289:
+    template: Vanguard_Alchemist
+    at:       [6.025, 9.000, -62.960, 192]
+    level:    [75, 77]
+
+  17547290:
+    template: Cloktix_Longnail
+    at:       [4.008, 9.000, -63.101, 192]
+    level:    [80, 80]
+
+  17547291:
+    template: Vanguard_Hitman
+    at:       [1.991, 9.000, -62.948, 192]
+    level:    [75, 77]
+
+  17547292:
+    template: Goblin_Replica
+    at:       [-21.042, 9.001, -50.010, 1]
+    level:    [65, 65]
+
+  17547293:
+    template: Vanguard_Welldigger
+    at:       [-18.964, 9.002, -51.960, 1]
+    level:    [75, 77]
+
+  17547294:
+    template: Tufflix_Loglimbs
+    at:       [-18.978, 9.002, -50.036, 1]
+    level:    [80, 80]
+
+  17547295:
+    template: Vanguard_Dragontamer
+    at:       [-19.019, 9.001, -48.003, 1]
+    level:    [75, 77]
+
+  17547296:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547297:
+    template: Goblin_Replica
+    at:       [21.003, 9.000, -35.972, 128]
+    level:    [65, 65]
+
+  17547298:
+    template: Gabblox_Magpietongue
+    at:       [18.940, 9.000, -35.992, 128]
+    level:    [80, 80]
+
+  17547299:
+    template: Vanguard_Ambusher
+    at:       [18.975, 9.000, -33.996, 128]
+    level:    [75, 77]
+
+  17547300:
+    template: Vanguard_Necromancer
+    at:       [18.971, 9.000, -37.967, 128]
+    level:    [75, 77]
+
+  17547301:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547302:
+    template: Goblin_Replica
+    at:       [1.623, 9.000, -30.151, 64]
+    level:    [65, 65]
+
+  17547303:
+    template: Vanguard_Smithy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547304:
+    template: Vanguard_Alchemist
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547305:
+    template: Goblin_Replica
+    at:       [-1.703, 9.000, -30.225, 64]
+    level:    [65, 65]
+
+  17547306:
+    template: Vanguard_Pitfighter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547307:
+    template: Vanguard_Shaman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547308:
+    template: Goblin_Statue
+    at:       [49.457, 7.500, -44.515, 64]
+    level:    [80, 80]
+
+  17547309:
+    template: Goblin_Replica
+    at:       [46.906, 7.500, -44.561, 64]
+    level:    [65, 65]
+
+  17547310:
+    template: Goblin_Replica
+    at:       [52.503, 7.500, -44.614, 64]
+    level:    [65, 65]
+
+  17547311:
+    template: Goblin_Replica
+    at:       [22.825, 9.000, -50.898, 128]
+    level:    [65, 65]
+
+  17547312:
+    template: Vanguard_Enchanter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547313:
+    template: Vanguard_Armorer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547314:
+    template: Goblin_Replica
+    at:       [21.137, 9.000, -53.949, 0]
+    level:    [65, 65]
+
+  17547315:
+    template: Vanguard_Shaman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547316:
+    template: Vanguard_Ambusher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547317:
+    template: Goblin_Replica
+    at:       [5.975, 9.000, -43.983, 0]
+    level:    [65, 65]
+
+  17547318:
+    template: Smeltix_Thickhide
+    at:       [8.048, 9.000, -43.939, 0]
+    level:    [80, 80]
+
+  17547319:
+    template: Vanguard_Alchemist
+    at:       [8.090, 9.000, -47.027, 0]
+    level:    [75, 77]
+
+  17547320:
+    template: Vanguard_Pathfinder
+    at:       [8.029, 9.000, -41.053, 0]
+    level:    [75, 77]
+
+  17547321:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547322:
+    template: Goblin_Replica
+    at:       [-0.021, 9.000, -49.958, 64]
+    level:    [65, 65]
+
+  17547323:
+    template: Wasabix_Callusdigit
+    at:       [-0.008, 9.000, -51.901, 64]
+    level:    [80, 80]
+
+  17547324:
+    template: Vanguard_Enchanter
+    at:       [-2.954, 9.000, -51.934, 64]
+    level:    [75, 77]
+
+  17547325:
+    template: Vanguard_Necromancer
+    at:       [3.025, 9.000, -51.908, 64]
+    level:    [75, 77]
+
+  17547326:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547327:
+    template: Goblin_Replica
+    at:       [-5.897, 9.000, -43.917, 128]
+    level:    [65, 65]
+
+  17547328:
+    template: Jabkix_Pigeonpecs
+    at:       [-7.953, 9.000, -43.979, 128]
+    level:    [80, 80]
+
+  17547329:
+    template: Vanguard_Shaman
+    at:       [-7.946, 9.000, -40.965, 128]
+    level:    [75, 77]
+
+  17547330:
+    template: Vanguard_Dragontamer
+    at:       [-7.986, 9.000, -47.008, 128]
+    level:    [75, 77]
+
+  17547331:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547332:
+    template: Goblin_Replica
+    at:       [1.988, 9.000, -38.689, 192]
+    level:    [65, 65]
+
+  17547333:
+    template: Vanguard_Welldigger
+    at:       [3.013, 9.000, -36.093, 192]
+    level:    [75, 77]
+
+  17547334:
+    template: Vanguard_Maestro
+    at:       [0.966, 9.000, -35.952, 192]
+    level:    [75, 77]
+
+  17547335:
+    template: Goblin_Replica
+    at:       [-2.002, 9.000, -38.607, 192]
+    level:    [65, 65]
+
+  17547336:
+    template: Vanguard_Welldigger
+    at:       [-3.006, 9.000, -36.072, 192]
+    level:    [75, 77]
+
+  17547337:
+    template: Vanguard_Maestro
+    at:       [-0.983, 9.000, -35.984, 192]
+    level:    [75, 77]
+
+  17547338:
+    template: Goblin_Replica
+    at:       [2.041, 9.000, -34.029, 192]
+    level:    [65, 65]
+
+  17547339:
+    template: Goblin_Replica
+    at:       [-2.062, 9.000, -34.057, 192]
+    level:    [65, 65]
+
+  17547340:
+    template: Goblin_Replica
+    at:       [4.059, 9.000, -64.101, 192]
+    level:    [65, 65]
+
+  17547341:
+    template: Vanguard_Tinkerer
+    at:       [4.000, 9.000, -57.976, 192]
+    level:    [75, 77]
+
+  17547342:
+    template: Goblin_Replica
+    at:       [-19.931, 9.001, -50.028, 0]
+    level:    [65, 65]
+
+  17547343:
+    template: Vanguard_Armorer
+    at:       [-14.018, 9.001, -50.031, 0]
+    level:    [75, 77]
+
+  17547344:
+    template: Goblin_Replica
+    at:       [18.035, 9.000, -35.961, 128]
+    level:    [65, 65]
+
+  17547345:
+    template: Vanguard_Ronin
+    at:       [14.099, 9.000, -35.997, 128]
+    level:    [75, 77]
+
+  17547346:
+    template: Goblin_Replica
+    at:       [49.051, 0.000, -17.590, 64]
+    level:    [65, 65]
+
+  17547347:
+    template: Vanguard_Armorer
+    at:       [49.024, 0.000, -22.959, 64]
+    level:    [75, 77]
+
+  17547348:
+    template: Vanguard_Tinkerer
+    at:       [47.037, 0.000, -22.968, 64]
+    level:    [75, 77]
+
+  17547349:
+    template: Wyrmwix_Snakespecs
+    at:       [50.996, 0.000, -23.059, 64]
+    level:    [80, 80]
+
+  17547350:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547351:
+    template: Goblin_Replica
+    at:       [42.000, 0.000, -20.973, 128]
+    level:    [65, 65]
+
+  17547352:
+    template: Goblin_Replica
+    at:       [41.104, 0.004, -27.091, 194]
+    level:    [65, 65]
+
+  17547353:
+    template: Vanguard_Welldigger
+    at:       [40.997, 0.001, -25.028, 194]
+    level:    [75, 77]
+
+  17547354:
+    template: Vanguard_Hitman
+    at:       [40.976, 0.000, -23.108, 194]
+    level:    [75, 77]
+
+  17547355:
+    template: Goblin_Replica
+    at:       [37.984, 0.005, -5.958, 92]
+    level:    [65, 65]
+
+  17547356:
+    template: Vanguard_Pitfighter
+    at:       [36.990, 0.001, -8.895, 64]
+    level:    [75, 77]
+
+  17547357:
+    template: Vanguard_Pathfinder
+    at:       [36.981, 0.001, -10.950, 64]
+    level:    [75, 77]
+
+  17547358:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547359:
+    template: Goblin_Replica
+    at:       [27.000, 0.005, -7.000, 64]
+    level:    [65, 65]
+
+  17547360:
+    template: Goblin_Replica
+    at:       [30.000, 0.005, -7.000, 64]
+    level:    [65, 65]
+
+  17547361:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547362:
+    template: Goblin_Replica
+    at:       [33.000, 0.005, -7.000, 64]
+    level:    [65, 65]
+
+  17547363:
+    template: Goblin_Replica
+    at:       [22.962, 0.000, -36.035, 0]
+    level:    [65, 65]
+
+  17547364:
+    template: Vanguard_Smithy
+    at:       [24.970, 0.001, -34.976, 0]
+    level:    [75, 77]
+
+  17547365:
+    template: Vanguard_Alchemist
+    at:       [25.005, 0.001, -37.031, 0]
+    level:    [75, 77]
+
+  17547366:
+    template: Hermitrix_Toothrot
+    at:       [25.062, 0.004, -33.063, 0]
+    level:    [80, 80]
+
+  17547367:
+    template: Vanguard_Necromancer
+    at:       [24.987, 0.004, -38.954, 0]
+    level:    [75, 77]
+
+  17547368:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547369:
+    template: Goblin_Replica
+    at:       [32.908, 0.000, -44.922, 64]
+    level:    [65, 65]
+
+  17547370:
+    template: Vanguard_Enchanter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547371:
+    template: Vanguard_Ronin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547372:
+    template: Goblin_Replica
+    at:       [25.945, -1.500, -57.049, 0]
+    level:    [65, 65]
+
+  17547373:
+    template: Goblin_Replica
+    at:       [35.048, 0.004, -77.036, 128]
+    level:    [65, 65]
+
+  17547374:
+    template: Vanguard_Pitfighter
+    at:       [30.925, 0.000, -77.031, 128]
+    level:    [75, 77]
+
+  17547375:
+    template: Vanguard_Pitfighter
+    at:       [26.937, 0.005, -77.030, 128]
+    level:    [75, 77]
+
+  17547376:
+    template: Goblin_Replica
+    at:       [22.014, 0.005, -74.013, 0]
+    level:    [65, 65]
+
+  17547377:
+    template: Vanguard_Hitman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547378:
+    template: Goblin_Replica
+    at:       [12.947, 0.002, -79.019, 192]
+    level:    [65, 65]
+
+  17547379:
+    template: Vanguard_Enchanter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547380:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547381:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547382:
+    template: Goblin_Replica
+    at:       [3.997, 0.003, -66.821, 64]
+    level:    [65, 65]
+
+  17547383:
+    template: Vanguard_Armorer
+    at:       [5.031, 0.004, -68.962, 64]
+    level:    [75, 77]
+
+  17547384:
+    template: Vanguard_Tinkerer
+    at:       [2.983, 0.005, -68.982, 64]
+    level:    [75, 77]
+
+  17547385:
+    template: Goblin_Replica
+    at:       [0.050, 0.000, -89.174, 192]
+    level:    [65, 65]
+
+  17547386:
+    template: Vanguard_Shaman
+    at:       [0.004, 0.000, -101.983, 190]
+    level:    [75, 77]
+
+  17547387:
+    template: Vanguard_Ambusher
+    at:       [0.024, 0.000, -91.994, 190]
+    level:    [75, 77]
+
+  17547388:
+    template: Vanguard_Ambusher
+    at:       [0.016, 0.000, -94.050, 190]
+    level:    [75, 77]
+
+  17547389:
+    template: Vanguard_Ambusher
+    at:       [0.010, 0.000, -95.970, 190]
+    level:    [75, 77]
+
+  17547390:
+    template: Vanguard_Ambusher
+    at:       [0.006, 0.000, -98.014, 190]
+    level:    [75, 77]
+
+  17547391:
+    template: Morgmox_Moldnoggin
+    at:       [0.005, 0.000, -99.923, 190]
+    level:    [80, 80]
+
+  17547392:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547393:
+    template: Goblin_Replica
+    at:       [0.923, 0.005, -77.067, 0]
+    level:    [65, 65]
+
+  17547394:
+    template: Vanguard_Alchemist
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547395:
+    template: Goblin_Replica
+    at:       [-9.000, 0.005, -71.000, 128]
+    level:    [65, 65]
+
+  17547396:
+    template: Vanguard_Smithy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547397:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547398:
+    template: Goblin_Replica
+    at:       [-8.850, 0.005, -76.914, 128]
+    level:    [65, 65]
+    script:   null
+
+  17547399:
+    template: Vanguard_Welldigger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547400:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547401:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547402:
+    template: Goblin_Replica
+    at:       [-8.252, 3.000, -6.256, 38]
+    level:    [65, 65]
+
+  17547403:
+    template: Vanguard_Necromancer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547404:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547405:
+    template: Goblin_Replica
+    at:       [9.999, 3.000, -0.968, 65]
+    level:    [65, 65]
+    script:   null
+
+  17547406:
+    template: Vanguard_Ronin
+    at:       [10.001, 3.000, -3.179, 65]
+    level:    [75, 77]
+    script:   null
+
+  17547407:
+    template: Vanguard_Dragontamer
+    at:       [10.007, 3.000, -5.103, 65]
+    level:    [75, 77]
+
+  17547408:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547409:
+    template: Goblin_Replica
+    at:       [-0.096, 3.000, -10.999, 192]
+    level:    [65, 65]
+    script:   null
+
+  17547410:
+    template: Vanguard_Hitman
+    at:       [0.019, 3.000, -8.907, 194]
+    level:    [75, 77]
+    script:   null
+
+  17547411:
+    template: Goblin_Replica
+    at:       [-24.019, 3.000, -9.986, 128]
+    level:    [65, 65]
+    script:   null
+
+  17547412:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547413:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547414:
+    template: Goblin_Replica
+    at:       [-29.956, 3.000, -5.101, 64]
+    level:    [65, 65]
+    script:   null
+
+  17547415:
+    template: Sparkspox_Sweatbrow
+    at:       [-30.026, 3.000, -7.723, 64]
+    level:    [80, 80]
+    script:   null
+
+  17547416:
+    template: Vanguard_Pitfighter
+    at:       [-27.986, 3.000, -8.055, 64]
+    level:    [75, 77]
+    script:   null
+
+  17547417:
+    template: Vanguard_Alchemist
+    at:       [-32.059, 3.000, -7.978, 64]
+    level:    [75, 77]
+    script:   null
+
+  17547418:
+    template: Vanguard_Shaman
+    at:       [-31.974, 3.000, -9.907, 64]
+    level:    [75, 77]
+    script:   null
+
+  17547419:
+    template: Vanguard_Enchanter
+    at:       [-30.022, 3.000, -10.002, 64]
+    level:    [75, 77]
+    script:   null
+
+  17547420:
+    template: Vanguard_Welldigger
+    at:       [-27.986, 3.000, -10.006, 64]
+    level:    [75, 77]
+
+  17547421:
+    template: Goblin_Replica
+    at:       [-23.988, 3.000, -2.022, 128]
+    level:    [65, 65]
+
+  17547422:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547423:
+    template: Goblin_Replica
+    at:       [-25.688, 1.000, -30.595, 194]
+    level:    [65, 65]
+
+  17547424:
+    template: Vanguard_Ronin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547425:
+    template: Goblin_Replica
+    at:       [-34.476, 1.000, -30.773, 192]
+    level:    [65, 65]
+    script:   null
+
+  17547426:
+    template: Vanguard_Hitman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547427:
+    template: Goblin_Replica
+    at:       [-26.065, 0.005, -64.910, 128]
+    level:    [65, 65]
+
+  17547428:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547429:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547430:
+    template: Goblin_Replica
+    at:       [-30.416, 0.003, -52.233, 0]
+    level:    [65, 65]
+    script:   null
+
+  17547431:
+    template: Vanguard_Welldigger
+    at:       [-30.114, 0.004, -54.960, 0]
+    level:    [75, 77]
+    script:   null
+
+  17547432:
+    template: Vanguard_Pathfinder
+    at:       [-30.065, 0.001, -49.035, 0]
+    level:    [75, 77]
+    script:   null
+
+  17547433:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547434:
+    template: Goblin_Replica
+    at:       [-21.129, 0.004, -51.971, 128]
+    level:    [65, 65]
+    script:   null
+
+  17547435:
+    template: Buffrix_Eargone
+    at:       [-21.929, 0.003, -54.959, 128]
+    level:    [80, 80]
+    script:   null
+
+  17547436:
+    template: Vanguard_Tinkerer
+    at:       [-21.901, 0.003, -49.052, 128]
+    level:    [75, 77]
+    script:   null
+
+  17547437:
+    template: Goblin_Replica
+    at:       [-38.596, 0.005, -62.539, 0]
+    level:    [65, 65]
+
+  17547438:
+    template: Goblin_Replica
+    at:       [-40.004, 0.005, -46.890, 0]
+    level:    [65, 65]
+
+  17547439:
+    template: Vanguard_Smithy
+    at:       [-38.019, 0.005, -48.009, 0]
+    level:    [75, 77]
+
+  17547440:
+    template: Vanguard_Alchemist
+    at:       [-38.014, 0.005, -44.040, 0]
+    level:    [75, 77]
+
+  17547441:
+    template: Goblin_Replica
+    at:       [-40.048, 0.005, -57.990, 254]
+    level:    [65, 65]
+    script:   null
+
+  17547442:
+    template: Humnox_Drumbelly
+    at:       [-38.111, 0.005, -60.059, 0]
+    level:    [80, 80]
+    script:   null
+
+  17547443:
+    template: Vanguard_Necromancer
+    at:       [-37.947, 0.005, -56.051, 0]
+    level:    [75, 77]
+
+  17547444:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547445:
+    template: Goblin_Replica
+    at:       [-68.270, 6.000, 3.443, 21]
+    level:    [65, 65]
+    script:   null
+
+  17547446:
+    template: Vanguard_Shaman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547447:
+    template: Goblin_Replica
+    at:       [-66.770, 6.000, -15.887, 228]
+    level:    [65, 65]
+    script:   null
+
+  17547448:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547449:
+    template: Goblin_Replica
+    at:       [-56.000, 6.000, -5.967, 0]
+    level:    [65, 65]
+    script:   null
+
+  17547450:
+    template: Vanguard_Smithy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547451:
+    template: Vanguard_Welldigger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547452:
+    template: Goblin_Replica
+    at:       [-68.701, 5.591, -7.961, 0]
+    level:    [65, 65]
+    script:   null
+
+  17547453:
+    template: Vanguard_Necromancer
+    at:       [-71.317, 5.591, -7.930, 0]
+    level:    [75, 77]
+
+  17547454:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547455:
+    template: Vanguard_Necromancer
+    at:       [-71.165, 5.591, -13.990, 0]
+    level:    [75, 77]
+
+  17547456:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547457:
+    template: Vanguard_Necromancer
+    at:       [-71.350, 5.591, -2.007, 0]
+    level:    [75, 77]
+
+  17547458:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547459:
+    template: Goblin_Replica
+    at:       [-56.892, 6.001, 8.025, 92]
+    level:    [65, 65]
+    script:   null
+
+  17547460:
+    template: Vanguard_Armorer
+    at:       [-59.146, 6.000, 7.118, 99]
+    level:    [75, 77]
+    script:   null
+
+  17547461:
+    template: Vanguard_Tinkerer
+    at:       [-57.077, 6.000, 5.088, 99]
+    level:    [75, 77]
+    script:   null
+
+  17547462:
+    template: Goblin_Replica
+    at:       [-73.272, 5.591, -23.047, 190]
+    level:    [65, 65]
+    script:   null
+
+  17547463:
+    template: Elixmix_Hooknose
+    at:       [-73.332, 5.591, -20.042, 192]
+    level:    [80, 80]
+    script:   null
+
+  17547464:
+    template: Goblin_Replica
+    at:       [-40.552, 8.000, -19.009, 128]
+    level:    [65, 65]
+    script:   null
+
+  17547465:
+    template: Goblin_Replica
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17547466:
+    template: Goblin_Replica
+    at:       [-58.048, 12.000, -27.905, 194]
+    level:    [65, 65]
+    script:   null
+
+  17547467:
+    template: Vanguard_Pitfighter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547468:
+    template: Vanguard_Enchanter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547469:
+    template: Goblin_Replica
+    at:       [-54.429, 12.000, -34.462, 160]
+    level:    [65, 65]
+    script:   null
+
+  17547470:
+    template: Trailblix_Goatmug
+    at:       [-54.941, 12.000, -33.187, 193]
+    level:    [80, 80]
+    script:   null
+
+  17547471:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547472:
+    template: Vanguard_Hitman
+    at:       [-55.049, 12.000, -31.059, 193]
+    level:    [75, 77]
+
+  17547473:
+    template: Vanguard_Hitman
+    at:       [-55.050, 12.000, -28.983, 193]
+    level:    [75, 77]
+
+  17547474:
+    template: Goblin_Statue
+    at:       [-65.974, 12.001, -33.006, 0]
+    level:    [80, 80]
+
+  17547475:
+    template: Goblin_Replica
+    at:       [-40.552, 8.000, -19.009, 128]
+    level:    [65, 65]
+    script:   null
+
+  17547476:
+    template: Vanguard_Shaman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547477:
+    template: Goblin_Replica
+    at:       [-57.049, 6.000, -16.083, 192]
+    level:    [65, 65]
+    script:   null
+
+  17547478:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547479:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547480:
+    template: Goblin_Replica
+    at:       [-56.027, 6.000, -9.053, 0]
+    level:    [65, 65]
+
+  17547481:
+    template: Vanguard_Ronin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17547482:
+    template: Goblin_Replica
+    at:       [-68.244, 5.591, -7.942, 255]
+    level:    [65, 65]
+    script:   null
+
+  17547483:
+    template: Mortilox_Wartpaws
+    at:       [-70.294, 5.591, -7.953, 255]
+    level:    [80, 80]
+    script:   null
+
+  17547484:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547485:
+    template: Vanguard_Necromancer
+    at:       [-70.326, 5.591, -13.954, 255]
+    level:    [75, 77]
+
+  17547486:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547487:
+    template: Vanguard_Necromancer
+    at:       [-70.219, 5.591, -1.904, 255]
+    level:    [75, 77]
+
+  17547488:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547489:
+    template: Goblin_Replica
+    at:       [-61.956, 6.000, 5.796, 64]
+    level:    [65, 65]
+    script:   null
+
+  17547490:
+    template: Vanguard_Smithy
+    at:       [-61.970, 6.000, 3.122, 64]
+    level:    [75, 77]
+
+  17547491:
+    template: Goblin_Replica
+    at:       [-64.924, 6.000, 5.796, 64]
+    level:    [65, 65]
+    script:   null
+
+  17547492:
+    template: Vanguard_Pitfighter
+    at:       [-64.946, 6.000, 3.135, 64]
+    level:    [75, 77]
+
+  17547493:
+    template: Goblin_Replica
+    at:       [-38.011, 3.000, -10.020, 128]
+    level:    [65, 65]
+
+  17547494:
+    template: Vanguard_Enchanter
+    at:       [-35.071, 3.000, -10.062, 128]
+    level:    [75, 77]
+
+  17547495:
+    template: Goblin_Replica
+    at:       [-38.011, 3.000, -6.038, 128]
+    level:    [65, 65]
+
+  17547496:
+    template: Goblin_Replica
+    at:       [-38.011, 3.000, -2.015, 128]
+    level:    [65, 65]
+
+  17547497:
+    template: Vanguard_Enchanter
+    at:       [-35.931, 3.000, -2.031, 128]
+    level:    [75, 77]
+
+  17547498:
+    template: Goblin_Replica
+    at:       [0.007, 3.000, 13.956, 64]
+    level:    [65, 65]
+
+  17547499:
+    template: Vanguard_Alchemist
+    at:       [1.989, 3.000, 12.031, 64]
+    level:    [75, 77]
+
+  17547500:
+    template: Vanguard_Enchanter
+    at:       [1.981, 3.000, 16.117, 64]
+    level:    [75, 77]
+
+  17547501:
+    template: Bandrix_Rockjaw
+    at:       [0.003, 3.000, 12.064, 64]
+    level:    [80, 80]
+
+  17547502:
+    template: Vanguard_Armorer
+    at:       [-1.914, 3.000, 12.092, 64]
+    level:    [75, 77]
+
+  17547503:
+    template: Vanguard_Tinkerer
+    at:       [-2.022, 3.000, 16.036, 64]
+    level:    [75, 77]
+
+  17547504:
+    template: Vanguard_Maestro
+    at:       [-0.024, 3.000, 15.970, 64]
+    level:    [75, 77]
+
+  17547505:
+    template: Goblin_Replica
+    at:       [-12.005, 2.000, 38.074, 192]
+    level:    [65, 65]
+
+  17547506:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547507:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547508:
+    template: Goblin_Replica
+    at:       [12.006, 2.000, 38.134, 192]
+    level:    [65, 65]
+
+  17547509:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547510:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547511:
+    template: Goblin_Replica
+    at:       [-0.048, -2.000, 55.241, 64]
+    level:    [65, 65]
+
+  17547512:
+    template: Vanguard_Ambusher
+    at:       [13.940, -5.000, 37.980, 192]
+    level:    [75, 77]
+
+  17547513:
+    template: Vanguard_Ambusher
+    at:       [-13.989, -5.000, 38.010, 192]
+    level:    [75, 77]
+
+  17547514:
+    template: Lurklox_Dhalmelneck
+    at:       [0.046, -5.000, 37.708, 192]
+    level:    [80, 80]
+
+  17547515:
+    template: Goblin_Replica
+    at:       [0.141, -5.000, 66.541, 64]
+    level:    [65, 65]
+
+  17547516:
+    template: Vanguard_Armorer
+    at:       [-0.062, -5.000, 64.062, 64]
+    level:    [75, 77]
+
+  17547517:
+    template: Goblin_Replica
+    at:       [-0.036, -5.000, 39.787, 64]
+    level:    [65, 65]
+
+  17547518:
+    template: Vanguard_Ronin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547519:
+    template: Goblin_Replica
+    at:       [-11.824, -5.000, 52.104, 128]
+    level:    [65, 65]
+
+  17547520:
+    template: Vanguard_Dragontamer
+    at:       [-13.843, -4.999, 52.097, 128]
+    level:    [75, 77]
+
+  17547521:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547522:
+    template: Goblin_Replica
+    at:       [-0.063, 2.000, 82.093, 64]
+    level:    [65, 65]
+
+  17547523:
+    template: Vanguard_Hitman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547524:
+    template: Goblin_Replica
+    at:       [11.809, -5.000, 52.192, 0]
+    level:    [65, 65]
+
+  17547525:
+    template: Vanguard_Necromancer
+    at:       [13.908, -4.999, 52.144, 0]
+    level:    [75, 77]
+
+  17547526:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547527:
+    template: Goblin_Replica
+    at:       [14.601, 2.000, 57.737, 128]
+    level:    [65, 65]
+
+  17547528:
+    template: Vanguard_Pitfighter
+    at:       [12.142, 2.000, 57.934, 128]
+    level:    [75, 77]
+
+  17547529:
+    template: Goblin_Replica
+    at:       [-15.500, 2.000, 56.098, 0]
+    level:    [65, 65]
+
+  17547530:
+    template: Vanguard_Smithy
+    at:       [-12.978, 2.000, 56.013, 0]
+    level:    [75, 77]
+
+  17547531:
+    template: Goblin_Replica
+    at:       [21.951, 2.000, 63.927, 128]
+    level:    [65, 65]
+
+  17547532:
+    template: Vanguard_Shaman
+    at:       [19.142, 8.000, 64.016, 128]
+    level:    [75, 77]
+
+  17547533:
+    template: Goblin_Replica
+    at:       [-21.827, 2.000, 64.080, 0]
+    level:    [65, 65]
+
+  17547534:
+    template: Vanguard_Shaman
+    at:       [-18.888, 2.000, 64.048, 0]
+    level:    [75, 77]
+
+  17547535:
+    template: Goblin_Replica
+    at:       [5.938, 2.000, 65.998, 255]
+    level:    [65, 65]
+
+  17547536:
+    template: Goblin_Replica
+    at:       [-6.004, 2.000, 66.106, 128]
+    level:    [65, 65]
+
+  17547537:
+    template: Goblin_Replica
+    at:       [-0.072, -5.000, 26.939, 64]
+    level:    [65, 65]
+
+  17547538:
+    template: Vanguard_Alchemist
+    at:       [-2.886, -5.000, 26.920, 194]
+    level:    [75, 77]
+
+  17547539:
+    template: Vanguard_Shaman
+    at:       [2.959, -5.000, 26.891, 194]
+    level:    [75, 77]
+
+  17547540:
+    template: Goblin_Replica
+    at:       [0.148, 3.000, 100.530, 64]
+    level:    [65, 65]
+
+  17547541:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547542:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547543:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547544:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547545:
+    template: Goblin_Replica
+    at:       [1.979, 3.100, 108.075, 60]
+    level:    [65, 65]
+
+  17547546:
+    template: Vanguard_Armorer
+    at:       [1.998, 3.000, 105.028, 64]
+    level:    [75, 77]
+
+  17547547:
+    template: Goblin_Replica
+    at:       [-1.992, 3.100, 108.075, 60]
+    level:    [65, 65]
+
+  17547548:
+    template: Vanguard_Enchanter
+    at:       [-1.893, 3.000, 105.211, 64]
+    level:    [75, 77]
+
+  17547549:
+    template: Goblin_Replica
+    at:       [1.979, 3.100, 120.033, 60]
+    level:    [65, 65]
+
+  17547550:
+    template: Vanguard_Smithy
+    at:       [1.982, 3.100, 117.098, 64]
+    level:    [75, 77]
+
+  17547551:
+    template: Vanguard_Alchemist
+    at:       [5.980, 3.100, 116.978, 64]
+    level:    [75, 77]
+
+  17547552:
+    template: Vanguard_Welldigger
+    at:       [4.010, 3.100, 117.063, 64]
+    level:    [75, 77]
+
+  17547553:
+    template: Goblin_Replica
+    at:       [-1.992, 3.100, 120.033, 60]
+    level:    [65, 65]
+
+  17547554:
+    template: Ticktox_Beadyeyes
+    at:       [-2.027, 3.100, 116.979, 64]
+    level:    [80, 80]
+
+  17547555:
+    template: Vanguard_Maestro
+    at:       [-5.997, 3.100, 117.030, 64]
+    level:    [75, 77]
+
+  17547556:
+    template: Vanguard_Ronin
+    at:       [-4.022, 3.100, 116.920, 64]
+    level:    [75, 77]
+
+  17547557:
+    template: Goblin_Statue
+    at:       [0.021, 2.000, 126.701, 64]
+    level:    [80, 80]
+
+  17547558:
+    template: Goblin_Replica
+    at:       [2.051, 2.000, 72.000, 0]
+    level:    [65, 65]
+
+  17547559:
+    template: Vanguard_Armorer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547560:
+    template: Goblin_Replica
+    at:       [-12.069, 2.000, 72.000, 128]
+    level:    [65, 65]
+
+  17547561:
+    template: Vanguard_Tinkerer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547562:
+    template: Goblin_Replica
+    at:       [12.000, 2.000, 66.000, 128]
+    level:    [65, 65]
+
+  17547563:
+    template: Vanguard_Hitman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547564:
+    template: Goblin_Replica
+    at:       [12.000, 2.000, 54.000, 128]
+    level:    [65, 65]
+
+  17547565:
+    template: Vanguard_Alchemist
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547566:
+    template: Goblin_Replica
+    at:       [-7.001, 2.000, 37.179, 192]
+    level:    [65, 65]
+
+  17547567:
+    template: Vanguard_Ronin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547568:
+    template: Goblin_Replica
+    at:       [7.378, 2.000, 37.635, 192]
+    level:    [65, 65]
+
+  17547569:
+    template: Vanguard_Smithy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547570:
+    template: Goblin_Replica
+    at:       [-13.588, 2.000, 70.086, 0]
+    level:    [65, 65]
+
+  17547571:
+    template: Vanguard_Ambusher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547572:
+    template: Goblin_Replica
+    at:       [-14.417, 2.000, 53.530, 0]
+    level:    [65, 65]
+
+  17547573:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547574:
+    template: Goblin_Replica
+    at:       [-0.036, -5.000, 39.787, 64]
+    level:    [65, 65]
+
+  17547575:
+    template: Vanguard_Shaman
+    at:       [1.929, -4.999, 40.040, 64]
+    level:    [75, 77]
+
+  17547576:
+    template: Vanguard_Shaman
+    at:       [-2.033, -4.999, 40.024, 64]
+    level:    [75, 77]
+
+  17547577:
+    template: Vanguard_Shaman
+    at:       [-2.008, -5.000, 38.057, 64]
+    level:    [75, 77]
+
+  17547578:
+    template: Vanguard_Welldigger
+    at:       [-0.062, -5.000, 38.064, 64]
+    level:    [75, 77]
+
+  17547579:
+    template: Karashix_Swollenskull
+    at:       [2.012, -5.000, 38.062, 64]
+    level:    [80, 80]
+
+  17547580:
+    template: Goblin_Replica
+    at:       [-0.033, 3.000, 11.943, 192]
+    level:    [65, 65]
+
+  17547581:
+    template: Vanguard_Armorer
+    at:       [2.032, 3.000, 11.965, 192]
+    level:    [75, 77]
+
+  17547582:
+    template: Vanguard_Tinkerer
+    at:       [-2.017, 3.000, 12.081, 192]
+    level:    [75, 77]
+
+  17547583:
+    template: Rutrix_Hamgams
+    at:       [0.004, 3.000, 14.024, 192]
+    level:    [80, 80]
+
+  17547584:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547585:
+    template: Vanguard_Maestro
+    at:       [2.025, 3.000, 14.005, 192]
+    level:    [75, 77]
+
+  17547586:
+    template: Vanguard_Ambusher
+    at:       [-1.986, 3.000, 14.037, 192]
+    level:    [75, 77]
+
+  17547587:
+    template: Goblin_Replica
+    at:       [0.012, 3.000, -1.037, 192]
+    level:    [65, 65]
+
+  17547588:
+    template: Vanguard_Ronin
+    at:       [0.976, 3.000, 0.978, 192]
+    level:    [75, 77]
+
+  17547589:
+    template: Snypestix_Eaglebeak
+    at:       [-0.969, 9.000, 0.999, 192]
+    level:    [80, 80]
+
+  17547590:
+    template: Vanguard_Dragontamer
+    at:       [3.011, 3.000, 0.884, 192]
+    level:    [75, 77]
+
+  17547591:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547592:
+    template: Vanguard_Necromancer
+    at:       [-2.989, 9.000, 1.001, 192]
+    level:    [75, 77]
+
+  17547593:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547594:
+    template: Goblin_Replica
+    at:       [5.000, 0.000, -76.000, 188]
+    level:    [65, 65]
+
+  17547595:
+    template: Vanguard_Pitfighter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547596:
+    template: Vanguard_Alchemist
+    at:       [222.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547597:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547598:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547599:
+    template: Vanguard_Ronin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547600:
+    template: Goblin_Replica
+    at:       [4.000, 0.000, -77.000, 64]
+    level:    [65, 65]
+
+  17547601:
+    template: Vanguard_Welldigger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547602:
+    template: Vanguard_Armorer
+    at:       [222.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547603:
+    template: Vanguard_Hitman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547604:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547605:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547606:
+    template: Goblin_Replica
+    at:       [3.000, 0.000, -76.000, 128]
+    level:    [65, 65]
+
+  17547607:
+    template: Vanguard_Smithy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547608:
+    template: Vanguard_Tinkerer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547609:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547610:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547611:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547612:
+    template: Goblin_Replica
+    at:       [4.000, 0.000, -75.000, 192]
+    level:    [65, 65]
+
+  17547613:
+    template: Vanguard_Shaman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547614:
+    template: Vanguard_Enchanter
+    at:       [222.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547615:
+    template: Vanguard_Ambusher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547616:
+    template: Vanguard_Necromancer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547617:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547618:
+    template: Goblin_Replica
+    at:       [1.994, 0.000, -87.984, 192]
+    level:    [65, 65]
+
+  17547619:
+    template: Goblin_Replica
+    at:       [-2.038, 0.000, -88.053, 192]
+    level:    [65, 65]
+
+  17547620:
+    template: Goblin_Replica
+    at:       [0.044, 0.000, -94.176, 192]
+    level:    [65, 65]
+
+  17547621:
+    template: Vanguard_Smithy
+    at:       [1.938, 1.000, -93.982, 192]
+    level:    [75, 77]
+
+  17547622:
+    template: Kikklix_Longlegs
+    at:       [2.017, 0.000, -98.014, 192]
+    level:    [80, 80]
+
+  17547623:
+    template: Vanguard_Alchemist
+    at:       [1.997, 0.000, -95.970, 192]
+    level:    [75, 77]
+
+  17547624:
+    template: Vanguard_Shaman
+    at:       [-1.957, 0.000, -96.076, 192]
+    level:    [75, 77]
+
+  17547625:
+    template: Vanguard_Enchanter
+    at:       [-2.024, 0.000, -98.118, 192]
+    level:    [75, 77]
+
+  17547626:
+    template: Vanguard_Welldigger
+    at:       [-1.982, 0.000, -94.157, 192]
+    level:    [75, 77]
+
+  17547627:
+    template: Goblin_Golem
+    at:       [-0.011, 0.000, -101.981, 194]
+    level:    [80, 80]
+
+  17547628:
+    template: Goblin_Replica
+    at:       [32.946, 0.000, -26.873, 64]
+    level:    [65, 65]
+
+  17547629:
+    template: Vanguard_Pitfighter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547630:
+    template: Vanguard_Welldigger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547631:
+    template: Goblin_Replica
+    at:       [28.974, 0.000, -26.999, 64]
+    level:    [65, 65]
+
+  17547632:
+    template: Vanguard_Smithy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547633:
+    template: Vanguard_Ronin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547634:
+    template: Goblin_Replica
+    at:       [34.447, -1.500, -57.916, 128]
+    level:    [65, 65]
+
+  17547635:
+    template: Vanguard_Alchemist
+    at:       [32.069, -1.500, -57.864, 128]
+    level:    [75, 77]
+
+  17547636:
+    template: Vanguard_Shaman
+    at:       [30.100, -1.500, -57.992, 128]
+    level:    [75, 77]
+
+  17547637:
+    template: Goblin_Replica
+    at:       [34.022, 0.000, -42.434, 128]
+    level:    [65, 65]
+
+  17547638:
+    template: Vanguard_Enchanter
+    at:       [32.028, 0.000, -42.447, 128]
+    level:    [75, 77]
+
+  17547639:
+    template: Vanguard_Maestro
+    at:       [29.976, 0.000, -42.453, 128]
+    level:    [75, 77]
+
+  17547640:
+    template: Goblin_Replica
+    at:       [23.992, 0.000, -35.979, 0]
+    level:    [65, 65]
+
+  17547641:
+    template: Scruffix_Shaggychest
+    at:       [25.949, 0.004, -39.043, 0]
+    level:    [80, 80]
+
+  17547642:
+    template: Vanguard_Tinkerer
+    at:       [26.054, 0.001, -36.948, 0]
+    level:    [75, 77]
+
+  17547643:
+    template: Vanguard_Ambusher
+    at:       [25.952, 0.001, -34.936, 0]
+    level:    [75, 77]
+
+  17547644:
+    template: Vanguard_Hitman
+    at:       [25.911, 0.004, -32.979, 0]
+    level:    [75, 77]
+
+  17547645:
+    template: Goblin_Replica
+    at:       [36.992, 0.005, -5.016, 64]
+    level:    [65, 65]
+
+  17547646:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547647:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547648:
+    template: Goblin_Replica
+    at:       [32.941, 0.000, -4.942, 64]
+    level:    [65, 65]
+
+  17547649:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547650:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547651:
+    template: Goblin_Replica
+    at:       [28.996, 0.000, -4.865, 64]
+    level:    [65, 65]
+
+  17547652:
+    template: Vanguard_Necromancer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547653:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547654:
+    template: Goblin_Replica
+    at:       [33.099, 0.004, -1.665, 64]
+    level:    [65, 65]
+
+  17547655:
+    template: Vanguard_Smithy
+    at:       [30.962, 0.000, -3.058, 64]
+    level:    [75, 77]
+
+  17547656:
+    template: Vanguard_Pitfighter
+    at:       [33.016, 0.002, -3.026, 64]
+    level:    [75, 77]
+
+  17547657:
+    template: Vanguard_Alchemist
+    at:       [34.972, 0.005, -3.083, 64]
+    level:    [75, 77]
+
+  17547658:
+    template: Vanguard_Shaman
+    at:       [34.996, 0.003, -4.942, 64]
+    level:    [75, 77]
+
+  17547659:
+    template: Vanguard_Enchanter
+    at:       [32.966, 0.000, -5.043, 64]
+    level:    [75, 77]
+
+  17547660:
+    template: Mobpix_Mucousmouth
+    at:       [31.011, 0.000, -4.965, 64]
+    level:    [80, 80]
+
+  17547661:
+    template: Goblin_Replica
+    at:       [44.481, 0.001, -19.216, 128]
+    level:    [65, 65]
+
+  17547662:
+    template: Vanguard_Armorer
+    at:       [42.997, 0.000, -21.043, 128]
+    level:    [75, 77]
+
+  17547663:
+    template: Vanguard_Armorer
+    at:       [43.064, 0.001, -17.012, 128]
+    level:    [75, 77]
+
+  17547664:
+    template: Vanguard_Armorer
+    at:       [46.886, 0.001, -17.064, 128]
+    level:    [75, 77]
+
+  17547665:
+    template: Vanguard_Maestro
+    at:       [46.941, 0.000, -21.029, 128]
+    level:    [75, 77]
+
+  17547666:
+    template: Goblin_Replica
+    at:       [-29.978, 0.005, -63.900, 64]
+    level:    [65, 65]
+
+  17547667:
+    template: Vanguard_Smithy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547668:
+    template: Vanguard_Shaman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547669:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547670:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547671:
+    template: Goblin_Replica
+    at:       [-27.880, 0.000, -51.964, 0]
+    level:    [65, 65]
+
+  17547672:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547673:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547674:
+    template: Vanguard_Ronin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547675:
+    template: Goblin_Replica
+    at:       [-39.967, 0.005, -51.981, 0]
+    level:    [65, 65]
+
+  17547676:
+    template: Vanguard_Pitfighter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547677:
+    template: Vanguard_Welldigger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547678:
+    template: Vanguard_Necromancer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547679:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547680:
+    template: Goblin_Replica
+    at:       [-30.043, 0.000, -36.094, 64]
+    level:    [65, 65]
+
+  17547681:
+    template: Vanguard_Armorer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547682:
+    template: Tymexox_Ninefingers
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [80, 80]
+
+  17547683:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547684:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547685:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547686:
+    template: Vanguard_Ambusher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547687:
+    template: Goblin_Replica
+    at:       [-30.043, 3.000, -23.514, 192]
+    level:    [65, 65]
+
+  17547688:
+    template: Vanguard_Ambusher
+    at:       [-28.061, 2.500, -25.385, 192]
+    level:    [75, 77]
+
+  17547689:
+    template: Vanguard_Ambusher
+    at:       [-31.915, 2.500, -25.383, 192]
+    level:    [75, 77]
+
+  17547690:
+    template: Slystix_Megapeepers
+    at:       [-30.035, 3.000, -21.111, 192]
+    level:    [80, 80]
+
+  17547691:
+    template: Vanguard_Hitman
+    at:       [-31.938, 3.000, -21.049, 192]
+    level:    [75, 77]
+
+  17547692:
+    template: Vanguard_Hitman
+    at:       [-27.932, 3.000, -21.080, 192]
+    level:    [75, 77]
+
+  17547693:
+    template: Vanguard_Hitman
+    at:       [-30.077, 2.500, -25.466, 192]
+    level:    [75, 77]
+
+  17547694:
+    template: Goblin_Replica
+    at:       [-32.021, 3.000, -3.945, 64]
+    level:    [65, 65]
+
+  17547695:
+    template: Vanguard_Alchemist
+    at:       [-32.967, 3.000, -5.061, 64]
+    level:    [75, 77]
+
+  17547696:
+    template: Vanguard_Tinkerer
+    at:       [-30.903, 3.000, -4.992, 64]
+    level:    [75, 77]
+
+  17547697:
+    template: Goblin_Replica
+    at:       [-28.022, 3.000, -3.980, 64]
+    level:    [65, 65]
+
+  17547698:
+    template: Vanguard_Enchanter
+    at:       [-29.009, 3.000, -4.948, 64]
+    level:    [75, 77]
+
+  17547699:
+    template: Vanguard_Dragontamer
+    at:       [-26.958, 3.000, -5.001, 64]
+    level:    [75, 77]
+
+  17547700:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547701:
+    template: Goblin_Replica
+    at:       [-28.049, 3.000, -7.962, 64]
+    level:    [65, 65]
+
+  17547702:
+    template: Vanguard_Alchemist
+    at:       [-29.033, 3.000, -8.956, 64]
+    level:    [75, 77]
+
+  17547703:
+    template: Vanguard_Tinkerer
+    at:       [-27.013, 3.000, -8.972, 64]
+    level:    [75, 77]
+
+  17547704:
+    template: Goblin_Replica
+    at:       [-31.999, 3.000, -8.034, 64]
+    level:    [65, 65]
+
+  17547705:
+    template: Vanguard_Enchanter
+    at:       [-33.037, 3.000, -9.053, 64]
+    level:    [75, 77]
+
+  17547706:
+    template: Vanguard_Necromancer
+    at:       [-31.003, 3.000, -8.970, 64]
+    level:    [75, 77]
+
+  17547707:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547708:
+    template: Goblin_Replica
+    at:       [-15.007, 3.000, -10.003, 128]
+    level:    [65, 65]
+
+  17547709:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547710:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547711:
+    template: Vanguard_Ronin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547712:
+    template: Goblin_Replica
+    at:       [-12.072, 3.000, -2.020, 128]
+    level:    [65, 65]
+
+  17547713:
+    template: Vanguard_Shaman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547714:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547715:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547716:
+    template: Goblin_Replica
+    at:       [-8.167, 3.000, -10.015, 128]
+    level:    [65, 65]
+
+  17547717:
+    template: Vanguard_Pitfighter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547718:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547719:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547720:
+    template: Goblin_Replica
+    at:       [5.949, 3.000, -5.975, 0]
+    level:    [65, 65]
+
+  17547721:
+    template: Anvilix_Sootwrists
+    at:       [7.952, 3.000, -5.997, 0]
+    level:    [80, 80]
+
+  17547722:
+    template: Vanguard_Welldigger
+    at:       [7.941, 3.000, -4.078, 0]
+    level:    [75, 77]
+
+  17547723:
+    template: Vanguard_Maestro
+    at:       [7.989, 3.000, -8.055, 0]
+    level:    [75, 77]
+
+  17547724:
+    template: Vanguard_Ronin
+    at:       [4.048, 3.000, -7.952, 0]
+    level:    [75, 77]
+
+  17547725:
+    template: Vanguard_Ronin
+    at:       [3.933, 3.000, -5.970, 0]
+    level:    [75, 77]
+
+  17547726:
+    template: Vanguard_Dragontamer
+    at:       [4.115, 3.000, -4.023, 0]
+    level:    [75, 77]
+
+  17547727:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547728:
+    template: Goblin_Replica
+    at:       [-0.017, 3.000, -9.916, 192]
+    level:    [65, 65]
+
+  17547729:
+    template: Distilix_Stickytoes
+    at:       [-2.014, 5.001, -16.507, 192]
+    level:    [80, 80]
+
+  17547730:
+    template: Vanguard_Enchanter
+    at:       [2.328, 4.001, -13.852, 192]
+    level:    [75, 77]
+
+  17547731:
+    template: Vanguard_Welldigger
+    at:       [0.015, 5.001, -16.564, 192]
+    level:    [75, 77]
+
+  17547732:
+    template: Vanguard_Armorer
+    at:       [-0.032, 4.001, -13.884, 192]
+    level:    [75, 77]
+
+  17547733:
+    template: Vanguard_Maestro
+    at:       [1.930, 5.001, -16.600, 192]
+    level:    [75, 77]
+
+  17547734:
+    template: Vanguard_Hitman
+    at:       [2.003, 1.001, -13.886, 192]
+    level:    [75, 77]
+
+  17547735:
+    template: Goblin_Replica
+    at:       [0.010, 3.000, 13.913, 64]
+    level:    [65, 65]
+
+  17547736:
+    template: Vanguard_Smithy
+    at:       [2.014, 3.000, 11.037, 64]
+    level:    [75, 77]
+
+  17547737:
+    template: Bootrix_Jaggedelbow
+    at:       [0.032, 3.000, 11.124, 64]
+    level:    [80, 80]
+
+  17547738:
+    template: Vanguard_Shaman
+    at:       [-1.995, 3.000, 11.066, 64]
+    level:    [75, 77]
+
+  17547739:
+    template: Vanguard_Tinkerer
+    at:       [1.969, 3.000, 17.141, 64]
+    level:    [75, 77]
+
+  17547740:
+    template: Vanguard_Ambusher
+    at:       [0.003, 3.000, 17.092, 64]
+    level:    [75, 77]
+
+  17547741:
+    template: Vanguard_Necromancer
+    at:       [-1.972, 3.000, 17.060, 64]
+    level:    [75, 77]
+
+  17547742:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547743:
+    template: Goblin_Replica
+    at:       [6.985, 9.000, -32.994, 64]
+    level:    [65, 65]
+
+  17547744:
+    template: Vanguard_Smithy
+    at:       [5.100, 9.000, -32.903, 64]
+    level:    [75, 77]
+
+  17547745:
+    template: Vanguard_Pitfighter
+    at:       [8.940, 9.000, -32.930, 64]
+    level:    [75, 77]
+
+  17547746:
+    template: Vanguard_Welldigger
+    at:       [9.031, 9.000, -34.860, 64]
+    level:    [75, 77]
+
+  17547747:
+    template: Prowlox_Barrelbelly
+    at:       [6.967, 9.000, -35.048, 64]
+    level:    [80, 80]
+
+  17547748:
+    template: Vanguard_Ronin
+    at:       [5.096, 9.000, -34.968, 64]
+    level:    [75, 77]
+
+  17547749:
+    template: Goblin_Replica
+    at:       [-6.992, 9.000, -32.970, 64]
+    level:    [65, 65]
+
+  17547750:
+    template: Vanguard_Alchemist
+    at:       [-8.967, 9.000, -32.983, 64]
+    level:    [75, 77]
+
+  17547751:
+    template: Vanguard_Shaman
+    at:       [-5.020, 9.000, -32.840, 64]
+    level:    [75, 77]
+
+  17547752:
+    template: Jabbrox_Grannyguise
+    at:       [-7.023, 9.000, -34.946, 64]
+    level:    [80, 80]
+
+  17547753:
+    template: Vanguard_Maestro
+    at:       [-8.942, 9.000, -34.950, 64]
+    level:    [75, 77]
+
+  17547754:
+    template: Vanguard_Hitman
+    at:       [-5.082, 9.000, -34.940, 64]
+    level:    [75, 77]
+
+  17547755:
+    template: Goblin_Replica
+    at:       [49.590, 4.500, -36.646, 64]
+    level:    [65, 65]
+
+  17547756:
+    template: Vanguard_Enchanter
+    at:       [50.907, 6.250, -41.218, 192]
+    level:    [75, 77]
+
+  17547757:
+    template: Vanguard_Armorer
+    at:       [49.544, 6.250, -41.130, 192]
+    level:    [75, 77]
+
+  17547758:
+    template: Vanguard_Tinkerer
+    at:       [50.947, 7.750, -45.186, 192]
+    level:    [75, 77]
+
+  17547759:
+    template: Blazox_Boneybod
+    at:       [49.492, 7.750, -45.162, 192]
+    level:    [80, 80]
+
+  17547760:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547761:
+    template: Vanguard_Maestro
+    at:       [47.170, 6.250, -41.319, 192]
+    level:    [75, 77]
+
+  17547762:
+    template: Vanguard_Hitman
+    at:       [47.010, 7.750, -45.186, 192]
+    level:    [75, 77]
+
+  17547763:
+    template: Goblin_Replica
+    at:       [16.945, 9.000, -51.046, 128]
+    level:    [65, 65]
+
+  17547764:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547765:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547766:
+    template: Vanguard_Necromancer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547767:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17547768:
+    template: Goblin_Replica
+    at:       [49.027, 9.001, -52.950, 64]
+    level:    [65, 65]
+
+  17547769:
+    template: Vanguard_Smithy
+    at:       [50.988, 9.000, -54.960, 64]
+    level:    [75, 77]
+
+  17547770:
+    template: Vanguard_Pitfighter
+    at:       [47.052, 9.001, -54.926, 64]
+    level:    [75, 77]
+
+  17547771:
+    template: Vanguard_Pitfighter
+    at:       [48.964, 9.000, -54.987, 64]
+    level:    [75, 77]
+
+  17547772:
+    template: Vanguard_Alchemist
+    at:       [47.029, 9.001, -50.946, 64]
+    level:    [75, 77]
+
+  17547773:
+    template: Eremix_Snottynostril
+    at:       [51.043, 9.000, -51.021, 64]
+    level:    [80, 80]
+
+  17547774:
+    template: Vanguard_Ambusher
+    at:       [49.111, 9.001, -50.986, 64]
+    level:    [75, 77]

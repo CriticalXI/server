@@ -1,0 +1,51 @@
+# Old-school Dynamis NPCs for dynamis_qufim, generated from
+# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Applied to data/zones/dynamis_qufim/npcs.yaml as an RFC 7396 merge patch.
+
+npcs:
+
+  16945563:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal
+
+  16945564:
+    script:       qm1
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal
+
+  16945630: null
+  16945631: null
+  16945632: null
+  16945634: null
+  16945635: null
+  16945636: null
+  16945637: null
+  16945638: null
+  16945639: null
+  16945640: null
+  16945641: null
+  16945642: null
+  16945643: null
+  16945644: null
+  16945645: null
+  16945646: null
+  16945647: null
+  16945648: null
+  16945649: null
+  16945650: null
+  16945651: null
+  16945652: null
+  16945653: null

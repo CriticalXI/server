@@ -1,0 +1,3009 @@
+# Old-school Dynamis spawn layout for dynamis_qufim, generated from
+# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Applied to data/zones/dynamis_qufim/mobs.yaml as an RFC 7396 merge patch.
+
+templates:
+
+  # -- Custom templates for mobs the core file lacks, scaffolded from the module's mob_groups/mob_pools inserts --
+
+  Air_Elemental:
+    id:            71
+    species:       air_elemental
+    type:          [notorious]
+    spell_list_id: 12
+    skill_list_id: 99
+    attributes:
+      combat:
+        skill: staff
+      jobs: [blm, rdm]
+      resists:
+        immune_status: [gravity, silence, slow, elegy]
+      render:
+        look:
+          type:  standard
+          model: 438
+        entity_flags:  1155
+        animation_sub: 16
+        model_size:    1
+        hitbox:        3
+      behaviors:
+        aggressive: true
+      spawn:
+        type: [scripted]
+    loot:
+      drops:
+        - chance: always
+          item: wind_cluster
+        - chance: common
+          item: wind_cluster
+        - chance: common
+          item: wind_cluster
+
+  Dark_Elemental:
+    id:            913
+    species:       dark_elemental
+    type:          [notorious]
+    spell_list_id: 18
+    skill_list_id: 100
+    attributes:
+      combat:
+        skill: club
+      jobs: [drk, drk]
+      resists:
+        immune_status: [blind, light_sleep, dark_sleep]
+      render:
+        look:
+          type:  standard
+          model: 443
+        entity_flags:  131
+        animation_sub: 16
+        model_size:    1
+        hitbox:        3
+      behaviors:
+        aggressive: true
+      spawn:
+        type: [scripted]
+    loot:
+      drops:
+        - chance: always
+          item: dark_cluster
+        - chance: common
+          item: dark_cluster
+        - chance: common
+          item: dark_cluster
+
+  Earth_Elemental:
+    id:            1160
+    species:       earth_elemental
+    type:          [notorious]
+    spell_list_id: 13
+    skill_list_id: 101
+    attributes:
+      combat:
+        skill: staff
+      jobs: [blm, rdm]
+      resists:
+        immune_status: [stun, slow, elegy]
+      render:
+        look:
+          type:  standard
+          model: 439
+        entity_flags:  1155
+        animation_sub: 16
+        model_size:    1
+        hitbox:        3
+      behaviors:
+        aggressive: true
+      spawn:
+        type: [scripted]
+    loot:
+      drops:
+        - chance: always
+          item: earth_cluster
+        - chance: common
+          item: earth_cluster
+        - chance: common
+          item: earth_cluster
+
+  Fire_Elemental:
+    id:            1341
+    species:       fire_elemental
+    type:          [notorious]
+    spell_list_id: 17
+    skill_list_id: 102
+    attributes:
+      combat:
+        skill: staff
+      jobs: [blm, rdm]
+      resists:
+        immune_status: [bind, paralyze]
+      render:
+        look:
+          type:  standard
+          model: 436
+        entity_flags:  131
+        animation_sub: 16
+        model_size:    1
+        hitbox:        3
+      behaviors:
+        aggressive: true
+      spawn:
+        type: [scripted]
+    loot:
+      drops:
+        - chance: always
+          item: fire_cluster
+        - chance: common
+          item: fire_cluster
+        - chance: common
+          item: fire_cluster
+
+  Ice_Elemental:
+    id:            2043
+    species:       ice_elemental
+    type:          [notorious]
+    spell_list_id: 14
+    skill_list_id: 103
+    attributes:
+      combat:
+        skill: staff
+      jobs: [blm, rdm]
+      resists:
+        immune_status: [gravity, bind, silence, paralyze]
+      render:
+        look:
+          type:  standard
+          model: 437
+        entity_flags:  1155
+        animation_sub: 16
+        model_size:    1
+        hitbox:        3
+      behaviors:
+        aggressive: true
+      spawn:
+        type: [scripted]
+    loot:
+      drops:
+        - chance: always
+          item: ice_cluster
+        - chance: common
+          item: ice_cluster
+        - chance: common
+          item: ice_cluster
+
+  Light_Elemental:
+    id:            2413
+    species:       light_elemental
+    type:          [notorious]
+    spell_list_id: 19
+    skill_list_id: 104
+    attributes:
+      combat:
+        skill: club
+      jobs: [whm, whm]
+      render:
+        look:
+          type:  standard
+          model: 442
+        entity_flags:  131
+        animation_sub: 16
+        model_size:    1
+        hitbox:        3
+      behaviors:
+        aggressive: true
+      spawn:
+        type: [scripted]
+    loot:
+      drops:
+        - chance: always
+          item: light_cluster
+        - chance: common
+          item: light_cluster
+        - chance: common
+          item: light_cluster
+
+  Thunder_Elemental:
+    id:            3912
+    species:       thunder_elemental
+    type:          [notorious]
+    spell_list_id: 16
+    skill_list_id: 105
+    attributes:
+      combat:
+        skill: staff
+      jobs: [blm, rdm]
+      resists:
+        immune_status: [stun, poison]
+      render:
+        look:
+          type:  standard
+          model: 441
+        entity_flags:  131
+        animation_sub: 16
+        model_size:    1
+        hitbox:        3
+      behaviors:
+        aggressive: true
+      spawn:
+        type: [scripted]
+    loot:
+      drops:
+        - chance: always
+          item: lightning_cluster
+        - chance: common
+          item: lightning_cluster
+        - chance: common
+          item: lightning_cluster
+
+  Water_Elemental:
+    id:            4309
+    species:       water_elemental
+    type:          [notorious]
+    spell_list_id: 15
+    skill_list_id: 106
+    attributes:
+      combat:
+        skill: staff
+      jobs: [blm, rdm]
+      resists:
+        immune_status: [poison]
+      render:
+        look:
+          type:  standard
+          model: 440
+        entity_flags:  131
+        animation_sub: 16
+        model_size:    1
+        hitbox:        3
+      behaviors:
+        aggressive: true
+      spawn:
+        type: [scripted]
+    loot:
+      drops:
+        - chance: always
+          item: water_cluster
+        - chance: common
+          item: water_cluster
+        - chance: common
+          item: water_cluster
+
+  Adamantking_Effigy:
+    type: [notorious]
+
+  Goblin_Replica:
+    type: [notorious]
+
+  Manifest_Icon:
+    type: [notorious]
+
+  Nightmare_Diremite:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Gaylas:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Kraken:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Raptor:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Roc:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Snoll:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Stirge:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Tiger:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Nightmare_Weapon:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Scolopendra:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Stringes:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Suttung:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Alchemist:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Ambusher:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Amputator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Armorer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Assassin:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Backstabber:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Beasttender:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Bugler:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Chanter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Constable:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Defender:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Dollmaster:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Dragontamer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Drakekeeper:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Enchanter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Exemplar:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Footsoldier:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Grappler:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Gutslasher:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Hatamoto:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Hawker:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Hitman:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Impaler:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Inciter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Kusa:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Liberator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Maestro:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Mason:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Mesmerizer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Militant:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Minstrel:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Neckchopper:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Necromancer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Ogresoother:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Oracle:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Partisan:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Pathfinder:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Persecutor:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Pillager:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Pitfighter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Predator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Prelate:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Priest:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Protector:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Purloiner:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Ronin:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Salvager:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Sentinel:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Shaman:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Skirmisher:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Smithy:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Thaumaturge:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Tinkerer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Trooper:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Undertaker:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Vexer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Vigilante:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Vindicator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Visionary:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Welldigger:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguards_Avatar:
+    type: [called, notorious]
+
+  Vanguards_Crow:
+    type: [called, notorious]
+
+  Vanguards_Hecteyes:
+    type: [called, notorious]
+
+  Vanguards_Scorpion:
+    type: [called, notorious]
+
+  Vanguards_Slime:
+    type: [called, notorious]
+
+  Vanguards_Wyvern:
+    type: [called, notorious]
+
+spawns:
+
+  16945153:
+    template: Warchief_Tombstone
+    at:       [95.000, -19.277, 84.111, 22]
+    level:    [65, 65]
+
+  16945154:
+    template: Vanguard_Grappler
+    at:       [90.889, -20.088, 86.834, 22]
+    level:    [75, 75]
+
+  16945155:
+    template: Vanguard_Amputator
+    at:       [100.116, -19.007, 81.376, 22]
+    level:    [75, 75]
+
+  16945156:
+    template: Vanguard_Backstabber
+    at:       [105.067, -19.311, 78.447, 22]
+    level:    [75, 75]
+
+  16945157:
+    template: Warchief_Tombstone
+    at:       [100.096, -19.006, 81.388, 22]
+    level:    [65, 65]
+
+  16945158:
+    template: Vanguard_Trooper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945159:
+    template: Warchief_Tombstone
+    at:       [96.384, -19.275, 84.665, 233]
+    level:    [65, 65]
+
+  16945160:
+    template: Vanguard_Bugler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945161:
+    template: Vanguard_Impaler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945162:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945163:
+    template: Warchief_Tombstone
+    at:       [72.360, -19.378, 179.824, 33]
+    level:    [65, 65]
+
+  16945164:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945165:
+    template: Warchief_Tombstone
+    at:       [59.059, -20.296, 186.073, 244]
+    level:    [65, 65]
+
+  16945166:
+    template: Vanguard_Vexer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945167:
+    template: Vanguard_Mesmerizer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945168:
+    template: Warchief_Tombstone
+    at:       [-7.148, -19.919, 230.398, 2]
+    level:    [65, 65]
+
+  16945169:
+    template: Vanguard_Pillager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945170:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945171:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945172:
+    template: Vanguard_Grappler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945173:
+    template: Warchief_Tombstone
+    at:       [-6.718, -19.812, 227.313, 60]
+    level:    [65, 65]
+
+  16945174:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945175:
+    template: Warchief_Tombstone
+    at:       [1.030, -19.841, 232.797, 187]
+    level:    [65, 65]
+
+  16945176:
+    template: Warchief_Tombstone
+    at:       [-13.601, -19.760, 261.678, 64]
+    level:    [65, 65]
+
+  16945177:
+    template: Vanguard_Footsoldier
+    at:       [-19.065, -19.800, 261.806, 64]
+    level:    [75, 75]
+
+  16945178:
+    template: Vanguard_Gutslasher
+    at:       [-24.001, -19.889, 261.743, 64]
+    level:    [75, 75]
+
+  16945179:
+    template: Vanguard_Predator
+    at:       [-8.778, -19.538, 261.932, 64]
+    level:    [75, 75]
+
+  16945180:
+    template: Vanguard_Hawker
+    at:       [-3.698, -19.101, 261.995, 64]
+    level:    [75, 75]
+
+  16945181:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945182:
+    template: Manifest_Icon
+    at:       [59.087, -19.416, 7.410, 98]
+    level:    [82, 82]
+
+  16945183:
+    template: Vanguard_Partisan
+    at:       [54.507, -19.353, 3.266, 98]
+    level:    [75, 75]
+
+  16945184:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945185:
+    template: Manifest_Icon
+    at:       [122.761, -20.000, -0.990, 162]
+    level:    [82, 82]
+
+  16945186:
+    template: Vanguard_Exemplar
+    at:       [118.771, -20.000, 3.351, 162]
+    level:    [75, 75]
+
+  16945187:
+    template: Vanguard_Prelate
+    at:       [127.681, -20.185, 1.823, 162]
+    level:    [75, 75]
+
+  16945188:
+    template: Vanguard_Persecutor
+    at:       [118.635, -20.063, -5.233, 162]
+    level:    [75, 75]
+
+  16945189:
+    template: Manifest_Icon
+    at:       [88.100, -19.984, -25.543, 169]
+    level:    [82, 82]
+
+  16945190:
+    template: Vanguard_Sentinel
+    at:       [84.647, -19.876, -20.074, 169]
+    level:    [75, 75]
+
+  16945191:
+    template: Vanguard_Liberator
+    at:       [92.574, -20.301, -22.346, 169]
+    level:    [75, 75]
+
+  16945192:
+    template: Vanguard_Priest
+    at:       [84.357, -19.707, -28.849, 169]
+    level:    [75, 75]
+
+  16945193:
+    template: Manifest_Icon
+    at:       [117.383, -20.041, -4.789, 103]
+    level:    [82, 82]
+
+  16945194:
+    template: Manifest_Icon
+    at:       [63.832, -19.244, 4.471, 22]
+    level:    [82, 82]
+
+  16945195:
+    template: Vanguard_Assassin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945196:
+    template: Vanguard_Ogresoother
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945197:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945198:
+    template: Manifest_Icon
+    at:       [27.086, -20.173, -22.998, 7]
+    level:    [82, 82]
+
+  16945199:
+    template: Vanguard_Oracle
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945200:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945201:
+    template: Manifest_Icon
+    at:       [16.593, -21.206, -21.740, 128]
+    level:    [82, 82]
+
+  16945202:
+    template: Vanguard_Skirmisher
+    at:       [10.277, -20.327, -21.726, 128]
+    level:    [75, 75]
+
+  16945203:
+    template: Vanguard_Visionary
+    at:       [23.193, -20.579, -21.755, 128]
+    level:    [75, 75]
+
+  16945204:
+    template: Vanguard_Chanter
+    at:       [17.226, -21.270, -26.520, 128]
+    level:    [75, 75]
+
+  16945205:
+    template: Vanguard_Salvager
+    at:       [19.376, -21.078, -17.393, 128]
+    level:    [75, 75]
+
+  16945206:
+    template: Manifest_Icon
+    at:       [-14.937, -19.854, -18.099, 4]
+    level:    [82, 82]
+
+  16945207:
+    template: Vanguard_Inciter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945208:
+    template: Vanguard_Persecutor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945209:
+    template: Adamantking_Effigy
+    at:       [-198.662, -19.520, 12.847, 142]
+    level:    [65, 65]
+
+  16945210:
+    template: Vanguard_Vindicator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945211:
+    template: Vanguard_Protector
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945212:
+    template: Vanguard_Kusa
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945213:
+    template: Adamantking_Effigy
+    at:       [-225.816, -21.024, 22.599, 141]
+    level:    [65, 65]
+
+  16945214:
+    template: Vanguard_Militant
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945215:
+    template: Vanguard_Thaumaturge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945216:
+    template: Vanguard_Purloiner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945217:
+    template: Scolopendra
+    at:       [-264.477, -3.417, 24.961, 60]
+    level:    [82, 82]
+
+  16945218:
+    template: Adamantking_Effigy
+    at:       [-205.970, -19.841, 93.721, 192]
+    level:    [65, 65]
+
+  16945219:
+    template: Vanguard_Defender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945220:
+    template: Vanguard_Hatamoto
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945221:
+    template: Vanguard_Constable
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945222:
+    template: Adamantking_Effigy
+    at:       [-194.525, -19.892, 146.923, 64]
+    level:    [65, 65]
+
+  16945223:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945224:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945225:
+    template: Vanguard_Mason
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945226:
+    template: Adamantking_Effigy
+    at:       [-205.681, -19.950, 128.470, 192]
+    level:    [65, 65]
+
+  16945227:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945228:
+    template: Vanguard_Kusa
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945229:
+    template: Vanguard_Drakekeeper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945230:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945231:
+    template: Adamantking_Effigy
+    at:       [-126.625, -19.870, 203.902, 139]
+    level:    [65, 65]
+
+  16945232:
+    template: Vanguard_Beasttender
+    at:       [-131.380, -19.787, 205.188, 139]
+    level:    [75, 75]
+
+  16945233:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945234:
+    template: Vanguard_Protector
+    at:       [-133.015, -19.503, 198.977, 139]
+    level:    [75, 75]
+
+  16945235:
+    template: Vanguard_Defender
+    at:       [-130.276, -19.920, 205.807, 139]
+    level:    [75, 75]
+
+  16945236:
+    template: Vanguard_Mason
+    at:       [-121.966, -20.000, 203.590, 139]
+    level:    [75, 75]
+
+  16945237:
+    template: Vanguard_Minstrel
+    at:       [-122.331, -20.000, 198.239, 139]
+    level:    [75, 75]
+
+  16945238:
+    template: Adamantking_Effigy
+    at:       [-124.548, -19.750, 212.071, 141]
+    level:    [65, 65]
+
+  16945239:
+    template: Vanguard_Vindicator
+    at:       [-128.731, -19.926, 213.410, 141]
+    level:    [75, 75]
+
+  16945240:
+    template: Vanguard_Constable
+    at:       [-120.062, -19.637, 211.289, 141]
+    level:    [75, 75]
+
+  16945241:
+    template: Vanguard_Thaumaturge
+    at:       [-125.224, -19.856, 208.542, 141]
+    level:    [75, 75]
+
+  16945242:
+    template: Vanguard_Undertaker
+    at:       [-123.635, -19.163, 216.765, 141]
+    level:    [75, 75]
+
+  16945243:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945244:
+    template: Goblin_Replica
+    at:       [-226.755, -19.480, 319.433, 0]
+    level:    [65, 65]
+
+  16945245:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945246:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945247:
+    template: Goblin_Replica
+    at:       [-73.475, -19.583, 254.906, 61]
+    level:    [65, 65]
+
+  16945248:
+    template: Vanguard_Welldigger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945249:
+    template: Vanguard_Necromancer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945250:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945251:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945252:
+    template: Goblin_Replica
+    at:       [-73.933, -19.269, 258.862, 189]
+    level:    [65, 65]
+
+  16945253:
+    template: Vanguard_Pitfighter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945254:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945255:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945256:
+    template: Vanguard_Hitman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945257:
+    template: Goblin_Replica
+    at:       [-224.341, -19.693, 306.920, 17]
+    level:    [65, 65]
+
+  16945258:
+    template: Vanguard_Smithy
+    at:       [-232.774, -19.962, 310.549, 17]
+    level:    [75, 75]
+
+  16945259:
+    template: Vanguard_Armorer
+    at:       [-218.878, -19.972, 304.573, 17]
+    level:    [75, 75]
+
+  16945260:
+    template: Vanguard_Enchanter
+    at:       [-212.816, -19.686, 301.966, 17]
+    level:    [75, 75]
+
+  16945261:
+    template: Vanguard_Shaman
+    at:       [-227.051, -19.699, 300.765, 17]
+    level:    [75, 75]
+
+  16945262:
+    template: Goblin_Replica
+    at:       [-219.612, -19.782, 331.987, 242]
+    level:    [65, 65]
+
+  16945263:
+    template: Vanguard_Ronin
+    at:       [-216.897, -19.697, 333.002, 242]
+    level:    [75, 75]
+
+  16945264:
+    template: Vanguard_Tinkerer
+    at:       [-217.745, -19.220, 326.100, 242]
+    level:    [75, 75]
+
+  16945265:
+    template: Vanguard_Ambusher
+    at:       [-210.742, -19.904, 333.001, 242]
+    level:    [75, 75]
+
+  16945266:
+    template: Vanguard_Alchemist
+    at:       [-229.297, -20.028, 328.425, 242]
+    level:    [75, 75]
+
+  16945267:
+    template: Goblin_Replica
+    at:       [-235.713, -19.306, 295.312, 64]
+    level:    [65, 65]
+
+  16945268:
+    template: Vanguard_Dragontamer
+    at:       [-228.753, -19.529, 297.485, 64]
+    level:    [75, 75]
+
+  16945269:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945270:
+    template: Goblin_Replica
+    at:       [-234.537, -19.088, 340.258, 192]
+    level:    [65, 65]
+
+  16945271:
+    template: Vanguard_Necromancer
+    at:       [-226.268, -19.777, 337.625, 240]
+    level:    [75, 75]
+
+  16945272:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945273:
+    template: Nightmare_Snoll
+    at:       [-136.073, -20.377, 344.421, 102]
+    level:    [78, 80]
+
+  16945274:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945275:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945276:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945277:
+    template: Nightmare_Snoll
+    at:       [-132.776, -19.527, 320.005, 118]
+    level:    [78, 80]
+
+  16945278:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945279:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945280:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945281:
+    template: Nightmare_Roc
+    at:       [-221.369, -19.805, 437.399, 56]
+    level:    [78, 80]
+
+  16945282:
+    template: Nightmare_Roc
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945283:
+    template: Nightmare_Roc
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945284:
+    template: Goblin_Replica
+    at:       [-306.489, -11.981, 467.923, 238]
+    level:    [65, 65]
+
+  16945285:
+    template: Vanguard_Welldigger
+    at:       [-301.541, -11.614, 470.277, 238]
+    level:    [75, 75]
+
+  16945286:
+    template: Vanguard_Enchanter
+    at:       [-303.236, -12.200, 463.424, 238]
+    level:    [75, 75]
+
+  16945287:
+    template: Vanguard_Necromancer
+    at:       [-309.330, -11.984, 472.717, 238]
+    level:    [75, 75]
+
+  16945288:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945289:
+    template: Nightmare_Snoll
+    at:       [-156.819, -20.000, 362.471, 98]
+    level:    [78, 80]
+
+  16945290:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945291:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945292:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945293:
+    template: Goblin_Replica
+    at:       [-309.331, -11.492, 485.880, 0]
+    level:    [65, 65]
+
+  16945294:
+    template: Vanguard_Maestro
+    at:       [-304.938, -11.240, 486.039, 0]
+    level:    [75, 75]
+
+  16945295:
+    template: Vanguard_Dragontamer
+    at:       [-309.517, -12.126, 492.455, 0]
+    level:    [75, 75]
+
+  16945296:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945297:
+    template: Vanguard_Hitman
+    at:       [-309.157, -11.651, 479.439, 0]
+    level:    [75, 75]
+
+  16945298:
+    template: Nightmare_Snoll
+    at:       [-157.837, -19.317, 334.877, 115]
+    level:    [78, 80]
+
+  16945299:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945300:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945301:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945302:
+    template: Nightmare_Snoll
+    at:       [-475.226, -11.232, 385.530, 207]
+    level:    [78, 80]
+
+  16945303:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945304:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945305:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945306:
+    template: Nightmare_Snoll
+    at:       [-496.717, -12.481, 379.136, 236]
+    level:    [78, 80]
+
+  16945307:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945308:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945309:
+    template: Nightmare_Snoll
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945310:
+    template: Suttung
+    at:       [-535.544, -13.042, 386.895, 51]
+    level:    [82, 82]
+
+  16945311:
+    template: Goblin_Replica
+    at:       [-545.381, -8.831, 416.481, 5]
+    level:    [65, 65]
+
+  16945312:
+    template: Goblin_Replica
+    at:       [-545.320, -8.367, 420.674, 5]
+    level:    [65, 65]
+
+  16945313:
+    template: Nightmare_Roc
+    at:       [153.580, -19.718, -20.217, 128]
+    level:    [78, 80]
+
+  16945314:
+    template: Nightmare_Roc
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945315:
+    template: Nightmare_Roc
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945316:
+    template: Goblin_Replica
+    at:       [202.412, 20.000, -160.927, 212]
+    level:    [65, 65]
+
+  16945317:
+    template: Vanguard_Smithy
+    at:       [205.016, 20.309, -155.951, 212]
+    level:    [75, 75]
+
+  16945318:
+    template: Vanguard_Shaman
+    at:       [200.252, 20.000, -165.053, 212]
+    level:    [75, 75]
+
+  16945319:
+    template: Vanguard_Pathfinder
+    at:       [196.289, 20.000, -159.653, 212]
+    level:    [75, 75]
+
+  16945320:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945321:
+    template: Nightmare_Stirge
+    at:       [-61.614, -19.824, 36.806, 64]
+    level:    [78, 80]
+
+  16945322:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945323:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945324:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945325:
+    template: Goblin_Replica
+    at:       [196.059, 20.230, -169.882, 85]
+    level:    [65, 65]
+
+  16945326:
+    template: Vanguard_Tinkerer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945327:
+    template: Vanguard_Ambusher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945328:
+    template: Vanguard_Alchemist
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945329:
+    template: Nightmare_Stirge
+    at:       [21.479, -19.832, 153.201, 79]
+    level:    [78, 80]
+
+  16945330:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945331:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945332:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945333:
+    template: Nightmare_Stirge
+    at:       [143.273, 21.394, -348.023, 144]
+    level:    [78, 80]
+
+  16945334:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945335:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945336:
+    template: Nightmare_Stirge
+    at:       [153.181, 20.601, -370.837, 193]
+    level:    [78, 80]
+
+  16945337:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945338:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945339:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945340:
+    template: Nightmare_Stirge
+    at:       [-60.969, -19.775, 153.545, 54]
+    level:    [78, 80]
+
+  16945341:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945342:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945343:
+    template: Nightmare_Stirge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945344:
+    template: Stringes
+    at:       [149.787, 21.221, -409.158, 185]
+    level:    [82, 82]
+
+  16945345:
+    template: Goblin_Replica
+    at:       [140.872, 18.000, -431.935, 210]
+    level:    [65, 65]
+
+  16945346:
+    template: Goblin_Replica
+    at:       [144.412, 17.918, -433.310, 210]
+    level:    [65, 65]
+
+  16945347:
+    template: Fire_Elemental
+    at:       [42.635, -20.500, -94.768, 139]
+    level:    [82, 82]
+
+  16945348:
+    template: Ice_Elemental
+    at:       [-208.064, -19.798, 361.243, 29]
+    level:    [82, 82]
+
+  16945349:
+    template: Air_Elemental
+    at:       [146.978, -20.062, 54.773, 157]
+    level:    [82, 82]
+
+  16945350:
+    template: Earth_Elemental
+    at:       [-338.197, -12.949, 531.737, 70]
+    level:    [82, 82]
+
+  16945351:
+    template: Thunder_Elemental
+    at:       [158.148, 20.219, -230.048, 184]
+    level:    [82, 82]
+
+  16945352:
+    template: Water_Elemental
+    at:       [-278.296, -19.902, 74.020, 57]
+    level:    [82, 82]
+
+  16945353:
+    template: Light_Elemental
+    at:       [1.924, -19.078, 301.529, 64]
+    level:    [82, 82]
+
+  16945354:
+    template: Dark_Elemental
+    at:       [-428.031, -12.956, 337.849, 136]
+    level:    [82, 82]
+
+  16945355:
+    template: Antaeus
+    at:       [-257.040, -20.000, 319.628, 254]
+    level:    [82, 82]
+
+  16945356:
+    template: Goblin_Replica
+    at:       [-15.468, -17.300, 103.314, 8]
+    level:    [65, 65]
+
+  16945357:
+    template: Goblin_Replica
+    at:       [-109.831, -20.229, 192.035, 163]
+    level:    [65, 65]
+
+  16945358:
+    template: Vanguard_Welldigger
+    at:       [-114.188, -20.092, 196.981, 163]
+    level:    [75, 75]
+
+  16945359:
+    template: Vanguard_Maestro
+    at:       [-119.005, -20.000, 202.449, 163]
+    level:    [75, 75]
+
+  16945360:
+    template: Vanguard_Pitfighter
+    at:       [-104.753, -20.000, 186.273, 163]
+    level:    [75, 75]
+
+  16945361:
+    template: Vanguard_Ambusher
+    at:       [-99.939, -20.000, 180.810, 163]
+    level:    [75, 75]
+
+  16945362:
+    template: Goblin_Replica
+    at:       [-111.833, -20.336, 189.722, 164]
+    level:    [65, 65]
+
+  16945363:
+    template: Vanguard_Pitfighter
+    at:       [-116.022, -20.062, 194.827, 164]
+    level:    [75, 75]
+
+  16945364:
+    template: Vanguard_Alchemist
+    at:       [-121.221, -20.000, 201.164, 164]
+    level:    [75, 75]
+
+  16945365:
+    template: Vanguard_Armorer
+    at:       [-106.840, -20.394, 183.634, 164]
+    level:    [75, 75]
+
+  16945366:
+    template: Vanguard_Necromancer
+    at:       [-103.790, -21.272, 181.185, 164]
+    level:    [75, 75]
+
+  16945367:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945368:
+    template: Goblin_Replica
+    at:       [-81.693, -19.707, 20.063, 131]
+    level:    [65, 65]
+
+  16945369:
+    template: Vanguard_Ronin
+    at:       [-84.427, -19.722, 20.260, 131]
+    level:    [75, 75]
+
+  16945370:
+    template: Vanguard_Shaman
+    at:       [-87.974, -19.741, 20.515, 131]
+    level:    [75, 75]
+
+  16945371:
+    template: Vanguard_Enchanter
+    at:       [-90.846, -19.972, 20.722, 131]
+    level:    [75, 75]
+
+  16945372:
+    template: Vanguard_Pitfighter
+    at:       [-93.986, -20.099, 20.948, 131]
+    level:    [75, 75]
+
+  16945373:
+    template: Vanguard_Smithy
+    at:       [-96.859, -20.029, 21.155, 131]
+    level:    [75, 75]
+
+  16945374:
+    template: Goblin_Replica
+    at:       [-59.935, -19.707, 2.919, 62]
+    level:    [65, 65]
+
+  16945375:
+    template: Vanguard_Armorer
+    at:       [-59.690, -19.726, -2.696, 62]
+    level:    [75, 75]
+
+  16945376:
+    template: Vanguard_Tinkerer
+    at:       [-60.105, -19.710, 6.791, 62]
+    level:    [75, 75]
+
+  16945377:
+    template: Vanguard_Alchemist
+    at:       [-65.148, -20.453, 2.825, 62]
+    level:    [75, 75]
+
+  16945378:
+    template: Vanguard_Pathfinder
+    at:       [-55.515, -20.221, 3.066, 62]
+    level:    [75, 75]
+
+  16945379:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945380:
+    template: Goblin_Replica
+    at:       [32.254, -19.921, 194.965, 128]
+    level:    [65, 65]
+
+  16945381:
+    template: Vanguard_Welldigger
+    at:       [27.014, -19.664, 195.010, 128]
+    level:    [75, 75]
+
+  16945382:
+    template: Vanguard_Maestro
+    at:       [22.326, -19.217, 195.050, 128]
+    level:    [75, 75]
+
+  16945383:
+    template: Vanguard_Ronin
+    at:       [37.306, -20.055, 194.921, 128]
+    level:    [75, 75]
+
+  16945384:
+    template: Vanguard_Dragontamer
+    at:       [42.258, -20.057, 194.879, 128]
+    level:    [75, 75]
+
+  16945385:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 75]
+
+  16945386:
+    template: Goblin_Replica
+    at:       [-5.837, -20.093, 201.581, 0]
+    level:    [65, 65]
+
+  16945387:
+    template: Vanguard_Smithy
+    at:       [-0.889, -20.000, 201.525, 0]
+    level:    [75, 75]
+
+  16945388:
+    template: Vanguard_Hitman
+    at:       [-0.886, -19.947, 205.085, 0]
+    level:    [75, 75]
+
+  16945389:
+    template: Vanguard_Enchanter
+    at:       [-0.894, -20.000, 196.593, 0]
+    level:    [75, 75]
+
+  16945390:
+    template: Vanguard_Shaman
+    at:       [-0.899, -20.316, 191.641, 0]
+    level:    [75, 75]
+
+  16945391:
+    template: Goblin_Replica
+    at:       [-45.033, -20.046, 125.922, 156]
+    level:    [65, 65]
+
+  16945392:
+    template: Goblin_Replica
+    at:       [5.021, -20.035, 124.363, 220]
+    level:    [65, 65]
+
+  16945393:
+    template: Goblin_Replica
+    at:       [-3.347, -19.026, 100.502, 8]
+    level:    [65, 65]
+
+  16945394:
+    template: Goblin_Replica
+    at:       [-46.633, -20.052, 74.369, 96]
+    level:    [65, 65]
+
+  16945395:
+    template: Nightmare_Diremite
+    at:       [-270.470, -10.747, 487.465, 231]
+    level:    [78, 80]
+
+  16945396:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945397:
+    template: Nightmare_Diremite
+    at:       [-275.038, -11.989, 471.655, 162]
+    level:    [78, 80]
+
+  16945398:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945399:
+    template: Nightmare_Diremite
+    at:       [-284.911, -12.086, 484.757, 245]
+    level:    [78, 80]
+
+  16945400:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945401:
+    template: Nightmare_Diremite
+    at:       [-296.533, -11.751, 491.319, 54]
+    level:    [78, 80]
+
+  16945402:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945403:
+    template: Nightmare_Diremite
+    at:       [-300.984, -11.000, 478.629, 248]
+    level:    [78, 80]
+
+  16945404:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945405:
+    template: Nightmare_Diremite
+    at:       [-298.767, -12.114, 463.578, 218]
+    level:    [78, 80]
+    script:   null
+
+  16945406:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945407:
+    template: Nightmare_Diremite
+    at:       [-308.469, -12.394, 456.989, 202]
+    level:    [78, 80]
+    script:   null
+
+  16945408:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945409:
+    template: Nightmare_Diremite
+    at:       [-320.408, -12.000, 472.749, 7]
+    level:    [78, 80]
+    script:   null
+
+  16945410:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945411:
+    template: Nightmare_Diremite
+    at:       [-332.928, -12.946, 467.776, 207]
+    level:    [78, 80]
+    script:   null
+
+  16945412:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945413:
+    template: Nightmare_Diremite
+    at:       [-316.672, -11.611, 450.671, 221]
+    level:    [78, 80]
+    script:   null
+
+  16945414:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945415:
+    template: Nightmare_Diremite
+    at:       [-318.770, -11.912, 428.749, 215]
+    level:    [78, 80]
+    script:   null
+
+  16945416:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945417:
+    template: Nightmare_Diremite
+    at:       [-332.708, -11.348, 443.779, 234]
+    level:    [78, 80]
+    script:   null
+
+  16945418:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945419:
+    template: Nightmare_Diremite
+    at:       [-358.722, -12.000, 442.357, 2]
+    level:    [78, 80]
+    script:   null
+
+  16945420:
+    template: Nightmare_Diremite
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945421:
+    template: Nightmare_Kraken
+    at:       [-218.359, -19.083, 38.272, 239]
+    level:    [78, 80]
+
+  16945422:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945423:
+    template: Nightmare_Kraken
+    at:       [-243.159, -20.207, 27.225, 198]
+    level:    [78, 80]
+    script:   null
+
+  16945424:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945425:
+    template: Nightmare_Kraken
+    at:       [-250.003, -20.170, 47.660, 69]
+    level:    [78, 80]
+    script:   null
+
+  16945426:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945427:
+    template: Nightmare_Kraken
+    at:       [-265.529, -19.342, 39.694, 8]
+    level:    [78, 80]
+    script:   null
+
+  16945428:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945429:
+    template: Nightmare_Kraken
+    at:       [-276.600, -19.065, 61.284, 83]
+    level:    [78, 80]
+    script:   null
+
+  16945430:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945431:
+    template: Nightmare_Kraken
+    at:       [-294.936, -20.308, 50.588, 29]
+    level:    [78, 80]
+    script:   null
+
+  16945432:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945433:
+    template: Nightmare_Kraken
+    at:       [-282.784, -19.906, 23.687, 238]
+    level:    [78, 80]
+    script:   null
+
+  16945434:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945435:
+    template: Nightmare_Kraken
+    at:       [-277.102, -20.299, 87.588, 87]
+    level:    [78, 80]
+    script:   null
+
+  16945436:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945437:
+    template: Nightmare_Kraken
+    at:       [-311.925, -19.710, 58.419, 10]
+    level:    [78, 80]
+    script:   null
+
+  16945438:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945439:
+    template: Nightmare_Kraken
+    at:       [-332.640, -20.770, 56.555, 26]
+    level:    [78, 80]
+    script:   null
+
+  16945440:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945441:
+    template: Nightmare_Kraken
+    at:       [-341.548, -20.000, 40.281, 235]
+    level:    [78, 80]
+    script:   null
+
+  16945442:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945443:
+    template: Nightmare_Kraken
+    at:       [-304.406, -13.677, 26.310, 162]
+    level:    [78, 80]
+
+  16945444:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945445:
+    template: Nightmare_Kraken
+    at:       [-287.617, -6.243, 14.683, 150]
+    level:    [78, 80]
+
+  16945446:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945447:
+    template: Nightmare_Kraken
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945448:
+    template: Nightmare_Gaylas
+    at:       [255.054, -9.825, -20.566, 157]
+    level:    [78, 80]
+    script:   null
+
+  16945449:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945450:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945451:
+    template: Nightmare_Gaylas
+    at:       [209.686, 21.250, -150.013, 232]
+    level:    [78, 80]
+    script:   null
+
+  16945452:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945453:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945454:
+    template: Nightmare_Gaylas
+    at:       [191.926, 20.154, -154.146, 32]
+    level:    [78, 80]
+    script:   null
+
+  16945455:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945456:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945457:
+    template: Nightmare_Gaylas
+    at:       [198.768, 20.933, -175.515, 216]
+    level:    [78, 80]
+
+  16945458:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945459:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945460:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945461:
+    template: Nightmare_Gaylas
+    at:       [185.369, 20.750, -195.772, 193]
+    level:    [78, 80]
+    script:   null
+
+  16945462:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945463:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945464:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945465:
+    template: Nightmare_Gaylas
+    at:       [162.382, 20.186, -194.457, 241]
+    level:    [78, 80]
+    script:   null
+
+  16945466:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945467:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945468:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945469:
+    template: Nightmare_Gaylas
+    at:       [153.565, 20.512, -214.524, 219]
+    level:    [78, 80]
+    script:   null
+
+  16945470:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945471:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945472:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945473:
+    template: Nightmare_Gaylas
+    at:       [165.904, 20.263, -235.467, 209]
+    level:    [78, 80]
+    script:   null
+
+  16945474:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945475:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945476:
+    template: Nightmare_Gaylas
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945477:
+    template: Nightmare_Raptor
+    at:       [130.669, -19.668, 82.273, 117]
+    level:    [78, 80]
+
+  16945478:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945479:
+    template: Nightmare_Raptor
+    at:       [148.374, -19.620, 76.792, 122]
+    level:    [78, 80]
+
+  16945480:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945481:
+    template: Nightmare_Raptor
+    at:       [160.662, -19.133, 97.363, 111]
+    level:    [78, 80]
+    script:   null
+
+  16945482:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945483:
+    template: Nightmare_Raptor
+    at:       [145.314, -19.913, 105.753, 129]
+    level:    [78, 80]
+    script:   null
+
+  16945484:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945485:
+    template: Nightmare_Raptor
+    at:       [123.742, -19.506, 107.013, 90]
+    level:    [78, 80]
+    script:   null
+
+  16945486:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945487:
+    template: Nightmare_Raptor
+    at:       [119.467, -20.012, 123.786, 77]
+    level:    [78, 80]
+
+  16945488:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945489:
+    template: Nightmare_Raptor
+    at:       [139.221, -19.040, 121.758, 128]
+    level:    [78, 80]
+
+  16945490:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945491:
+    template: Nightmare_Raptor
+    at:       [157.073, -20.000, 120.170, 126]
+    level:    [78, 80]
+
+  16945492:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945493:
+    template: Nightmare_Raptor
+    at:       [162.310, -19.547, 147.419, 96]
+    level:    [78, 80]
+    script:   null
+
+  16945494:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945495:
+    template: Nightmare_Raptor
+    at:       [146.681, -19.473, 160.135, 96]
+    level:    [78, 80]
+
+  16945496:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945497:
+    template: Nightmare_Raptor
+    at:       [123.247, -19.623, 148.440, 78]
+    level:    [78, 80]
+
+  16945498:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945499:
+    template: Nightmare_Raptor
+    at:       [196.789, -20.000, 119.545, 127]
+    level:    [78, 80]
+
+  16945500:
+    template: Nightmare_Raptor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945501:
+    template: Nightmare_Tiger
+    at:       [-5.263, -19.257, -17.494, 134]
+    level:    [78, 80]
+    script:   null
+
+  16945502:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945503:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945504:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945505:
+    template: Nightmare_Tiger
+    at:       [9.803, -19.711, 2.171, 83]
+    level:    [78, 80]
+    script:   null
+
+  16945506:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945507:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945508:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945509:
+    template: Nightmare_Tiger
+    at:       [16.809, -19.160, -37.493, 160]
+    level:    [78, 80]
+
+  16945510:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945511:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945512:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945513:
+    template: Nightmare_Tiger
+    at:       [31.847, -19.619, -23.678, 129]
+    level:    [78, 80]
+
+  16945514:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945515:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945516:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945517:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945518:
+    template: Nightmare_Tiger
+    at:       [26.496, -19.454, 2.021, 98]
+    level:    [78, 80]
+
+  16945519:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945520:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945521:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945522:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945523:
+    template: Nightmare_Tiger
+    at:       [42.812, -19.072, -18.570, 125]
+    level:    [78, 80]
+    script:   null
+
+  16945524:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945525:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945526:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945527:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945528:
+    template: Nightmare_Tiger
+    at:       [42.515, -20.000, -43.731, 152]
+    level:    [78, 80]
+
+  16945529:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945530:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945531:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945532:
+    template: Nightmare_Tiger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945533:
+    template: Nightmare_Weapon
+    at:       [-121.628, -19.756, 208.912, 96]
+    level:    [78, 80]
+    script:   null
+
+  16945534:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945535:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945536:
+    template: Nightmare_Weapon
+    at:       [-134.926, -19.311, 196.783, 161]
+    level:    [78, 80]
+
+  16945537:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945538:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945539:
+    template: Nightmare_Weapon
+    at:       [-146.120, -20.016, 210.193, 132]
+    level:    [78, 80]
+
+  16945540:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945541:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945542:
+    template: Nightmare_Weapon
+    at:       [-130.309, -19.514, 223.921, 94]
+    level:    [78, 80]
+    script:   null
+
+  16945543:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945544:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945545:
+    template: Nightmare_Weapon
+    at:       [-152.466, -19.784, 228.106, 80]
+    level:    [78, 80]
+
+  16945546:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945547:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945548:
+    template: Nightmare_Weapon
+    at:       [-180.295, -19.421, 234.489, 124]
+    level:    [78, 80]
+
+  16945549:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945550:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945551:
+    template: Nightmare_Weapon
+    at:       [-179.492, -19.027, 202.111, 128]
+    level:    [78, 80]
+
+  16945552:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945553:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945554:
+    template: Nightmare_Weapon
+    at:       [-204.581, -19.972, 196.347, 177]
+    level:    [78, 80]
+
+  16945555:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945556:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945557:
+    template: Nightmare_Weapon
+    at:       [-232.019, -19.347, 217.225, 225]
+    level:    [78, 80]
+
+  16945558:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945559:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945560:
+    template: Nightmare_Weapon
+    at:       [-223.150, -19.996, 252.186, 131]
+    level:    [78, 80]
+    script:   null
+
+  16945561:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+    script:   null
+
+  16945562:
+    template: Nightmare_Weapon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [78, 80]
+
+  16945563: null
+  16945564: null
+  16945565: null
+  16945566: null
+  16945567: null
+  16945568: null
+  16945569: null
+  16945570: null
+  16945571: null
+  16945572: null
+  16945573: null
+  16945574: null
+  16945575: null
+  16945576: null
+  16945577: null
+  16945578: null
+  16945579: null
+  16945580: null
+  16945581: null
+  16945582: null
+  16945583: null
+  16945584: null
+  16945585: null
+  16945586: null
+  16945587: null
+  16945588: null
+  16945589: null
+  16945590: null
+  16945591: null
+  16945592: null
+  16945593: null
+  16945594: null
+  16945595: null
+  16945596: null
+  16945597: null
+  16945598: null
+  16945599: null
+  16945600: null
+  16945601: null
+  16945602: null
+  16945603: null
+  16945604: null
+  16945605: null
+  16945606: null
+  16945607: null
+  16945608: null
+  16945609: null
+  16945610: null
+  16945611: null
+  16945612: null
+  16945613: null
+  16945614: null
+  16945615: null
+  16945616: null
+  16945617: null
+  16945618: null
+  16945619: null
+  16945620: null
+  16945621: null
+  16945622: null
+  16945623: null
+  16945624: null
+  16945625: null
+  16945626: null
+  16945627: null
+  16945628: null
