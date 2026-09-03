@@ -1,0 +1,132 @@
+# Era mob layout for labyrinth_of_onzozo, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Babaulas:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Boribaba:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Cockatrice:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Flying_Manta:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Alchemist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Bandit:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Bouncer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Enchanter:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Hunter:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Mercenary:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Miner:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Poacher:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Goblin_Reaper:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Goblin_Robber:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Goblin_Shepherd:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Trader:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Labyrinth_Leech:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Labyrinth_Manticore:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mushussu_LO:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Tainted_Flesh_LoO:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Torama:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Wyvern:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+spawns:
+
+  17649818:
+    template: Soulstealer_Skullnix
+    at:       [31.207, 4.372, 284.198, 69]
+    level:    [69, 72]
+
+  17649848:
+    template: Goblin_Mercenary
+    at:       [2.601, 5.060, 287.128, 170]
+    level:    [66, 69]
+
+  17649849:
+    template: Labyrinth_Manticore
+    at:       [28.582, 5.390, 269.455, 134]
+    level:    [71, 74]

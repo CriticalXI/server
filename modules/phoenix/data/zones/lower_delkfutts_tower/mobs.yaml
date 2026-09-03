@@ -1,0 +1,100 @@
+# Era mob layout for lower_delkfutts_tower, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Ancient_Bat_LDT_MoS:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Bogy_LDT:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Chaos_Idol:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Giant_Gatekeeper:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Giant_Guard:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Giant_Lobber:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Giant_Sentry:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Butcher:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Hallwatcher:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Punisher:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Sculptor:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Gambler:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Leecher:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Mugger:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Light_Elemental:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Magic_Pot:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Magic_Urn:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Seeker_Bats_LDT:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers

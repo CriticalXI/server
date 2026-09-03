@@ -1,0 +1,90 @@
+# Era mob layout for rala_waterways, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Baleful_Tarichuk:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Barnacle_Crab:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Chalybeous_Slime:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Depthswalker_Crab:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Duskbringer_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Duskjaw_Obdella:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Flavescent_Slime:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  New_Moon_Bats:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Pewter_Diremite:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Plantpassage_Slug:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Rustwater_Toad:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Skittering_Spider:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Spoutdrenched_Toad:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Stillwater_Funguar:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Unrelenting_Eft:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Waterway_Pugil:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Weatherworn_Leech:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

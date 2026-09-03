@@ -1,0 +1,187 @@
+# Era mob layout for aydeewa_subterrane, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+spawns:
+
+  17055868:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17055869:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17055870:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17055871:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17055872:
+    template: Great_Ameretat
+    at:       [-316.395, 8.711, 82.913, 0]
+    level:    [73, 75]
+
+  17055873:
+    template: Great_Ameretat
+    at:       [-274.952, 8.957, 70.967, 130]
+    level:    [73, 75]
+
+  17055874:
+    template: Treant_Sapling_AS_CM
+    at:       [-281.522, 8.904, 86.972, 102]
+    level:    [66, 69]
+    script:   Treant_Sapling
+
+  17055875:
+    template: Treant_Sapling_AS_CM
+    at:       [-289.604, 8.821, 82.423, 112]
+    level:    [66, 69]
+    script:   Treant_Sapling
+
+  17055876:
+    template: Aydeewa_Diremite
+    at:       [-134.373, 36.418, -67.871, 70]
+    level:    [70, 74]
+
+  17055877:
+    template: Aydeewa_Diremite
+    at:       [-117.699, 36.834, -30.822, 112]
+    level:    [70, 74]
+
+  17055878:
+    template: Cave_Tiger
+    at:       [-106.444, 36.866, -49.749, 208]
+    level:    [73, 76]
+
+  17055879:
+    template: Cave_Tiger
+    at:       [-112.689, 36.867, -63.868, 239]
+    level:    [73, 76]
+
+  17055880:
+    template: Aydeewa_Diremite
+    at:       [-96.491, 36.704, -63.734, 49]
+    level:    [70, 74]
+
+  17055881:
+    template: Aydeewa_Diremite
+    at:       [-99.129, 36.875, -79.548, 64]
+    level:    [70, 74]
+
+  17055967:
+    template: Qiqirn_Archaeologist
+    at:       [-27.259, 36.007, -21.098, 122]
+    level:    [73, 75]
+
+  17056019:
+    template: Aydeewa_Diremite
+    at:       [-104.127, 36.687, -93.946, 49]
+    level:    [70, 74]
+
+  17056020:
+    template: Aydeewa_Diremite
+    at:       [-74.244, 36.870, -90.291, 222]
+    level:    [70, 74]
+
+  17056021:
+    template: Aydeewa_Diremite
+    at:       [-68.433, 36.766, -65.074, 205]
+    level:    [70, 74]
+
+  17056022:
+    template: Cave_Tiger
+    at:       [-76.060, 36.924, -46.687, 27]
+    level:    [73, 76]
+
+  17056023:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17056024:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17056025:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17056026:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17056027:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17056028:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17056029:
+    template: Mycohopper
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [68, 71]
+
+  17056030:
+    template: Aydeewa_Diremite
+    at:       [402.082, -26.028, 432.152, 139]
+    level:    [70, 74]
+
+  17056031:
+    template: Aydeewa_Diremite
+    at:       [397.876, -26.148, 446.401, 157]
+    level:    [70, 74]
+
+  17056032:
+    template: Aydeewa_Diremite
+    at:       [378.241, -25.785, 446.407, 140]
+    level:    [70, 74]
+
+  17056033:
+    template: Aydeewa_Diremite
+    at:       [345.920, -26.032, 442.919, 111]
+    level:    [70, 74]
+
+  17056034:
+    template: Aydeewa_Diremite
+    at:       [349.533, -26.528, 430.053, 45]
+    level:    [70, 74]
+
+  17056035:
+    template: Aydeewa_Diremite
+    at:       [369.516, -26.408, 426.268, 16]
+    level:    [70, 74]
+
+  17056036:
+    template: Mold_Eater
+    at:       [341.553, -26.502, 498.698, 104]
+    level:    [69, 71]
+
+  17056096:
+    template: Mold_Eater
+    at:       [338.932, -26.479, 494.791, 223]
+    level:    [69, 71]
+
+  17056097:
+    template: Mold_Eater
+    at:       [383.900, -26.396, 502.214, 139]
+    level:    [69, 71]
+
+  17056098:
+    template: Mold_Eater
+    at:       [380.038, -26.197, 492.087, 60]
+    level:    [69, 71]

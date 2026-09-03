@@ -1,0 +1,75 @@
+# Era mob layout for mamook, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Mamool_Ja_Blusterer_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Bounder:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Frogman:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Infiltrator_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Lurker_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Mimicker:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Philosopher_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Pikeman_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Savant:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Sophist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Spearman:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Stabler_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Strapper:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Zenist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

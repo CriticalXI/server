@@ -1,0 +1,140 @@
+# Era mob layout for moh_gates, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Apex_Eft:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Eruca:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Matamata:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Raptor:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Blustering_Twitherym:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Cave_Panopt:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Consecrated_Baelfyr:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Crestfallen_Baelfyr:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Cthonic_Chapuli_MG:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Disturbed_Matamata:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dullahan_generic:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Erythemic_Eft:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ferocious_Funguar:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Gelatinous_Clot:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Gleeful_Ungeweder:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Groundstomp_Matamata:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Highwing_Chapuli:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Menacing_Mantis:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Nachtschatten:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Pepper_Hare:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Praying_Chapuli:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Rank_Eft:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Repugnant_Twitherym:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Splotched_Acuex:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Steelclaw_Raptor:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Thirsting_Obdella:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Writhing_Obdella:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

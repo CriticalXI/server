@@ -51,6 +51,7 @@ custom/cpp/ah_pagination.cpp
 
 # YAML
 era/data
+phoenix/data
 phoenix/data/bazaar_tax
 phoenix/data/npc_lists
 phoenix/data/dynazones

@@ -1,0 +1,396 @@
+# Era mob layout for garlaige_citadel, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Acid_Grease:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Bhuta:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Borer_Beetle:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Chamber_Beetle:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Citadel_Bats:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Clockwork_Pod_GC:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Demonic_Weapon:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Donjon_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Droma_GC:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Earth_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Explosure:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fallen_Evacuee_blm:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Fallen_Evacuee_war:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Fallen_Mage:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fallen_Major:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fallen_Officer_blm:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fallen_Officer_war:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fallen_Soldier_blm:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Fallen_Soldier_war:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Fetid_Flesh:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fortalice_Bats:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Funnel_Bats_GC:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Hellmine:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Kaboom:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Magic_Jug:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Oil_Spill:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Over_Weapon:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Puroboros_EN_GC:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Revenant_NGS_EN_GC:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Siege_Bat:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Tainted_Flesh_GC:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Vault_Weapon:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Warden_Beetle:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Wingrats_GC:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Wraith:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+spawns:
+
+  17596644:
+    template: Funnel_Bats_GC
+    at:       [-353.189, 19.193, 236.476, 13]
+    level:    [51, 53]
+    script:   Funnel_Bat
+
+  17596645:
+    template: Funnel_Bats_GC
+    at:       [-315.631, 19.571, 254.821, 205]
+    level:    [51, 53]
+    script:   Funnel_Bat
+
+  17596646:
+    template: Funnel_Bats_GC
+    at:       [-318.545, 19.000, 289.354, 169]
+    level:    [51, 53]
+    script:   Funnel_Bat
+
+  17596647:
+    template: Chamber_Beetle
+    at:       [-336.801, 19.257, 233.240, 7]
+    level:    [56, 58]
+
+  17596648:
+    template: Chamber_Beetle
+    at:       [-323.229, 19.147, 241.602, 224]
+    level:    [56, 58]
+
+  17596649:
+    template: Chamber_Beetle
+    at:       [-313.224, 19.451, 269.647, 200]
+    level:    [56, 58]
+
+  17596650:
+    template: Chamber_Beetle
+    at:       [-344.053, 19.169, 287.848, 137]
+    level:    [56, 58]
+
+  17596651:
+    template: Magic_Jug
+    at:       [-369.323, 19.067, 287.222, 11]
+    level:    [62, 64]
+
+  17596652:
+    template: Magic_Jug
+    at:       [-368.109, 19.052, 230.875, 72]
+    level:    [62, 64]
+
+  17596653:
+    template: Funnel_Bats_GC
+    at:       [-338.821, 12.610, 257.584, 17]
+    level:    [51, 53]
+    script:   Funnel_Bat
+
+  17596654:
+    template: Funnel_Bats_GC
+    at:       [-343.507, 12.442, 263.537, 169]
+    level:    [51, 53]
+    script:   Funnel_Bat
+
+  17596655:
+    template: Funnel_Bats_GC
+    at:       [-246.954, 19.265, 283.105, 148]
+    level:    [51, 53]
+    script:   Funnel_Bat
+
+  17596656:
+    template: Funnel_Bats_GC
+    at:       [-290.606, 19.318, 278.143, 85]
+    level:    [51, 53]
+    script:   Funnel_Bat
+
+  17596657:
+    template: Chamber_Beetle
+    at:       [-236.283, 19.518, 264.702, 207]
+    level:    [56, 58]
+
+  17596658:
+    template: Chamber_Beetle
+    at:       [-273.146, 18.992, 291.973, 101]
+    level:    [56, 58]
+
+  17596659:
+    template: Chamber_Beetle
+    at:       [-290.365, 19.521, 253.081, 102]
+    level:    [56, 58]
+
+  17596660:
+    template: Funnel_Bats_GC
+    at:       [-257.435, 12.452, 255.291, 119]
+    level:    [51, 53]
+    script:   Funnel_Bat
+
+  17596661:
+    template: Funnel_Bats_GC
+    at:       [-257.472, 12.588, 265.317, 176]
+    level:    [51, 53]
+    script:   Funnel_Bat
+
+  17596662:
+    template: Chamber_Beetle
+    at:       [-211.858, 19.550, 291.341, 204]
+    level:    [56, 58]
+
+  17596663:
+    template: Fallen_Mage
+    at:       [-188.151, 19.459, 305.849, 87]
+    level:    [59, 62]
+
+  17596664:
+    template: Fallen_Mage
+    at:       [-167.078, 19.177, 312.483, 109]
+    level:    [59, 62]
+
+  17596665:
+    template: Fallen_Major
+    at:       [-181.761, 19.540, 324.427, 141]
+    level:    [59, 62]
+
+  17596666:
+    template: Fallen_Major
+    at:       [-156.567, 19.117, 324.803, 93]
+    level:    [59, 62]
+
+  17596667:
+    template: Fallen_Mage
+    at:       [-161.417, 19.250, 207.019, 211]
+    level:    [59, 62]
+
+  17596668:
+    template: Fallen_Mage
+    at:       [-128.025, 19.250, 240.710, 159]
+    level:    [59, 62]
+
+  17596669:
+    template: Fallen_Major
+    at:       [-129.394, 19.250, 199.934, 112]
+    level:    [59, 62]
+
+  17596670:
+    template: Fallen_Major
+    at:       [-159.133, 19.000, 240.424, 89]
+    level:    [59, 62]
+
+  17596671:
+    template: Hellmine
+    at:       [-173.075, 18.250, 251.671, 133]
+    level:    [60, 62]
+
+  17596672:
+    template: Hellmine
+    at:       [-170.796, 18.367, 190.109, 177]
+    level:    [60, 62]
+
+  17596717:
+    template: Wraith
+    at:       [-159.000, 19.000, 217.000, 127]
+    level:    [60, 62]
+
+  17596718:
+    template: Wraith
+    at:       [-152.174, 19.138, 193.684, 5]
+    level:    [60, 62]
+
+  17596719:
+    template: Wraith
+    at:       [-115.204, 19.038, 192.837, 87]
+    level:    [60, 62]
+
+  17596720:
+    template: Serket
+    at:       [-262.057, 19.736, 281.540, 134]
+    level:    [70, 70]
+
+  17596721:
+    template: Wraith
+    at:       [-208.198, 18.994, 305.655, 87]
+    level:    [60, 62]
+
+  17596722:
+    template: Magic_Jug
+    at:       [-189.752, 19.000, 272.353, 14]
+    level:    [62, 64]
+
+  17596723:
+    template: Magic_Jug
+    at:       [-212.930, 18.246, 331.082, 1]
+    level:    [62, 64]
+
+  17596724:
+    template: Magic_Jug
+    at:       [-147.050, 18.265, 306.954, 145]
+    level:    [62, 64]
+
+  17596725:
+    template: Magic_Jug
+    at:       [-147.210, 18.263, 333.103, 100]
+    level:    [62, 64]
+
+  17596726:
+    template: Hellmine
+    at:       [-105.881, 18.262, 193.591, 17]
+    level:    [60, 62]
+
+  17596727:
+    template: Hellmine
+    at:       [-109.087, 18.270, 251.370, 188]
+    level:    [60, 62]

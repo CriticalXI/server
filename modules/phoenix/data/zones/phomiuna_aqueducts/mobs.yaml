@@ -1,0 +1,21 @@
+# Era mob layout for phomiuna_aqueducts, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+spawns:
+
+  16888011:
+    template: Makara_PA
+    at:       [179.708, 1.002, 141.484, 175]
+    level:    [44, 47]
+    script:   Makara
+
+  16888012:
+    template: Oil_Spill
+    at:       [173.292, 1.152, 139.795, 166]
+    level:    [44, 47]
+
+  16888013:
+    template: Foul_Meat
+    at:       [179.909, 1.000, 178.220, 59]
+    level:    [45, 47]

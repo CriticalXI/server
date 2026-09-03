@@ -1,0 +1,85 @@
+# Era mob layout for quicksand_caves, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Antican_Aedilis:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Antican_Antesignanus:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Antican_Hastatus:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Antican_Princeps:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Antican_Quaestor:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Antican_Signifer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Antican_Triarius:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Girtab:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Helm_Beetle:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sabotender_Bailaor:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sand_Digger:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sand_Eater:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sand_Lizard:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sand_Spider:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sand_Tarantula:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Spelunking_Sabotender:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

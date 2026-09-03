@@ -1,0 +1,10 @@
+# Era mob layout for fort_ghelsba, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Orcish_Fighter:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers

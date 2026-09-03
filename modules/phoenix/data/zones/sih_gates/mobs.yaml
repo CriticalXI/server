@@ -1,0 +1,140 @@
+# Era mob layout for sih_gates, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Apex_Chapuli:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Jagil:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Leech:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Mandragora:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Bloated_Acuex:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Bonaria:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Burrowing_Chapuli:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Choleric_Umbril:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dullahan_generic:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Echo_Bats:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Esurient_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ferocious_Funguar:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Flitting_Bee:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fulvous_Jagil:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Hemorraghic_Bats:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Javelin_Wasp:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Loathsome_Leech:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Loathsome_Obdella:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Lyngbakr:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Macabre_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Malodorous_Twitherym:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Quiescent_Leech:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Snapping_Craklaw:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Speleothem_Gefyrst:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Speleothem_Ungeweder:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sprightly_Acuex:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Tortured_Diremite:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

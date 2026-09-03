@@ -1,0 +1,125 @@
+# Era mob layout for middle_delkfutts_tower, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Banshee:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Big_Bat:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Evil_Spirit_MDT:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Giant_Gatekeeper:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Giant_Guard:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Giant_Lobber:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Giant_Sentry:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Jailer:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Kettlemaster:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Quarrier:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Wallwatcher:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Furrier:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Pathfinder:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Shaman:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Smithy:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Jagd_Doll:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Light_Elemental:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Magic_Jar:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Magic_Pot:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Mold_Bats:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Panzer_Doll:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Stirge:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Tower_Bats:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers

@@ -1,0 +1,165 @@
+# Era mob layout for dho_gates, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Apex_Bats:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Crab:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Craklaw:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Jagil:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Bloodspattered_Fly:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dullahan_generic:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Duskprowlers:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dwende:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fetid_Umbril:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Firth_Umbril:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fleshrending_Obdella:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Irascible_Tarichuk:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Leafdancer_Twitherym:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Midnight_Worm:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Peevish_Acuex:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Rancidclaw_Crab:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ripsaw_Jagil:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Septic_Acuex:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Slinking_Slug:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Spinescent_Protuberance:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Spumous_Slug:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Twilight_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Unyielding_Tarichuk:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Archmagus:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Berserker:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Cyclonicist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Dreadnought:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Magus:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Reaver:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Stormcaller:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Trampler:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Void_Worm:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

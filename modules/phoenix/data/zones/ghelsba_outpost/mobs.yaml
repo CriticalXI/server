@@ -1,0 +1,75 @@
+# Era mob layout for ghelsba_outpost, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Cheiroptera_GO:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Ghelsba_Pugil:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Orcish_Barricader:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Orcish_Fodder:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Orcish_Grappler:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Orcish_Grunt:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Orcish_Mesmerizer:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Orcish_Neckchopper:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Orcish_Stonechucker:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Orcish_Stonelauncher:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Orcish_Wallbreacher:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Spectacled_Bats_GO:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Toadstool:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Watch_Lizard:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers

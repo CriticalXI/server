@@ -1,0 +1,140 @@
+# Era mob layout for outer_rakaznar, generated from
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Apex_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Ironclad:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Twitherym:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Astringent_Acuex:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Bristlehair_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Debauched_Unseelie:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dreadhound:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dullahan_generic:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Enshrouded_Cyhiraeth:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fluturini:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Horrific_Bhoot:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ironclad:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Legionless_Draugar_blm:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Legionless_Draugar_drg:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Legionless_Draugar_drk:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Obfuscous_Obdella:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Phlegmatic_Byrgen:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Restless_Twitherym:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Shunned_Deeparrow:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Shunned_Elementalist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Shunned_Engraver:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Shunned_Fluteslinger:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Shunned_Hexer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Shunned_Nightstalker:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Shunned_Saboteur:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Shunned_Valiant:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Undulating_Umbril:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
