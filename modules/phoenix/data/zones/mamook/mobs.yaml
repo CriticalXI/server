@@ -1,5 +1,5 @@
 # Era mob layout for mamook, generated from
-# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql, modules/phoenix/sql/disable_besieged_mobs.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
 # Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
 
 templates:
@@ -73,3 +73,36 @@ templates:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers
+
+  Devout_Radol_Ja:
+    content: wotg # Disable besieged mobs
+
+  Dragonscaled_Bugaal_Ja:
+    content: wotg # Disable besieged mobs
+
+  Hundredfaced_Hapool_Ja:
+    content: wotg # Disable besieged mobs
+
+  Darting_Kachaal_Ja:
+    content: wotg # Disable besieged mobs
+
+  Sagelord_Molaal_Ja_M:
+    content: wotg # Disable besieged mobs
+
+  Shadelurking_Zolool_Ja:
+    content: wotg # Disable besieged mobs
+
+  Forbidding_Koheel_Ja:
+    content: wotg # Disable besieged mobs
+
+  Gulool_Ja_Ja:
+    content: wotg # Disable besieged mobs
+
+  Mamool_Ja_Chamberlain:
+    content: wotg # Disable besieged mobs
+
+  Mamool_Ja_Palatine:
+    content: wotg # Disable besieged mobs
+
+  Hundredfaced_clone:
+    content: wotg # Disable besieged mobs

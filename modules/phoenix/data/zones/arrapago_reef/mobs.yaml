@@ -1,6 +1,35 @@
 # Era mob layout for arrapago_reef, generated from
-# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# modules/phoenix/sql/pxi_mob_spawn_points.sql, modules/phoenix/sql/pxi_mob_groups.sql, modules/phoenix/sql/disable_besieged_mobs.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
 # Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Lamie_No8:
+    content: wotg # Disable besieged mobs
+
+  Lamie_No7:
+    content: wotg # Disable besieged mobs
+
+  Merrow_No5:
+    content: wotg # Disable besieged mobs
+
+  Lamie_No9:
+    content: wotg # Disable besieged mobs
+
+  Lamia_No11:
+    content: wotg # Disable besieged mobs
+
+  Lamia_No24:
+    content: wotg # Disable besieged mobs
+
+  Lamia_No18:
+    content: wotg # Disable besieged mobs
+
+  Medusa:
+    content: wotg # Disable besieged mobs
+
+  Lamia_Exon:
+    content: wotg # Disable besieged mobs
 
 spawns:
 
