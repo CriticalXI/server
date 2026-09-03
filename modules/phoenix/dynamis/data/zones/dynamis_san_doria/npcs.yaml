@@ -1,6 +1,5 @@
 # Old-school Dynamis NPCs for dynamis_san_doria, generated from
 # modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
-# Applied to data/zones/dynamis_san_doria/npcs.yaml as an RFC 7396 merge patch.
 
 npcs:
 

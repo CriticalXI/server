@@ -1,0 +1,5 @@
+# Zonewide loot pool and no Chocobo Mazurka for old-school Dynamis, from
+# ../../../sql/dyna_zone_settings.sql.
+# misc is a list and is replaced whole: the core flags plus treasure, minus mazurka.
+
+misc: [tractor, pet, treasure, trust, los_player_block]
