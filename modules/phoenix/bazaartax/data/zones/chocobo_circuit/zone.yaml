@@ -1,4 +1,4 @@
-# City bazaar tax at ToAU rates, applied to data/zones/<zone>/zone.yaml as an RFC 7396 merge patch.
+# City bazaar tax at ToAU rates.
 # Jeuno tax removal:          https://www.bg-wiki.com/ffxi/Version_Update_(12/08/2008)
 # Remaining zone tax removal: https://forum.square-enix.com/ffxi/threads/40059
 

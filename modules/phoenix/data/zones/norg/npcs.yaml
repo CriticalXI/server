@@ -1,0 +1,7 @@
+# Retags Tales' Beginning from tvr to the expansion whose storyline it starts,
+# so players who skip cutscenes can still use it.
+
+npcs:
+
+  17809554:
+    content: rotz
