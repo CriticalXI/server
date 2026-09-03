@@ -1,5 +1,4 @@
-# Old-school Dynamis NPCs for dynamis_tavnazia, generated from
-# modules/phoenix/dynamis/sql/dyna_spawn.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Old-school Dynamis NPCs for dynamis_tavnazia.
 
 npcs:
 

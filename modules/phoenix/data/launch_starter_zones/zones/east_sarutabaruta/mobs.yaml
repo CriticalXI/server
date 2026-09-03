@@ -1,5 +1,4 @@
-# Launch starter zones for east_sarutabaruta, generated from
-# modules/phoenix/sql/pxi_launch_starter_zones.sql by modules/phoenix/tools/spawn_sql_to_yaml.py.
+# Launch starter zones for east_sarutabaruta.
 # Temporary launch-week module: faster trash respawns, loot one TH bracket down, 150 level 1 mobs per zone.
 # To end it, remove phoenix/data/launch_starter_zones from modules/init.txt and restart.
 
