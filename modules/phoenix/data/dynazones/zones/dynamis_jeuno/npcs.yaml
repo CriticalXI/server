@@ -1,0 +1,38 @@
+# Old-school Dynamis NPCs for dynamis_jeuno.
+
+npcs:
+
+  17547500: null
+  17547501: null
+  17547502: null
+  17547503: null
+  17547505: null
+  17547506: null
+  17547507: null
+  17547508: null
+  17547509: null
+  17547510: null
+  17547511: null
+  17547512: null
+  17547513: null
+  17547514: null
+  17547515: null
+  17547516: null
+  17547517: null
+  17547518: null
+  17547519: null
+  17547520: null
+  17547521: null
+  17547522: null
+  17547523: null
+
+  17547777:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal

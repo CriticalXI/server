@@ -1,0 +1,59 @@
+# Era mob layout for velugannon_palace.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Air_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Detector:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dustbuster:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Earth_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Enkidu:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fire_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ice_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mystic_Weapon:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ornamental_Weapon:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Water_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

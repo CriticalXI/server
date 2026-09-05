@@ -1,0 +1,57 @@
+# Old-school Dynamis NPCs for dynamis_tavnazia.
+
+npcs:
+
+  16949388: null
+  16949389: null
+  16949390: null
+  16949392: null
+  16949393: null
+  16949394: null
+  16949395: null
+  16949396: null
+  16949397: null
+  16949398: null
+  16949399: null
+  16949400: null
+  16949401: null
+  16949402: null
+  16949403: null
+  16949404: null
+  16949405: null
+  16949406: null
+  16949407: null
+  16949408: null
+  16949409: null
+  16949410: null
+  16949411: null
+
+  16949653:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+
+  16949654:
+    script:       qm1
+    display_name: ???
+    at:           [-98.199, -26.751, 0.039]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+
+  16949655:
+    script:       qm2
+    display_name: ???
+    at:           [97.912, -40.744, -0.236]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1

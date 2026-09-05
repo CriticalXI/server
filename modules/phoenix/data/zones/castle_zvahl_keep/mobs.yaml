@@ -1,0 +1,89 @@
+# Era mob layout for castle_zvahl_keep.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Elder_Quadav:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Emerald_Quadav:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Evil_Eye:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Goblin_Poacher:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Goblin_Reaper:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Goblin_Robber:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Goblin_Trader:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Iron_Quadav:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Orcish_Bowshooter:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Orcish_Footsoldier:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Orcish_Gladiator:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Orcish_Trooper:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Spinel_Quadav:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Conquistador:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Lutenist:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Prior:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Zealot:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers

@@ -1,0 +1,462 @@
+# Era mob layout for outer_horutoto_ruins.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Balloon_OHR:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Battue_Bats:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Black_Slime:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Blade_Bat:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Combat_OH:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Dancing_Weapon:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Eight_of_Batons:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Eight_of_Coins:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Eight_of_Cups:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Eight_of_Swords:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Five_of_Batons:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Five_of_Coins:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Five_of_Cups:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Five_of_Swords:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Four_of_Batons:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Four_of_Coins:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Four_of_Cups:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Four_of_Swords:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Fuligo:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ghoul_blm:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Ghoul_war:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Goblin_Ambusher:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Goblin_Butcher:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Goblin_Thug:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Goblin_Tinkerer:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Goblin_Weaver:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Nine_of_Batons:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Nine_of_Coins:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Nine_of_Cups:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Nine_of_Swords:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Rotten_Jam:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Seven_of_Batons:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Seven_of_Coins:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Seven_of_Cups:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Seven_of_Swords:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Six_of_Batons:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Six_of_Coins:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Six_of_Cups:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Six_of_Swords:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Stink_Bats_OHR:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Ten_of_Batons:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Ten_of_Coins:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Ten_of_Cups:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Ten_of_Swords:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Three_of_Batons:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Three_of_Coins:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Three_of_Cups:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Three_of_Swords:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Two_of_Batons:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Two_of_Coins:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Two_of_Cups:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Two_of_Swords:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+spawns:
+
+  17571874:
+    template: Blade_Bat
+    at:       [-223.642, -0.924, 731.584, 163]
+    level:    [4, 7]
+
+  17571875:
+    template: Blade_Bat
+    at:       [-218.473, 1.307, 720.319, 42]
+    level:    [4, 7]
+
+  17571876:
+    template: Blade_Bat
+    at:       [-227.160, -0.094, 712.795, 62]
+    level:    [4, 7]
+
+  17571877:
+    template: Blade_Bat
+    at:       [-227.216, -0.386, 709.837, 218]
+    level:    [4, 7]
+
+  17571878:
+    template: Goblin_Ambusher
+    at:       [-256.513, 0.435, 703.909, 4]
+    level:    [10, 14]
+
+  17571879:
+    template: Goblin_Ambusher
+    at:       [-257.784, 0.500, 687.220, 75]
+    level:    [10, 14]
+
+  17571880:
+    template: Goblin_Tinkerer
+    at:       [-256.907, 0.490, 676.688, 187]
+    level:    [10, 14]
+
+  17571881:
+    template: Goblin_Butcher
+    at:       [-257.669, 0.355, 661.585, 255]
+    level:    [10, 14]
+
+  17571882:
+    template: Rotten_Jam
+    at:       [-217.688, 0.195, 655.145, 142]
+    level:    [12, 15]
+
+  17571883:
+    template: Rotten_Jam
+    at:       [-217.719, 0.047, 661.256, 187]
+    level:    [12, 15]
+
+  17571884:
+    template: Goblin_Ambusher
+    at:       [-270.512, -0.194, 646.561, 87]
+    level:    [10, 14]
+
+  17571885:
+    template: Goblin_Butcher
+    at:       [-273.237, 0.391, 636.248, 175]
+    level:    [10, 14]
+
+  17571886:
+    template: Goblin_Butcher
+    at:       [-284.337, 0.059, 647.071, 48]
+    level:    [10, 14]
+
+  17571887:
+    template: Stink_Bats_OHR
+    at:       [-316.433, -0.053, 620.975, 132]
+    level:    [15, 18]
+    script:   Stink_Bats
+
+  17571888:
+    template: Stink_Bats_OHR
+    at:       [-328.153, -0.236, 620.061, 253]
+    level:    [15, 18]
+    script:   Stink_Bats
+
+  17571889:
+    template: Stink_Bats_OHR
+    at:       [-358.754, -0.029, 595.434, 173]
+    level:    [15, 18]
+    script:   Stink_Bats
+
+  17571890:
+    template: Stink_Bats_OHR
+    at:       [-357.749, -0.172, 606.483, 170]
+    level:    [15, 18]
+    script:   Stink_Bats
+
+  17571892:
+    template: Black_Slime
+    at:       [-463.791, -0.282, 736.043, 193]
+    level:    [23, 25]
+
+  17571904:
+    template: Stink_Bats_OHR
+    at:       [-364.412, 0.573, 611.331, 152]
+    level:    [15, 18]
+    script:   Stink_Bats
+
+  17571905:
+    template: Stink_Bats_OHR
+    at:       [-371.045, -0.216, 622.335, 210]
+    level:    [15, 18]
+    script:   Stink_Bats
+
+  17571906:
+    template: Combat_OH
+    at:       [-357.746, 0.971, 624.131, 239]
+    level:    [20, 23]
+    script:   Combat
+
+  17571907:
+    template: Combat_OH
+    at:       [-351.406, 0.000, 635.382, 175]
+    level:    [20, 23]
+    script:   Combat
+
+  17571908:
+    template: Combat_OH
+    at:       [-360.033, 0.000, 640.133, 141]
+    level:    [20, 23]
+    script:   Combat
+
+  17571909:
+    template: Combat_OH
+    at:       [-372.686, 0.386, 644.706, 160]
+    level:    [20, 23]
+    script:   Combat
+
+  17571910:
+    template: Ghoul_war
+    at:       [-381.905, 0.479, 674.382, 123]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571911:
+    template: Ghoul_war
+    at:       [-381.777, 0.500, 689.250, 230]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571912:
+    template: Ghoul_blm
+    at:       [-382.437, 0.500, 707.311, 80]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571913:
+    template: Ghoul_war
+    at:       [-443.249, -0.433, 716.420, 143]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571914:
+    template: Ghoul_war
+    at:       [-469.194, 0.553, 721.592, 154]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571915:
+    template: Ghoul_war
+    at:       [-483.007, -0.067, 764.615, 140]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571916:
+    template: Ghoul_war
+    at:       [-486.663, 0.140, 757.371, 73]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571917:
+    template: Ghoul_blm
+    at:       [-459.190, 0.502, 708.803, 128]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571918:
+    template: Ghoul_blm
+    at:       [-469.420, 0.436, 748.717, 179]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571919:
+    template: Ghoul_blm
+    at:       [-490.756, -0.046, 740.368, 41]
+    level:    [23, 26]
+    script:   Ghoul
+
+  17571920:
+    template: Ghoul_blm
+    at:       [-480.455, 1.000, 734.654, 40]
+    level:    [23, 26]
+    script:   Ghoul

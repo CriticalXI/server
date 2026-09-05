@@ -1,0 +1,34 @@
+# Era mob layout for halvung.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Mythril_Mouth_Monamaq:
+    content: wotg # Disable besieged mobs
+
+  Kirlirger_the_Abhorrent:
+    content: wotg # Disable besieged mobs
+
+  Farlarder_the_Shrewd:
+    content: wotg # Disable besieged mobs
+
+  Dorgerwor_the_Astute:
+    content: wotg # Disable besieged mobs
+
+  Chiliarch_Gordarvor:
+    content: wotg # Disable besieged mobs
+
+  Hetairoi_Vuryargur:
+    content: wotg # Disable besieged mobs
+
+  Hetairoi_Zarwarkur:
+    content: wotg # Disable besieged mobs
+
+  Gurfurlur_the_Menacing:
+    content: wotg # Disable besieged mobs
+
+  Hilltroll_Elite_Guard:
+    content: wotg # Disable besieged mobs
+
+  Woodtroll_Elite_Guard:
+    content: wotg # Disable besieged mobs

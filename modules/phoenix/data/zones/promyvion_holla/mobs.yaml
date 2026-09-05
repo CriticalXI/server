@@ -1,0 +1,806 @@
+# Era mob layout for promyvion_holla.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Thinker_PH:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Thinker_PH_2:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Wanderer_PV:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Weeper_PH:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+spawns:
+
+  16842753:
+    level: [24, 26] # Pre-nerf levels
+
+  16842754:
+    level: [24, 26] # Pre-nerf levels
+
+  16842755:
+    level: [25, 27] # Pre-nerf levels
+
+  16842756:
+    level: [24, 26] # Pre-nerf levels
+
+  16842757:
+    level: [24, 26] # Pre-nerf levels
+
+  16842758:
+    level: [25, 27] # Pre-nerf levels
+
+  16842759:
+    level: [24, 26] # Pre-nerf levels
+
+  16842760:
+    level: [24, 26] # Pre-nerf levels
+
+  16842761:
+    level: [24, 26] # Pre-nerf levels
+
+  16842762:
+    level: [25, 27] # Pre-nerf levels
+
+  16842763:
+    level: [25, 27] # Pre-nerf levels
+
+  16842764:
+    level: [25, 27] # Pre-nerf levels
+
+  16842765:
+    template: Weeper_PH
+    at:       [73.933, 0.000, -280.932, 215]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842766:
+    template: Weeper_PH
+    at:       [83.550, 0.000, -241.452, 244]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842767:
+    template: Wanderer_PV
+    at:       [45.184, 0.000, -206.834, 149]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842768:
+    template: Weeper_PH
+    at:       [38.697, -0.043, -198.328, 163]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842769:
+    template: Weeper_PH
+    at:       [34.635, -0.040, -204.250, 82]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842770:
+    template: Weeper_PH
+    at:       [-34.032, -0.006, -199.687, 244]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842771:
+    template: Weeper_PH
+    at:       [-44.142, 0.000, -196.191, 246]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842772:
+    template: Weeper_PH
+    at:       [-39.229, 0.000, -191.072, 22]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842773:
+    template: Seether_Prom
+    at:       [-30.269, 0.000, -194.240, 14]
+    level:    [37, 38]
+    script:   Seether
+
+  16842774:
+    template: Weeper_PH
+    at:       [-6.173, 0.000, -159.013, 200]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842775:
+    template: Weeper_PH
+    at:       [1.198, 0.000, -153.063, 234]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842776:
+    template: Wanderer_PV
+    at:       [3.876, 0.000, -126.674, 192]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842777:
+    template: Weeper_PH
+    at:       [4.636, 0.000, -135.036, 51]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842778:
+    template: Seether_Prom
+    at:       [14.226, 0.000, -130.140, 198]
+    level:    [37, 38]
+    script:   Seether
+
+  16842779:
+    level: [30, 32] # Pre-nerf levels
+
+  16842785:
+    level: [28, 30] # Pre-nerf levels
+
+  16842786:
+    level: [28, 30] # Pre-nerf levels
+
+  16842787:
+    level: [28, 30] # Pre-nerf levels
+
+  16842788:
+    level: [29, 31] # Pre-nerf levels
+
+  16842789:
+    level: [28, 30] # Pre-nerf levels
+
+  16842790:
+    level: [28, 30] # Pre-nerf levels
+
+  16842791:
+    level: [29, 31] # Pre-nerf levels
+
+  16842792:
+    level: [28, 30] # Pre-nerf levels
+
+  16842793:
+    level: [28, 30] # Pre-nerf levels
+
+  16842794:
+    level: [28, 30] # Pre-nerf levels
+
+  16842795:
+    level: [28, 30] # Pre-nerf levels
+
+  16842796:
+    level: [28, 30] # Pre-nerf levels
+
+  16842798:
+    level: [28, 30] # Pre-nerf levels
+
+  16842799:
+    level: [28, 30] # Pre-nerf levels
+
+  16842800:
+    level: [29, 31] # Pre-nerf levels
+
+  16842801:
+    level: [29, 31] # Pre-nerf levels
+
+  16842802:
+    level: [29, 31] # Pre-nerf levels
+
+  16842803:
+    level: [29, 31] # Pre-nerf levels
+
+  16842804:
+    level: [31, 33] # Pre-nerf levels
+
+  16842805:
+    level: [29, 31] # Pre-nerf levels
+
+  16842806:
+    template: Weeper_PH
+    at:       [-234.526, 0.000, -80.144, 209]
+    level:    [29, 31]
+    script:   Weeper
+
+  16842807:
+    level: [29, 31] # Pre-nerf levels
+
+  16842808:
+    template: Weeper_PH
+    at:       [-237.222, 0.000, -85.896, 166]
+    level:    [29, 31]
+    script:   Weeper
+
+  16842809:
+    level: [28, 30] # Pre-nerf levels
+
+  16842810:
+    level: [29, 31] # Pre-nerf levels
+
+  16842811:
+    level: [29, 31] # Pre-nerf levels
+
+  16842812:
+    template: Wanderer_PV
+    at:       [51.880, 0.000, -116.575, 37]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842813:
+    template: Wanderer_PV
+    at:       [90.404, 0.000, -42.350, 206]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842814:
+    template: Wanderer_PV
+    at:       [152.356, 0.000, -75.611, 26]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842815:
+    template: Wanderer_PV
+    at:       [133.604, 0.000, -240.092, 198]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842816:
+    template: Weeper_PH
+    at:       [223.544, 0.000, -191.075, 15]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842817:
+    template: Seether_Prom
+    at:       [223.967, 0.000, -200.814, 94]
+    level:    [37, 38]
+    script:   Seether
+
+  16842818:
+    template: Weeper_PH
+    at:       [248.149, 0.000, -191.309, 89]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842819:
+    template: Thinker_PH
+    at:       [261.349, 0.000, -192.595, 136]
+    level:    [38, 40]
+    script:   Thinker
+
+  16842820:
+    template: Wanderer_PV
+    at:       [264.568, 0.000, -172.179, 82]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842821:
+    template: Wanderer_PV
+    at:       [264.090, -0.015, -184.546, 12]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842822:
+    template: Weeper_PH
+    at:       [264.462, 0.000, -132.999, 252]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842823:
+    template: Weeper_PH
+    at:       [272.473, -0.056, -132.261, 252]
+    level:    [37, 38]
+    script:   Weeper
+
+  16842824:
+    template: Wanderer_PV
+    at:       [242.521, 0.000, -87.196, 22]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842825:
+    template: Wanderer_PV
+    at:       [241.147, 0.000, -69.290, 167]
+    level:    [34, 36]
+    script:   Wanderer
+
+  16842826:
+    template: Wanderer_PV
+    at:       [7.323, 0.000, 87.370, 255]
+    level:    [24, 26]
+    script:   Wanderer
+
+  16842827:
+    template: Wanderer_PV
+    at:       [-2.908, 0.000, 72.636, 112]
+    level:    [24, 26]
+    script:   Wanderer
+
+  16842828:
+    template: Wanderer_PV
+    at:       [37.986, -0.002, 146.894, 244]
+    level:    [24, 26]
+    script:   Wanderer
+
+  16842829:
+    level: [28, 30] # Pre-nerf levels
+
+  16842830:
+    level: [29, 31] # Pre-nerf levels
+
+  16842831:
+    level: [31, 33] # Pre-nerf levels
+
+  16842832:
+    level: [29, 31] # Pre-nerf levels
+
+  16842833:
+    level: [31, 33] # Pre-nerf levels
+
+  16842834:
+    level: [31, 33] # Pre-nerf levels
+
+  16842835:
+    level: [28, 30] # Pre-nerf levels
+
+  16842836:
+    level: [28, 30] # Pre-nerf levels
+
+  16842837:
+    level: [31, 33] # Pre-nerf levels
+
+  16842868:
+    level: [32, 34] # Pre-nerf levels
+
+  16842869:
+    level: [32, 34] # Pre-nerf levels
+
+  16842870:
+    level: [33, 35] # Pre-nerf levels
+
+  16842871:
+    level: [33, 35] # Pre-nerf levels
+
+  16842872:
+    level: [34, 36] # Pre-nerf levels
+
+  16842873:
+    level: [33, 35] # Pre-nerf levels
+
+  16842874:
+    level: [33, 35] # Pre-nerf levels
+
+  16842875:
+    level: [33, 35] # Pre-nerf levels
+
+  16842876:
+    level: [32, 34] # Pre-nerf levels
+
+  16842877:
+    level: [33, 35] # Pre-nerf levels
+
+  16842878:
+    level: [34, 36] # Pre-nerf levels
+
+  16842879:
+    level: [32, 34] # Pre-nerf levels
+
+  16842880:
+    level: [34, 36] # Pre-nerf levels
+
+  16842881:
+    level: [34, 36] # Pre-nerf levels
+
+  16842882:
+    level: [34, 36] # Pre-nerf levels
+
+  16842883:
+    level: [33, 35] # Pre-nerf levels
+
+  16842884:
+    level: [33, 35] # Pre-nerf levels
+
+  16842885:
+    level: [36, 38] # Pre-nerf levels
+
+  16842886:
+    level: [36, 38] # Pre-nerf levels
+
+  16842914:
+    level: [33, 35] # Pre-nerf levels
+
+  16842915:
+    level: [34, 36] # Pre-nerf levels
+
+  16842916:
+    level: [32, 34] # Pre-nerf levels
+
+  16842917:
+    level: [33, 35] # Pre-nerf levels
+
+  16842918:
+    level: [33, 35] # Pre-nerf levels
+
+  16842919:
+    level: [32, 34] # Pre-nerf levels
+
+  16842920:
+    level: [33, 35] # Pre-nerf levels
+
+  16842921:
+    level: [33, 35] # Pre-nerf levels
+
+  16842922:
+    level: [33, 35] # Pre-nerf levels
+
+  16842923:
+    level: [34, 36] # Pre-nerf levels
+
+  16842924:
+    level: [32, 34] # Pre-nerf levels
+
+  16842925:
+    level: [33, 35] # Pre-nerf levels
+
+  16842926:
+    level: [34, 36] # Pre-nerf levels
+
+  16842927:
+    level: [34, 36] # Pre-nerf levels
+
+  16842928:
+    level: [33, 35] # Pre-nerf levels
+
+  16842929:
+    level: [34, 36] # Pre-nerf levels
+
+  16842930:
+    level: [33, 35] # Pre-nerf levels
+
+  16842931:
+    level: [33, 35] # Pre-nerf levels
+
+  16842932:
+    level: [33, 35] # Pre-nerf levels
+
+  16842933:
+    level: [34, 36] # Pre-nerf levels
+
+  16842934:
+    level: [33, 35] # Pre-nerf levels
+
+  16842935:
+    level: [33, 35] # Pre-nerf levels
+
+  16842936:
+    level: [33, 35] # Pre-nerf levels
+
+  16842937:
+    level: [36, 38] # Pre-nerf levels
+
+  16842938:
+    level: [36, 38] # Pre-nerf levels
+
+  16842966:
+    level: [37, 38] # Pre-nerf levels
+
+  16842967:
+    level: [37, 38] # Pre-nerf levels
+
+  16842968:
+    level: [37, 38] # Pre-nerf levels
+
+  16842969:
+    template: Wanderer_PV
+    at:       [34.972, -0.051, 139.183, 140]
+    level:    [24, 26]
+    script:   Wanderer
+
+  16842970:
+    template: Wanderer_PV
+    at:       [33.583, 0.000, 162.468, 206]
+    level:    [24, 26]
+    script:   Wanderer
+
+  16842971:
+    template: Wanderer_PV
+    at:       [17.976, 0.000, 159.399, 116]
+    level:    [24, 26]
+    script:   Wanderer
+
+  16842972:
+    template: Wanderer_PV
+    at:       [15.273, 0.000, 144.187, 74]
+    level:    [24, 26]
+    script:   Wanderer
+
+  16842973:
+    template: Weeper_PH
+    at:       [26.302, -0.020, 145.284, 193]
+    level:    [25, 27]
+    script:   Weeper
+
+  16842974:
+    template: Wanderer_PV
+    at:       [-237.916, 0.000, -78.272, 21]
+    level:    [28, 30]
+    script:   Wanderer
+
+  16842975:
+    template: Seether_Prom
+    at:       [-247.677, 0.000, -80.320, 130]
+    level:    [31, 33]
+    script:   Seether
+
+  16842976:
+    template: Wanderer_PV
+    at:       [-199.560, 0.000, -112.486, 53]
+    level:    [28, 30]
+    script:   Wanderer
+
+  16842977:
+    template: Seether_Prom
+    at:       [-191.762, 0.000, -119.506, 40]
+    level:    [31, 33]
+    script:   Seether
+
+  16842978:
+    template: Weeper_PH
+    at:       [-150.986, 0.000, -163.581, 127]
+    level:    [29, 31]
+    script:   Weeper
+
+  16842979:
+    template: Weeper_PH
+    at:       [-71.442, 0.000, -90.197, 205]
+    level:    [29, 31]
+    script:   Weeper
+
+  16842980:
+    template: Weeper_PH
+    at:       [-77.492, 0.000, -82.421, 178]
+    level:    [29, 31]
+    script:   Weeper
+
+  16842981:
+    template: Weeper_PH
+    at:       [-103.827, 0.000, -47.356, 110]
+    level:    [29, 31]
+    script:   Weeper
+
+  16842982:
+    template: Wanderer_PV
+    at:       [-69.408, 0.000, -58.497, 212]
+    level:    [28, 30]
+    script:   Wanderer
+
+  16842983:
+    template: Weeper_PH
+    at:       [-43.589, 0.000, -38.825, 239]
+    level:    [29, 31]
+    script:   Weeper
+
+  16842984:
+    template: Weeper_PH
+    at:       [-198.970, 0.000, 122.838, 246]
+    level:    [33, 35]
+    script:   Weeper
+
+  16842985:
+    template: Wanderer_PV
+    at:       [-275.122, 0.000, 141.500, 32]
+    level:    [32, 34]
+    script:   Wanderer
+
+  16842986:
+    template: Weeper_PH
+    at:       [-335.661, 0.000, 197.902, 232]
+    level:    [33, 35]
+    script:   Weeper
+
+  16842987:
+    template: Weeper_PH
+    at:       [-351.880, 0.000, 197.072, 2]
+    level:    [33, 35]
+    script:   Weeper
+
+  16842988:
+    template: Weeper_PH
+    at:       [-321.923, 0.000, 236.392, 156]
+    level:    [33, 35]
+    script:   Weeper
+
+  16842989:
+    template: Weeper_PH
+    at:       [-397.584, 0.000, 188.929, 82]
+    level:    [33, 35]
+    script:   Weeper
+
+  16842990:
+    template: Weeper_PH
+    at:       [234.540, -0.217, 238.725, 130]
+    level:    [33, 35]
+    script:   Weeper
+
+  16842991:
+    template: Weeper_PH
+    at:       [224.854, 0.000, 241.437, 212]
+    level:    [33, 35]
+    script:   Weeper
+
+  16842992:
+    template: Wanderer_PV
+    at:       [192.934, 0.000, 230.412, 101]
+    level:    [32, 34]
+    script:   Wanderer
+
+  16842993:
+    template: Thinker_PH
+    at:       [190.729, 0.000, 285.004, 34]
+    level:    [36, 38]
+    script:   Thinker
+
+  16842994:
+    template: Weeper_PH
+    at:       [189.764, 0.000, 275.733, 249]
+    level:    [33, 35]
+    script:   Weeper
+
+  16842995:
+    template: Weeper_PH
+    at:       [134.087, 0.000, 275.896, 59]
+    level:    [33, 35]
+    script:   Weeper
+
+  16842996:
+    level: [37, 38] # Pre-nerf levels
+
+  16842997:
+    level: [37, 38] # Pre-nerf levels
+
+  16842998:
+    level: [37, 38] # Pre-nerf levels
+
+  16842999:
+    level: [37, 38] # Pre-nerf levels
+
+  16843000:
+    level: [37, 38] # Pre-nerf levels
+
+  16843001:
+    level: [37, 38] # Pre-nerf levels
+
+  16843002:
+    level: [37, 38] # Pre-nerf levels
+
+  16843003:
+    level: [37, 38] # Pre-nerf levels
+
+  16843004:
+    level: [37, 38] # Pre-nerf levels
+
+  16843005:
+    level: [37, 38] # Pre-nerf levels
+
+  16843006:
+    level: [37, 38] # Pre-nerf levels
+
+  16843007:
+    level: [37, 38] # Pre-nerf levels
+
+  16843008:
+    level: [37, 38] # Pre-nerf levels
+
+  16843009:
+    level: [37, 38] # Pre-nerf levels
+
+  16843010:
+    level: [37, 38] # Pre-nerf levels
+
+  16843011:
+    level: [37, 38] # Pre-nerf levels
+
+  16843012:
+    level: [37, 38] # Pre-nerf levels
+
+  16843013:
+    level: [34, 36] # Pre-nerf levels
+
+  16843014:
+    level: [34, 36] # Pre-nerf levels
+
+  16843015:
+    level: [37, 38] # Pre-nerf levels
+
+  16843016:
+    level: [37, 38] # Pre-nerf levels
+
+  16843017:
+    level: [37, 38] # Pre-nerf levels
+
+  16843018:
+    level: [37, 38] # Pre-nerf levels
+
+  16843019:
+    level: [37, 38] # Pre-nerf levels
+
+  16843020:
+    level: [37, 38] # Pre-nerf levels
+
+  16843021:
+    level: [37, 38] # Pre-nerf levels
+
+  16843022:
+    level: [37, 38] # Pre-nerf levels
+
+  16843023:
+    level: [37, 38] # Pre-nerf levels
+
+  16843024:
+    level: [37, 38] # Pre-nerf levels
+
+  16843025:
+    level: [37, 38] # Pre-nerf levels
+
+  16843026:
+    level: [37, 38] # Pre-nerf levels
+
+  16843027:
+    level: [37, 38] # Pre-nerf levels
+
+  16843028:
+    level: [38, 40] # Pre-nerf levels
+
+  16843029:
+    level: [37, 38] # Pre-nerf levels
+
+  16843030:
+    level: [34, 36] # Pre-nerf levels
+
+  16843031:
+    level: [37, 38] # Pre-nerf levels
+
+  16843032:
+    level: [37, 38] # Pre-nerf levels
+
+  16843033:
+    level: [37, 38] # Pre-nerf levels
+
+  16843034:
+    level: [37, 38] # Pre-nerf levels
+
+  16843035:
+    level: [37, 38] # Pre-nerf levels
+
+  16843036:
+    level: [37, 38] # Pre-nerf levels
+
+  16843037:
+    level: [34, 36] # Pre-nerf levels
+
+  16843038:
+    level: [37, 38] # Pre-nerf levels
+
+  16843039:
+    level: [38, 40] # Pre-nerf levels
+
+  16843040:
+    level: [38, 40] # Pre-nerf levels
+
+  16843041:
+    level: [38, 40] # Pre-nerf levels
+
+  16843042:
+    level: [38, 40] # Pre-nerf levels

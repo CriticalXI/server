@@ -1,0 +1,24 @@
+# Era mob layout for beadeaux.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Charging_Sheep:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Ooze:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Water_Elemental:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers

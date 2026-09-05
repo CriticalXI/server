@@ -1,0 +1,89 @@
+# Era mob layout for sea_serpent_grotto.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Bigclaw_aggro:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Brook_Sahagin:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Devil_Manta:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ghast_blm:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Ghast_war:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Grotto_Pugil:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Ironshell:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Lake_Sahagin:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Ooze:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Pond_Sahagin:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Riparian_Sahagin:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Rivulet_Sahagin:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Robber_Crab_SSG:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Royal_Leech:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Spring_Sahagin:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Undead_Bats_SSG:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Vampire_Bat:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers

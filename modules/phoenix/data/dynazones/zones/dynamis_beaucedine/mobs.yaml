@@ -1,0 +1,3853 @@
+# Old-school Dynamis spawn layout for dynamis_beaucedine.
+
+templates:
+
+  # -- Custom templates for mobs the core file lacks, scaffolded from the module's mob_groups/mob_pools inserts --
+
+  Dynamis_Effigy:
+    id:            1152
+    species:       quadav_statue
+    type:          [notorious, battlefield]
+    spell_list_id: 21
+    skill_list_id: 94
+    attributes:
+      combat:
+        skill: staff
+      jobs: [blm, blm]
+      resists:
+        immune_status: [silence, slow, elegy, light_sleep, dark_sleep]
+        dmg_physical:
+          slashing: -5000
+          piercing: -5000
+          blunt:    -5000
+          h2h:      -5000
+      render:
+        look:
+          type:  standard
+          model: 1059
+        entity_flags: 641
+      behaviors:
+        aggressive:     true
+        links:          true
+        true_detection: true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 9000
+        mp: 10000
+
+  Dynamis_Icon:
+    id:            1153
+    species:       yagudo_statue
+    type:          [notorious, battlefield]
+    spell_list_id: 21
+    skill_list_id: 95
+    attributes:
+      combat:
+        skill: staff
+      jobs: [blm, blm]
+      resists:
+        immune_status: [silence, slow, elegy, light_sleep, dark_sleep]
+        dmg_physical:
+          slashing: -5000
+          piercing: -5000
+          blunt:    -5000
+          h2h:      -5000
+      render:
+        look:
+          type:  standard
+          model: 1061
+        entity_flags: 129
+      behaviors:
+        aggressive:     true
+        links:          true
+        true_detection: true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 9000
+        mp: 10000
+
+  Dynamis_Statue:
+    id:            1155
+    species:       goblin_statue
+    type:          [notorious, battlefield]
+    spell_list_id: 20
+    skill_list_id: 92
+    attributes:
+      combat:
+        skill: club
+      jobs: [whm, whm]
+      resists:
+        immune_status: [silence, slow, elegy, light_sleep, dark_sleep]
+        dmg_physical:
+          slashing: -5000
+          piercing: -5000
+          blunt:    -5000
+          h2h:      -5000
+      render:
+        look:
+          type:  standard
+          model: 1063
+        entity_flags: 135
+      behaviors:
+        aggressive:     true
+        links:          true
+        true_detection: true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 9000
+        mp: 10000
+
+  Dynamis_Tombstone:
+    id:            1156
+    species:       orc_statue
+    type:          [notorious, battlefield]
+    spell_list_id: 3
+    skill_list_id: 93
+    attributes:
+      combat:
+        skill: club
+      jobs: [rdm, rdm]
+      resists:
+        immune_status: [silence, slow, elegy, light_sleep, dark_sleep]
+        dmg_physical:
+          slashing: -5000
+          piercing: -5000
+          blunt:    -5000
+          h2h:      -5000
+      render:
+        look:
+          type:  standard
+          model: 1057
+        entity_flags: 129
+      behaviors:
+        aggressive:     true
+        links:          true
+        true_detection: true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 9000
+        mp: 10000
+
+  Adamantking_Effigy:
+    type: [notorious]
+
+  Ascetox_Ratgums:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Avatar_Icon:
+    type: [notorious]
+
+  BeZhe_Keeprazer:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Bhuu_Wjato_the_Firepool:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Bordox_Kittyback:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Brewnix_Bittypupils:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Caa_Xaza_the_Madpiercer:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Cobraclaw_Buchzvotch:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Dagourmarches_Avatar:
+    type: [called, notorious]
+
+  Dagourmarches_Wyvern:
+    type: [called, notorious]
+
+  DeBho_Pyrohand:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Deathcaller_Bidfbid:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Drakefeast_Wubmfub:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Draklix_Scalecrust:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Droprix_Granitepalms:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Elvaanlopper_Grokdok:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Foo_Peku_the_Bloodcloak:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  GaFho_Venomtouch:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Galkarider_Retzpratz:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Gibberox_Pimplebeak:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  GoTyo_Magenapper:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Goblin_Replica:
+    type: [notorious]
+
+  GuKhu_Dukesniper:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  GuNha_Wallstormer:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Guu_Waji_the_Preacher:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Heavymail_Djidzbad:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Hee_Mida_the_Meticulous:
+    spell_list_id: 0
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Humegutter_Adzjbadj:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Hydra_Bard:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Beastmaster:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Black_Mage:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Dark_Knight:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Dragoon:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Monk:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Ninja:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Paladin:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Ranger:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Red_Mage:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Samurai:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Summoner:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Thief:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_Warrior:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydra_White_Mage:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Hydras_Avatar:
+    type: [called, notorious]
+
+  Hydras_Hound:
+    type: [called, notorious]
+
+  Hydras_Wyvern:
+    type: [called, notorious]
+
+  Jeunoraider_Gepkzip:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  JiFhu_Infiltrator:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  JiKhu_Towercleaver:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Knii_Hoqo_the_Bisector:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Koo_Saxu_the_Everfast:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Kuu_Xuka_the_Nimble:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Lockbuster_Zapdjipp:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Maa_Zaua_the_Wyrmkeeper:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  MiRhe_Whisperblade:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Mithraslaver_Debhabob:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Moltenox_Stubthumbs:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Morblox_Chubbychin:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  MuGha_Legionkiller:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  NaHya_Floodmaker:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Nee_Huxa_the_Judgmental:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  NuBhi_Spiraleye:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Puu_Timu_the_Phantasmal:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Routsix_Rubbertendon:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Ruffbix_Jumbolobes:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Ryy_Qihi_the_Idolrobber:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Serjeant_Tombstone:
+    type: [notorious]
+
+  Shisox_Widebrow:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Skinmask_Ugghfogg:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Slinkix_Trufflesniff:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  SoGho_Adderhandler:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  SoZho_Metalbender:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Soo_Jopo_the_Fiendking:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Spinalsucker_Galflmall:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Swypestix_Tigershins:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  TaHyu_Gallanthunter:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Taruroaster_Biggsjig:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Tocktix_Thinlids:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Ultrasonic_Zeknajak:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Vanguard_Alchemist:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Ambusher:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Amputator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Armorer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Assassin:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Backstabber:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Beasttender:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Bugler:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Chanter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Constable:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Defender:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Dollmaster:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Dragontamer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Drakekeeper:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Enchanter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Exemplar:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Footsoldier:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Grappler:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Gutslasher:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Hatamoto:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Hawker:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Hitman:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Impaler:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Inciter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Kusa:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Liberator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Maestro:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Mason:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Mesmerizer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Militant:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Minstrel:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Neckchopper:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Necromancer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Ogresoother:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Oracle:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Partisan:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Pathfinder:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Persecutor:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Pillager:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Pitfighter:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Predator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Prelate:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Priest:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Protector:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Purloiner:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Ronin:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Salvager:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Sentinel:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Shaman:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Skirmisher:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Smithy:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Thaumaturge:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Tinkerer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Trooper:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Undertaker:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Vexer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Vigilante:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Vindicator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Visionary:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Welldigger:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguards_Avatar:
+    type: [called, notorious]
+
+  Vanguards_Crow:
+    type: [called, notorious]
+
+  Vanguards_Hecteyes:
+    type: [called, notorious]
+
+  Vanguards_Scorpion:
+    type: [called, notorious]
+
+  Vanguards_Slime:
+    type: [called, notorious]
+
+  Vanguards_Wyvern:
+    type: [called, notorious]
+
+  Whistrix_Toadthroat:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Wraithdancer_Gidbnod:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Xaa_Chau_the_Roctalon:
+    attributes:
+      spawn:
+        type: [scripted]
+
+  Xhoo_Fuza_the_Sublime:
+    attributes:
+      spawn:
+        type: [scripted]
+
+spawns:
+
+  17326081:
+    template: Avatar_Icon
+    at:       [-286.290, -39.624, -342.971, 64]
+    level:    [82, 82]
+
+  17326082:
+    template: Vanguard_Liberator
+    at:       [-280.733, -39.379, -345.750, 64]
+    level:    [75, 77]
+
+  17326083:
+    template: Vanguard_Salvager
+    at:       [-292.527, -41.094, -346.147, 64]
+    level:    [75, 77]
+
+  17326084:
+    template: Adamantking_Effigy
+    at:       [-268.843, -39.810, -346.472, 192]
+    level:    [65, 65]
+
+  17326085:
+    template: Vanguard_Constable
+    at:       [-263.118, -39.957, -346.387, 64]
+    level:    [75, 77]
+
+  17326086:
+    template: Vanguard_Hatamoto
+    at:       [-263.306, -39.636, -336.615, 64]
+    level:    [75, 77]
+
+  17326087:
+    template: Serjeant_Tombstone
+    at:       [-252.616, -39.639, -343.885, 192]
+    level:    [65, 65]
+
+  17326088:
+    template: Vanguard_Footsoldier
+    at:       [-252.675, -39.635, -336.632, 64]
+    level:    [75, 77]
+
+  17326089:
+    template: Vanguard_Mesmerizer
+    at:       [-252.747, -39.679, -339.927, 64]
+    level:    [75, 77]
+
+  17326090:
+    template: Goblin_Replica
+    at:       [-237.698, -39.193, -343.829, 64]
+    level:    [65, 65]
+
+  17326091:
+    template: Vanguard_Tinkerer
+    at:       [-241.790, -39.692, -349.827, 64]
+    level:    [75, 77]
+
+  17326092:
+    template: Vanguard_Maestro
+    at:       [-231.628, -40.243, -350.179, 64]
+    level:    [75, 77]
+
+  17326093:
+    template: Serjeant_Tombstone
+    at:       [-301.265, -40.400, -295.428, 192]
+    level:    [65, 65]
+
+  17326094:
+    template: Vanguard_Grappler
+    at:       [-298.289, -40.242, -287.461, 238]
+    level:    [75, 77]
+
+  17326095:
+    template: Vanguard_Impaler
+    at:       [-290.043, -398.724, -295.833, 239]
+    level:    [75, 77]
+
+  17326096:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326097:
+    template: Adamantking_Effigy
+    at:       [-284.269, -40.185, -272.325, 57]
+    level:    [65, 65]
+
+  17326098:
+    template: Vanguard_Beasttender
+    at:       [-289.300, -39.736, -279.031, 90]
+    level:    [75, 77]
+
+  17326099:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326100:
+    template: Vanguard_Defender
+    at:       [-286.902, -39.875, -275.634, 90]
+    level:    [75, 77]
+
+  17326101:
+    template: Avatar_Icon
+    at:       [-281.362, -39.382, -294.221, 122]
+    level:    [82, 82]
+
+  17326102:
+    template: Vanguard_Assassin
+    at:       [-292.713, -40.112, -292.925, 224]
+    level:    [75, 77]
+
+  17326103:
+    template: Vanguard_Visionary
+    at:       [-285.044, -39.949, -279.380, 65]
+    level:    [75, 77]
+
+  17326104:
+    template: Goblin_Replica
+    at:       [-304.400, -40.777, -268.540, 37]
+    level:    [65, 65]
+
+  17326105:
+    template: Vanguard_Necromancer
+    at:       [-301.346, -39.746, -272.681, 37]
+    level:    [75, 77]
+
+  17326106:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326107:
+    template: Vanguard_Welldigger
+    at:       [-298.310, -39.086, -276.798, 37]
+    level:    [75, 77]
+
+  17326108:
+    template: Avatar_Icon
+    at:       [-202.107, -39.011, -220.207, 129]
+    level:    [82, 82]
+
+  17326109:
+    template: Vanguard_Priest
+    at:       [-202.619, -39.303, -215.016, 129]
+    level:    [75, 77]
+
+  17326110:
+    template: Vanguard_Chanter
+    at:       [-202.722, -39.529, -227.250, 129]
+    level:    [75, 77]
+
+  17326111:
+    template: Xaa_Chau_the_Roctalon
+    at:       [-209.415, -39.591, -220.424, 129]
+    level:    [82, 82]
+
+  17326112:
+    template: Avatar_Icon
+    at:       [-190.465, -39.724, -201.463, 172]
+    level:    [82, 82]
+
+  17326113:
+    template: Vanguard_Exemplar
+    at:       [-194.707, -39.936, -201.349, 172]
+    level:    [75, 77]
+
+  17326114:
+    template: Avatar_Icon
+    at:       [-190.121, -39.707, -237.457, 81]
+    level:    [82, 82]
+
+  17326115:
+    template: Vanguard_Inciter
+    at:       [-194.630, -39.933, -238.212, 81]
+    level:    [75, 77]
+
+  17326116:
+    template: Avatar_Icon
+    at:       [-189.650, -39.684, -199.202, 0]
+    level:    [82, 82]
+
+  17326117:
+    template: Vanguard_Skirmisher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326118:
+    template: Vanguard_Ogresoother
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326119:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326120:
+    template: Avatar_Icon
+    at:       [-189.125, -39.657, -242.405, 0]
+    level:    [82, 82]
+
+  17326121:
+    template: Vanguard_Persecutor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326122:
+    template: Vanguard_Oracle
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326123:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326124:
+    template: Avatar_Icon
+    at:       [-46.367, -39.800, -208.203, 43]
+    level:    [82, 82]
+
+  17326125:
+    template: Vanguard_Sentinel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326126:
+    template: Soo_Jopo_the_Fiendking
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326127:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326128:
+    template: Avatar_Icon
+    at:       [-33.759, -40.175, -192.528, 30]
+    level:    [82, 82]
+
+  17326129:
+    template: Vanguard_Visionary
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326130:
+    template: Avatar_Icon
+    at:       [-21.508, -39.158, -195.678, 18]
+    level:    [82, 82]
+
+  17326131:
+    template: Vanguard_Inciter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326132:
+    template: Hee_Mida_the_Meticulous
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326133:
+    template: Avatar_Icon
+    at:       [-59.362, -40.839, -220.580, 28]
+    level:    [82, 82]
+
+  17326134:
+    template: Vanguard_Prelate
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326135:
+    template: Maa_Zaua_the_Wyrmkeeper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326136:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326137:
+    template: Avatar_Icon
+    at:       [-24.285, -39.233, -203.010, 82]
+    level:    [82, 82]
+
+  17326138:
+    template: Vanguard_Exemplar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326139:
+    template: Avatar_Icon
+    at:       [-16.308, -40.634, -209.900, 85]
+    level:    [82, 82]
+
+  17326140:
+    template: Vanguard_Skirmisher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326141:
+    template: Xhoo_Fuza_the_Sublime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326142:
+    template: Avatar_Icon
+    at:       [-80.499, -40.000, -260.017, 0]
+    level:    [82, 82]
+
+  17326143:
+    template: Vanguard_Assassin
+    at:       [-76.722, -39.688, -264.398, 0]
+    level:    [75, 77]
+
+  17326144:
+    template: Puu_Timu_the_Phantasmal
+    at:       [-76.809, -40.038, -256.038, 0]
+    level:    [82, 82]
+
+  17326145:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326146:
+    template: Avatar_Icon
+    at:       [117.067, -40.000, -0.030, 0]
+    level:    [82, 82]
+
+  17326147:
+    template: Foo_Peku_the_Bloodcloak
+    at:       [110.910, -39.747, -0.608, 0]
+    level:    [82, 82]
+
+  17326148:
+    template: Vanguard_Persecutor
+    at:       [118.577, -39.839, 5.339, 0]
+    level:    [75, 77]
+
+  17326149:
+    template: Vanguard_Liberator
+    at:       [117.723, -40.151, -6.997, 0]
+    level:    [75, 77]
+
+  17326150:
+    template: Avatar_Icon
+    at:       [71.548, -39.778, -1.274, 3]
+    level:    [82, 82]
+
+  17326151:
+    template: Vanguard_Prelate
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326152:
+    template: Vanguard_Visionary
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326153:
+    template: Avatar_Icon
+    at:       [108.571, -39.630, 2.688, 128]
+    level:    [82, 82]
+
+  17326154:
+    template: Vanguard_Salvager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326155:
+    template: Vanguard_Assassin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326156:
+    template: Avatar_Icon
+    at:       [75.410, -39.594, 67.268, 191]
+    level:    [82, 82]
+
+  17326157:
+    template: Vanguard_Priest
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326158:
+    template: Vanguard_Ogresoother
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326159:
+    template: Vanguards_Crow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326160:
+    template: Avatar_Icon
+    at:       [62.529, -39.567, 67.238, 191]
+    level:    [82, 82]
+
+  17326161:
+    template: Vanguard_Oracle
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326162:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326163:
+    template: Vanguard_Chanter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326164:
+    template: Avatar_Icon
+    at:       [80.976, -39.647, 51.082, 191]
+    level:    [82, 82]
+
+  17326165:
+    template: Bhuu_Wjato_the_Firepool
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326166:
+    template: Vanguard_Exemplar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326167:
+    template: Avatar_Icon
+    at:       [60.227, -39.892, 58.180, 191]
+    level:    [82, 82]
+
+  17326168:
+    template: Vanguard_Skirmisher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326169:
+    template: Caa_Xaza_the_Madpiercer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326170:
+    template: Avatar_Icon
+    at:       [74.805, -40.012, 45.399, 191]
+    level:    [82, 82]
+
+  17326171:
+    template: Vanguard_Partisan
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326172:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326173:
+    template: Vanguard_Sentinel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326174:
+    template: Avatar_Icon
+    at:       [62.302, -39.265, 46.365, 191]
+    level:    [82, 82]
+
+  17326175:
+    template: Vanguard_Liberator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326176:
+    template: Vanguard_Persecutor
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326177:
+    template: Dynamis_Icon
+    at:       [67.865, -39.692, 64.875, 64]
+    level:    [82, 82]
+
+  17326178:
+    template: Koo_Saxu_the_Everfast
+    at:       [67.846, -39.620, 60.277, 64]
+    level:    [82, 82]
+
+  17326179:
+    template: Kuu_Xuka_the_Nimble
+    at:       [61.610, -39.767, 64.373, 64]
+    level:    [82, 82]
+
+  17326180:
+    template: Guu_Waji_the_Preacher
+    at:       [73.560, -39.471, 64.185, 64]
+    level:    [82, 82]
+
+  17326181:
+    template: Nee_Huxa_the_Judgmental
+    at:       [69.714, -40.000, 70.931, 64]
+    level:    [82, 82]
+
+  17326182:
+    template: Goblin_Replica
+    at:       [-121.694, -59.653, -189.047, 232]
+    level:    [65, 65]
+
+  17326183:
+    template: Vanguard_Pathfinder
+    at:       [-125.368, -59.849, -191.578, 232]
+    level:    [75, 77]
+
+  17326184:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326185:
+    template: Droprix_Granitepalms
+    at:       [-121.068, -59.431, -186.262, 232]
+    level:    [82, 82]
+
+  17326186:
+    template: Goblin_Replica
+    at:       [-128.077, -60.016, -188.957, 232]
+    level:    [65, 65]
+
+  17326187:
+    template: Vanguard_Alchemist
+    at:       [-123.710, -59.621, -188.390, 232]
+    level:    [75, 77]
+
+  17326188:
+    template: Vanguard_Ambusher
+    at:       [-128.777, -59.601, -184.216, 232]
+    level:    [75, 77]
+
+  17326189:
+    template: Goblin_Replica
+    at:       [-122.030, -59.986, -195.703, 232]
+    level:    [65, 65]
+
+  17326190:
+    template: Vanguard_Enchanter
+    at:       [-120.624, -59.752, -191.015, 232]
+    level:    [75, 77]
+
+  17326191:
+    template: Vanguard_Ronin
+    at:       [-117.271, -60.003, -196.042, 232]
+    level:    [75, 77]
+
+  17326192:
+    template: Goblin_Replica
+    at:       [-32.063, -59.991, -114.172, 139]
+    level:    [65, 65]
+
+  17326193:
+    template: Ascetox_Ratgums
+    at:       [-39.486, -60.000, -122.321, 139]
+    level:    [82, 82]
+
+  17326194:
+    template: Vanguard_Hitman
+    at:       [-36.262, -59.656, -109.108, 139]
+    level:    [75, 77]
+
+  17326195:
+    template: Goblin_Replica
+    at:       [-39.074, -59.249, -135.555, 185]
+    level:    [65, 65]
+
+  17326196:
+    template: Vanguard_Smithy
+    at:       [-27.504, -59.441, -131.566, 185]
+    level:    [75, 77]
+
+  17326197:
+    template: Bordox_Kittyback
+    at:       [-44.841, -59.093, -142.663, 185]
+    level:    [82, 82]
+
+  17326198:
+    template: Goblin_Replica
+    at:       [-22.987, -59.818, -135.992, 177]
+    level:    [65, 65]
+
+  17326199:
+    template: Vanguard_Tinkerer
+    at:       [-25.240, -59.637, -131.135, 177]
+    level:    [75, 77]
+
+  17326200:
+    template: Goblin_Replica
+    at:       [-1.298, -59.965, -115.289, 153]
+    level:    [65, 65]
+
+  17326201:
+    template: Vanguard_Armorer
+    at:       [-10.868, -59.658, -119.227, 153]
+    level:    [75, 77]
+
+  17326202:
+    template: Vanguard_Ronin
+    at:       [7.279, -59.702, -106.458, 153]
+    level:    [75, 77]
+
+  17326203:
+    template: Goblin_Replica
+    at:       [-8.435, -59.909, -126.562, 156]
+    level:    [65, 65]
+
+  17326204:
+    template: Vanguard_Dragontamer
+    at:       [-16.168, -60.207, -131.829, 156]
+    level:    [75, 77]
+
+  17326205:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326206:
+    template: Vanguard_Alchemist
+    at:       [-0.930, -60.000, -123.429, 156]
+    level:    [75, 77]
+
+  17326207:
+    template: Goblin_Replica
+    at:       [96.003, -60.231, -61.063, 112]
+    level:    [65, 65]
+
+  17326208:
+    template: Vanguard_Shaman
+    at:       [92.101, -59.814, -55.896, 112]
+    level:    [75, 77]
+
+  17326209:
+    template: Goblin_Replica
+    at:       [79.610, -59.860, -46.815, 112]
+    level:    [65, 65]
+
+  17326210:
+    template: Vanguard_Welldigger
+    at:       [84.114, -59.950, -45.012, 112]
+    level:    [75, 77]
+
+  17326211:
+    template: Goblin_Replica
+    at:       [76.253, -60.014, -35.301, 105]
+    level:    [65, 65]
+
+  17326212:
+    template: Vanguard_Pitfighter
+    at:       [78.457, -60.000, -39.097, 105]
+    level:    [75, 77]
+
+  17326213:
+    template: Vanguard_Enchanter
+    at:       [81.179, -60.000, -43.300, 105]
+    level:    [75, 77]
+
+  17326214:
+    template: Goblin_Replica
+    at:       [81.515, -59.087, -58.275, 112]
+    level:    [65, 65]
+
+  17326215:
+    template: Vanguard_Hitman
+    at:       [85.459, -59.318, -56.654, 112]
+    level:    [75, 77]
+
+  17326216:
+    template: Vanguard_Tinkerer
+    at:       [89.034, -59.694, -55.186, 112]
+    level:    [75, 77]
+
+  17326217:
+    template: Goblin_Replica
+    at:       [109.713, -60.001, -31.344, 111]
+    level:    [65, 65]
+
+  17326218:
+    template: Vanguard_Ronin
+    at:       [105.065, -59.482, -33.425, 111]
+    level:    [75, 77]
+
+  17326219:
+    template: Routsix_Rubbertendon
+    at:       [100.953, -59.128, -34.945, 111]
+    level:    [82, 82]
+
+  17326220:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326221:
+    template: Goblin_Replica
+    at:       [117.423, -60.500, -55.392, 114]
+    level:    [65, 65]
+
+  17326222:
+    template: Vanguard_Dragontamer
+    at:       [111.733, -60.031, -57.510, 114]
+    level:    [75, 77]
+
+  17326223:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326224:
+    template: Whistrix_Toadthroat
+    at:       [105.236, -60.384, -59.698, 114]
+    level:    [82, 82]
+
+  17326225:
+    template: Dynamis_Statue
+    at:       [111.259, -59.764, -39.423, 118]
+    level:    [82, 82]
+
+  17326226:
+    template: Morblox_Chubbychin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326227:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326228:
+    template: Moltenox_Stubthumbs
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326229:
+    template: Slinkix_Trufflesniff
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326230:
+    template: Ruffbix_Jumbolobes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326231:
+    template: Goblin_Replica
+    at:       [6.464, -59.814, 50.384, 64]
+    level:    [65, 65]
+
+  17326232:
+    template: Vanguard_Smithy
+    at:       [0.312, -59.568, 52.362, 64]
+    level:    [75, 77]
+
+  17326233:
+    template: Vanguard_Alchemist
+    at:       [12.154, -60.472, 51.136, 64]
+    level:    [75, 77]
+
+  17326234:
+    template: Goblin_Replica
+    at:       [-0.035, -59.059, 58.850, 192]
+    level:    [65, 65]
+
+  17326235:
+    template: Vanguard_Armorer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326236:
+    template: Swypestix_Tigershins
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326237:
+    template: Goblin_Replica
+    at:       [12.403, -58.719, 56.908, 192]
+    level:    [65, 65]
+
+  17326238:
+    template: Vanguard_Shaman
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326239:
+    template: Draklix_Scalecrust
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326240:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326241:
+    template: Goblin_Replica
+    at:       [36.860, -59.593, 172.164, 196]
+    level:    [65, 65]
+
+  17326242:
+    template: Vanguard_Maestro
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326243:
+    template: Vanguard_Pitfighter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326244:
+    template: Goblin_Replica
+    at:       [54.590, -60.535, 172.663, 229]
+    level:    [65, 65]
+
+  17326245:
+    template: Vanguard_Ambusher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326246:
+    template: Shisox_Widebrow
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326247:
+    template: Goblin_Replica
+    at:       [53.245, -59.480, 201.430, 245]
+    level:    [65, 65]
+
+  17326248:
+    template: Vanguard_Necromancer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326249:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326250:
+    template: Vanguard_Dragontamer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326251:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326252:
+    template: Goblin_Replica
+    at:       [89.569, -61.445, 213.120, 70]
+    level:    [65, 65]
+
+  17326253:
+    template: Vanguard_Pathfinder
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326254:
+    template: Vanguards_Slime
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326255:
+    template: Vanguard_Armorer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326256:
+    template: Goblin_Replica
+    at:       [106.806, -59.773, 206.836, 121]
+    level:    [65, 65]
+
+  17326257:
+    template: Vanguard_Welldigger
+    at:       [107.012, -59.505, 200.808, 121]
+    level:    [75, 77]
+
+  17326258:
+    template: Gibberox_Pimplebeak
+    at:       [106.660, -60.200, 213.080, 121]
+    level:    [82, 82]
+
+  17326259:
+    template: Adamantking_Effigy
+    at:       [162.012, -19.868, 33.337, 3]
+    level:    [65, 65]
+
+  17326260:
+    template: Vanguard_Vindicator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326261:
+    template: Vanguard_Protector
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326262:
+    template: Adamantking_Effigy
+    at:       [157.455, -19.434, 13.707, 190]
+    level:    [65, 65]
+
+  17326263:
+    template: Vanguard_Kusa
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326264:
+    template: JiFhu_Infiltrator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326265:
+    template: Adamantking_Effigy
+    at:       [178.482, -19.443, 27.607, 69]
+    level:    [65, 65]
+
+  17326266:
+    template: Vanguard_Mason
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326267:
+    template: TaHyu_Gallanthunter
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326268:
+    template: Adamantking_Effigy
+    at:       [175.727, -19.488, 6.526, 124]
+    level:    [65, 65]
+
+  17326269:
+    template: Vanguard_Minstrel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326270:
+    template: Vanguard_Drakekeeper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326271:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326272:
+    template: Dynamis_Effigy
+    at:       [257.641, -21.135, -142.078, 131]
+    level:    [65, 65]
+
+  17326273:
+    template: SoZho_Metalbender
+    at:       [249.576, -20.204, -141.787, 130]
+    level:    [82, 82]
+
+  17326274:
+    template: GaFho_Venomtouch
+    at:       [266.754, -20.254, -142.357, 130]
+    level:    [82, 82]
+
+  17326275:
+    template: DeBho_Pyrohand
+    at:       [259.001, -20.086, -132.784, 135]
+    level:    [82, 82]
+
+  17326276:
+    template: SoGho_Adderhandler
+    at:       [257.907, -20.091, -151.697, 134]
+    level:    [82, 82]
+
+  17326277:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326278:
+    template: Adamantking_Effigy
+    at:       [255.849, -19.911, -134.054, 190]
+    level:    [65, 65]
+
+  17326279:
+    template: Vanguard_Undertaker
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326280:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326281:
+    template: JiKhu_Towercleaver
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326282:
+    template: Adamantking_Effigy
+    at:       [264.428, -20.400, -137.671, 223]
+    level:    [65, 65]
+
+  17326283:
+    template: Vanguard_Vindicator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326284:
+    template: Adamantking_Effigy
+    at:       [265.883, -20.294, -142.307, 1]
+    level:    [65, 65]
+
+  17326285:
+    template: Vanguard_Protector
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326286:
+    template: Vanguard_Minstrel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326287:
+    template: Adamantking_Effigy
+    at:       [262.632, -20.332, -147.132, 32]
+    level:    [65, 65]
+
+  17326288:
+    template: Vanguard_Mason
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326289:
+    template: Adamantking_Effigy
+    at:       [257.884, -20.254, -150.355, 62]
+    level:    [65, 65]
+
+  17326290:
+    template: Vanguard_Kusa
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326291:
+    template: GoTyo_Magenapper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326292:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326293:
+    template: Adamantking_Effigy
+    at:       [251.977, -20.346, -147.744, 95]
+    level:    [65, 65]
+
+  17326294:
+    template: Vanguard_Defender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326295:
+    template: Adamantking_Effigy
+    at:       [250.247, -20.288, -143.267, 127]
+    level:    [65, 65]
+
+  17326296:
+    template: Vanguard_Purloiner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326297:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326298:
+    template: Adamantking_Effigy
+    at:       [251.715, -19.987, -134.730, 165]
+    level:    [65, 65]
+
+  17326299:
+    template: Vanguard_Militant
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326300:
+    template: Adamantking_Effigy
+    at:       [75.053, -19.954, -197.949, 128]
+    level:    [65, 65]
+
+  17326301:
+    template: MuGha_Legionkiller
+    at:       [67.226, -19.527, -197.936, 128]
+    level:    [82, 82]
+
+  17326302:
+    template: Vanguard_Thaumaturge
+    at:       [87.115, -19.845, -197.962, 128]
+    level:    [75, 77]
+
+  17326303:
+    template: Adamantking_Effigy
+    at:       [75.001, -19.951, -201.926, 64]
+    level:    [65, 65]
+
+  17326304:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326305:
+    template: Adamantking_Effigy
+    at:       [74.717, -19.467, -225.304, 153]
+    level:    [65, 65]
+
+  17326306:
+    template: Vanguard_Beasttender
+    at:       [86.328, -19.854, -233.292, 153]
+    level:    [75, 77]
+
+  17326307:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326308:
+    template: MiRhe_Whisperblade
+    at:       [62.696, -19.853, -217.029, 153]
+    level:    [82, 82]
+
+  17326309:
+    template: Adamantking_Effigy
+    at:       [72.507, -19.985, -228.609, 86]
+    level:    [65, 65]
+
+  17326310:
+    template: Vanguard_Vindicator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326311:
+    template: Adamantking_Effigy
+    at:       [61.271, -19.456, -247.656, 150]
+    level:    [65, 65]
+
+  17326312:
+    template: NuBhi_Spiraleye
+    at:       [73.199, -20.292, -254.727, 150]
+    level:    [82, 82]
+
+  17326313:
+    template: Vanguard_Hatamoto
+    at:       [49.305, -19.736, -240.577, 150]
+    level:    [75, 77]
+
+  17326314:
+    template: Adamantking_Effigy
+    at:       [165.418, -19.733, -234.606, 128]
+    level:    [65, 65]
+
+  17326315:
+    template: Vanguard_Purloiner
+    at:       [165.224, -19.854, -242.144, 128]
+    level:    [75, 77]
+
+  17326316:
+    template: Vanguard_Mason
+    at:       [165.060, -20.179, -223.766, 128]
+    level:    [75, 77]
+
+  17326317:
+    template: BeZhe_Keeprazer
+    at:       [153.191, -19.950, -234.227, 128]
+    level:    [82, 82]
+
+  17326318:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326319:
+    template: Adamantking_Effigy
+    at:       [-65.838, -19.406, -284.057, 246]
+    level:    [65, 65]
+
+  17326320:
+    template: Vanguard_Undertaker
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326321:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326322:
+    template: Vanguard_Militant
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326323:
+    template: Adamantking_Effigy
+    at:       [-66.722, -19.395, -301.755, 225]
+    level:    [65, 65]
+
+  17326324:
+    template: Vanguard_Constable
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326325:
+    template: Vanguard_Thaumaturge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326326:
+    template: Adamantking_Effigy
+    at:       [-83.282, -20.000, -315.874, 212]
+    level:    [65, 65]
+
+  17326327:
+    template: Vanguard_Drakekeeper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326328:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326329:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326330:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326331:
+    template: Adamantking_Effigy
+    at:       [-78.295, -20.000, -282.005, 45]
+    level:    [65, 65]
+
+  17326332:
+    template: Vanguard_Vindicator
+    at:       [-77.573, -20.064, -274.739, 45]
+    level:    [75, 77]
+
+  17326333:
+    template: NaHya_Floodmaker
+    at:       [-85.645, -20.000, -277.835, 45]
+    level:    [82, 82]
+
+  17326334:
+    template: Dynamis_Tombstone
+    at:       [333.597, 0.556, -158.405, 0]
+    level:    [65, 65]
+
+  17326335:
+    template: Drakefeast_Wubmfub
+    at:       [390.434, 0.277, -162.324, 131]
+    level:    [82, 82]
+
+  17326336:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326337:
+    template: Spinalsucker_Galflmall
+    at:       [372.504, 0.446, -161.333, 129]
+    level:    [82, 82]
+
+  17326338:
+    template: Elvaanlopper_Grokdok
+    at:       [400.391, 0.609, -145.870, 129]
+    level:    [82, 82]
+
+  17326339:
+    template: Humegutter_Adzjbadj
+    at:       [351.835, 0.520, -147.968, 132]
+    level:    [82, 82]
+
+  17326340:
+    template: Serjeant_Tombstone
+    at:       [353.935, 0.152, -166.861, 194]
+    level:    [65, 65]
+
+  17326341:
+    template: Mithraslaver_Debhabob
+    at:       [353.613, 0.186, -172.332, 194]
+    level:    [82, 82]
+
+  17326342:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326343:
+    template: Vanguard_Pillager
+    at:       [353.244, 0.719, -178.626, 194]
+    level:    [75, 77]
+
+  17326344:
+    template: Serjeant_Tombstone
+    at:       [365.020, 0.196, -166.942, 189]
+    level:    [65, 65]
+
+  17326345:
+    template: Vanguard_Predator
+    at:       [365.592, 0.533, -175.011, 189]
+    level:    [75, 77]
+
+  17326346:
+    template: Serjeant_Tombstone
+    at:       [378.341, 0.676, -167.054, 193]
+    level:    [65, 65]
+
+  17326347:
+    template: Vanguard_Mesmerizer
+    at:       [378.012, 0.158, -177.208, 193]
+    level:    [75, 77]
+
+  17326348:
+    template: Serjeant_Tombstone
+    at:       [399.005, 0.111, -166.239, 192]
+    level:    [65, 65]
+
+  17326349:
+    template: Vanguard_Trooper
+    at:       [398.909, 0.765, -175.695, 192]
+    level:    [75, 77]
+
+  17326350:
+    template: Vanguard_Bugler
+    at:       [398.818, 0.733, -184.624, 192]
+    level:    [75, 77]
+
+  17326351:
+    template: Serjeant_Tombstone
+    at:       [352.834, 0.512, -148.793, 63]
+    level:    [65, 65]
+
+  17326352:
+    template: Wraithdancer_Gidbnod
+    at:       [352.694, 0.800, -142.731, 63]
+    level:    [82, 82]
+
+  17326353:
+    template: Vanguard_Grappler
+    at:       [352.547, 0.645, -136.393, 63]
+    level:    [75, 77]
+
+  17326354:
+    template: Serjeant_Tombstone
+    at:       [363.870, 0.322, -149.395, 65]
+    level:    [65, 65]
+
+  17326355:
+    template: Vanguard_Neckchopper
+    at:       [363.711, 0.985, -139.712, 65]
+    level:    [75, 77]
+
+  17326356:
+    template: Serjeant_Tombstone
+    at:       [378.574, 0.691, -150.193, 65]
+    level:    [65, 65]
+
+  17326357:
+    template: Vanguard_Backstabber
+    at:       [378.694, 0.350, -141.530, 65]
+    level:    [75, 77]
+
+  17326358:
+    template: Serjeant_Tombstone
+    at:       [398.607, 0.256, -150.868, 64]
+    level:    [65, 65]
+
+  17326359:
+    template: Vanguard_Dollmaster
+    at:       [398.403, 0.867, -142.639, 64]
+    level:    [75, 77]
+
+  17326360:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326361:
+    template: Vanguard_Pillager
+    at:       [398.226, 0.746, -135.498, 64]
+    level:    [75, 77]
+
+  17326362:
+    template: Serjeant_Tombstone
+    at:       [-17.037, 0.000, -329.172, 175]
+    level:    [65, 65]
+
+  17326363:
+    template: Vanguard_Amputator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326364:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326365:
+    template: Serjeant_Tombstone
+    at:       [-26.591, 0.000, -307.135, 139]
+    level:    [65, 65]
+
+  17326366:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326367:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326368:
+    template: Serjeant_Tombstone
+    at:       [-48.095, -0.010, -302.736, 244]
+    level:    [65, 65]
+
+  17326369:
+    template: Vanguard_Hawker
+    at:       [-52.093, 0.000, -304.376, 239]
+    level:    [75, 77]
+
+  17326370:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326371:
+    template: Deathcaller_Bidfbid
+    at:       [-55.659, -0.132, -306.708, 237]
+    level:    [82, 82]
+
+  17326372:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326373:
+    template: Serjeant_Tombstone
+    at:       [-53.079, 0.000, -306.444, 79]
+    level:    [65, 65]
+
+  17326374:
+    template: Vanguard_Bugler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326375:
+    template: Vanguard_Trooper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326376:
+    template: Serjeant_Tombstone
+    at:       [-59.854, 0.278, -327.988, 75]
+    level:    [65, 65]
+
+  17326377:
+    template: Vanguard_Footsoldier
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326378:
+    template: Vanguard_Vexer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326379:
+    template: Serjeant_Tombstone
+    at:       [-116.206, -0.011, -360.097, 37]
+    level:    [65, 65]
+
+  17326380:
+    template: Skinmask_Ugghfogg
+    at:       [-119.058, 0.000, -362.451, 37]
+    level:    [82, 82]
+
+  17326381:
+    template: Vanguard_Predator
+    at:       [-112.269, 0.185, -358.064, 37]
+    level:    [75, 77]
+
+  17326382:
+    template: Serjeant_Tombstone
+    at:       [-119.330, 0.917, -381.641, 250]
+    level:    [65, 65]
+
+  17326383:
+    template: Heavymail_Djidzbad
+    at:       [-119.629, 0.855, -377.121, 250]
+    level:    [82, 82]
+
+  17326384:
+    template: Vanguard_Grappler
+    at:       [-117.553, 0.680, -385.155, 250]
+    level:    [75, 77]
+
+  17326385:
+    template: Serjeant_Tombstone
+    at:       [-115.249, 0.036, -396.499, 237]
+    level:    [65, 65]
+
+  17326386:
+    template: Taruroaster_Biggsjig
+    at:       [-113.420, 0.128, -400.327, 237]
+    level:    [82, 82]
+
+  17326387:
+    template: Vanguard_Impaler
+    at:       [-117.218, 0.101, -393.950, 237]
+    level:    [75, 77]
+
+  17326388:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326389:
+    template: Serjeant_Tombstone
+    at:       [366.665, 0.132, -0.107, 8]
+    level:    [65, 65]
+
+  17326390:
+    template: Vanguard_Amputator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326391:
+    template: Vanguard_Vexer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326392:
+    template: Serjeant_Tombstone
+    at:       [388.371, 0.174, 6.023, 136]
+    level:    [65, 65]
+
+  17326393:
+    template: Lockbuster_Zapdjipp
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326394:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326395:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326396:
+    template: Serjeant_Tombstone
+    at:       [381.682, 0.194, 18.240, 138]
+    level:    [65, 65]
+
+  17326397:
+    template: Cobraclaw_Buchzvotch
+    at:       [380.378, 0.147, 13.399, 138]
+    level:    [82, 82]
+
+  17326398:
+    template: Vanguard_Hawker
+    at:       [382.266, 0.133, 22.676, 138]
+    level:    [75, 77]
+
+  17326399:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326400:
+    template: Serjeant_Tombstone
+    at:       [375.839, 0.600, 30.158, 1]
+    level:    [65, 65]
+
+  17326401:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326402:
+    template: Galkarider_Retzpratz
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326403:
+    template: Serjeant_Tombstone
+    at:       [374.503, 0.646, 40.071, 255]
+    level:    [65, 65]
+
+  17326404:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326405:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326406:
+    template: Serjeant_Tombstone
+    at:       [274.182, 0.372, 54.224, 32]
+    level:    [65, 65]
+
+  17326407:
+    template: Vanguard_Mesmerizer
+    at:       [279.057, 0.269, 49.391, 32]
+    level:    [75, 77]
+
+  17326408:
+    template: Adamantking_Effigy
+    at:       [281.321, 0.994, 60.092, 21]
+    level:    [65, 65]
+
+  17326409:
+    template: Vanguard_Undertaker
+    at:       [285.841, 0.775, 57.377, 21]
+    level:    [75, 77]
+
+  17326410:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17326411:
+    template: Avatar_Icon
+    at:       [286.426, 0.471, 68.972, 26]
+    level:    [82, 82]
+
+  17326412:
+    template: Vanguard_Visionary
+    at:       [292.075, 0.441, 64.840, 26]
+    level:    [75, 77]
+
+  17326413:
+    template: Goblin_Replica
+    at:       [293.721, 0.568, 78.218, 34]
+    level:    [65, 65]
+
+  17326414:
+    template: Vanguard_Pitfighter
+    at:       [298.572, 0.766, 72.790, 34]
+    level:    [75, 77]
+
+  17326415:
+    template: Adamantking_Effigy
+    at:       [283.385, 0.000, 204.086, 117]
+    level:    [65, 65]
+
+  17326416:
+    template: GuNha_Wallstormer
+    at:       [277.038, 0.000, 202.305, 117]
+    level:    [82, 82]
+
+  17326417:
+    template: GuKhu_Dukesniper
+    at:       [289.202, -0.487, 205.721, 117]
+    level:    [82, 82]
+
+  17326418:
+    template: Goblin_Replica
+    at:       [268.383, 0.380, 242.644, 54]
+    level:    [65, 65]
+
+  17326419:
+    template: Brewnix_Bittypupils
+    at:       [269.656, 0.316, 237.309, 54]
+    level:    [82, 82]
+
+  17326420:
+    template: Tocktix_Thinlids
+    at:       [266.759, -0.393, 249.465, 54]
+    level:    [82, 82]
+
+  17326421:
+    template: Serjeant_Tombstone
+    at:       [278.403, 0.000, 238.465, 61]
+    level:    [65, 65]
+
+  17326422:
+    template: Ultrasonic_Zeknajak
+    at:       [278.731, 0.130, 233.380, 61]
+    level:    [82, 82]
+
+  17326423:
+    template: Jeunoraider_Gepkzip
+    at:       [278.011, 0.000, 243.217, 61]
+    level:    [82, 82]
+
+  17326424:
+    template: Avatar_Icon
+    at:       [282.533, 0.869, 217.405, 65]
+    level:    [82, 82]
+
+  17326425:
+    template: Ryy_Qihi_the_Idolrobber
+    at:       [282.433, 0.382, 211.658, 65]
+    level:    [82, 82]
+
+  17326426:
+    template: Knii_Hoqo_the_Bisector
+    at:       [282.621, 0.875, 222.485, 65]
+    level:    [82, 82]
+
+  17326427:
+    template: Vanguard_Eye
+    at:       [-51.671, -65.444, 100.438, 2]
+    level:    [70, 70]
+
+  17326428:
+    template: Hydra_Monk
+    at:       [-58.947, -67.165, 99.936, 2]
+    level:    [82, 82]
+
+  17326429:
+    template: Hydra_Bard
+    at:       [-65.120, -69.099, 105.864, 2]
+    level:    [82, 82]
+
+  17326430:
+    template: Hydra_Ranger
+    at:       [-76.752, -71.409, 102.752, 2]
+    level:    [82, 82]
+
+  17326431:
+    template: Vanguard_Eye
+    at:       [-37.112, -80.000, 119.059, 132]
+    level:    [70, 70]
+
+  17326432:
+    template: Hydra_White_Mage
+    at:       [-43.528, -80.000, 119.656, 132]
+    level:    [82, 82]
+
+  17326433:
+    template: Vanguard_Eye
+    at:       [-25.261, -80.271, 131.079, 142]
+    level:    [70, 70]
+
+  17326434:
+    template: Hydra_Black_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326435:
+    template: Hydra_Ninja
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326436:
+    template: Vanguard_Eye
+    at:       [-33.313, -79.971, 149.930, 126]
+    level:    [70, 70]
+
+  17326437:
+    template: Hydra_Dragoon
+    at:       [-38.679, -79.414, 146.094, 126]
+    level:    [82, 82]
+
+  17326438:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326439:
+    template: Hydra_Paladin
+    at:       [-36.666, -79.904, 154.051, 126]
+    level:    [82, 82]
+
+  17326440:
+    template: Vanguard_Eye
+    at:       [-55.465, -79.689, 166.363, 132]
+    level:    [70, 70]
+
+  17326441:
+    template: Hydra_Warrior
+    at:       [-60.836, -80.689, 170.915, 132]
+    level:    [82, 82]
+
+  17326442:
+    template: Hydra_Ranger
+    at:       [-60.786, -79.040, 159.861, 132]
+    level:    [82, 82]
+
+  17326443:
+    template: Vanguard_Eye
+    at:       [-56.541, -79.550, 149.158, 71]
+    level:    [70, 70]
+
+  17326444:
+    template: Hydra_Red_Mage
+    at:       [-53.170, -79.669, 143.834, 71]
+    level:    [82, 82]
+
+  17326445:
+    template: Hydra_Samurai
+    at:       [-61.524, -79.703, 144.459, 71]
+    level:    [82, 82]
+
+  17326446:
+    template: Vanguard_Eye
+    at:       [-88.081, -79.797, 120.552, 132]
+    level:    [70, 70]
+
+  17326447:
+    template: Hydra_Thief
+    at:       [-95.753, -79.230, 116.161, 132]
+    level:    [82, 82]
+
+  17326448:
+    template: Hydra_Summoner
+    at:       [-94.236, -79.471, 125.781, 132]
+    level:    [82, 82]
+
+  17326449:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326450:
+    template: Vanguard_Eye
+    at:       [-140.909, -79.060, 164.094, 9]
+    level:    [70, 70]
+
+  17326451:
+    template: Hydra_Dark_Knight
+    at:       [-133.289, -79.475, 162.302, 9]
+    level:    [82, 82]
+
+  17326452:
+    template: Vanguard_Eye
+    at:       [-110.021, -80.008, 146.218, 0]
+    level:    [70, 70]
+
+  17326453:
+    template: Hydra_Beastmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326454:
+    template: Hydras_Hound
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326455:
+    template: Hydra_Warrior
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326456:
+    template: Vanguard_Eye
+    at:       [-156.657, -79.647, 131.074, 0]
+    level:    [70, 70]
+
+  17326457:
+    template: Hydra_Monk
+    at:       [-150.205, -79.891, 131.241, 0]
+    level:    [82, 82]
+
+  17326458:
+    template: Vanguard_Eye
+    at:       [-148.852, -80.437, 182.064, 73]
+    level:    [70, 70]
+
+  17326459:
+    template: Hydra_Beastmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326460:
+    template: Hydras_Hound
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326461:
+    template: Vanguard_Eye
+    at:       [-138.950, -79.054, 203.067, 47]
+    level:    [70, 70]
+
+  17326462:
+    template: Hydra_Summoner
+    at:       [-132.175, -79.592, 199.790, 47]
+    level:    [82, 82]
+
+  17326463:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326464:
+    template: Hydra_White_Mage
+    at:       [-139.117, -79.780, 192.648, 47]
+    level:    [82, 82]
+
+  17326465:
+    template: Vanguard_Eye
+    at:       [-164.384, -79.686, 189.297, 5]
+    level:    [70, 70]
+
+  17326466:
+    template: Hydra_Red_Mage
+    at:       [-157.038, -79.622, 188.426, 5]
+    level:    [82, 82]
+
+  17326467:
+    template: Vanguard_Eye
+    at:       [-166.762, -79.907, 171.501, 9]
+    level:    [70, 70]
+
+  17326468:
+    template: Hydra_Thief
+    at:       [-159.268, -79.712, 169.791, 9]
+    level:    [82, 82]
+
+  17326469:
+    template: Vanguard_Eye
+    at:       [-43.419, -80.078, 74.469, 128]
+    level:    [70, 70]
+
+  17326470:
+    template: Hydra_Dragoon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326471:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326472:
+    template: Vanguard_Eye
+    at:       [-80.143, -79.859, 86.834, 2]
+    level:    [70, 70]
+
+  17326473:
+    template: Hydra_Black_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326474:
+    template: Vanguard_Eye
+    at:       [-22.695, -80.000, -1.377, 185]
+    level:    [70, 70]
+
+  17326475:
+    template: Hydra_Dark_Knight
+    at:       [-21.108, -79.875, -10.853, 185]
+    level:    [82, 82]
+
+  17326476:
+    template: Vanguard_Eye
+    at:       [-33.085, -80.110, -16.742, 109]
+    level:    [70, 70]
+
+  17326477:
+    template: Hydra_Paladin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326478:
+    template: Vanguard_Eye
+    at:       [-56.170, -79.715, -42.376, 92]
+    level:    [70, 70]
+
+  17326479:
+    template: Hydra_Bard
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326480:
+    template: Hydra_Warrior
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326481:
+    template: Vanguard_Eye
+    at:       [-73.277, -79.658, -58.937, 121]
+    level:    [70, 70]
+
+  17326482:
+    template: Hydra_White_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326483:
+    template: Vanguard_Eye
+    at:       [-91.010, -80.793, -62.912, 245]
+    level:    [70, 70]
+
+  17326484:
+    template: Hydra_Beastmaster
+    at:       [-95.137, -80.840, -62.334, 245]
+    level:    [82, 82]
+
+  17326485:
+    template: Hydras_Hound
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326486:
+    template: Vanguard_Eye
+    at:       [-96.929, -80.319, -69.882, 71]
+    level:    [70, 70]
+
+  17326487:
+    template: Hydra_Summoner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326488:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326489:
+    template: Hydra_Paladin
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326490:
+    template: Vanguard_Eye
+    at:       [-145.322, -80.500, -155.649, 236]
+    level:    [70, 70]
+
+  17326491:
+    template: Hydra_Bard
+    at:       [-150.241, -80.226, -161.934, 240]
+    level:    [82, 82]
+
+  17326492:
+    template: Vanguard_Eye
+    at:       [-161.005, -80.000, -163.029, 240]
+    level:    [70, 70]
+
+  17326493:
+    template: Hydra_Ranger
+    at:       [-169.816, -79.710, -162.013, 6]
+    level:    [82, 82]
+
+  17326494:
+    template: Vanguard_Eye
+    at:       [-149.220, -80.034, -135.066, 22]
+    level:    [70, 70]
+
+  17326495:
+    template: Hydra_Ninja
+    at:       [-154.547, -80.074, -125.736, 22]
+    level:    [82, 82]
+
+  17326496:
+    template: Hydra_Black_Mage
+    at:       [-158.135, -79.667, -130.684, 22]
+    level:    [82, 82]
+
+  17326497:
+    template: Vanguard_Eye
+    at:       [-156.433, -80.000, -119.615, 99]
+    level:    [70, 70]
+
+  17326498:
+    template: Hydra_Monk
+    at:       [-161.433, -80.000, -116.602, 99]
+    level:    [82, 82]
+
+  17326499:
+    template: Vanguard_Eye
+    at:       [-171.990, -80.005, -131.146, 171]
+    level:    [70, 70]
+
+  17326500:
+    template: Hydra_Red_Mage
+    at:       [-180.174, -79.010, -121.878, 171]
+    level:    [82, 82]
+
+  17326501:
+    template: Vanguard_Eye
+    at:       [-245.461, -80.157, -126.681, 11]
+    level:    [70, 70]
+
+  17326502:
+    template: Hydra_Dragoon
+    at:       [-238.770, -80.304, -128.024, 11]
+    level:    [82, 82]
+
+  17326503:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326504:
+    template: Hydra_Thief
+    at:       [-251.537, -79.827, -125.585, 11]
+    level:    [82, 82]
+
+  17326505:
+    template: Vanguard_Eye
+    at:       [-192.480, -80.098, -127.602, 228]
+    level:    [70, 70]
+
+  17326506:
+    template: Hydra_Samurai
+    at:       [-183.838, -79.193, -122.504, 62]
+    level:    [82, 82]
+
+  17326507:
+    template: Vanguard_Eye
+    at:       [-179.906, -79.306, -113.038, 60]
+    level:    [70, 70]
+
+  17326508:
+    template: Hydra_Dark_Knight
+    at:       [-189.172, -79.811, -125.154, 6]
+    level:    [82, 82]
+
+  17326509:
+    template: Vanguard_Eye
+    at:       [-241.060, -80.073, -114.565, 15]
+    level:    [70, 70]
+
+  17326510:
+    template: Hydra_White_Mage
+    at:       [-237.412, -80.018, -115.655, 8]
+    level:    [82, 82]
+
+  17326511:
+    template: Hydra_Monk
+    at:       [-246.580, -80.294, -112.659, 8]
+    level:    [82, 82]
+
+  17326512:
+    template: Vanguard_Eye
+    at:       [-288.956, -80.126, -114.679, 230]
+    level:    [70, 70]
+
+  17326513:
+    template: Hydra_Beastmaster
+    at:       [-285.175, -79.860, -111.938, 230]
+    level:    [82, 82]
+
+  17326514:
+    template: Hydras_Hound
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326515:
+    template: Vanguard_Eye
+    at:       [-295.680, -80.472, -95.093, 15]
+    level:    [70, 70]
+
+  17326516:
+    template: Hydra_Ninja
+    at:       [-291.166, -79.883, -96.792, 15]
+    level:    [82, 82]
+
+  17326517:
+    template: Vanguard_Eye
+    at:       [-282.812, -79.939, -85.231, 49]
+    level:    [70, 70]
+
+  17326518:
+    template: Hydra_Black_Mage
+    at:       [-280.691, -79.671, -90.600, 49]
+    level:    [82, 82]
+
+  17326519:
+    template: Vanguard_Eye
+    at:       [-123.832, -100.037, 4.537, 127]
+    level:    [70, 70]
+
+  17326520:
+    template: Hydra_Summoner
+    at:       [-130.132, -99.711, 4.311, 127]
+    level:    [82, 82]
+
+  17326521:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326522:
+    template: Vanguard_Eye
+    at:       [-118.959, -99.614, -11.737, 113]
+    level:    [70, 70]
+
+  17326523:
+    template: Hydra_Dragoon
+    at:       [-125.175, -99.542, -13.414, 113]
+    level:    [82, 82]
+
+  17326524:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326525:
+    template: Vanguard_Eye
+    at:       [-129.991, -99.440, -22.356, 125]
+    level:    [70, 70]
+
+  17326526:
+    template: Hydra_Samurai
+    at:       [-136.432, -99.823, -22.905, 125]
+    level:    [82, 82]
+
+  17326527:
+    template: Vanguard_Eye
+    at:       [-121.283, -100.000, -36.358, 119]
+    level:    [70, 70]
+
+  17326528:
+    template: Hydra_Ranger
+    at:       [-127.417, -99.830, -37.764, 119]
+    level:    [82, 82]
+
+  17326529:
+    template: Vanguard_Eye
+    at:       [-116.375, -99.675, -50.517, 122]
+    level:    [70, 70]
+
+  17326530:
+    template: Hydra_Paladin
+    at:       [-121.494, -99.623, -51.558, 122]
+    level:    [82, 82]
+
+  17326531:
+    template: Vanguard_Eye
+    at:       [-108.250, -99.989, -28.946, 100]
+    level:    [70, 70]
+
+  17326532:
+    template: Hydra_Warrior
+    at:       [-113.872, -99.915, -33.069, 100]
+    level:    [82, 82]
+
+  17326533:
+    template: Vanguard_Eye
+    at:       [-65.458, -99.715, 60.550, 74]
+    level:    [70, 70]
+
+  17326534:
+    template: Hydra_Paladin
+    at:       [-73.019, -100.194, 56.736, 86]
+    level:    [82, 82]
+
+  17326535:
+    template: Hydra_Bard
+    at:       [-59.474, -99.184, 51.680, 86]
+    level:    [82, 82]
+
+  17326536:
+    template: Vanguard_Eye
+    at:       [-61.885, -101.187, 23.100, 91]
+    level:    [70, 70]
+
+  17326537:
+    template: Hydra_Red_Mage
+    at:       [-66.599, -100.373, 28.051, 100]
+    level:    [82, 82]
+
+  17326538:
+    template: Hydra_Thief
+    at:       [-55.134, -100.356, 18.115, 100]
+    level:    [82, 82]
+
+  17326539:
+    template: Vanguard_Eye
+    at:       [-245.539, -99.841, 11.312, 10]
+    level:    [70, 70]
+
+  17326540:
+    template: Hydra_Dragoon
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326541:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326542:
+    template: Vanguard_Eye
+    at:       [-248.258, -99.524, 22.190, 10]
+    level:    [70, 70]
+
+  17326543:
+    template: Hydra_Bard
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326544:
+    template: Hydra_Ranger
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326545:
+    template: Vanguard_Eye
+    at:       [-247.553, -99.953, 30.010, 10]
+    level:    [70, 70]
+
+  17326546:
+    template: Hydra_Black_Mage
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326547:
+    template: Vanguard_Eye
+    at:       [-301.971, -99.863, 46.145, 52]
+    level:    [70, 70]
+
+  17326548:
+    template: Hydra_Ninja
+    at:       [-306.330, -100.000, 52.008, 36]
+    level:    [82, 82]
+
+  17326549:
+    template: Vanguard_Eye
+    at:       [-315.180, -99.833, 58.261, 19]
+    level:    [70, 70]
+
+  17326550:
+    template: Vanguard_Eye
+    at:       [-321.648, -99.710, 59.901, 9]
+    level:    [70, 70]
+
+  17326551:
+    template: Hydra_Beastmaster
+    at:       [-332.360, -100.168, 60.943, 9]
+    level:    [82, 82]
+
+  17326552:
+    template: Hydras_Hound
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326553:
+    template: Vanguard_Eye
+    at:       [-362.824, -99.872, 86.575, 68]
+    level:    [70, 70]
+
+  17326554:
+    template: Hydra_Summoner
+    at:       [-362.463, -99.117, 97.680, 68]
+    level:    [82, 82]
+
+  17326555:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326556:
+    template: Vanguard_Eye
+    at:       [-336.798, -100.982, 103.780, 108]
+    level:    [70, 70]
+
+  17326557:
+    template: Hydra_Monk
+    at:       [-343.489, -100.484, 100.359, 108]
+    level:    [82, 82]
+
+  17326558:
+    template: Hydra_Dark_Knight
+    at:       [-328.533, -100.715, 107.566, 108]
+    level:    [82, 82]
+
+  17326559:
+    template: Vanguard_Eye
+    at:       [-339.871, -100.250, 136.203, 63]
+    level:    [70, 70]
+
+  17326560:
+    template: Hydra_Red_Mage
+    at:       [-335.549, -100.250, 133.643, 62]
+    level:    [82, 82]
+
+  17326561:
+    template: Hydra_Samurai
+    at:       [-336.003, -100.250, 141.486, 62]
+    level:    [82, 82]
+
+  17326562:
+    template: Hydra_White_Mage
+    at:       [-340.083, -100.250, 140.540, 62]
+    level:    [82, 82]
+
+  17326563:
+    template: Hydra_Thief
+    at:       [-344.742, -100.250, 133.710, 62]
+    level:    [82, 82]
+
+  17326564:
+    template: Hydra_Ninja
+    at:       [-345.251, -100.250, 140.964, 62]
+    level:    [82, 82]
+
+  17326565:
+    template: Goublefaupe
+    at:       [99.934, -20.250, 135.171, 64]
+    level:    [82, 82]
+
+  17326566:
+    template: Hydra_Red_Mage
+    at:       [99.992, -20.250, 131.455, 64]
+    level:    [82, 82]
+
+  17326567:
+    template: Hydra_Red_Mage
+    at:       [99.851, -20.250, 140.554, 64]
+    level:    [82, 82]
+
+  17326568:
+    template: Hydra_Paladin
+    at:       [105.322, -20.250, 140.520, 64]
+    level:    [82, 82]
+
+  17326569:
+    template: Hydra_Paladin
+    at:       [104.970, -20.250, 131.588, 64]
+    level:    [82, 82]
+
+  17326570:
+    template: Hydra_Warrior
+    at:       [95.406, -20.250, 140.766, 64]
+    level:    [82, 82]
+
+  17326571:
+    template: Hydra_Warrior
+    at:       [95.559, -20.250, 131.576, 64]
+    level:    [82, 82]
+
+  17326572:
+    template: Velosareon
+    at:       [263.077, -0.250, -20.052, 0]
+    level:    [82, 82]
+
+  17326573:
+    template: Hydra_Dark_Knight
+    at:       [268.307, -0.250, -20.030, 0]
+    level:    [82, 82]
+
+  17326574:
+    template: Hydra_Dark_Knight
+    at:       [259.243, -0.250, -20.068, 0]
+    level:    [82, 82]
+
+  17326575:
+    template: Hydra_Samurai
+    at:       [259.366, -0.250, -14.879, 0]
+    level:    [82, 82]
+
+  17326576:
+    template: Hydra_Samurai
+    at:       [268.449, -0.250, -14.766, 0]
+    level:    [82, 82]
+
+  17326577:
+    template: Hydra_Ranger
+    at:       [259.283, -0.250, -24.809, 0]
+    level:    [82, 82]
+
+  17326578:
+    template: Hydra_Ranger
+    at:       [268.335, -0.250, -24.299, 0]
+    level:    [82, 82]
+
+  17326579:
+    template: Mildaunegeux
+    at:       [60.047, -0.250, -335.368, 192]
+    level:    [82, 82]
+
+  17326580:
+    template: Hydra_Monk
+    at:       [60.163, -0.250, -331.770, 192]
+    level:    [82, 82]
+
+  17326581:
+    template: Hydra_Monk
+    at:       [59.871, -0.250, -340.849, 192]
+    level:    [82, 82]
+
+  17326582:
+    template: Hydra_Ninja
+    at:       [54.852, -0.250, -340.274, 192]
+    level:    [82, 82]
+
+  17326583:
+    template: Hydra_Ninja
+    at:       [55.079, -0.250, -331.604, 192]
+    level:    [82, 82]
+
+  17326584:
+    template: Hydra_Thief
+    at:       [65.357, -0.250, -340.594, 192]
+    level:    [82, 82]
+
+  17326585:
+    template: Hydra_Thief
+    at:       [65.169, -0.250, -332.131, 192]
+    level:    [82, 82]
+
+  17326586:
+    template: Dagourmarche
+    at:       [-175.544, -40.250, -219.884, 0]
+    level:    [82, 82]
+
+  17326587:
+    template: Dagourmarches_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326588:
+    template: Dagourmarches_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326589:
+    template: Hydra_Dragoon
+    at:       [-171.169, -40.250, -219.885, 0]
+    level:    [82, 82]
+
+  17326590:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326591:
+    template: Hydra_Dragoon
+    at:       [-180.258, -40.250, -219.883, 0]
+    level:    [82, 82]
+
+  17326592:
+    template: Hydras_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326593:
+    template: Hydra_Summoner
+    at:       [-179.928, -40.250, -214.884, 0]
+    level:    [82, 82]
+
+  17326594:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326595:
+    template: Hydra_Summoner
+    at:       [-171.965, -40.250, -215.167, 0]
+    level:    [82, 82]
+
+  17326596:
+    template: Hydras_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326597:
+    template: Hydra_Beastmaster
+    at:       [-180.731, -40.250, -224.575, 0]
+    level:    [82, 82]
+
+  17326598:
+    template: Hydras_Hound
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326599:
+    template: Hydra_Beastmaster
+    at:       [-172.229, -40.250, -224.710, 0]
+    level:    [82, 82]
+
+  17326600:
+    template: Hydras_Hound
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326601:
+    template: Quiebitiel
+    at:       [-19.957, -60.250, -64.375, 64]
+    level:    [82, 82]
+    script:   null
+
+  17326602:
+    template: Hydra_Black_Mage
+    at:       [-19.975, -60.250, -67.395, 64]
+    level:    [82, 82]
+
+  17326603:
+    template: Hydra_Black_Mage
+    at:       [-19.930, -60.250, -59.567, 64]
+    level:    [82, 82]
+    script:   null
+
+  17326604:
+    template: Hydra_White_Mage
+    at:       [-14.395, -60.250, -59.552, 64]
+    level:    [82, 82]
+
+  17326605:
+    template: Hydra_White_Mage
+    at:       [-14.342, -60.250, -67.520, 64]
+    level:    [82, 82]
+    script:   null
+
+  17326606:
+    template: Hydra_Bard
+    at:       [-24.802, -60.250, -59.789, 64]
+    level:    [82, 82]
+    script:   null
+
+  17326607:
+    template: Hydra_Bard
+    at:       [-24.568, -60.250, -67.765, 64]
+    level:    [82, 82]
+
+  17326608:
+    template: Angra_Mainyu
+    at:       [280.082, 20.000, 536.515, 65]
+    level:    [82, 82]
+    script:   null
+
+  17326609:
+    template: Fire_Pukis
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+    script:   null
+
+  17326610:
+    template: Poison_Pukis
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+    script:   null
+
+  17326611:
+    template: Wind_Pukis
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+    script:   null
+
+  17326612:
+    template: Petro_Pukis
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [82, 82]
+
+  17326613: null
+  17326614: null
+  17326615: null
+  17326616: null
+  17326617: null
+  17326618: null
+  17326619: null
+  17326620: null
+  17326621: null
+  17326622: null
+  17326623: null
+  17326624: null
+  17326625: null
+  17326626: null
+  17326627: null
+  17326628: null
+  17326629: null
+  17326630: null
+  17326631: null
+  17326632: null
+  17326633: null
+  17326634: null
+  17326635: null
+  17326636: null
+  17326637: null
+  17326638: null
+  17326639: null
+  17326640: null
+  17326641: null
+  17326642: null
+  17326643: null
+  17326644: null
+  17326645: null
+  17326646: null
+  17326647: null
+  17326648: null
+  17326649: null
+  17326650: null
+  17326651: null
+  17326652: null
+  17326653: null
+  17326654: null
+  17326655: null
+  17326656: null
+  17326657: null
+  17326658: null
+  17326659: null
+  17326660: null
+  17326661: null
+  17326662: null
+  17326663: null
+  17326664: null
+  17326665: null
+  17326666: null
+  17326667: null
+  17326668: null
+  17326669: null
+  17326670: null
+  17326671: null
+  17326672: null
+  17326673: null
+  17326674: null
+  17326675: null
+  17326676: null
+  17326677: null
+  17326678: null
+  17326679: null
+  17326680: null
+  17326681: null
+  17326682: null
+  17326683: null
+  17326684: null
+  17326685: null
+  17326686: null
+  17326687: null
+  17326688: null
+  17326689: null
+  17326690: null
+  17326691: null
+  17326692: null
+  17326693: null
+  17326694: null
+  17326695: null
+  17326696: null
+  17326697: null
+  17326698: null
+  17326699: null
+  17326700: null
+  17326701: null
+  17326702: null
+  17326703: null
+  17326704: null
+  17326705: null
+  17326706: null
+  17326707: null
+  17326708: null
+  17326709: null
+  17326710: null
+  17326711: null
+  17326712: null
+  17326713: null
+  17326714: null
+  17326715: null
+  17326716: null
+  17326717: null
+  17326718: null
+  17326719: null
+  17326720: null
+  17326721: null
+  17326722: null
+  17326723: null
+  17326724: null
+  17326725: null
+  17326726: null
+  17326727: null
+  17326728: null
+  17326729: null
+  17326730: null
+  17326731: null
+  17326732: null
+  17326733: null
+  17326734: null
+  17326735: null
+  17326736: null
+  17326737: null
+  17326738: null
+  17326739: null
+  17326740: null
+  17326741: null
+  17326742: null
+  17326743: null
+  17326744: null
+  17326745: null
+  17326746: null
+  17326747: null
+  17326748: null
+  17326749: null
+  17326750: null
+  17326751: null
+  17326752: null
+  17326753: null
+  17326754: null
+  17326755: null
+  17326756: null
+  17326757: null
+  17326758: null
+  17326759: null
+  17326760: null
+  17326761: null
+  17326762: null
+  17326763: null
+  17326764: null
+  17326765: null
+  17326766: null
+  17326767: null
+  17326768: null
+  17326769: null
+  17326770: null
+  17326771: null
+  17326772: null
+  17326773: null
+  17326774: null
+  17326775: null
+  17326776: null
+  17326777: null
+  17326778: null
+  17326779: null
+  17326780: null
+  17326781: null
+  17326782: null
+  17326783: null
+  17326784: null
+  17326785: null
+  17326786: null
+  17326787: null
+  17326788: null
+  17326789: null
+  17326790: null

@@ -1,0 +1,99 @@
+# Era mob layout for fort_karugo_narugo_s.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Air_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Carrion_Crow:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Death_Jacket_FKNS:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Dragonfly_MMS_FKNS:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Earth_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Pioneer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Jumbo_Rafflesia:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Lycopodium:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Pixie:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Rafflesia:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Vorpal_Bunny_past:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Wandering_Sapling_past:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  War_Lizard_past:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Drummer_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Herald_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Interrogator_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Priest_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Theologist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Votary_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

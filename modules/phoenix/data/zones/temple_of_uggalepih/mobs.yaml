@@ -1,0 +1,9 @@
+# Era mob layout for temple_of_uggalepih.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Temple_Guardian:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

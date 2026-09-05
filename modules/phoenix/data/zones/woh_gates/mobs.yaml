@@ -1,0 +1,134 @@
+# Era mob layout for woh_gates.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Apex_Jagil:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Apex_Toad:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Bergschrund_Gefyrst:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Bound_Twitherym:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Calcined_Umbril:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Cliffclinger_Toad:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Depthdiver_Bats:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Drusy_Twitherym:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dullahan_generic:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Grimfang_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Malodorous_Tarichuk:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Metalcruncher_Worm:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Nesting_Hippogryph:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Pestiferous_Acuex:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Powdery_Snoll:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Serac_Rabbit:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Slabspitter_Jagil:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Soundsplitter_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Spinescent_Protuberance:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Talus_Tarichuk:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Touched_Gefyrst:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Abyssal:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Junglemancer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Mindmelter:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Velkk_Tearlicker:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Wheezing_Acuex:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

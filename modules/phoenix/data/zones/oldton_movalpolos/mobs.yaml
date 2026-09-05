@@ -1,0 +1,19 @@
+# Era mob layout for oldton_movalpolos.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Ancient_Bomb:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Earth_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

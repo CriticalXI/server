@@ -1,0 +1,79 @@
+# Era mob layout for ifrits_cauldron.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Ash_Lizard:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dire_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dodomeki:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Eotyrannus:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Alchemist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Bandit:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Mercenary:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Shepherd:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Hurricane_Wyvern:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Nightmare_Bats_Ifrits_Cauldron:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Old_Opo-opo:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sulfur_Scorpion:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Volcanic_Bomb:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Volcanic_Gas:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Volcano_Wasp:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

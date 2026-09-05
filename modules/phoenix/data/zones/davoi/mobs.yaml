@@ -1,0 +1,19 @@
+# Era mob layout for davoi.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Water_Elemental:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Wolf_Bat:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers

@@ -1,0 +1,6 @@
+# Enables the Linkshell Concierge; core tags it soa.
+
+npcs:
+
+  17736070:
+    content: null

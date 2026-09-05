@@ -1,0 +1,9 @@
+# Era mob layout for palborough_mines.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Scimitar_Scorpion:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers

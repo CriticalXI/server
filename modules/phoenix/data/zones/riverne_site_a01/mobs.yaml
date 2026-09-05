@@ -1,0 +1,136 @@
+# Era mob layout for riverne_site_a01.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Air_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Atomic_Cluster:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Cloud_Hippogryph:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Darner:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Firedrake:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Flamedrake:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Hawker:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Hawkertrap_RSA:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Hippogryph:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Riverne_Vulture:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+spawns:
+
+  16900277:
+    template: Cloud_Hippogryph
+    at:       [-90.844, 0.367, 599.301, 172]
+    level:    [45, 47]
+
+  16900278:
+    template: Cloud_Hippogryph
+    at:       [-120.008, 0.808, 496.464, 149]
+    level:    [45, 47]
+
+  16900279:
+    template: Cloud_Hippogryph
+    at:       [-139.405, 2.516, 507.035, 139]
+    level:    [45, 47]
+
+  16900280:
+    template: Cloud_Hippogryph
+    at:       [-121.926, 0.157, 516.348, 217]
+    level:    [45, 47]
+
+  16900281:
+    template: Cloud_Hippogryph
+    at:       [-116.781, -0.122, 525.441, 212]
+    level:    [45, 47]
+
+  16900282:
+    template: Cloud_Hippogryph
+    at:       [-125.381, 0.562, 548.434, 180]
+    level:    [45, 47]
+
+  16900283:
+    template: Cloud_Hippogryph
+    at:       [-138.442, -1.104, 575.789, 187]
+    level:    [45, 47]
+
+  16900284:
+    template: Cloud_Hippogryph
+    at:       [-118.172, 0.912, 579.477, 239]
+    level:    [45, 47]
+
+  16900285:
+    template: Atomic_Cluster
+    at:       [-77.822, 0.706, 575.109, 223]
+    level:    [45, 48]
+
+  16900286:
+    template: Atomic_Cluster
+    at:       [-82.856, 0.026, 564.550, 233]
+    level:    [45, 48]
+
+  16900287:
+    template: Hawker
+    at:       [-89.630, 0.327, 440.948, 23]
+    level:    [45, 48]
+
+  16900288:
+    template: Hawker
+    at:       [-104.022, 0.028, 459.196, 151]
+    level:    [45, 48]
+
+  16900289:
+    template: Hawker
+    at:       [-98.920, 0.371, 469.150, 200]
+    level:    [45, 48]
+
+  16900290:
+    template: Hawker
+    at:       [-93.130, 0.455, 484.869, 204]
+    level:    [45, 48]
+
+  16900291:
+    template: Hawker
+    at:       [-108.284, 0.500, 489.534, 145]
+    level:    [45, 48]

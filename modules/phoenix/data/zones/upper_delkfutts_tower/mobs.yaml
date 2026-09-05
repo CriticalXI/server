@@ -1,0 +1,84 @@
+# Era mob layout for upper_delkfutts_tower.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Demonic_Doll:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dire_Bat_UDT_TC_SSG:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Gigas_Bonecutter:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Spirekeeper:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Stonemason:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Gigas_Torturer:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Incubus_Bats_UDT:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Jotunn_Gatekeeper:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Jotunn_Hallkeeper:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Jotunn_Wallkeeper:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Jotunn_Wildkeeper:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Light_Elemental:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Magic_Pot_UDT:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Magic_Urn:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Phasma_UDT:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers

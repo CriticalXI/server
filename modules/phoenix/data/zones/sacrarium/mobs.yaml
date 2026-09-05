@@ -1,0 +1,61 @@
+# Era mob layout for sacrarium.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Azren_Kuba:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Azren_Kuguza:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Gazer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+spawns:
+
+  16892075:
+    template: Fomor_Ranger
+    at:       [140.200, 0.000, -78.973, 165]
+    level:    [55, 56]
+
+  16892076:
+    template: Fomor_Samurai
+    at:       [138.904, 0.025, -77.356, 226]
+    level:    [55, 56]
+
+  16892077:
+    template: Blubber_Eyes
+    at:       [179.113, -4.000, -59.894, 58]
+    level:    [57, 59]
+
+  16892078:
+    template: Blubber_Eyes
+    at:       [180.032, -4.750, -65.326, 56]
+    level:    [57, 59]
+
+  16892079:
+    template: Blubber_Eyes
+    at:       [140.677, 3.750, 96.573, 46]
+    level:    [57, 59]
+
+  16892080:
+    template: Blubber_Eyes
+    at:       [149.023, 5.250, 101.879, 227]
+    level:    [57, 59]
+
+  16892081:
+    template: Fomor_Red_Mage
+    at:       [158.753, 0.000, 59.494, 252]
+    level:    [55, 56]
+
+  16892082:
+    template: Fomor_Dark_Knight
+    at:       [163.604, -1.000, 61.793, 47]
+    level:    [55, 56]

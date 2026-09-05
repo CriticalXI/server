@@ -1,0 +1,38 @@
+# Old-school Dynamis NPCs for dynamis_san_doria.
+
+npcs:
+
+  17535214: null
+  17535215: null
+  17535216: null
+  17535217: null
+  17535219: null
+  17535220: null
+  17535221: null
+  17535222: null
+  17535223: null
+  17535224: null
+  17535225: null
+  17535226: null
+  17535227: null
+  17535228: null
+  17535229: null
+  17535230: null
+  17535231: null
+  17535232: null
+  17535233: null
+  17535234: null
+  17535235: null
+  17535236: null
+  17535237: null
+
+  17535486:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal

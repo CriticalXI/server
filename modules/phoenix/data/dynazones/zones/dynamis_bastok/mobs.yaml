@@ -1,0 +1,3771 @@
+# Old-school Dynamis spawn layout for dynamis_bastok.
+
+templates:
+
+  # -- Custom templates for mobs the core file lacks, scaffolded from the module's mob_groups/mob_pools inserts --
+
+  AaNyu_Dismantler:
+    id:            16
+    species:       quadav
+    type:          [notorious, battlefield]
+    spell_list_id: 5
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: great_sword
+        delay: 265
+      jobs: [drk, drk]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1053
+      behaviors:
+        aggressive:     true
+        links:          true
+        true_detection: true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  BeEbo_Tortoisedriver:
+    id:            20015
+    species:       quadav
+    type:          [notorious]
+    skill_list_id: 337
+    attributes:
+      combat:
+        skill: axe
+        delay: 265
+      jobs: [bst, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1052
+        entity_flags: 131
+        model_size:   2
+        hitbox:       17
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_WAR:
+    id:            20000
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: great_axe
+      jobs: [war, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1051
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_WHM:
+    id:            20001
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    spell_list_id: 20
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: club
+      jobs: [whm, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1054
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+        mp: 20000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_MNK:
+    id:            20002
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: hand_to_hand
+        delay: 480
+      jobs: [mnk, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1054
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_BLM:
+    id:            20003
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    spell_list_id: 2
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: club
+      jobs: [blm, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1055
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+        mp: 20000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_THF:
+    id:            20004
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: dagger
+      jobs: [thf, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1054
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_DRK:
+    id:            20005
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    spell_list_id: 5
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: great_axe
+      jobs: [drk, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1053
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+        mp: 20000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_PLD:
+    id:            20006
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    spell_list_id: 4
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: great_sword
+      jobs: [pld, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1053
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+        mp: 20000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_BRD:
+    id:            20007
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    spell_list_id: 6
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: club
+      jobs: [brd, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1055
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+        mp: 20000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_NIN:
+    id:            20008
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    spell_list_id: 7
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: great_axe
+      jobs: [nin, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1052
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+        mp: 20000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_SAM:
+    id:            20009
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: katana
+      jobs: [sam, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1051
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_RNG:
+    id:            20010
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: club
+      jobs: [rng, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1054
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_SMN:
+    id:            20011
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    spell_list_id: 141
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: club
+      jobs: [smn, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1055
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+        mp: 20000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_RDM:
+    id:            20012
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    spell_list_id: 3
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: sword
+      jobs: [rdm, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1053
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+        mp: 20000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_DRG:
+    id:            20013
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: sword
+      jobs: [drg, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1053
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Effigy_Shield_BST:
+    id:            20014
+    display_name:  Effigy_Shield
+    species:       quadav
+    type:          [notorious]
+    skill_list_id: 705
+    attributes:
+      combat:
+        skill: axe
+      jobs: [bst, war]
+      resists:
+        dmg_physical:
+          piercing: 2500
+      render:
+        look:
+          type:  standard
+          model: 1052
+        entity_flags: 131
+        model_size:   1
+        hitbox:       15
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        type: [scripted]
+      stats:
+        hp: 8000
+    loot:
+      drops:
+        - chance: very_common
+          item: steelwall_bijou
+        - chance: very_rare
+          item: chunk_of_wootz_ore
+        - chance: very_rare
+          item: sparkling_stone
+        - chance: very_rare
+          item: vial_of_slime_juice
+        - chance: rare
+          item: forgotten_journey
+        - chance: very_rare
+          item: one_hundred_byne_bill
+        - chance: very_rare
+          one_of: [relic_blade, relic_axe, relic_scythe, ito]
+        - chance: rare
+          one_of: [valor_coronet, assassins_vest, monster_jackcoat, duelists_gloves, bards_cuffs, saotome_kote, summoners_bracers, sorcerers_tonban, wyrm_brais, melee_gaiters, abyss_sollerets]
+        - chance: very_rare
+          one_of: [commodore_bottes, etoile_tiara, mirage_shalwar, argute_pants]
+      steal: one_byne_bill
+
+  Adamantking_Effigy:
+    type: [notorious]
+
+  GiPha_Manameister:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  GuNhi_Noondozer:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  KoDho_Cannonball:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Beasttender:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Constable:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Defender:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Drakekeeper:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Hatamoto:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Kusa:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Mason:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Militant:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Minstrel:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Protector:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Purloiner:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Thaumaturge:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Undertaker:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Vigilante:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Vindicator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguards_Avatar:
+    type: [called, notorious]
+
+  Vanguards_Scorpion:
+    type: [called, notorious]
+
+  Vanguards_Wyvern:
+    type: [called, notorious]
+
+  ZeVho_Fallsplitter:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+spawns:
+
+  17539073:
+    template: Adamantking_Effigy
+    at:       [-187.475, -8.556, -21.928, 1]
+    level:    [65, 65]
+
+  17539074:
+    template: ZeVho_Fallsplitter
+    at:       [-184.040, -8.625, -20.389, 1]
+    level:    [80, 80]
+
+  17539075:
+    template: Vanguard_Constable
+    at:       [-184.698, -8.617, -23.788, 1]
+    level:    [75, 77]
+
+  17539076:
+    template: Adamantking_Effigy
+    at:       [-187.798, -8.631, -15.631, 1]
+    level:    [65, 65]
+
+  17539077:
+    template: Adamantking_Effigy
+    at:       [-177.362, -8.505, -27.264, 195]
+    level:    [65, 65]
+
+  17539078:
+    template: Vanguard_Defender
+    at:       [-177.192, -8.438, -24.675, 195]
+    level:    [75, 77]
+
+  17539079:
+    template: Vanguard_Constable
+    at:       [-177.028, -8.061, -21.262, 195]
+    level:    [75, 77]
+
+  17539080:
+    template: Adamantking_Effigy
+    at:       [-178.077, -8.371, -13.271, 3]
+    level:    [65, 65]
+
+  17539081:
+    template: Vanguard_Drakekeeper
+    at:       [-174.670, -8.059, -13.627, 3]
+    level:    [75, 77]
+
+  17539082:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539083:
+    template: Vanguard_Purloiner
+    at:       [-174.353, -7.524, -17.002, 3]
+    level:    [75, 77]
+
+  17539084:
+    template: Vanguard_Constable
+    at:       [-174.472, -7.939, -10.751, 3]
+    level:    [75, 77]
+
+  17539085:
+    template: Adamantking_Effigy
+    at:       [-153.780, 0.000, -40.965, 191]
+    level:    [65, 65]
+
+  17539086:
+    template: Vanguard_Militant
+    at:       [-150.962, 0.000, -41.043, 194]
+    level:    [75, 77]
+
+  17539087:
+    template: Vanguard_Militant
+    at:       [-156.717, 0.000, -41.072, 194]
+    level:    [75, 77]
+
+  17539088:
+    template: Vanguard_Vigilante
+    at:       [-153.751, 0.000, -36.682, 194]
+    level:    [75, 77]
+
+  17539089:
+    template: Adamantking_Effigy
+    at:       [-159.684, 0.000, -41.278, 193]
+    level:    [65, 65]
+
+  17539090:
+    template: Vanguard_Constable
+    at:       [-158.358, 0.000, -25.405, 251]
+    level:    [75, 77]
+
+  17539091:
+    template: Vanguard_Vindicator
+    at:       [-159.955, 0.000, -36.950, 251]
+    level:    [75, 77]
+
+  17539092:
+    template: Vanguard_Mason
+    at:       [-161.823, -1.750, -31.453, 251]
+    level:    [75, 77]
+
+  17539093:
+    template: Vanguard_Militant
+    at:       [-165.564, -3.298, -26.653, 251]
+    level:    [75, 77]
+
+  17539094:
+    template: Vanguard_Thaumaturge
+    at:       [-167.790, -4.712, -23.550, 251]
+    level:    [75, 77]
+
+  17539095:
+    template: Vanguard_Mason
+    at:       [-169.680, -6.275, -20.367, 251]
+    level:    [75, 77]
+
+  17539096:
+    template: Adamantking_Effigy
+    at:       [-164.769, -3.493, -2.082, 2]
+    level:    [65, 65]
+
+  17539097:
+    template: Adamantking_Effigy
+    at:       [-157.507, 0.000, 1.682, 255]
+    level:    [65, 65]
+
+  17539098:
+    template: Adamantking_Effigy
+    at:       [-152.094, 0.000, -20.001, 245]
+    level:    [65, 65]
+
+  17539099:
+    template: Vanguard_Vigilante
+    at:       [-155.220, -0.058, -20.966, 245]
+    level:    [75, 77]
+
+  17539100:
+    template: Vanguard_Hatamoto
+    at:       [-152.792, 0.000, -15.618, 245]
+    level:    [75, 77]
+
+  17539101:
+    template: Vanguard_Minstrel
+    at:       [-152.094, -0.280, -20.001, 245]
+    level:    [75, 77]
+
+  17539102:
+    template: Adamantking_Effigy
+    at:       [-161.149, 0.000, -11.384, 249]
+    level:    [65, 65]
+
+  17539103:
+    template: Vanguard_Vindicator
+    at:       [-156.464, 0.000, -13.256, 0]
+    level:    [75, 77]
+
+  17539104:
+    template: Vanguard_Kusa
+    at:       [-156.007, 0.002, -9.177, 0]
+    level:    [75, 77]
+
+  17539105:
+    template: Adamantking_Effigy
+    at:       [-147.154, 0.000, 4.279, 60]
+    level:    [65, 65]
+
+  17539106:
+    template: Vanguard_Defender
+    at:       [-148.791, 0.000, 0.284, 57]
+    level:    [75, 77]
+
+  17539107:
+    template: Vanguard_Kusa
+    at:       [-144.735, 0.000, 0.897, 57]
+    level:    [75, 77]
+
+  17539108:
+    template: Adamantking_Effigy
+    at:       [-120.042, -3.493, -73.725, 191]
+    level:    [65, 65]
+
+  17539109:
+    template: Adamantking_Effigy
+    at:       [-123.688, 0.000, -65.159, 191]
+    level:    [65, 65]
+
+  17539110:
+    template: Adamantking_Effigy
+    at:       [-122.641, 0.000, -43.491, 192]
+    level:    [65, 65]
+
+  17539111:
+    template: Vanguard_Defender
+    at:       [-122.399, 0.000, -48.408, 191]
+    level:    [75, 77]
+
+  17539112:
+    template: Vanguard_Militant
+    at:       [-122.120, 0.000, -52.109, 191]
+    level:    [75, 77]
+
+  17539113:
+    template: Vanguard_Thaumaturge
+    at:       [-122.135, 0.000, -56.370, 191]
+    level:    [75, 77]
+
+  17539114:
+    template: Adamantking_Effigy
+    at:       [-117.175, 0.000, -43.491, 192]
+    level:    [65, 65]
+
+  17539115:
+    template: Vanguard_Vigilante
+    at:       [-117.086, 0.000, -48.476, 191]
+    level:    [75, 77]
+
+  17539116:
+    template: Vanguard_Militant
+    at:       [-116.879, 0.000, -52.298, 191]
+    level:    [75, 77]
+
+  17539117:
+    template: Vanguard_Thaumaturge
+    at:       [-116.791, 0.000, -56.546, 191]
+    level:    [75, 77]
+
+  17539118:
+    template: Adamantking_Effigy
+    at:       [-133.564, 0.000, -31.000, 96]
+    level:    [65, 65]
+
+  17539119:
+    template: Vanguard_Drakekeeper
+    at:       [-130.405, 0.033, -30.157, 221]
+    level:    [75, 77]
+
+  17539120:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539121:
+    template: Vanguard_Thaumaturge
+    at:       [-133.090, -0.007, -27.818, 221]
+    level:    [75, 77]
+
+  17539122:
+    template: Adamantking_Effigy
+    at:       [-133.178, -0.539, 4.024, 64]
+    level:    [65, 65]
+
+  17539123:
+    template: Vanguard_Vindicator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539124:
+    template: Vanguard_Minstrel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539125:
+    template: Adamantking_Effigy
+    at:       [-128.090, -0.572, -0.971, 64]
+    level:    [65, 65]
+
+  17539126:
+    template: Vanguard_Defender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539127:
+    template: Vanguard_Kusa
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539128:
+    template: Adamantking_Effigy
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [65, 65]
+
+  17539129:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539130:
+    template: Vanguard_Purloiner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539131:
+    template: Adamantking_Effigy
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [65, 65]
+
+  17539132:
+    template: Adamantking_Effigy
+    at:       [-138.123, -11.924, 29.282, 28]
+    level:    [65, 65]
+
+  17539133:
+    template: Vanguard_Kusa
+    at:       [-132.730, -11.759, 28.903, 1]
+    level:    [75, 77]
+
+  17539134:
+    template: Adamantking_Effigy
+    at:       [-113.616, 0.000, -24.538, 193]
+    level:    [65, 65]
+
+  17539135:
+    template: Vanguard_Defender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539136:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539137:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539138:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539139:
+    template: Adamantking_Effigy
+    at:       [-108.139, -0.342, -37.232, 189]
+    level:    [65, 65]
+
+  17539140:
+    template: Vanguard_Mason
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539141:
+    template: Vanguard_Mason
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539142:
+    template: Adamantking_Effigy
+    at:       [-99.439, -8.000, -59.807, 106]
+    level:    [65, 65]
+
+  17539143:
+    template: Vanguard_Mason
+    at:       [-99.439, -8.000, -59.807, 106]
+    level:    [75, 77]
+
+  17539144:
+    template: Adamantking_Effigy
+    at:       [-60.980, -8.000, -51.955, 64]
+    level:    [65, 65]
+
+  17539145:
+    template: Vanguard_Drakekeeper
+    at:       [-57.413, -8.000, -55.191, 64]
+    level:    [75, 77]
+
+  17539146:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539147:
+    template: Vanguard_Purloiner
+    at:       [-60.964, -8.000, -54.974, 64]
+    level:    [75, 77]
+
+  17539148:
+    template: Adamantking_Effigy
+    at:       [-61.832, -8.000, -68.380, 193]
+    level:    [65, 65]
+
+  17539149:
+    template: Vanguard_Vigilante
+    at:       [-61.768, -8.000, -64.950, 193]
+    level:    [75, 77]
+
+  17539150:
+    template: Vanguard_Hatamoto
+    at:       [-57.799, -8.000, -64.992, 193]
+    level:    [75, 77]
+
+  17539151:
+    template: Adamantking_Effigy
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [65, 65]
+
+  17539152:
+    template: Adamantking_Effigy
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [65, 65]
+
+  17539153:
+    template: Adamantking_Effigy
+    at:       [0.000, 0.000, 0.000, 0]
+    level:    [65, 65]
+
+  17539154:
+    template: Adamantking_Effigy
+    at:       [-58.076, -8.000, -79.551, 194]
+    level:    [65, 65]
+
+  17539155:
+    template: Adamantking_Effigy
+    at:       [-104.024, 12.000, 72.817, 64]
+    level:    [65, 65]
+
+  17539156:
+    template: KoDho_Cannonball
+    at:       [-100.054, 12.000, 73.288, 64]
+    level:    [80, 80]
+
+  17539157:
+    template: Vanguard_Constable
+    at:       [-106.572, 12.000, 72.832, 64]
+    level:    [75, 77]
+
+  17539158:
+    template: Adamantking_Effigy
+    at:       [-110.636, 12.000, 66.750, 33]
+    level:    [65, 65]
+
+  17539159:
+    template: Adamantking_Effigy
+    at:       [-106.099, 12.000, 60.434, 162]
+    level:    [65, 65]
+
+  17539160:
+    template: Vanguard_Vindicator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539161:
+    template: Vanguard_Purloiner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539162:
+    template: Vanguard_Protector
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539163:
+    template: Adamantking_Effigy
+    at:       [-102.158, 12.000, 60.692, 218]
+    level:    [65, 65]
+
+  17539164:
+    template: Vanguard_Defender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539165:
+    template: Vanguard_Hatamoto
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539166:
+    template: Vanguard_Thaumaturge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539167:
+    template: Adamantking_Effigy
+    at:       [-101.663, 8.000, 51.388, 64]
+    level:    [65, 65]
+
+  17539168:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539169:
+    template: Vanguard_Militant
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539170:
+    template: Vanguard_Minstrel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539171:
+    template: Adamantking_Effigy
+    at:       [-78.000, 0.000, 4.000, 0]
+    level:    [65, 65]
+
+  17539172:
+    template: Vanguard_Vindicator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539173:
+    template: Vanguard_Militant
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539174:
+    template: Vanguard_Constable
+    at:       [-82.720, 0.000, 8.089, 2]
+    level:    [75, 77]
+
+  17539175:
+    template: Adamantking_Effigy
+    at:       [-91.200, 0.000, 6.000, 0]
+    level:    [65, 65]
+
+  17539176:
+    template: Vanguard_Defender
+    at:       [-98.968, 0.000, 17.463, 66]
+    level:    [75, 77]
+
+  17539177:
+    template: Vanguard_Militant
+    at:       [-7.014, 0.000, 18.921, 164]
+    level:    [75, 77]
+
+  17539178:
+    template: Vanguard_Constable
+    at:       [-103.986, 0.000, 17.071, 66]
+    level:    [75, 77]
+
+  17539179:
+    template: Adamantking_Effigy
+    at:       [-78.000, 0.000, -4.000, 0]
+    level:    [65, 65]
+
+  17539180:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539181:
+    template: Vanguard_Militant
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539182:
+    template: Vanguard_Constable
+    at:       [-82.600, 0.000, -8.341, 2]
+    level:    [75, 77]
+
+  17539183:
+    template: Adamantking_Effigy
+    at:       [-91.200, 0.000, -6.000, 0]
+    level:    [65, 65]
+
+  17539184:
+    template: Vanguard_Drakekeeper
+    at:       [-100.280, 12.000, 73.093, 64]
+    level:    [75, 77]
+
+  17539185:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539186:
+    template: Vanguard_Militant
+    at:       [-109.575, 0.000, 2.255, 31]
+    level:    [75, 77]
+
+  17539187:
+    template: Vanguard_Constable
+    at:       [-111.936, 0.000, -0.675, 31]
+    level:    [75, 77]
+
+  17539188:
+    template: Adamantking_Effigy
+    at:       [-74.000, 0.000, 0.000, 0]
+    level:    [65, 65]
+
+  17539189:
+    template: Vanguard_Vindicator
+    at:       [-39.733, 0.000, 38.011, 128]
+    level:    [75, 77]
+
+  17539190:
+    template: Vanguard_Purloiner
+    at:       [-39.531, 0.000, 30.047, 128]
+    level:    [75, 77]
+
+  17539191:
+    template: Adamantking_Effigy
+    at:       [-91.200, 0.000, -1.000, 0]
+    level:    [65, 65]
+    script:   null
+
+  17539192:
+    template: AaNyu_Dismantler
+    at:       [-122.662, 0.000, -16.410, 0]
+    level:    [80, 80]
+    script:   null
+
+  17539193:
+    template: Vanguard_Constable
+    at:       [-91.200, 0.000, -1.000, 0]
+    level:    [75, 77]
+
+  17539194:
+    template: Adamantking_Effigy
+    at:       [-44.835, -3.493, 14.606, 127]
+    level:    [65, 65]
+    script:   null
+
+  17539195:
+    template: Vanguard_Undertaker
+    at:       [-44.964, -3.493, 16.717, 127]
+    level:    [75, 77]
+    script:   null
+
+  17539196:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539197:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17539198:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+
+  17539199:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17539200:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+
+  17539201:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539202:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539203:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539204:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539205:
+    template: BeEbo_Tortoisedriver
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [80, 80]
+    script:   null
+
+  17539206:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539207:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17539208:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17539209:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17539210:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+
+  17539211:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539212:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539213:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539214:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539215:
+    template: BeEbo_Tortoisedriver
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [80, 80]
+    script:   null
+
+  17539216:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539217:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17539218:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17539219:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17539220:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+    script:   null
+
+  17539221:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539222:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539223:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539224:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539225:
+    template: BeEbo_Tortoisedriver
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [80, 80]
+    script:   null
+
+  17539226:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539227:
+    template: Adamantking_Effigy
+    at:       [-57.750, 0.000, 41.037, 192]
+    level:    [65, 65]
+
+  17539228:
+    template: Adamantking_Effigy
+    at:       [-41.118, 0.000, 4.836, 0]
+    level:    [65, 65]
+
+  17539229:
+    template: Adamantking_Effigy
+    at:       [-41.069, 0.000, -2.124, 0]
+    level:    [65, 65]
+
+  17539230:
+    template: Adamantking_Effigy
+    at:       [-64.562, 0.000, 41.341, 192]
+    level:    [65, 65]
+    script:   null
+
+  17539231:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539232:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539233:
+    template: Vanguard_Beasttender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539234:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539235:
+    template: BeEbo_Tortoisedriver
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [80, 80]
+
+  17539236:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539237:
+    template: Adamantking_Effigy
+    at:       [-5.266, 0.000, 37.841, 127]
+    level:    [65, 65]
+    script:   null
+
+  17539238:
+    template: Vanguard_Kusa
+    at:       [-9.390, 0.000, 37.834, 127]
+    level:    [75, 77]
+
+  17539239:
+    template: Vanguard_Protector
+    at:       [-1.002, 0.000, 37.856, 127]
+    level:    [75, 77]
+    script:   null
+
+  17539240:
+    template: Adamantking_Effigy
+    at:       [-14.234, 0.000, 31.981, 194]
+    level:    [65, 65]
+
+  17539241:
+    template: Vanguard_Defender
+    at:       [-14.240, 0.000, 28.009, 194]
+    level:    [75, 77]
+    script:   null
+
+  17539242:
+    template: Vanguard_Purloiner
+    at:       [-13.879, 0.000, 23.996, 194]
+    level:    [75, 77]
+    script:   null
+
+  17539243:
+    template: Adamantking_Effigy
+    at:       [8.482, 0.000, 28.505, 162]
+    level:    [65, 65]
+    script:   null
+
+  17539244:
+    template: Vanguard_Purloiner
+    at:       [4.294, 0.000, 30.193, 162]
+    level:    [75, 77]
+    script:   null
+
+  17539245:
+    template: Vanguard_Thaumaturge
+    at:       [6.981, 0.000, 33.613, 162]
+    level:    [75, 77]
+    script:   null
+
+  17539246:
+    template: Adamantking_Effigy
+    at:       [1.808, 0.000, 9.954, 254]
+    level:    [65, 65]
+    script:   null
+
+  17539247:
+    template: Vanguard_Kusa
+    at:       [-2.720, 0.000, 10.022, 254]
+    level:    [75, 77]
+    script:   null
+
+  17539248:
+    template: Vanguard_Minstrel
+    at:       [5.866, 0.000, 10.071, 254]
+    level:    [75, 77]
+
+  17539249:
+    template: Adamantking_Effigy
+    at:       [17.721, 0.000, 7.974, 133]
+    level:    [65, 65]
+    script:   null
+
+  17539250:
+    template: Vanguard_Drakekeeper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539251:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539252:
+    template: Vanguard_Hatamoto
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539253:
+    template: Adamantking_Effigy
+    at:       [8.969, 0.000, -5.424, 192]
+    level:    [65, 65]
+
+  17539254:
+    template: Vanguard_Vigilante
+    at:       [8.988, 0.000, -0.540, 193]
+    level:    [75, 77]
+    script:   null
+
+  17539255:
+    template: Vanguard_Minstrel
+    at:       [8.914, 0.000, -9.814, 193]
+    level:    [75, 77]
+    script:   null
+
+  17539256:
+    template: Adamantking_Effigy
+    at:       [8.884, 0.000, -16.332, 192]
+    level:    [65, 65]
+    script:   null
+
+  17539257:
+    template: Vanguard_Defender
+    at:       [10.778, 0.000, -12.608, 191]
+    level:    [75, 77]
+    script:   null
+
+  17539258:
+    template: Vanguard_Protector
+    at:       [6.946, 0.000, -12.507, 191]
+    level:    [75, 77]
+    script:   null
+
+  17539259:
+    template: Adamantking_Effigy
+    at:       [31.028, 0.000, 23.812, 64]
+    level:    [65, 65]
+    script:   null
+
+  17539260:
+    template: Vanguard_Vindicator
+    at:       [31.163, 0.000, 24.640, 61]
+    level:    [75, 77]
+    script:   null
+
+  17539261:
+    template: Vanguard_Minstrel
+    at:       [49.489, 0.000, 8.058, 72]
+    level:    [75, 77]
+    script:   null
+
+  17539262:
+    template: Adamantking_Effigy
+    at:       [60.045, 0.000, -1.295, 192]
+    level:    [65, 65]
+    script:   null
+
+  17539263:
+    template: Vanguard_Hatamoto
+    at:       [59.937, 0.000, -5.061, 194]
+    level:    [75, 77]
+    script:   null
+
+  17539264:
+    template: Vanguard_Protector
+    at:       [60.027, 0.000, 3.987, 194]
+    level:    [75, 77]
+    script:   null
+
+  17539265:
+    template: Adamantking_Effigy
+    at:       [61.778, 0.000, -20.673, 187]
+    level:    [65, 65]
+    script:   null
+
+  17539266:
+    template: Vanguard_Drakekeeper
+    at:       [61.747, 0.000, -17.122, 190]
+    level:    [75, 77]
+
+  17539267:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539268:
+    template: Vanguard_Militant
+    at:       [61.801, 1.000, -13.804, 190]
+    level:    [75, 77]
+    script:   null
+
+  17539269:
+    template: Adamantking_Effigy
+    at:       [50.880, -0.002, -13.248, 232]
+    level:    [65, 65]
+    script:   null
+
+  17539270:
+    template: Vanguard_Kusa
+    at:       [53.606, 0.000, -13.228, 255]
+    level:    [75, 77]
+    script:   null
+
+  17539271:
+    template: Vanguard_Thaumaturge
+    at:       [56.898, 0.000, -13.266, 255]
+    level:    [75, 77]
+
+  17539272:
+    template: Adamantking_Effigy
+    at:       [69.926, 0.000, 10.587, 64]
+    level:    [65, 65]
+    script:   null
+
+  17539273:
+    template: Vanguard_Drakekeeper
+    at:       [69.858, 0.000, 7.779, 64]
+    level:    [75, 77]
+
+  17539274:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539275:
+    template: Vanguard_Protector
+    at:       [69.877, 0.000, 5.445, 64]
+    level:    [75, 77]
+
+  17539276:
+    template: Adamantking_Effigy
+    at:       [86.067, 0.000, 10.554, 64]
+    level:    [65, 65]
+    script:   null
+
+  17539277:
+    template: Vanguard_Defender
+    at:       [86.040, 0.000, 8.283, 64]
+    level:    [75, 77]
+    script:   null
+
+  17539278:
+    template: Vanguard_Thaumaturge
+    at:       [86.040, 0.000, 5.255, 64]
+    level:    [75, 77]
+    script:   null
+
+  17539279:
+    template: Adamantking_Effigy
+    at:       [-28.372, 0.000, 22.374, 66]
+    level:    [65, 65]
+    script:   null
+
+  17539280:
+    template: Adamantking_Effigy
+    at:       [-6.680, 0.000, -9.996, 3]
+    level:    [65, 65]
+    script:   null
+
+  17539281:
+    template: Vanguard_Defender
+    at:       [-3.968, 0.000, -13.606, 3]
+    level:    [75, 77]
+    script:   null
+
+  17539282:
+    template: Vanguard_Militant
+    at:       [-4.216, 0.000, -10.039, 3]
+    level:    [75, 77]
+    script:   null
+
+  17539283:
+    template: Vanguard_Protector
+    at:       [-4.181, 0.000, -6.479, 3]
+    level:    [75, 77]
+    script:   null
+
+  17539284:
+    template: Adamantking_Effigy
+    at:       [83.579, 7.000, -32.435, 145]
+    level:    [65, 65]
+    script:   null
+
+  17539285:
+    template: Vanguard_Undertaker
+    at:       [81.924, 7.000, -34.404, 195]
+    level:    [75, 77]
+
+  17539286:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539287:
+    template: Adamantking_Effigy
+    at:       [65.777, 7.000, -31.811, 228]
+    level:    [65, 65]
+
+  17539288:
+    template: Vanguard_Undertaker
+    at:       [67.089, 7.000, -34.549, 193]
+    level:    [75, 77]
+    script:   null
+
+  17539289:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539290:
+    template: Adamantking_Effigy
+    at:       [74.019, 7.000, -36.418, 200]
+    level:    [65, 65]
+    script:   null
+
+  17539291:
+    template: GuNhi_Noondozer
+    at:       [74.030, 7.000, -33.266, 200]
+    level:    [80, 80]
+    script:   null
+
+  17539292:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539293:
+    template: Vanguard_Constable
+    at:       [78.571, 7.000, -33.424, 200]
+    level:    [75, 77]
+
+  17539294:
+    template: Adamantking_Effigy
+    at:       [90.208, 7.003, -2.404, 128]
+    level:    [65, 65]
+
+  17539295:
+    template: GiPha_Manameister
+    at:       [85.503, 7.000, -2.468, 127]
+    level:    [80, 80]
+    script:   null
+
+  17539296:
+    template: Vanguard_Constable
+    at:       [89.020, 7.000, 1.720, 127]
+    level:    [75, 77]
+    script:   null
+
+  17539297:
+    template: Adamantking_Effigy
+    at:       [82.693, 7.000, -6.673, 130]
+    level:    [65, 65]
+    script:   null
+
+  17539298:
+    template: Adamantking_Effigy
+    at:       [81.957, 7.000, 2.399, 64]
+    level:    [65, 65]
+    script:   null
+
+  17539299:
+    template: Vanguard_Vigilante
+    at:       [81.842, 7.000, -1.436, 68]
+    level:    [75, 77]
+
+  17539300:
+    template: Vanguard_Hatamoto
+    at:       [77.090, 7.000, 1.340, 68]
+    level:    [75, 77]
+    script:   null
+
+  17539301:
+    template: Vanguard_Minstrel
+    at:       [86.382, 7.000, 2.634, 68]
+    level:    [75, 77]
+    script:   null
+
+  17539302:
+    template: Adamantking_Effigy
+    at:       [69.942, 7.000, 2.595, 64]
+    level:    [65, 65]
+    script:   null
+
+  17539303:
+    template: Vanguard_Drakekeeper
+    at:       [70.470, 7.000, -0.018, 128]
+    level:    [75, 77]
+    script:   null
+
+  17539304:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539305:
+    template: Vanguard_Kusa
+    at:       [70.330, 7.000, -7.292, 64]
+    level:    [75, 77]
+    script:   null
+
+  17539306:
+    template: Vanguard_Protector
+    at:       [46.132, 7.000, -2.353, 64]
+    level:    [75, 77]
+
+  17539307:
+    template: Adamantking_Effigy
+    at:       [30.978, 7.000, 5.660, 64]
+    level:    [65, 65]
+
+  17539308:
+    template: Vanguard_Kusa
+    at:       [30.978, 7.000, 5.660, 64]
+    level:    [75, 77]
+
+  17539309:
+    template: Adamantking_Effigy
+    at:       [21.069, 7.000, 1.167, 115]
+    level:    [65, 65]
+
+  17539310:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17539311:
+    template: Vanguard_Militant
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539312:
+    template: Vanguard_Protector
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539313:
+    template: Adamantking_Effigy
+    at:       [14.025, 7.000, -8.544, 192]
+    level:    [65, 65]
+
+  17539314:
+    template: Vanguard_Defender
+    at:       [10.023, 7.000, -4.902, 199]
+    level:    [75, 77]
+
+  17539315:
+    template: Vanguard_Purloiner
+    at:       [0.422, 7.000, 27.954, 131]
+    level:    [75, 77]
+
+  17539316:
+    template: Vanguard_Thaumaturge
+    at:       [17.523, 7.000, -4.862, 199]
+    level:    [75, 77]
+
+  17539317:
+    template: Adamantking_Effigy
+    at:       [-2.503, 7.000, -6.008, 0]
+    level:    [65, 65]
+
+  17539318:
+    template: Vanguard_Vindicator
+    at:       [0.164, 7.000, -10.464, 1]
+    level:    [75, 77]
+
+  17539319:
+    template: Vanguard_Hatamoto
+    at:       [1.709, 7.000, -0.493, 1]
+    level:    [75, 77]
+
+  17539320:
+    template: Vanguard_Protector
+    at:       [1.517, 7.000, -6.091, 1]
+    level:    [75, 77]
+
+  17539321:
+    template: Adamantking_Effigy
+    at:       [-2.562, 7.000, 13.989, 255]
+    level:    [65, 65]
+
+  17539322:
+    template: Vanguard_Vindicator
+    at:       [1.294, 7.000, 13.990, 255]
+    level:    [75, 77]
+
+  17539323:
+    template: Vanguard_Militant
+    at:       [1.323, 7.000, 10.413, 255]
+    level:    [75, 77]
+
+  17539324:
+    template: Vanguard_Protector
+    at:       [1.749, 7.000, 17.527, 255]
+    level:    [75, 77]
+
+  17539325:
+    template: Adamantking_Effigy
+    at:       [-14.028, 7.000, 25.981, 194]
+    level:    [65, 65]
+
+  17539326:
+    template: Vanguard_Vigilante
+    at:       [-9.853, 7.000, 27.297, 194]
+    level:    [75, 77]
+
+  17539327:
+    template: Vanguard_Purloiner
+    at:       [-16.610, 7.000, 28.371, 194]
+    level:    [75, 77]
+
+  17539328:
+    template: Adamantking_Effigy
+    at:       [-18.030, 7.000, 34.335, 67]
+    level:    [65, 65]
+
+  17539329:
+    template: Vanguard_Hatamoto
+    at:       [-20.272, 7.000, 31.344, 67]
+    level:    [75, 77]
+
+  17539330:
+    template: Vanguard_Thaumaturge
+    at:       [-14.435, 7.000, 31.021, 67]
+    level:    [75, 77]
+
+  17539331:
+    template: Adamantking_Effigy
+    at:       [-23.645, 0.000, -24.661, 122]
+    level:    [65, 65]
+
+  17539332:
+    template: Vanguard_Vindicator
+    at:       [-31.478, 0.000, -24.895, 127]
+    level:    [75, 77]
+
+  17539333:
+    template: Vanguard_Purloiner
+    at:       [-31.318, 0.000, -31.232, 127]
+    level:    [75, 77]
+
+  17539334:
+    template: Adamantking_Effigy
+    at:       [0.487, 0.000, -24.974, 128]
+    level:    [65, 65]
+
+  17539335:
+    template: Vanguard_Defender
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539336:
+    template: Vanguard_Militant
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539337:
+    template: Vanguard_Minstrel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539338:
+    template: Adamantking_Effigy
+    at:       [31.634, 0.000, -24.662, 63]
+    level:    [65, 65]
+
+  17539339:
+    template: Vanguard_Defender
+    at:       [31.472, 0.000, -33.768, 63]
+    level:    [75, 77]
+
+  17539340:
+    template: Vanguard_Kusa
+    at:       [31.338, 0.000, -28.710, 63]
+    level:    [75, 77]
+
+  17539341:
+    template: Vanguard_Protector
+    at:       [26.826, 0.000, -24.610, 63]
+    level:    [75, 77]
+
+  17539342:
+    template: Adamantking_Effigy
+    at:       [37.864, 0.000, -40.402, 63]
+    level:    [65, 65]
+
+  17539343:
+    template: Vanguard_Drakekeeper
+    at:       [38.127, 0.000, -44.862, 63]
+    level:    [75, 77]
+
+  17539344:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539345:
+    template: Vanguard_Minstrel
+    at:       [32.293, 0.000, -43.343, 63]
+    level:    [75, 77]
+
+  17539346:
+    template: Adamantking_Effigy
+    at:       [43.486, 0.000, -52.017, 131]
+    level:    [65, 65]
+
+  17539347:
+    template: Vanguard_Vindicator
+    at:       [44.312, 0.000, -49.036, 131]
+    level:    [75, 77]
+
+  17539348:
+    template: Vanguard_Purloiner
+    at:       [44.420, 0.000, -56.514, 131]
+    level:    [75, 77]
+
+  17539349:
+    template: Adamantking_Effigy
+    at:       [-18.947, 0.000, -71.316, 77]
+    level:    [65, 65]
+
+  17539350:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539351:
+    template: Vanguard_Thaumaturge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539352:
+    template: Adamantking_Effigy
+    at:       [0.016, 0.000, -73.353, 61]
+    level:    [65, 65]
+
+  17539353:
+    template: Vanguard_Drakekeeper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539354:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539355:
+    template: Vanguard_Hatamoto
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539356:
+    template: Vanguard_Minstrel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539357:
+    template: Adamantking_Effigy
+    at:       [19.045, 0.000, -71.223, 45]
+    level:    [65, 65]
+
+  17539358:
+    template: Vanguard_Hatamoto
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539359:
+    template: Vanguard_Minstrel
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539360:
+    template: Adamantking_Effigy
+    at:       [-9.536, 0.000, -75.258, 69]
+    level:    [65, 65]
+
+  17539361:
+    template: Vanguard_Kusa
+    at:       [-9.881, 0.000, -78.810, 69]
+    level:    [75, 77]
+
+  17539362:
+    template: Vanguard_Constable
+    at:       [-10.375, 0.000, -83.245, 69]
+    level:    [75, 77]
+
+  17539363:
+    template: Adamantking_Effigy
+    at:       [9.902, 0.000, -76.221, 59]
+    level:    [65, 65]
+
+  17539364:
+    template: Vanguard_Hatamoto
+    at:       [10.403, 0.000, -80.366, 59]
+    level:    [75, 77]
+
+  17539365:
+    template: Vanguard_Minstrel
+    at:       [11.131, 0.000, -84.293, 59]
+    level:    [75, 77]
+
+  17539366:
+    template: Adamantking_Effigy
+    at:       [-16.413, -3.000, -54.391, 207]
+    level:    [65, 65]
+
+  17539367:
+    template: Adamantking_Effigy
+    at:       [-8.438, -3.000, -56.521, 199]
+    level:    [65, 65]
+
+  17539368:
+    template: Vanguard_Purloiner
+    at:       [-4.277, -3.000, -55.450, 68]
+    level:    [75, 77]
+
+  17539369:
+    template: Adamantking_Effigy
+    at:       [-0.002, -3.000, -57.367, 191]
+    level:    [65, 65]
+
+  17539370:
+    template: Adamantking_Effigy
+    at:       [8.435, -3.000, -56.447, 183]
+    level:    [65, 65]
+
+  17539371:
+    template: Vanguard_Protector
+    at:       [12.230, -3.000, -54.527, 52]
+    level:    [75, 77]
+
+  17539372:
+    template: Adamantking_Effigy
+    at:       [16.367, -3.000, -54.657, 175]
+    level:    [65, 65]
+
+  17539373:
+    template: Adamantking_Effigy
+    at:       [7.050, 0.000, -100.773, 192]
+    level:    [65, 65]
+
+  17539374:
+    template: Vanguard_Vindicator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539375:
+    template: Vanguard_Kusa
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539376:
+    template: Vanguard_Thaumaturge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539377:
+    template: Adamantking_Effigy
+    at:       [-21.414, 0.000, -95.119, 195]
+    level:    [65, 65]
+
+  17539378:
+    template: Vanguard_Drakekeeper
+    at:       [-21.416, 0.000, -91.963, 195]
+    level:    [75, 77]
+
+  17539379:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539380:
+    template: Vanguard_Protector
+    at:       [-21.417, 0.000, -89.627, 195]
+    level:    [75, 77]
+
+  17539381:
+    template: Adamantking_Effigy
+    at:       [-31.376, 0.000, -73.274, 94]
+    level:    [65, 65]
+
+  17539382:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539383:
+    template: Vanguard_Kusa
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539384:
+    template: Vanguard_Thaumaturge
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539385:
+    template: Adamantking_Effigy
+    at:       [-37.007, 0.000, -56.156, 60]
+    level:    [65, 65]
+
+  17539386:
+    template: Adamantking_Effigy
+    at:       [-33.535, 0.000, -59.508, 63]
+    level:    [65, 65]
+
+  17539387:
+    template: Vanguard_Kusa
+    at:       [-35.741, 0.000, -61.387, 63]
+    level:    [75, 77]
+
+  17539388:
+    template: Vanguard_Defender
+    at:       [-31.502, 0.000, -61.406, 63]
+    level:    [75, 77]
+
+  17539389:
+    template: Adamantking_Effigy
+    at:       [-39.708, 0.000, -59.801, 63]
+    level:    [65, 65]
+
+  17539390:
+    template: Vanguard_Hatamoto
+    at:       [-42.739, 0.000, -61.749, 63]
+    level:    [75, 77]
+
+  17539391:
+    template: Vanguard_Vindicator
+    at:       [-37.712, 0.000, -62.089, 63]
+    level:    [75, 77]
+
+  17539392:
+    template: Adamantking_Effigy
+    at:       [-37.450, 0.000, -51.488, 63]
+    level:    [65, 65]
+
+  17539393:
+    template: Vanguard_Minstrel
+    at:       [-40.471, 0.000, -51.721, 63]
+    level:    [75, 77]
+
+  17539394:
+    template: Vanguard_Thaumaturge
+    at:       [-34.727, 0.000, -51.144, 63]
+    level:    [75, 77]
+
+  17539395:
+    template: Adamantking_Effigy
+    at:       [-38.430, 0.000, -38.003, 60]
+    level:    [65, 65]
+
+  17539396:
+    template: Vanguard_Vigilante
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539397:
+    template: Vanguard_Kusa
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539398:
+    template: Vanguard_Constable
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539399:
+    template: Adamantking_Effigy
+    at:       [-5.634, -1.000, -115.618, 192]
+    level:    [65, 65]
+
+  17539400:
+    template: Vanguard_Mason
+    at:       [-2.423, -1.001, -112.104, 195]
+    level:    [75, 77]
+
+  17539401:
+    template: Vanguard_Militant
+    at:       [-8.579, -1.001, -111.487, 195]
+    level:    [75, 77]
+
+  17539402:
+    template: Adamantking_Effigy
+    at:       [-16.204, -1.000, -122.385, 192]
+    level:    [65, 65]
+
+  17539403:
+    template: Vanguard_Vindicator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539404:
+    template: Vanguard_Constable
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539405:
+    template: Adamantking_Effigy
+    at:       [-23.924, -1.000, -121.605, 227]
+    level:    [65, 65]
+
+  17539406:
+    template: Adamantking_Effigy
+    at:       [-30.034, -1.001, -115.595, 195]
+    level:    [65, 65]
+
+  17539407:
+    template: Vanguard_Purloiner
+    at:       [-32.928, -1.001, -111.712, 195]
+    level:    [75, 77]
+
+  17539408:
+    template: Vanguard_Protector
+    at:       [-26.519, -1.001, -111.630, 195]
+    level:    [75, 77]
+
+  17539409:
+    template: Adamantking_Effigy
+    at:       [39.934, 0.799, -88.810, 192]
+    level:    [65, 65]
+
+  17539410:
+    template: Vanguard_Beasttender
+    at:       [41.911, 0.872, -96.150, 195]
+    level:    [75, 77]
+
+  17539411:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539412:
+    template: Vanguard_Beasttender
+    at:       [38.054, 0.872, -95.998, 195]
+    level:    [75, 77]
+
+  17539413:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539414:
+    template: Adamantking_Effigy
+    at:       [48.164, 0.872, -91.191, 195]
+    level:    [65, 65]
+
+  17539415:
+    template: Vanguard_Beasttender
+    at:       [44.794, 0.841, -90.650, 195]
+    level:    [75, 77]
+
+  17539416:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539417:
+    template: Vanguard_Beasttender
+    at:       [47.440, 0.872, -95.353, 195]
+    level:    [75, 77]
+
+  17539418:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539419:
+    template: Adamantking_Effigy
+    at:       [28.690, 0.872, -91.721, 202]
+    level:    [65, 65]
+
+  17539420:
+    template: Vanguard_Beasttender
+    at:       [28.690, 0.872, -91.721, 195]
+    level:    [75, 77]
+
+  17539421:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539422:
+    template: Vanguard_Beasttender
+    at:       [33.366, 0.855, -91.256, 195]
+    level:    [75, 77]
+
+  17539423:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539424:
+    template: Adamantking_Effigy
+    at:       [79.545, 0.000, -71.833, 255]
+    level:    [65, 65]
+
+  17539425:
+    template: Vanguard_Kusa
+    at:       [85.196, 0.436, -68.296, 255]
+    level:    [75, 77]
+
+  17539426:
+    template: Vanguard_Thaumaturge
+    at:       [85.231, 0.436, -75.564, 255]
+    level:    [75, 77]
+
+  17539427:
+    template: Adamantking_Effigy
+    at:       [60.450, 0.000, -68.558, 246]
+    level:    [65, 65]
+
+  17539428:
+    template: Vanguard_Hatamoto
+    at:       [66.183, 0.000, -64.330, 255]
+    level:    [75, 77]
+
+  17539429:
+    template: Vanguard_Minstrel
+    at:       [66.183, 0.000, -71.341, 255]
+    level:    [75, 77]
+
+  17539430:
+    template: Adamantking_Effigy
+    at:       [60.450, 0.000, -75.714, 19]
+    level:    [65, 65]
+
+  17539431:
+    template: Vanguard_Vindicator
+    at:       [66.183, 0.000, -73.825, 255]
+    level:    [75, 77]
+
+  17539432:
+    template: Vanguard_Protector
+    at:       [66.370, 0.000, -80.183, 255]
+    level:    [75, 77]
+
+  17539433:
+    template: Adamantking_Effigy
+    at:       [-15.525, -1.001, -105.900, 193]
+    level:    [65, 65]
+
+  17539434:
+    template: Vanguard_Vigilante
+    at:       [-15.549, 0.000, -99.992, 193]
+    level:    [75, 77]
+
+  17539435:
+    template: Vanguard_Minstrel
+    at:       [-8.993, 0.000, -99.689, 193]
+    level:    [75, 77]
+
+  17539436:
+    template: Adamantking_Effigy
+    at:       [-26.137, -1.001, -106.559, 193]
+    level:    [65, 65]
+
+  17539437:
+    template: Vanguard_Hatamoto
+    at:       [-26.381, 0.000, -99.702, 193]
+    level:    [75, 77]
+
+  17539438:
+    template: Vanguard_Thaumaturge
+    at:       [-19.059, 0.000, -99.837, 193]
+    level:    [75, 77]
+
+  17539439:
+    template: Adamantking_Effigy
+    at:       [36.009, 0.000, 8.132, 191]
+    level:    [65, 65]
+
+  17539440:
+    template: Vanguard_Purloiner
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539441:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+
+  17539442:
+    template: Adamantking_Effigy
+    at:       [60.126, 0.000, 8.102, 129]
+    level:    [65, 65]
+
+  17539443:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+
+  17539444:
+    template: Adamantking_Effigy
+    at:       [37.032, 0.000, 20.259, 147]
+    level:    [65, 65]
+
+  17539445:
+    template: Adamantking_Effigy
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [65, 65]
+
+  17539446:
+    template: Adamantking_Effigy
+    at:       [-41.884, 0.000, -14.914, 80]
+    level:    [65, 65]
+
+  17539447:
+    template: Vanguard_Constable
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539448:
+    template: Vanguard_Hatamoto
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539449:
+    template: GuDha_Effigy
+    at:       [-16.169, -1.001, -127.812, 191]
+    level:    [65, 65]
+
+  17539450:
+    template: Effigy_Shield_WAR
+    at:       [-16.256, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539451:
+    template: Effigy_Shield_WHM
+    at:       [-13.552, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539452:
+    template: Effigy_Shield_MNK
+    at:       [-9.477, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539453:
+    template: Effigy_Shield_BLM
+    at:       [-19.257, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539454:
+    template: Effigy_Shield_THF
+    at:       [-21.326, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539455:
+    template: Adamantking_Effigy
+    at:       [-26.043, -1.001, -122.321, 191]
+    level:    [65, 65]
+
+  17539456:
+    template: Effigy_Shield_DRK
+    at:       [-16.256, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539457:
+    template: Effigy_Shield_PLD
+    at:       [-13.552, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539458:
+    template: Effigy_Shield_BRD
+    at:       [-9.477, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539459:
+    template: Effigy_Shield_NIN
+    at:       [-19.257, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539460:
+    template: Effigy_Shield_SAM
+    at:       [-21.326, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539461:
+    template: Adamantking_Effigy
+    at:       [-26.043, -1.001, -122.321, 191]
+    level:    [65, 65]
+
+  17539462:
+    template: Effigy_Shield_RNG
+    at:       [-16.256, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539463:
+    template: Effigy_Shield_SMN
+    at:       [-13.552, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539464:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539465:
+    template: Effigy_Shield_RDM
+    at:       [-9.477, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539466:
+    template: Effigy_Shield_DRG
+    at:       [-19.257, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539467:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539468:
+    template: Effigy_Shield_BST
+    at:       [-21.326, -1.001, -122.321, 191]
+    level:    [65, 65]
+    script:   Effigy_Shield
+
+  17539469:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539470:
+    template: Adamantking_Effigy
+    at:       [-26.043, -1.001, -122.321, 191]
+    level:    [65, 65]
+
+  17539471:
+    template: Adamantking_Effigy
+    at:       [-21.089, -3.000, -57.047, 68]
+    level:    [65, 65]
+
+  17539472:
+    template: Vanguard_Vindicator
+    at:       [-21.324, -3.000, -59.495, 68]
+    level:    [75, 77]
+
+  17539473:
+    template: Vanguard_Vindicator
+    at:       [-24.017, -3.000, -59.246, 68]
+    level:    [75, 77]
+
+  17539474:
+    template: Vanguard_Vindicator
+    at:       [-17.464, -3.000, -61.320, 68]
+    level:    [75, 77]
+
+  17539475:
+    template: Adamantking_Effigy
+    at:       [-8.871, -3.000, -59.191, 71]
+    level:    [65, 65]
+
+  17539476:
+    template: Vanguard_Thaumaturge
+    at:       [-9.618, -3.000, -62.440, 71]
+    level:    [75, 77]
+
+  17539477:
+    template: Vanguard_Thaumaturge
+    at:       [-11.868, -3.000, -61.950, 71]
+    level:    [75, 77]
+
+  17539478:
+    template: Vanguard_Thaumaturge
+    at:       [-7.562, -3.000, -62.629, 71]
+    level:    [75, 77]
+
+  17539479:
+    template: Adamantking_Effigy
+    at:       [0.057, -3.000, -60.557, 63]
+    level:    [65, 65]
+
+  17539480:
+    template: Vanguard_Militant
+    at:       [0.100, -3.000, -63.309, 63]
+    level:    [75, 77]
+
+  17539481:
+    template: Vanguard_Militant
+    at:       [-2.098, -3.000, -63.360, 63]
+    level:    [75, 77]
+
+  17539482:
+    template: Vanguard_Militant
+    at:       [2.123, -3.000, -63.437, 63]
+    level:    [75, 77]
+
+  17539483:
+    template: Adamantking_Effigy
+    at:       [9.124, -3.000, -59.720, 52]
+    level:    [65, 65]
+
+  17539484:
+    template: Vanguard_Vigilante
+    at:       [9.808, -3.000, -62.842, 52]
+    level:    [75, 77]
+
+  17539485:
+    template: Vanguard_Vigilante
+    at:       [7.518, -3.000, -63.638, 52]
+    level:    [75, 77]
+
+  17539486:
+    template: Vanguard_Vigilante
+    at:       [11.474, -3.000, -62.965, 52]
+    level:    [75, 77]
+
+  17539487:
+    template: Adamantking_Effigy
+    at:       [19.090, -3.000, -57.277, 51]
+    level:    [65, 65]
+
+  17539488:
+    template: Vanguard_Mason
+    at:       [20.377, -3.000, -60.086, 51]
+    level:    [75, 77]
+
+  17539489:
+    template: Vanguard_Mason
+    at:       [17.719, -3.000, -61.101, 51]
+    level:    [75, 77]
+
+  17539490:
+    template: Vanguard_Mason
+    at:       [22.566, -3.000, -58.292, 51]
+    level:    [75, 77]
+
+  17539491:
+    template: Adamantking_Effigy
+    at:       [9.605, 0.000, -122.601, 191]
+    level:    [65, 65]
+
+  17539492:
+    template: Vanguard_Defender
+    at:       [9.546, 0.000, -119.174, 191]
+    level:    [75, 77]
+
+  17539493:
+    template: Vanguard_Defender
+    at:       [9.537, 0.000, -116.154, 191]
+    level:    [75, 77]
+
+  17539494:
+    template: Vanguard_Defender
+    at:       [9.537, 0.000, -112.994, 191]
+    level:    [75, 77]
+
+  17539495:
+    template: Vanguard_Defender
+    at:       [9.537, 0.000, -110.118, 191]
+    level:    [75, 77]
+
+  17539496:
+    template: Adamantking_Effigy
+    at:       [16.518, 0.000, -121.544, 190]
+    level:    [65, 65]
+
+  17539497:
+    template: Vanguard_Constable
+    at:       [16.451, 0.000, -118.378, 193]
+    level:    [75, 77]
+
+  17539498:
+    template: Vanguard_Constable
+    at:       [16.473, 0.000, -115.346, 193]
+    level:    [75, 77]
+
+  17539499:
+    template: Vanguard_Constable
+    at:       [16.473, 0.000, -112.466, 193]
+    level:    [75, 77]
+
+  17539500:
+    template: Vanguard_Constable
+    at:       [16.473, 0.000, -109.710, 193]
+    level:    [75, 77]
+
+  17539501:
+    template: Adamantking_Effigy
+    at:       [20.729, 0.000, -109.733, 126]
+    level:    [65, 65]
+
+  17539502:
+    template: Vanguard_Purloiner
+    at:       [17.421, 0.000, -109.720, 126]
+    level:    [75, 77]
+
+  17539503:
+    template: Vanguard_Purloiner
+    at:       [14.813, 0.000, -109.702, 126]
+    level:    [75, 77]
+
+  17539504:
+    template: Vanguard_Purloiner
+    at:       [12.065, 0.000, -109.670, 126]
+    level:    [75, 77]
+
+  17539505:
+    template: Vanguard_Purloiner
+    at:       [9.470, 0.000, -109.617, 126]
+    level:    [75, 77]
+
+  17539506:
+    template: Adamantking_Effigy
+    at:       [20.767, 0.000, -103.461, 126]
+    level:    [65, 65]
+
+  17539507:
+    template: Vanguard_Drakekeeper
+    at:       [17.882, 0.000, -103.334, 126]
+    level:    [75, 77]
+
+  17539508:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539509:
+    template: Vanguard_Drakekeeper
+    at:       [14.593, 0.000, -103.188, 126]
+    level:    [75, 77]
+
+  17539510:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539511:
+    template: Vanguard_Drakekeeper
+    at:       [11.568, 0.000, -103.062, 126]
+    level:    [75, 77]
+
+  17539512:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539513:
+    template: Adamantking_Effigy
+    at:       [61.460, 0.000, -83.699, 193]
+    level:    [65, 65]
+
+  17539514:
+    template: Vanguard_Vindicator
+    at:       [61.533, 0.000, -80.823, 193]
+    level:    [75, 77]
+
+  17539515:
+    template: Vanguard_Purloiner
+    at:       [58.378, 0.000, -80.575, 193]
+    level:    [75, 77]
+
+  17539516:
+    template: Vanguard_Minstrel
+    at:       [64.050, 0.000, -80.705, 193]
+    level:    [75, 77]
+
+  17539517:
+    template: Adamantking_Effigy
+    at:       [71.082, 0.000, -83.594, 193]
+    level:    [65, 65]
+
+  17539518:
+    template: Vanguard_Defender
+    at:       [70.723, 0.000, -80.866, 193]
+    level:    [75, 77]
+
+  17539519:
+    template: Vanguard_Vigilante
+    at:       [67.980, 0.000, -80.639, 193]
+    level:    [75, 77]
+
+  17539520:
+    template: Vanguard_Thaumaturge
+    at:       [73.035, 0.000, -80.533, 193]
+    level:    [75, 77]
+
+  17539521:
+    template: Adamantking_Effigy
+    at:       [80.146, 0.000, -82.767, 193]
+    level:    [65, 65]
+
+  17539522:
+    template: Vanguard_Constable
+    at:       [80.191, 0.000, -79.879, 193]
+    level:    [75, 77]
+
+  17539523:
+    template: Vanguard_Mason
+    at:       [82.920, 0.000, -79.886, 193]
+    level:    [75, 77]
+
+  17539524:
+    template: Vanguard_Militant
+    at:       [77.551, 0.000, -79.024, 193]
+    level:    [75, 77]
+
+  17539525:
+    template: Adamantking_Effigy
+    at:       [30.594, 0.000, -62.092, 63]
+    level:    [65, 65]
+
+  17539526:
+    template: Vanguard_Undertaker
+    at:       [30.772, 0.000, -64.702, 63]
+    level:    [75, 77]
+
+  17539527:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539528:
+    template: Vanguard_Undertaker
+    at:       [27.766, 0.000, -65.025, 63]
+    level:    [75, 77]
+
+  17539529:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539530:
+    template: Vanguard_Undertaker
+    at:       [33.813, 0.000, -64.647, 63]
+    level:    [75, 77]
+
+  17539531:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539532:
+    template: Adamantking_Effigy
+    at:       [39.996, 0.000, -61.946, 65]
+    level:    [65, 65]
+
+  17539533:
+    template: Vanguard_Hatamoto
+    at:       [39.932, 0.000, -64.447, 65]
+    level:    [75, 77]
+
+  17539534:
+    template: Vanguard_Hatamoto
+    at:       [36.496, 0.000, -64.399, 65]
+    level:    [75, 77]
+
+  17539535:
+    template: Vanguard_Hatamoto
+    at:       [42.651, 0.000, -64.260, 65]
+    level:    [75, 77]
+
+  17539536:
+    template: Vanguard_Hatamoto
+    at:       [45.633, 0.000, -64.420, 65]
+    level:    [75, 77]
+
+  17539537:
+    template: Adamantking_Effigy
+    at:       [61.453, 0.000, -63.361, 63]
+    level:    [65, 65]
+
+  17539538:
+    template: Vanguard_Minstrel
+    at:       [59.207, 0.000, -66.433, 63]
+    level:    [75, 77]
+
+  17539539:
+    template: Vanguard_Minstrel
+    at:       [56.321, 0.000, -66.568, 63]
+    level:    [75, 77]
+
+  17539540:
+    template: Vanguard_Minstrel
+    at:       [63.405, 0.000, -67.570, 63]
+    level:    [75, 77]
+
+  17539541:
+    template: Vanguard_Minstrel
+    at:       [66.127, 0.000, -67.054, 63]
+    level:    [75, 77]
+
+  17539542:
+    template: Adamantking_Effigy
+    at:       [71.288, 0.000, -63.268, 63]
+    level:    [65, 65]
+
+  17539543:
+    template: Vanguard_Kusa
+    at:       [71.363, 0.000, -66.680, 63]
+    level:    [75, 77]
+
+  17539544:
+    template: Vanguard_Kusa
+    at:       [67.873, 0.000, -67.109, 63]
+    level:    [75, 77]
+
+  17539545:
+    template: Vanguard_Kusa
+    at:       [74.091, 0.000, -67.604, 63]
+    level:    [75, 77]
+
+  17539546:
+    template: Adamantking_Effigy
+    at:       [80.627, 0.000, -62.992, 63]
+    level:    [65, 65]
+
+  17539547:
+    template: Vanguard_Protector
+    at:       [80.531, 0.000, -65.598, 63]
+    level:    [75, 77]
+
+  17539548:
+    template: Vanguard_Protector
+    at:       [77.400, 0.000, -65.950, 63]
+    level:    [75, 77]
+
+  17539549:
+    template: Vanguard_Protector
+    at:       [82.793, 0.000, -65.641, 63]
+    level:    [75, 77]
+
+  17539550:
+    template: Adamantking_Effigy
+    at:       [90.440, 0.994, -57.074, 66]
+    level:    [65, 65]
+
+  17539551:
+    template: Vanguard_Drakekeeper
+    at:       [90.347, 0.994, -60.104, 66]
+    level:    [75, 77]
+
+  17539552:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539553:
+    template: Vanguard_Militant
+    at:       [90.263, 0.994, -62.719, 66]
+    level:    [75, 77]
+
+  17539554:
+    template: Adamantking_Effigy
+    at:       [90.102, 0.623, -71.780, 128]
+    level:    [65, 65]
+
+  17539555:
+    template: Vanguard_Undertaker
+    at:       [90.111, 0.623, -69.314, 127]
+    level:    [75, 77]
+
+  17539556:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539557:
+    template: Vanguard_Undertaker
+    at:       [90.090, 623.000, -74.622, 127]
+    level:    [75, 77]
+
+  17539558:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539559:
+    template: Adamantking_Effigy
+    at:       [90.762, 0.994, -87.715, 190]
+    level:    [65, 65]
+
+  17539560:
+    template: Vanguard_Drakekeeper
+    at:       [90.709, 0.994, -84.409, 191]
+    level:    [75, 77]
+
+  17539561:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539562:
+    template: Vanguard_Mason
+    at:       [90.633, 0.994, -81.394, 191]
+    level:    [75, 77]
+
+  17539563:
+    template: Adamantking_Effigy
+    at:       [99.891, 0.994, -52.935, 66]
+    level:    [65, 65]
+
+  17539564:
+    template: Vanguard_Hatamoto
+    at:       [99.900, 0.994, -56.239, 66]
+    level:    [75, 77]
+
+  17539565:
+    template: Vanguard_Kusa
+    at:       [97.595, 0.994, -56.239, 66]
+    level:    [75, 77]
+
+  17539566:
+    template: Vanguard_Mason
+    at:       [102.490, 0.994, -56.239, 66]
+    level:    [75, 77]
+
+  17539567:
+    template: Adamantking_Effigy
+    at:       [108.102, 0.994, -53.086, 66]
+    level:    [65, 65]
+
+  17539568:
+    template: Vanguard_Defender
+    at:       [105.602, 0.994, -56.239, 66]
+    level:    [75, 77]
+
+  17539569:
+    template: Vanguard_Vigilante
+    at:       [110.675, 0.994, -56.239, 66]
+    level:    [75, 77]
+
+  17539570:
+    template: Adamantking_Effigy
+    at:       [115.743, 0.994, -53.100, 66]
+    level:    [65, 65]
+
+  17539571:
+    template: Vanguard_Purloiner
+    at:       [114.086, 0.994, -56.239, 66]
+    level:    [75, 77]
+
+  17539572:
+    template: Vanguard_Minstrel
+    at:       [119.160, 0.994, -56.239, 66]
+    level:    [75, 77]
+
+  17539573:
+    template: Adamantking_Effigy
+    at:       [117.281, 0.994, -65.884, 128]
+    level:    [65, 65]
+
+  17539574:
+    template: Vanguard_Vindicator
+    at:       [114.896, 0.994, -63.498, 127]
+    level:    [75, 77]
+
+  17539575:
+    template: Vanguard_Militant
+    at:       [114.896, 0.994, -66.114, 127]
+    level:    [75, 77]
+
+  17539576:
+    template: Vanguard_Hatamoto
+    at:       [114.896, 0.994, -68.700, 127]
+    level:    [75, 77]
+
+  17539577:
+    template: Adamantking_Effigy
+    at:       [117.244, 0.994, -71.554, 128]
+    level:    [65, 65]
+
+  17539578:
+    template: Vanguard_Beasttender
+    at:       [114.896, 0.994, -69.510, 127]
+    level:    [75, 77]
+
+  17539579:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539580:
+    template: Vanguard_Beasttender
+    at:       [114.896, 0.994, -71.704, 127]
+    level:    [75, 77]
+
+  17539581:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539582:
+    template: Vanguard_Beasttender
+    at:       [114.896, 0.994, -74.160, 127]
+    level:    [75, 77]
+
+  17539583:
+    template: Vanguards_Scorpion
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539584:
+    template: Adamantking_Effigy
+    at:       [117.281, 0.994, -77.786, 128]
+    level:    [65, 65]
+
+  17539585:
+    template: Vanguard_Constable
+    at:       [114.896, 0.994, -75.549, 127]
+    level:    [75, 77]
+
+  17539586:
+    template: Vanguard_Thaumaturge
+    at:       [114.896, 0.994, -77.887, 127]
+    level:    [75, 77]
+
+  17539587:
+    template: Vanguard_Protector
+    at:       [114.896, 0.994, -80.100, 127]
+    level:    [75, 77]
+
+  17539588:
+    template: Adamantking_Effigy
+    at:       [116.276, 0.994, -90.624, 190]
+    level:    [65, 65]
+
+  17539589:
+    template: Vanguard_Mason
+    at:       [119.149, 0.994, -87.375, 190]
+    level:    [75, 77]
+
+  17539590:
+    template: Vanguard_Kusa
+    at:       [113.502, 0.994, -87.375, 190]
+    level:    [75, 77]
+
+  17539591:
+    template: Adamantking_Effigy
+    at:       [107.966, 0.994, -90.889, 190]
+    level:    [65, 65]
+
+  17539592:
+    template: Vanguard_Defender
+    at:       [110.263, 0.994, -87.375, 190]
+    level:    [75, 77]
+
+  17539593:
+    template: Vanguard_Vigilante
+    at:       [105.619, 0.994, -87.375, 190]
+    level:    [75, 77]
+
+  17539594:
+    template: Adamantking_Effigy
+    at:       [99.975, 0.994, -90.819, 190]
+    level:    [65, 65]
+
+  17539595:
+    template: Vanguard_Minstrel
+    at:       [99.987, 0.994, -87.375, 190]
+    level:    [75, 77]
+
+  17539596:
+    template: Vanguard_Protector
+    at:       [97.843, 0.994, -87.375, 190]
+    level:    [75, 77]
+
+  17539597:
+    template: Vanguard_Purloiner
+    at:       [102.475, 0.994, -87.375, 190]
+    level:    [75, 77]
+
+  17539598:
+    template: Adamantking_Effigy
+    at:       [101.433, 0.994, -65.995, 1]
+    level:    [65, 65]
+
+  17539599:
+    template: Vanguard_Drakekeeper
+    at:       [101.872, 0.994, -66.876, 1]
+    level:    [75, 77]
+
+  17539600:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539601:
+    template: Vanguard_Hatamoto
+    at:       [101.937, 0.994, -69.081, 1]
+    level:    [75, 77]
+
+  17539602:
+    template: Vanguard_Constable
+    at:       [102.042, 0.994, -63.703, 1]
+    level:    [75, 77]
+
+  17539603:
+    template: Adamantking_Effigy
+    at:       [98.872, 0.994, -77.229, 1]
+    level:    [65, 65]
+
+  17539604:
+    template: Vanguard_Drakekeeper
+    at:       [102.287, 0.994, -77.299, 1]
+    level:    [75, 77]
+
+  17539605:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17539606:
+    template: Vanguard_Thaumaturge
+    at:       [102.319, 0.994, -74.553, 1]
+    level:    [75, 77]
+
+  17539607:
+    template: Vanguard_Vindicator
+    at:       [102.384, 0.994, -80.436, 1]
+    level:    [75, 77]

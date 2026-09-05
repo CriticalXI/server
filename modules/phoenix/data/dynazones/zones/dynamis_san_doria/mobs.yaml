@@ -1,0 +1,2789 @@
+# Old-school Dynamis spawn layout for dynamis_san_doria.
+
+templates:
+
+  Reapertongue_Gadgquok:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Serjeant_Tombstone:
+    type: [notorious]
+
+  Vanguard_Amputator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Backstabber:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Bugler:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Dollmaster:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Footsoldier:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Grappler:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Gutslasher:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Hawker:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Impaler:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Mesmerizer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Neckchopper:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Pillager:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Predator:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Trooper:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguard_Vexer:
+    type: [notorious]
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Vanguards_Avatar:
+    type: [called, notorious]
+
+  Vanguards_Hecteyes:
+    type: [called, notorious]
+
+  Vanguards_Wyvern:
+    type: [called, notorious]
+
+  Voidstreaker_Butchnotch:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+  Wyrmgnasher_Bjakdek:
+    attributes:
+      spawn:
+        respawn: 0
+        type:    [scripted]
+
+spawns:
+
+  17534977:
+    template: Serjeant_Tombstone
+    at:       [137.079, -2.000, 105.150, 225]
+    level:    [65, 65]
+
+  17534978:
+    template: Vanguard_Footsoldier
+    at:       [134.295, -2.000, 106.993, 225]
+    level:    [75, 77]
+
+  17534979:
+    template: Vanguard_Footsoldier
+    at:       [138.669, -2.000, 102.356, 225]
+    level:    [75, 77]
+
+  17534980:
+    template: Serjeant_Tombstone
+    at:       [116.400, 0.000, 91.644, 225]
+    level:    [65, 65]
+
+  17534981:
+    template: Vanguard_Grappler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17534982:
+    template: Serjeant_Tombstone
+    at:       [137.545, -1.000, 98.575, 96]
+    level:    [65, 65]
+
+  17534983:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17534984:
+    template: Serjeant_Tombstone
+    at:       [123.581, 0.000, 84.273, 225]
+    level:    [65, 65]
+
+  17534985:
+    template: Vanguard_Grappler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17534986:
+    template: Serjeant_Tombstone
+    at:       [130.625, -1.250, 105.902, 96]
+    level:    [65, 65]
+
+  17534987:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17534988:
+    template: Serjeant_Tombstone
+    at:       [118.874, 0.000, 79.627, 225]
+    level:    [65, 65]
+
+  17534989:
+    template: Vanguard_Vexer
+    at:       [114.734, 0.000, 75.638, 225]
+    level:    [75, 77]
+
+  17534990:
+    template: Serjeant_Tombstone
+    at:       [116.585, 0.000, 74.906, 96]
+    level:    [65, 65]
+
+  17534991:
+    template: Vanguard_Grappler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17534992:
+    template: Serjeant_Tombstone
+    at:       [110.874, 0.000, 86.843, 225]
+    level:    [65, 65]
+
+  17534993:
+    template: Vanguard_Vexer
+    at:       [108.206, 0.000, 82.997, 225]
+    level:    [75, 77]
+
+  17534994:
+    template: Serjeant_Tombstone
+    at:       [108.890, 0.000, 85.610, 96]
+    level:    [65, 65]
+
+  17534995:
+    template: Vanguard_Grappler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17534996:
+    template: Warchief_Tombstone
+    at:       [100.088, 1.000, 103.686, 32]
+    level:    [65, 65]
+
+  17534997:
+    template: Vanguard_Grappler
+    at:       [99.677, 0.750, 96.918, 33]
+    level:    [75, 77]
+
+  17534998:
+    template: Vanguard_Grappler
+    at:       [102.316, 1.000, 101.327, 33]
+    level:    [75, 77]
+
+  17534999:
+    template: Vanguard_Grappler
+    at:       [106.225, 0.750, 103.557, 33]
+    level:    [75, 77]
+
+  17535000:
+    template: Serjeant_Tombstone
+    at:       [99.965, 4.000, 67.815, 227]
+    level:    [65, 65]
+
+  17535001:
+    template: Serjeant_Tombstone
+    at:       [97.673, 4.000, 67.124, 225]
+    level:    [65, 65]
+
+  17535002:
+    template: Vanguard_Trooper
+    at:       [101.752, 4.000, 63.606, 255]
+    level:    [75, 77]
+
+  17535003:
+    template: Vanguard_Neckchopper
+    at:       [95.796, 4.000, 69.034, 225]
+    level:    [75, 77]
+
+  17535004:
+    template: Serjeant_Tombstone
+    at:       [93.749, 4.000, 56.914, 255]
+    level:    [65, 65]
+
+  17535005:
+    template: Vanguard_Footsoldier
+    at:       [94.043, 4.000, 60.509, 255]
+    level:    [75, 77]
+
+  17535006:
+    template: Vanguard_Footsoldier
+    at:       [94.645, 4.000, 53.358, 255]
+    level:    [75, 77]
+
+  17535007:
+    template: Warchief_Tombstone
+    at:       [101.250, 4.000, 50.091, 160]
+    level:    [65, 65]
+
+  17535008:
+    template: Vanguard_Vexer
+    at:       [101.500, 4.000, 53.277, 131]
+    level:    [75, 77]
+
+  17535009:
+    template: Vanguard_Vexer
+    at:       [101.404, 4.000, 45.324, 131]
+    level:    [75, 77]
+
+  17535010:
+    template: Serjeant_Tombstone
+    at:       [94.843, 4.000, 38.093, 1]
+    level:    [65, 65]
+
+  17535011:
+    template: Vanguard_Impaler
+    at:       [94.734, 4.000, 42.250, 1]
+    level:    [75, 77]
+
+  17535012:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535013:
+    template: Vanguard_Impaler
+    at:       [95.201, 4.000, 33.505, 1]
+    level:    [75, 77]
+
+  17535014:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535015:
+    template: Warchief_Tombstone
+    at:       [101.441, 4.000, 32.048, 151]
+    level:    [65, 65]
+
+  17535016:
+    template: Vanguard_Amputator
+    at:       [101.691, 4.000, 35.436, 130]
+    level:    [75, 77]
+
+  17535017:
+    template: Vanguard_Amputator
+    at:       [101.497, 4.000, 27.419, 130]
+    level:    [75, 77]
+
+  17535018:
+    template: Serjeant_Tombstone
+    at:       [97.806, 4.000, 45.270, 194]
+    level:    [65, 65]
+
+  17535019:
+    template: Vanguard_Pillager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535020:
+    template: Vanguard_Pillager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535021:
+    template: Serjeant_Tombstone
+    at:       [142.436, 0.000, 69.366, 70]
+    level:    [65, 65]
+
+  17535022:
+    template: Vanguard_Hawker
+    at:       [146.022, 0.000, 62.224, 96]
+    level:    [75, 77]
+
+  17535023:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535024:
+    template: Vanguard_Mesmerizer
+    at:       [145.954, -6.000, 60.522, 99]
+    level:    [75, 77]
+
+  17535025:
+    template: Vanguard_Mesmerizer
+    at:       [149.307, -6.000, 57.406, 99]
+    level:    [75, 77]
+
+  17535026:
+    template: Serjeant_Tombstone
+    at:       [156.478, -1.000, 41.983, 128]
+    level:    [65, 65]
+
+  17535027:
+    template: Vanguard_Trooper
+    at:       [151.030, 0.000, 42.025, 129]
+    level:    [75, 77]
+
+  17535028:
+    template: Vanguard_Predator
+    at:       [154.375, -6.000, 44.559, 129]
+    level:    [75, 77]
+
+  17535029:
+    template: Vanguard_Predator
+    at:       [154.375, -6.000, 39.325, 129]
+    level:    [75, 77]
+
+  17535030:
+    template: Serjeant_Tombstone
+    at:       [147.716, 0.000, 42.070, 177]
+    level:    [65, 65]
+
+  17535031:
+    template: Vanguard_Grappler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535032:
+    template: Vanguard_Mesmerizer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535033:
+    template: Vanguard_Mesmerizer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535034:
+    template: Serjeant_Tombstone
+    at:       [140.898, 0.000, 55.751, 165]
+    level:    [65, 65]
+
+  17535035:
+    template: Serjeant_Tombstone
+    at:       [149.329, -1.000, 57.353, 98]
+    level:    [65, 65]
+
+  17535036:
+    template: Serjeant_Tombstone
+    at:       [143.507, 0.000, 27.361, 94]
+    level:    [65, 65]
+
+  17535037:
+    template: Warchief_Tombstone
+    at:       [130.542, 0.000, 14.217, 127]
+    level:    [65, 65]
+
+  17535038:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535039:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535040:
+    template: Warchief_Tombstone
+    at:       [112.954, 2.000, 14.070, 127]
+    level:    [65, 65]
+
+  17535041:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535042:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535043:
+    template: Serjeant_Tombstone
+    at:       [93.693, 2.000, -0.298, 158]
+    level:    [65, 65]
+
+  17535044:
+    template: Vanguard_Pillager
+    at:       [89.553, 2.000, 3.428, 225]
+    level:    [75, 77]
+
+  17535045:
+    template: Serjeant_Tombstone
+    at:       [79.793, 2.000, 12.783, 33]
+    level:    [65, 65]
+
+  17535046:
+    template: Vanguard_Pillager
+    at:       [83.954, 2.000, 8.993, 225]
+    level:    [75, 77]
+
+  17535047:
+    template: Serjeant_Tombstone
+    at:       [86.037, 2.000, 6.810, 224]
+    level:    [65, 65]
+
+  17535048:
+    template: Vanguard_Amputator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535049:
+    template: Vanguard_Mesmerizer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535050:
+    template: Serjeant_Tombstone
+    at:       [76.000, 2.000, -4.000, 160]
+    level:    [65, 65]
+
+  17535051:
+    template: Vanguard_Pillager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535052:
+    template: Vanguard_Bugler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535053:
+    template: Serjeant_Tombstone
+    at:       [68.000, 2.000, -12.000, 160]
+    level:    [65, 65]
+
+  17535054:
+    template: Vanguard_Pillager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535055:
+    template: Vanguard_Bugler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535056:
+    template: Serjeant_Tombstone
+    at:       [60.000, 2.000, -20.000, 160]
+    level:    [65, 65]
+
+  17535057:
+    template: Vanguard_Pillager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535058:
+    template: Vanguard_Bugler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535059:
+    template: Serjeant_Tombstone
+    at:       [67.585, 2.000, -3.527, 32]
+    level:    [65, 65]
+    script:   null
+
+  17535060:
+    template: Vanguard_Pillager
+    at:       [74.176, 2.000, -10.136, 31]
+    level:    [75, 77]
+    script:   null
+
+  17535061:
+    template: Vanguard_Pillager
+    at:       [72.114, 2.000, -8.061, 31]
+    level:    [75, 77]
+    script:   null
+
+  17535062:
+    template: Vanguard_Bugler
+    at:       [69.572, 2.000, -5.525, 31]
+    level:    [75, 77]
+    script:   null
+
+  17535063:
+    template: Warchief_Tombstone
+    at:       [97.210, 1.000, -41.355, 160]
+    level:    [65, 65]
+    script:   null
+
+  17535064:
+    template: Wyrmgnasher_Bjakdek
+    at:       [99.959, 1.000, -43.974, 160]
+    level:    [80, 80]
+    script:   null
+
+  17535065:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535066:
+    template: Vanguard_Neckchopper
+    at:       [98.510, 1.000, -39.933, 160]
+    level:    [75, 77]
+    script:   null
+
+  17535067:
+    template: Vanguard_Neckchopper
+    at:       [95.856, 1.000, -42.849, 160]
+    level:    [75, 77]
+
+  17535068:
+    template: Serjeant_Tombstone
+    at:       [83.951, 2.000, -28.249, 160]
+    level:    [65, 65]
+    script:   null
+
+  17535069:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535070:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535071:
+    template: Serjeant_Tombstone
+    at:       [76.024, 2.000, -36.144, 160]
+    level:    [65, 65]
+    script:   null
+
+  17535072:
+    template: Vanguard_Amputator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535073:
+    template: Vanguard_Amputator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535074:
+    template: Serjeant_Tombstone
+    at:       [100.092, 1.000, -36.074, 154]
+    level:    [65, 65]
+    script:   null
+
+  17535075:
+    template: Serjeant_Tombstone
+    at:       [92.348, 2.000, -20.508, 160]
+    level:    [65, 65]
+
+  17535076:
+    template: Serjeant_Tombstone
+    at:       [92.192, 1.000, -44.067, 166]
+    level:    [65, 65]
+    script:   null
+
+  17535077:
+    template: Warchief_Tombstone
+    at:       [96.910, 0.000, -60.700, 160]
+    level:    [65, 65]
+
+  17535078:
+    template: Serjeant_Tombstone
+    at:       [-7.787, 2.000, -80.453, 240]
+    level:    [65, 65]
+    script:   null
+
+  17535079:
+    template: Vanguard_Pillager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535080:
+    template: Vanguard_Pillager
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535081:
+    template: Serjeant_Tombstone
+    at:       [-12.359, -73.771, 2.000, 249]
+    level:    [65, 65]
+    script:   null
+
+  17535082:
+    template: Vanguard_Amputator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535083:
+    template: Serjeant_Tombstone
+    at:       [5.482, -74.629, 2.000, 241]
+    level:    [65, 65]
+    script:   null
+
+  17535084:
+    template: Vanguard_Amputator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535085:
+    template: Serjeant_Tombstone
+    at:       [4.221, 2.000, -84.063, 161]
+    level:    [65, 65]
+    script:   null
+
+  17535086:
+    template: Vanguard_Trooper
+    at:       [5.847, 2.000, -82.399, 161]
+    level:    [75, 77]
+    script:   null
+
+  17535087:
+    template: Vanguard_Trooper
+    at:       [1.734, 2.000, -86.105, 161]
+    level:    [75, 77]
+    script:   null
+
+  17535088:
+    template: Warchief_Tombstone
+    at:       [19.391, 2.200, -93.816, 128]
+    level:    [65, 65]
+    script:   null
+
+  17535089:
+    template: Warchief_Tombstone
+    at:       [23.036, 2.200, -93.958, 4]
+    level:    [65, 65]
+    script:   null
+
+  17535090:
+    template: Serjeant_Tombstone
+    at:       [-0.049, 1.700, -25.102, 192]
+    level:    [65, 65]
+    script:   null
+
+  17535091:
+    template: Vanguard_Trooper
+    at:       [-0.032, 2.000, -21.818, 192]
+    level:    [75, 77]
+    script:   null
+
+  17535092:
+    template: Vanguard_Footsoldier
+    at:       [3.922, 2.000, -21.818, 192]
+    level:    [75, 77]
+    script:   null
+
+  17535093:
+    template: Vanguard_Footsoldier
+    at:       [-4.018, 2.000, -21.884, 192]
+    level:    [75, 77]
+    script:   null
+
+  17535094:
+    template: Serjeant_Tombstone
+    at:       [14.058, 1.700, -28.468, 192]
+    level:    [65, 65]
+    script:   null
+
+  17535095:
+    template: Vanguard_Grappler
+    at:       [13.974, 2.000, -17.824, 192]
+    level:    [75, 77]
+
+  17535096:
+    template: Vanguard_Footsoldier
+    at:       [13.974, 2.000, -22.215, 192]
+    level:    [75, 77]
+    script:   null
+
+  17535097:
+    template: Serjeant_Tombstone
+    at:       [-13.951, 1.700, -29.058, 192]
+    level:    [65, 65]
+
+  17535098:
+    template: Vanguard_Grappler
+    at:       [-13.919, 2.000, -22.037, 192]
+    level:    [75, 77]
+    script:   null
+
+  17535099:
+    template: Vanguard_Footsoldier
+    at:       [-13.919, 2.000, -17.933, 192]
+    level:    [75, 77]
+    script:   null
+
+  17535100:
+    template: Warchief_Tombstone
+    at:       [-0.065, -3.000, -29.798, 192]
+    level:    [65, 65]
+    script:   null
+
+  17535101:
+    template: Vanguard_Predator
+    at:       [3.110, -3.000, -29.121, 192]
+    level:    [75, 77]
+
+  17535102:
+    template: Vanguard_Predator
+    at:       [-3.053, -3.000, -28.951, 192]
+    level:    [75, 77]
+    script:   null
+
+  17535103:
+    template: Serjeant_Tombstone
+    at:       [11.011, -3.000, -33.837, 192]
+    level:    [65, 65]
+    script:   null
+
+  17535104:
+    template: Vanguard_Amputator
+    at:       [8.001, -3.000, -34.748, 192]
+    level:    [75, 77]
+    script:   null
+
+  17535105:
+    template: Serjeant_Tombstone
+    at:       [-11.003, -3.000, -33.811, 192]
+    level:    [65, 65]
+    script:   null
+
+  17535106:
+    template: Vanguard_Amputator
+    at:       [-7.997, -3.000, -34.013, 192]
+    level:    [75, 77]
+    script:   null
+
+  17535107:
+    template: Serjeant_Tombstone
+    at:       [40.012, 2.000, -29.899, 232]
+    level:    [65, 65]
+    script:   null
+
+  17535108:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535109:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535110:
+    template: Warchief_Tombstone
+    at:       [28.024, 2.000, -18.309, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535111:
+    template: Vanguard_Hawker
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535112:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535113:
+    template: Vanguard_Hawker
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535114:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535115:
+    template: Warchief_Tombstone
+    at:       [-0.083, 2.000, -8.938, 64]
+    level:    [65, 65]
+
+  17535116:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535117:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535118:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535119:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535120:
+    template: Warchief_Tombstone
+    at:       [-28.038, 2.000, -17.135, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535121:
+    template: Vanguard_Hawker
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535122:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535123:
+    template: Vanguard_Hawker
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535124:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535125:
+    template: Serjeant_Tombstone
+    at:       [-39.851, 2.000, -29.884, 150]
+    level:    [65, 65]
+    script:   null
+
+  17535126:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535127:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535128:
+    template: Warchief_Tombstone
+    at:       [55.769, -8.600, -30.046, 192]
+    level:    [65, 65]
+
+  17535129:
+    template: Warchief_Tombstone
+    at:       [-55.810, -8.600, -30.251, 192]
+    level:    [65, 65]
+    script:   null
+
+  17535130:
+    template: Overlords_Tombstone
+    at:       [0.074, -2.000, 44.017, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535131:
+    template: Battlechoir_Gitchfotch
+    at:       [-4.955, -2.000, 41.064, 63]
+    level:    [80, 80]
+
+  17535132:
+    template: Soulsender_Fugbrag
+    at:       [4.944, -2.000, 41.185, 63]
+    level:    [80, 80]
+    script:   null
+
+  17535133:
+    template: Warchief_Tombstone
+    at:       [6.050, -1.335, 35.945, 128]
+    level:    [65, 65]
+    script:   null
+
+  17535134:
+    template: Vanguard_Impaler
+    at:       [6.892, 0.000, 26.976, 132]
+    level:    [75, 77]
+    script:   null
+
+  17535135:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535136:
+    template: Vanguard_Impaler
+    at:       [6.984, 0.000, 25.043, 132]
+    level:    [75, 77]
+    script:   null
+
+  17535137:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535138:
+    template: Vanguard_Impaler
+    at:       [6.986, 0.000, 23.014, 132]
+    level:    [75, 77]
+
+  17535139:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535140:
+    template: Warchief_Tombstone
+    at:       [-5.920, -1.335, 35.993, 253]
+    level:    [65, 65]
+    script:   null
+
+  17535141:
+    template: Vanguard_Dollmaster
+    at:       [-7.013, 0.000, 27.057, 255]
+    level:    [75, 77]
+    script:   null
+
+  17535142:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535143:
+    template: Vanguard_Dollmaster
+    at:       [-7.013, 0.000, 24.959, 255]
+    level:    [75, 77]
+    script:   null
+
+  17535144:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535145:
+    template: Vanguard_Dollmaster
+    at:       [-7.013, 0.000, 23.097, 255]
+    level:    [75, 77]
+    script:   null
+
+  17535146:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535147:
+    template: Serjeant_Tombstone
+    at:       [18.015, 0.000, 35.865, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535148:
+    template: Serjeant_Tombstone
+    at:       [-17.993, 0.000, 35.865, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535149:
+    template: Warchief_Tombstone
+    at:       [13.922, 0.000, 35.865, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535150:
+    template: Warchief_Tombstone
+    at:       [-12.009, 0.000, 35.865, 64]
+    level:    [65, 65]
+
+  17535151:
+    template: Serjeant_Tombstone
+    at:       [0.000, 0.000, 25.000, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535152:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535153:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535154:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535155:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535156:
+    template: Serjeant_Tombstone
+    at:       [5.000, 0.000, 10.000, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535157:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535158:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535159:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535160:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535161:
+    template: Serjeant_Tombstone
+    at:       [-5.000, 0.000, 10.000, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535162:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535163:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535164:
+    template: Vanguard_Dollmaster
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535165:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535166:
+    template: Serjeant_Tombstone
+    at:       [20.000, 2.000, 5.000, 64]
+    level:    [65, 65]
+
+  17535167:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535168:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535169:
+    template: Serjeant_Tombstone
+    at:       [20.000, 0.000, 24.000, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535170:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535171:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535172:
+    template: Serjeant_Tombstone
+    at:       [-20.000, 2.000, 5.000, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535173:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535174:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535175:
+    template: Serjeant_Tombstone
+    at:       [-20.000, 0.000, 24.000, 64]
+    level:    [65, 65]
+    script:   null
+
+  17535176:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535177:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535178:
+    template: Serjeant_Tombstone
+    at:       [23.852, 2.000, -12.458, 128]
+    level:    [65, 65]
+    script:   null
+
+  17535179:
+    template: Vanguard_Dollmaster
+    at:       [18.909, 2.000, -12.461, 128]
+    level:    [75, 77]
+    script:   null
+
+  17535180:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535181:
+    template: Vanguard_Dollmaster
+    at:       [15.066, 2.000, -12.425, 128]
+    level:    [75, 77]
+
+  17535182:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535183:
+    template: Serjeant_Tombstone
+    at:       [-23.954, 2.000, -12.138, 0]
+    level:    [65, 65]
+    script:   null
+
+  17535184:
+    template: Vanguard_Dollmaster
+    at:       [-20.099, 2.000, -12.028, 0]
+    level:    [75, 77]
+    script:   null
+
+  17535185:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535186:
+    template: Vanguard_Dollmaster
+    at:       [-16.121, 2.000, -11.978, 0]
+    level:    [75, 77]
+    script:   null
+
+  17535187:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535188:
+    template: Serjeant_Tombstone
+    at:       [-5.031, 2.000, -11.830, 51]
+    level:    [65, 65]
+    script:   null
+
+  17535189:
+    template: Serjeant_Tombstone
+    at:       [5.083, 2.000, -11.842, 75]
+    level:    [65, 65]
+    script:   null
+
+  17535190:
+    template: Serjeant_Tombstone
+    at:       [-72.000, 2.000, -32.000, 224]
+    level:    [65, 65]
+    script:   null
+
+  17535191:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535192:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535193:
+    template: Serjeant_Tombstone
+    at:       [-68.000, 2.000, -12.000, 224]
+    level:    [65, 65]
+
+  17535194:
+    template: Vanguard_Impaler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535195:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535196:
+    template: Vanguard_Impaler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535197:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535198:
+    template: Serjeant_Tombstone
+    at:       [-88.000, 2.000, -16.000, 224]
+    level:    [65, 65]
+    script:   null
+
+  17535199:
+    template: Vanguard_Hawker
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535200:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535201:
+    template: Vanguard_Hawker
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535202:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+    script:   null
+
+  17535203:
+    template: Serjeant_Tombstone
+    at:       [-66.917, 2.000, -3.372, 96]
+    level:    [65, 65]
+    script:   null
+
+  17535204:
+    template: Vanguard_Grappler
+    at:       [-72.997, 2.000, -9.010, 100]
+    level:    [75, 77]
+
+  17535205:
+    template: Vanguard_Grappler
+    at:       [-74.967, 2.000, -10.936, 100]
+    level:    [75, 77]
+
+  17535206:
+    template: Vanguard_Bugler
+    at:       [-71.071, 2.000, -7.090, 100]
+    level:    [75, 77]
+
+  17535207:
+    template: Serjeant_Tombstone
+    at:       [-103.030, -2.000, 12.577, 32]
+    level:    [65, 65]
+
+  17535208:
+    template: Vanguard_Backstabber
+    at:       [-95.306, 1.000, 4.917, 33]
+    level:    [75, 77]
+
+  17535209:
+    template: Vanguard_Backstabber
+    at:       [-99.134, -1.000, 8.880, 33]
+    level:    [75, 77]
+
+  17535210:
+    template: Serjeant_Tombstone
+    at:       [-92.851, -2.000, 22.354, 32]
+    level:    [65, 65]
+
+  17535211:
+    template: Vanguard_Gutslasher
+    at:       [-88.319, -0.500, 17.841, 33]
+    level:    [75, 77]
+
+  17535212:
+    template: Vanguard_Gutslasher
+    at:       [-85.309, -1.000, 14.711, 33]
+    level:    [75, 77]
+
+  17535213:
+    template: Warchief_Tombstone
+    at:       [-105.934, -2.000, 25.837, 33]
+    level:    [65, 65]
+
+  17535214:
+    template: Vanguard_Amputator
+    at:       [-107.943, -2.000, 22.866, 33]
+    level:    [75, 77]
+
+  17535215:
+    template: Vanguard_Amputator
+    at:       [-103.565, -2.000, 26.756, 33]
+    level:    [75, 77]
+
+  17535216:
+    template: Vanguard_Predator
+    at:       [-112.589, -8.000, 32.617, 33]
+    level:    [75, 77]
+
+  17535217:
+    template: Vanguard_Predator
+    at:       [-115.298, -8.000, 29.580, 33]
+    level:    [75, 77]
+
+  17535218:
+    template: Vanguard_Predator
+    at:       [-109.642, -8.000, 35.351, 33]
+    level:    [75, 77]
+
+  17535219:
+    template: Warchief_Tombstone
+    at:       [-97.550, -2.000, 17.439, 32]
+    level:    [65, 65]
+
+  17535220:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535221:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535222:
+    template: Warchief_Tombstone
+    at:       [-97.346, 1.000, -41.302, 224]
+    level:    [65, 65]
+
+  17535223:
+    template: Reapertongue_Gadgquok
+    at:       [-100.173, 1.000, -44.133, 224]
+    level:    [80, 80]
+
+  17535224:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535225:
+    template: Vanguard_Grappler
+    at:       [-96.063, 1.000, -42.792, 224]
+    level:    [75, 77]
+
+  17535226:
+    template: Vanguard_Grappler
+    at:       [-98.671, 1.000, -40.029, 224]
+    level:    [75, 77]
+
+  17535227:
+    template: Serjeant_Tombstone
+    at:       [-91.867, 1.000, -44.116, 224]
+    level:    [65, 65]
+
+  17535228:
+    template: Vanguard_Vexer
+    at:       [-95.411, 1.000, -44.831, 224]
+    level:    [75, 77]
+
+  17535229:
+    template: Vanguard_Vexer
+    at:       [-92.569, 1.000, -47.237, 224]
+    level:    [75, 77]
+
+  17535230:
+    template: Serjeant_Tombstone
+    at:       [-100.037, 1.000, -36.671, 224]
+    level:    [65, 65]
+
+  17535231:
+    template: Vanguard_Mesmerizer
+    at:       [-103.418, 1.000, -36.688, 224]
+    level:    [75, 77]
+
+  17535232:
+    template: Vanguard_Mesmerizer
+    at:       [-100.706, 1.000, -39.397, 224]
+    level:    [75, 77]
+
+  17535233:
+    template: Serjeant_Tombstone
+    at:       [-94.423, 2.000, -22.141, 224]
+    level:    [65, 65]
+
+  17535234:
+    template: Serjeant_Tombstone
+    at:       [-86.576, 2.000, -30.616, 224]
+    level:    [65, 65]
+
+  17535235:
+    template: Serjeant_Tombstone
+    at:       [-78.558, 2.000, -38.546, 224]
+    level:    [65, 65]
+
+  17535236:
+    template: Warchief_Tombstone
+    at:       [-114.830, 1.000, -38.900, 223]
+    level:    [65, 65]
+
+  17535237:
+    template: Serjeant_Tombstone
+    at:       [-114.053, -2.000, 16.539, 12]
+    level:    [65, 65]
+
+  17535238:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535239:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535240:
+    template: Warchief_Tombstone
+    at:       [-130.719, -2.000, 18.687, 247]
+    level:    [65, 65]
+
+  17535241:
+    template: Vanguard_Mesmerizer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535242:
+    template: Vanguard_Mesmerizer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535243:
+    template: Warchief_Tombstone
+    at:       [-141.385, -2.000, 18.260, 0]
+    level:    [65, 65]
+
+  17535244:
+    template: Vanguard_Amputator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535245:
+    template: Vanguard_Amputator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535246:
+    template: Serjeant_Tombstone
+    at:       [-154.052, -2.200, 27.972, 66]
+    level:    [65, 65]
+
+  17535247:
+    template: Vanguard_Vexer
+    at:       [-151.071, -2.200, 25.851, 66]
+    level:    [75, 77]
+
+  17535248:
+    template: Vanguard_Vexer
+    at:       [-156.458, -2.200, 25.530, 66]
+    level:    [75, 77]
+
+  17535249:
+    template: Warchief_Tombstone
+    at:       [-178.125, -1.000, 30.411, 36]
+    level:    [65, 65]
+
+  17535250:
+    template: Vanguard_Hawker
+    at:       [-178.973, -1.000, 31.904, 36]
+    level:    [75, 77]
+
+  17535251:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535252:
+    template: Vanguard_Hawker
+    at:       [-180.382, -1.000, 30.077, 36]
+    level:    [75, 77]
+
+  17535253:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535254:
+    template: Warchief_Tombstone
+    at:       [-181.883, -1.000, 33.708, 160]
+    level:    [65, 65]
+
+  17535255:
+    template: Vanguard_Hawker
+    at:       [-180.561, -1.000, 32.345, 160]
+    level:    [75, 77]
+
+  17535256:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535257:
+    template: Vanguard_Hawker
+    at:       [-181.856, -1.000, 31.327, 160]
+    level:    [75, 77]
+
+  17535258:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535259:
+    template: Serjeant_Tombstone
+    at:       [-175.030, -1.500, 36.693, 95]
+    level:    [65, 65]
+
+  17535260:
+    template: Vanguard_Hawker
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535261:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535262:
+    template: Warchief_Tombstone
+    at:       [-182.151, -8.800, 29.878, 225]
+    level:    [65, 65]
+
+  17535263:
+    template: Vanguard_Hawker
+    at:       [-180.281, -8.800, 27.790, 225]
+    level:    [75, 77]
+
+  17535264:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535265:
+    template: Vanguard_Hawker
+    at:       [-184.276, -8.800, 31.819, 225]
+    level:    [75, 77]
+
+  17535266:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535267:
+    template: Warchief_Tombstone
+    at:       [-172.753, -8.800, 15.485, 229]
+    level:    [65, 65]
+
+  17535268:
+    template: Warchief_Tombstone
+    at:       [-196.530, -8.800, 39.105, 229]
+    level:    [65, 65]
+
+  17535269:
+    template: Serjeant_Tombstone
+    at:       [-194.040, -2.000, 60.996, 63]
+    level:    [65, 65]
+
+  17535270:
+    template: Vanguard_Vexer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535271:
+    template: Vanguard_Vexer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535272:
+    template: Vanguard_Mesmerizer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535273:
+    template: Vanguard_Mesmerizer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535274:
+    template: Serjeant_Tombstone
+    at:       [-193.573, -2.000, 68.407, 63]
+    level:    [65, 65]
+
+  17535275:
+    template: Vanguard_Trooper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535276:
+    template: Vanguard_Trooper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535277:
+    template: Serjeant_Tombstone
+    at:       [-185.956, -8.800, 82.070, 63]
+    level:    [65, 65]
+
+  17535278:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535279:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535280:
+    template: Vanguard_Predator
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535281:
+    template: Serjeant_Tombstone
+    at:       [-202.615, -2.000, 85.832, 157]
+    level:    [65, 65]
+
+  17535282:
+    template: Vanguard_Trooper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535283:
+    template: Vanguard_Trooper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535284:
+    template: Vanguard_Trooper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535285:
+    template: Serjeant_Tombstone
+    at:       [-210.255, -2.000, 95.173, 130]
+    level:    [65, 65]
+
+  17535286:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535287:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535288:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535289:
+    template: Serjeant_Tombstone
+    at:       [-203.991, -2.000, 88.370, 33]
+    level:    [65, 65]
+
+  17535290:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535291:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535292:
+    template: Warchief_Tombstone
+    at:       [-221.783, -2.000, 98.220, 0]
+    level:    [65, 65]
+
+  17535293:
+    template: Vanguard_Vexer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535294:
+    template: Vanguard_Footsoldier
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535295:
+    template: Vanguard_Footsoldier
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535296:
+    template: Warchief_Tombstone
+    at:       [-240.978, -4.000, 98.077, 0]
+    level:    [65, 65]
+
+  17535297:
+    template: Vanguard_Bugler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535298:
+    template: Vanguard_Bugler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535299:
+    template: Serjeant_Tombstone
+    at:       [-139.481, -6.000, 90.012, 3]
+    level:    [65, 65]
+
+  17535300:
+    template: Vanguard_Impaler
+    at:       [-136.624, -6.000, 86.882, 0]
+    level:    [75, 77]
+
+  17535301:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535302:
+    template: Vanguard_Impaler
+    at:       [-132.368, -6.000, 86.844, 0]
+    level:    [75, 77]
+
+  17535303:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535304:
+    template: Vanguard_Footsoldier
+    at:       [-132.384, -6.000, 92.476, 0]
+    level:    [75, 77]
+
+  17535305:
+    template: Vanguard_Footsoldier
+    at:       [-136.639, -6.000, 92.513, 0]
+    level:    [75, 77]
+
+  17535306:
+    template: Serjeant_Tombstone
+    at:       [-110.366, -6.000, 86.003, 24]
+    level:    [65, 65]
+
+  17535307:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535308:
+    template: Vanguard_Neckchopper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535309:
+    template: Vanguard_Vexer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535310:
+    template: Vanguard_Vexer
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535311:
+    template: Serjeant_Tombstone
+    at:       [-94.248, -6.000, 74.241, 57]
+    level:    [65, 65]
+
+  17535312:
+    template: Vanguard_Footsoldier
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535313:
+    template: Vanguard_Footsoldier
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535314:
+    template: Vanguard_Trooper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535315:
+    template: Vanguard_Trooper
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535316:
+    template: Serjeant_Tombstone
+    at:       [-132.227, -4.000, 70.296, 64]
+    level:    [65, 65]
+
+  17535317:
+    template: Serjeant_Tombstone
+    at:       [-132.194, -4.000, 66.998, 64]
+    level:    [65, 65]
+
+  17535318:
+    template: Vanguard_Bugler
+    at:       [-132.185, -4.000, 63.842, 64]
+    level:    [75, 77]
+
+  17535319:
+    template: Serjeant_Tombstone
+    at:       [-132.208, -4.000, 72.223, 64]
+    level:    [65, 65]
+
+  17535320:
+    template: Vanguard_Bugler
+    at:       [-132.220, -5.000, 76.347, 64]
+    level:    [75, 77]
+
+  17535321:
+    template: Warchief_Tombstone
+    at:       [-125.755, -6.000, 89.001, 10]
+    level:    [65, 65]
+
+  17535322:
+    template: Warchief_Tombstone
+    at:       [-89.775, -4.000, 49.977, 81]
+    level:    [65, 65]
+
+  17535323:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535324:
+    template: Vanguard_Backstabber
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535325:
+    template: Warchief_Tombstone
+    at:       [-94.647, -4.000, 41.151, 95]
+    level:    [65, 65]
+
+  17535326:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535327:
+    template: Vanguard_Gutslasher
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535328:
+    template: Serjeant_Tombstone
+    at:       [-152.357, -2.000, 54.921, 133]
+    level:    [65, 65]
+
+  17535329:
+    template: Vanguard_Impaler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535330:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535331:
+    template: Vanguard_Impaler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535332:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535333:
+    template: Warchief_Tombstone
+    at:       [-159.694, -2.000, 67.684, 66]
+    level:    [65, 65]
+
+  17535334:
+    template: Vanguard_Predator
+    at:       [-163.185, -2.000, 63.348, 66]
+    level:    [75, 77]
+
+  17535335:
+    template: Vanguard_Predator
+    at:       [-155.898, -2.000, 63.309, 66]
+    level:    [75, 77]
+
+  17535336:
+    template: Serjeant_Tombstone
+    at:       [-166.867, -2.000, 54.199, 142]
+    level:    [65, 65]
+
+  17535337:
+    template: Vanguard_Impaler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535338:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535339:
+    template: Vanguard_Impaler
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535340:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535341:
+    template: Warchief_Tombstone
+    at:       [-137.640, -10.800, 65.053, 32]
+    level:    [65, 65]
+
+  17535342:
+    template: Vanguard_Trooper
+    at:       [-135.486, -10.800, 62.955, 33]
+    level:    [75, 77]
+
+  17535343:
+    template: Vanguard_Trooper
+    at:       [-133.458, -10.800, 60.876, 33]
+    level:    [75, 77]
+
+  17535344:
+    template: Serjeant_Tombstone
+    at:       [-268.003, -4.000, 97.985, 0]
+    level:    [65, 65]
+
+  17535345:
+    template: Voidstreaker_Butchnotch
+    at:       [-263.726, -4.000, 97.991, 1]
+    level:    [80, 80]
+
+  17535346:
+    template: Serjeant_Tombstone
+    at:       [-253.300, -3.600, 117.861, 64]
+    level:    [65, 65]
+
+  17535347:
+    template: Vanguard_Backstabber
+    at:       [-253.297, -3.600, 114.425, 64]
+    level:    [75, 77]
+
+  17535348:
+    template: Vanguard_Backstabber
+    at:       [-253.295, -3.600, 111.557, 64]
+    level:    [75, 77]
+
+  17535349:
+    template: Serjeant_Tombstone
+    at:       [-253.280, -3.600, 77.136, 191]
+    level:    [65, 65]
+
+  17535350:
+    template: Vanguard_Backstabber
+    at:       [-253.342, -3.600, 80.024, 191]
+    level:    [75, 77]
+
+  17535351:
+    template: Vanguard_Backstabber
+    at:       [-253.411, -3.600, 83.191, 191]
+    level:    [75, 77]
+
+  17535352:
+    template: Serjeant_Tombstone
+    at:       [92.454, 4.000, 47.961, 1]
+    level:    [65, 65]
+
+  17535353:
+    template: Vanguard_Footsoldier
+    at:       [95.924, 4.000, 47.957, 0]
+    level:    [75, 77]
+
+  17535354:
+    template: Vanguard_Footsoldier
+    at:       [95.836, 4.000, 44.391, 0]
+    level:    [75, 77]
+
+  17535355:
+    template: Vanguard_Footsoldier
+    at:       [95.998, 4.000, 50.977, 0]
+    level:    [75, 77]
+
+  17535356:
+    template: Serjeant_Tombstone
+    at:       [103.677, 4.000, 40.924, 126]
+    level:    [65, 65]
+
+  17535357:
+    template: Vanguard_Grappler
+    at:       [100.347, 4.000, 40.861, 128]
+    level:    [75, 77]
+
+  17535358:
+    template: Vanguard_Grappler
+    at:       [100.258, 4.000, 37.566, 128]
+    level:    [75, 77]
+
+  17535359:
+    template: Vanguard_Grappler
+    at:       [100.428, 4.000, 43.876, 128]
+    level:    [75, 77]
+
+  17535360:
+    template: Serjeant_Tombstone
+    at:       [101.546, 4.000, 25.604, 91]
+    level:    [65, 65]
+
+  17535361:
+    template: Vanguard_Amputator
+    at:       [99.238, 4.000, 22.450, 93]
+    level:    [75, 77]
+
+  17535362:
+    template: Vanguard_Amputator
+    at:       [95.470, 4.000, 24.776, 93]
+    level:    [75, 77]
+
+  17535363:
+    template: Vanguard_Amputator
+    at:       [102.754, 4.000, 20.152, 93]
+    level:    [75, 77]
+
+  17535364:
+    template: Serjeant_Tombstone
+    at:       [133.089, 0.000, 9.887, 193]
+    level:    [65, 65]
+
+  17535365:
+    template: Vanguard_Mesmerizer
+    at:       [132.927, 0.000, 12.837, 192]
+    level:    [75, 77]
+
+  17535366:
+    template: Vanguard_Mesmerizer
+    at:       [132.907, 0.000, 15.857, 192]
+    level:    [75, 77]
+
+  17535367:
+    template: Vanguard_Mesmerizer
+    at:       [132.890, 0.000, 18.461, 192]
+    level:    [75, 77]
+
+  17535368:
+    template: Serjeant_Tombstone
+    at:       [75.173, 2.000, 4.869, 32]
+    level:    [65, 65]
+
+  17535369:
+    template: Vanguard_Vexer
+    at:       [78.882, 2.000, 1.207, 35]
+    level:    [75, 77]
+
+  17535370:
+    template: Vanguard_Vexer
+    at:       [81.050, 2.000, -1.276, 35]
+    level:    [75, 77]
+
+  17535371:
+    template: Vanguard_Vexer
+    at:       [82.762, 2.000, -3.237, 35]
+    level:    [75, 77]
+
+  17535372:
+    template: Serjeant_Tombstone
+    at:       [61.961, 2.000, -47.888, 253]
+    level:    [65, 65]
+
+  17535373:
+    template: Vanguard_Pillager
+    at:       [68.111, 2.000, -47.414, 255]
+    level:    [75, 77]
+
+  17535374:
+    template: Vanguard_Pillager
+    at:       [72.634, 2.000, -47.311, 255]
+    level:    [75, 77]
+
+  17535375:
+    template: Vanguard_Pillager
+    at:       [75.385, 2.000, -47.248, 255]
+    level:    [75, 77]
+
+  17535376:
+    template: Serjeant_Tombstone
+    at:       [103.971, 2.000, -6.349, 64]
+    level:    [65, 65]
+
+  17535377:
+    template: Vanguard_Trooper
+    at:       [104.183, 2.000, -12.620, 62]
+    level:    [75, 77]
+
+  17535378:
+    template: Vanguard_Trooper
+    at:       [103.914, 2.000, -16.101, 62]
+    level:    [75, 77]
+
+  17535379:
+    template: Vanguard_Trooper
+    at:       [103.885, 2.000, -19.385, 62]
+    level:    [75, 77]
+
+  17535380:
+    template: Serjeant_Tombstone
+    at:       [126.198, 1.000, -29.259, 126]
+    level:    [65, 65]
+
+  17535381:
+    template: Vanguard_Neckchopper
+    at:       [118.845, 1.000, -29.298, 128]
+    level:    [75, 77]
+
+  17535382:
+    template: Vanguard_Neckchopper
+    at:       [115.966, 1.000, -29.362, 128]
+    level:    [75, 77]
+
+  17535383:
+    template: Vanguard_Neckchopper
+    at:       [113.079, 1.000, -29.426, 128]
+    level:    [75, 77]
+
+  17535384:
+    template: Serjeant_Tombstone
+    at:       [85.385, 1.000, -69.550, 188]
+    level:    [65, 65]
+
+  17535385:
+    template: Vanguard_Hawker
+    at:       [85.333, 1.000, -62.588, 195]
+    level:    [75, 77]
+
+  17535386:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535387:
+    template: Vanguard_Hawker
+    at:       [85.443, 1.000, -57.611, 195]
+    level:    [75, 77]
+
+  17535388:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535389:
+    template: Vanguard_Hawker
+    at:       [85.603, 1.000, -54.595, 195]
+    level:    [75, 77]
+
+  17535390:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535391:
+    template: Serjeant_Tombstone
+    at:       [-62.568, 2.000, -48.154, 122]
+    level:    [65, 65]
+
+  17535392:
+    template: Vanguard_Bugler
+    at:       [-68.285, 2.000, -49.054, 128]
+    level:    [75, 77]
+
+  17535393:
+    template: Vanguard_Bugler
+    at:       [-71.313, 2.000, -49.027, 128]
+    level:    [75, 77]
+
+  17535394:
+    template: Vanguard_Bugler
+    at:       [-74.329, 2.000, -49.000, 128]
+    level:    [75, 77]
+
+  17535395:
+    template: Serjeant_Tombstone
+    at:       [-85.464, 1.000, -70.938, 190]
+    level:    [65, 65]
+
+  17535396:
+    template: Vanguard_Predator
+    at:       [-85.325, 1.000, -65.304, 192]
+    level:    [75, 77]
+
+  17535397:
+    template: Vanguard_Predator
+    at:       [-85.339, 1.000, -62.148, 192]
+    level:    [75, 77]
+
+  17535398:
+    template: Vanguard_Predator
+    at:       [-85.351, 1.000, -59.540, 192]
+    level:    [75, 77]
+
+  17535399:
+    template: Serjeant_Tombstone
+    at:       [-125.602, 1.000, -29.441, 251]
+    level:    [65, 65]
+
+  17535400:
+    template: Vanguard_Gutslasher
+    at:       [-121.323, 1.000, -29.270, 0]
+    level:    [75, 77]
+
+  17535401:
+    template: Vanguard_Gutslasher
+    at:       [-118.571, 1.000, -29.290, 0]
+    level:    [75, 77]
+
+  17535402:
+    template: Vanguard_Gutslasher
+    at:       [-115.687, 1.000, -29.311, 0]
+    level:    [75, 77]
+
+  17535403:
+    template: Serjeant_Tombstone
+    at:       [-103.415, 2.000, -8.437, 59]
+    level:    [65, 65]
+
+  17535404:
+    template: Vanguard_Backstabber
+    at:       [-102.757, 2.000, -12.838, 64]
+    level:    [75, 77]
+
+  17535405:
+    template: Vanguard_Backstabber
+    at:       [-102.761, 2.000, -15.854, 64]
+    level:    [75, 77]
+
+  17535406:
+    template: Vanguard_Backstabber
+    at:       [-102.764, 2.000, -18.594, 64]
+    level:    [75, 77]
+
+  17535407:
+    template: Vanguard_Backstabber
+    at:       [-102.768, 2.000, -21.486, 64]
+    level:    [75, 77]
+
+  17535408:
+    template: Serjeant_Tombstone
+    at:       [-167.960, -1.000, 12.028, 201]
+    level:    [65, 65]
+
+  17535409:
+    template: Vanguard_Impaler
+    at:       [-167.077, -1.000, 16.356, 201]
+    level:    [75, 77]
+
+  17535410:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535411:
+    template: Vanguard_Impaler
+    at:       [-162.876, -1.000, 10.566, 201]
+    level:    [75, 77]
+
+  17535412:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535413:
+    template: Vanguard_Impaler
+    at:       [-161.459, -1.000, 16.302, 201]
+    level:    [75, 77]
+
+  17535414:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535415:
+    template: Serjeant_Tombstone
+    at:       [-198.883, -1.000, 41.677, 237]
+    level:    [65, 65]
+
+  17535416:
+    template: Vanguard_Dollmaster
+    at:       [-195.835, -1.000, 43.279, 238]
+    level:    [75, 77]
+
+  17535417:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535418:
+    template: Vanguard_Dollmaster
+    at:       [-192.627, -1.000, 44.841, 238]
+    level:    [75, 77]
+
+  17535419:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535420:
+    template: Serjeant_Tombstone
+    at:       [-197.328, -8.801, 90.762, 95]
+    level:    [65, 65]
+
+  17535421:
+    template: Vanguard_Dollmaster
+    at:       [-200.081, -8.801, 93.398, 100]
+    level:    [75, 77]
+
+  17535422:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535423:
+    template: Vanguard_Dollmaster
+    at:       [-194.448, -8.801, 88.126, 100]
+    level:    [75, 77]
+
+  17535424:
+    template: Vanguards_Avatar
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535425:
+    template: Vanguard_Bugler
+    at:       [-201.075, -8.801, 98.289, 100]
+    level:    [75, 77]
+
+  17535426:
+    template: Vanguard_Bugler
+    at:       [-189.973, -8.801, 87.434, 100]
+    level:    [75, 77]
+
+  17535427:
+    template: Serjeant_Tombstone
+    at:       [28.383, 2.200, -89.913, 134]
+    level:    [65, 65]
+
+  17535428:
+    template: Vanguard_Pillager
+    at:       [25.314, 2.200, -89.824, 142]
+    level:    [75, 77]
+
+  17535429:
+    template: Vanguard_Pillager
+    at:       [22.846, 2.200, -89.824, 142]
+    level:    [75, 77]
+
+  17535430:
+    template: Vanguard_Pillager
+    at:       [19.982, 2.200, -89.824, 142]
+    level:    [75, 77]
+
+  17535431:
+    template: Vanguard_Bugler
+    at:       [17.918, 2.200, -89.824, 142]
+    level:    [75, 77]
+
+  17535432:
+    template: Vanguard_Bugler
+    at:       [15.450, 2.200, -89.824, 142]
+    level:    [75, 77]
+
+  17535433:
+    template: Serjeant_Tombstone
+    at:       [28.068, 2.200, -96.912, 142]
+    level:    [65, 65]
+
+  17535434:
+    template: Vanguard_Gutslasher
+    at:       [25.314, 2.200, -96.912, 142]
+    level:    [75, 77]
+
+  17535435:
+    template: Vanguard_Gutslasher
+    at:       [22.846, 2.200, -96.912, 142]
+    level:    [75, 77]
+
+  17535436:
+    template: Vanguard_Vexer
+    at:       [19.982, 2.200, -96.912, 142]
+    level:    [75, 77]
+
+  17535437:
+    template: Vanguard_Vexer
+    at:       [17.918, 2.200, -96.912, 142]
+    level:    [75, 77]
+
+  17535438:
+    template: Vanguard_Mesmerizer
+    at:       [15.450, 2.200, -96.912, 142]
+    level:    [75, 77]
+
+  17535439:
+    template: Vanguard_Mesmerizer
+    at:       [12.835, 2.200, -96.912, 142]
+    level:    [75, 77]
+
+  17535440:
+    template: Serjeant_Tombstone
+    at:       [-152.009, -2.000, 65.984, 64]
+    level:    [65, 65]
+
+  17535441:
+    template: Vanguard_Footsoldier
+    at:       [-149.665, -2.000, 65.955, 64]
+    level:    [75, 77]
+
+  17535442:
+    template: Vanguard_Footsoldier
+    at:       [-149.759, -2.000, 61.840, 64]
+    level:    [75, 77]
+
+  17535443:
+    template: Vanguard_Amputator
+    at:       [-149.544, -2.000, 59.497, 64]
+    level:    [75, 77]
+
+  17535444:
+    template: Vanguard_Amputator
+    at:       [-149.604, -2.000, 56.881, 64]
+    level:    [75, 77]
+
+  17535445:
+    template: Serjeant_Tombstone
+    at:       [-169.901, -2.000, 66.130, 64]
+    level:    [65, 65]
+
+  17535446:
+    template: Vanguard_Grappler
+    at:       [-167.001, -2.000, 66.106, 64]
+    level:    [75, 77]
+
+  17535447:
+    template: Vanguard_Grappler
+    at:       [-164.657, -2.000, 66.087, 64]
+    level:    [75, 77]
+
+  17535448:
+    template: Vanguard_Grappler
+    at:       [-161.625, -2.000, 66.062, 64]
+    level:    [75, 77]
+
+  17535449:
+    template: Vanguard_Amputator
+    at:       [-158.609, -2.000, 66.038, 64]
+    level:    [75, 77]
+
+  17535450:
+    template: Vanguard_Amputator
+    at:       [-155.453, -2.000, 66.012, 64]
+    level:    [75, 77]
+
+  17535451:
+    template: Serjeant_Tombstone
+    at:       [-36.984, 0.000, 30.022, 23]
+    level:    [65, 65]
+
+  17535452:
+    template: Vanguard_Neckchopper
+    at:       [-34.910, 0.000, 28.557, 27]
+    level:    [75, 77]
+
+  17535453:
+    template: Vanguard_Neckchopper
+    at:       [-31.468, 0.000, 25.842, 27]
+    level:    [75, 77]
+
+  17535454:
+    template: Vanguard_Neckchopper
+    at:       [-28.233, 0.000, 23.291, 27]
+    level:    [75, 77]
+
+  17535455:
+    template: Vanguard_Mesmerizer
+    at:       [-24.131, 0.667, 20.057, 27]
+    level:    [75, 77]
+
+  17535456:
+    template: Vanguard_Mesmerizer
+    at:       [-20.019, 1.667, 16.815, 27]
+    level:    [75, 77]
+
+  17535457:
+    template: Serjeant_Tombstone
+    at:       [-38.034, 0.000, 12.952, 0]
+    level:    [65, 65]
+
+  17535458:
+    template: Vanguard_Hawker
+    at:       [-35.621, 0.000, 12.998, 0]
+    level:    [75, 77]
+
+  17535459:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535460:
+    template: Vanguard_Hawker
+    at:       [-31.218, 1.000, 13.091, 0]
+    level:    [75, 77]
+
+  17535461:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535462:
+    template: Vanguard_Hawker
+    at:       [-27.242, 2.100, 13.175, 0]
+    level:    [75, 77]
+
+  17535463:
+    template: Vanguards_Hecteyes
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535464:
+    template: Serjeant_Tombstone
+    at:       [37.964, 0.000, 12.996, 127]
+    level:    [65, 65]
+
+  17535465:
+    template: Vanguard_Trooper
+    at:       [35.185, 0.000, 13.002, 128]
+    level:    [75, 77]
+
+  17535466:
+    template: Vanguard_Trooper
+    at:       [31.482, 1.000, 13.088, 128]
+    level:    [75, 77]
+
+  17535467:
+    template: Vanguard_Trooper
+    at:       [27.383, 2.100, 13.183, 128]
+    level:    [75, 77]
+
+  17535468:
+    template: Vanguard_Pillager
+    at:       [23.684, 2.100, 13.270, 128]
+    level:    [75, 77]
+
+  17535469:
+    template: Vanguard_Pillager
+    at:       [19.581, 2.100, 13.365, 128]
+    level:    [75, 77]
+
+  17535470:
+    template: Serjeant_Tombstone
+    at:       [36.944, 0.000, 30.214, 96]
+    level:    [65, 65]
+
+  17535471:
+    template: Vanguard_Gutslasher
+    at:       [35.038, 0.000, 28.085, 94]
+    level:    [75, 77]
+
+  17535472:
+    template: Vanguard_Gutslasher
+    at:       [31.979, 0.000, 24.753, 94]
+    level:    [75, 77]
+
+  17535473:
+    template: Vanguard_Vexer
+    at:       [29.372, 0.000, 21.913, 94]
+    level:    [75, 77]
+
+  17535474:
+    template: Vanguard_Vexer
+    at:       [26.583, 1.000, 18.875, 94]
+    level:    [75, 77]
+
+  17535475:
+    template: Vanguard_Bugler
+    at:       [23.328, 2.100, 15.331, 94]
+    level:    [75, 77]
+
+  17535476:
+    template: Vanguard_Bugler
+    at:       [20.545, 2.100, 12.299, 94]
+    level:    [75, 77]
+
+  17535477:
+    template: Serjeant_Tombstone
+    at:       [0.000, -3.000, -32.000, 191]
+    level:    [65, 65]
+
+  17535478:
+    template: Vanguard_Impaler
+    at:       [-0.094, -3.000, -34.204, 191]
+    level:    [75, 77]
+
+  17535479:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535480:
+    template: Vanguard_Impaler
+    at:       [-3.929, -3.000, -34.187, 191]
+    level:    [75, 77]
+
+  17535481:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]
+
+  17535482:
+    template: Vanguard_Impaler
+    at:       [3.936, -3.000, -34.188, 191]
+    level:    [75, 77]
+
+  17535483:
+    template: Vanguards_Wyvern
+    at:       [1.000, 1.000, 1.000, 1]
+    level:    [75, 77]

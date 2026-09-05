@@ -1,0 +1,37 @@
+# Old-school Dynamis NPCs for dynamis_valkurm.
+
+npcs:
+
+  16937394:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal
+
+  16937577: null
+  16937578: null
+  16937579: null
+  16937581: null
+  16937582: null
+  16937583: null
+  16937584: null
+  16937585: null
+  16937586: null
+  16937587: null
+  16937588: null
+  16937589: null
+  16937590: null
+  16937591: null
+  16937592: null
+  16937593: null
+  16937594: null
+  16937595: null
+  16937596: null
+  16937597: null
+  16937598: null
+  16937599: null

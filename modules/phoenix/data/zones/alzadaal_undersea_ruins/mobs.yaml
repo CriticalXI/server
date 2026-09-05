@@ -1,0 +1,14 @@
+# Era mob layout for alzadaal_undersea_ruins.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Qiqirn_Goldsmith:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Qiqirn_Poulterer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

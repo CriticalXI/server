@@ -1,0 +1,11 @@
+# Enables the Linkshell Concierge (core tags it soa) and retags Tales' Beginning
+# from tvr to the expansion whose storyline it starts, so players who skip
+# cutscenes can still use it.
+
+npcs:
+
+  17756509:
+    content: null
+
+  17756512:
+    content: asa

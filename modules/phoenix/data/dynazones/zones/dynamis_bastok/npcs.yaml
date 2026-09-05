@@ -1,0 +1,38 @@
+# Old-school Dynamis NPCs for dynamis_bastok.
+
+npcs:
+
+  17539314: null
+  17539315: null
+  17539316: null
+  17539318: null
+  17539319: null
+  17539320: null
+  17539321: null
+  17539322: null
+  17539323: null
+  17539324: null
+  17539325: null
+  17539326: null
+  17539327: null
+  17539328: null
+  17539329: null
+  17539330: null
+  17539331: null
+  17539332: null
+  17539333: null
+  17539334: null
+  17539335: null
+  17539336: null
+  17539337: null
+
+  17539610:
+    script:       qm0
+    display_name: ???
+    at:           [0.000, -2.000, 43.000]
+    render:
+      look:
+        type:  standard
+        model: 52
+      moving: 1
+    status: normal

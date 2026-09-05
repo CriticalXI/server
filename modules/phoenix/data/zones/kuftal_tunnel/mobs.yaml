@@ -1,0 +1,171 @@
+# Era mob layout for kuftal_tunnel.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Air_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Cave_Worm_KT:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Deinonychus:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fire_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Alchemist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Bandit:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Mercenary:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Goblin_Tamer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Greater_Cockatrice:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Haunt:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Kuftal_Delver:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Kuftal_Digger:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ladon:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Machairodus:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Ovinnik:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Recluse_Spider:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Robber_Crab:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sabotender_Sediendo:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Sand_Lizard:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+spawns:
+
+  17490101:
+    template: Pelican
+    at:       [39.396, 30.000, -200.946, 231]
+    level:    [80, 81]
+
+  17490111:
+    template: Ovinnik
+    at:       [116.382, 19.992, -98.262, 25]
+    level:    [77, 79]
+
+  17490112:
+    template: Greater_Cockatrice
+    at:       [85.159, 20.985, -98.288, 105]
+    level:    [78, 80]
+
+  17490113:
+    template: Greater_Cockatrice
+    at:       [81.143, 20.480, -105.845, 218]
+    level:    [78, 80]
+
+  17490114:
+    template: Ladon
+    at:       [75.781, 20.526, -94.960, 30]
+    level:    [80, 82]
+
+  17490115:
+    template: Ovinnik
+    at:       [75.337, 20.408, -142.321, 222]
+    level:    [77, 79]
+
+  17490116:
+    template: Ovinnik
+    at:       [65.668, 20.197, -137.728, 2]
+    level:    [77, 79]
+
+  17490117:
+    template: Greater_Cockatrice
+    at:       [57.758, 21.064, -143.735, 112]
+    level:    [78, 80]
+
+  17490118:
+    template: Greater_Cockatrice
+    at:       [60.356, 20.999, -153.031, 37]
+    level:    [78, 80]
+
+  17490119:
+    template: Greater_Cockatrice
+    at:       [64.421, 20.675, -154.670, 170]
+    level:    [78, 80]
+
+  17490120:
+    template: Greater_Cockatrice
+    at:       [40.775, 30.000, -193.717, 162]
+    level:    [78, 80]
+
+  17490121:
+    template: Greater_Cockatrice
+    at:       [34.180, 29.944, -201.979, 28]
+    level:    [78, 80]
+
+  17490122:
+    template: Greater_Cockatrice
+    at:       [41.411, 29.851, -203.977, 230]
+    level:    [78, 80]
+
+  17490124:
+    template: Ladon
+    at:       [45.748, 30.000, -195.146, 205]
+    level:    [80, 82]

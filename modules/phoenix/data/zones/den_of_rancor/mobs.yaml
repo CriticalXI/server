@@ -1,0 +1,99 @@
+# Era mob layout for den_of_rancor.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Bifrons_Den_of_Rancor:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Bullbeggar:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Cave_Worm_DoR:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Cutlass_Scorpion_DR:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Demonic_Pugil:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Den_Scorpion:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Dire_Bat:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Doom_Toad:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Fire_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Million_Eyes_DR:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mousse_DoR_PMS:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Puck:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Succubus_Bats:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Tonberry_Beleaguerer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Tonberry_Imprecator:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Tonberry_Slasher:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Tonberry_Trailer:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Tormentor:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Water_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

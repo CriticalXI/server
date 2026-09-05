@@ -1,0 +1,628 @@
+# Era mob layout for inner_horutoto_ruins.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  # -- Custom templates for mobs the core file lacks, scaffolded from the module's mob_groups/mob_pools inserts --
+
+  Bat_Battalion:
+    id:            372
+    display_name:  Battue_Bats
+    species:       flock_bat
+    skill_list_id: 47
+    attributes:
+      combat:
+        skill: club
+      jobs: [war, war]
+      render:
+        look:
+          type:  standard
+          model: 260
+        entity_flags:  641
+        animation_sub: 8
+        name_prefix:   64
+        hitbox:        13
+      spawn:
+        respawn: 480 # Era dungeon timers
+    loot:
+      drops:
+        - chance: common
+          item: bat_wing
+        - chance: rare
+          item: horutoto_chest_key
+      despoil:
+        bat_wing: 0
+
+  Beady_Beetle:
+    id:            382
+    species:       beetle
+    skill_list_id: 49
+    attributes:
+      combat:
+        skill: polearm
+      jobs: [pld, pld]
+      render:
+        look:
+          type:  standard
+          model: 408
+        entity_flags: 131
+        model_size:   1
+        hitbox:       12
+      behaviors:
+        links: true
+      spawn:
+        respawn: 480 # Era dungeon timers
+    loot:
+      drops:
+        - chance: common
+          item: insect_wing
+        - chance: rare
+          item: beetle_jaw
+      despoil:
+        insect_wing:  0
+        beetle_shell: 0
+        beetle_jaw:   0
+
+  Goblin_Ambusher:
+    id:            1635
+    species:       goblin
+    skill_list_id: 133
+    attributes:
+      combat:
+        skill: dagger
+      jobs: [rng, rng]
+      render:
+        look:
+          type:  standard
+          model: 486
+        entity_flags: 131
+        model_size:   1
+        hitbox:       12
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        respawn: 600 # Era dungeon timers
+    loot:
+      drops:
+        - chance: common
+          item: block_of_animal_glue
+        - chance: very_rare
+          item: leather_bandana
+        - chance: very_rare
+          item: leather_gloves
+        - chance: very_rare
+          item: leather_trousers
+        - chance: very_rare
+          item: leather_highboots
+      steal: crossbow_bolt
+      despoil:
+        loaf_of_goblin_bread:      0
+        chunk_of_goblin_chocolate: 0
+        bowl_of_goblin_stew:       0
+        goblin_mushpot:            0
+
+  Goblin_Butcher:
+    id:            1643
+    species:       armored_goblin
+    skill_list_id: 133
+    attributes:
+      combat:
+        skill: great_sword
+      jobs: [war, war]
+      render:
+        look:
+          type:  standard
+          model: 495
+        entity_flags: 131
+        model_size:   1
+        hitbox:       12
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        respawn: 600 # Era dungeon timers
+    loot:
+      drops:
+        - chance: rare
+          item: goblin_helm
+        - chance: very_rare
+          item: goblin_mail
+        - chance: very_rare
+          item: beastcoin
+      steal: beastcoin
+      despoil:
+        loaf_of_goblin_bread:      0
+        chunk_of_goblin_chocolate: 0
+        bowl_of_goblin_stew:       0
+        goblin_mushpot:            0
+
+  Goblin_Tinkerer:
+    id:            1738
+    species:       armored_goblin
+    spell_list_id: 5
+    skill_list_id: 133
+    attributes:
+      combat:
+        skill: sword
+      jobs: [drk, drk]
+      render:
+        look:
+          type:  standard
+          model: 491
+        entity_flags: 131
+        model_size:   1
+        hitbox:       12
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        respawn: 600 # Era dungeon timers
+    loot:
+      drops:
+        - chance: very_rare
+          item: faceguard
+        - chance: very_rare
+          item: scale_finger_gauntlets
+        - chance: very_rare
+          item: scale_cuisses
+        - chance: very_rare
+          item: scale_greaves
+      steal: beastcoin
+      despoil:
+        loaf_of_goblin_bread:      0
+        chunk_of_goblin_chocolate: 0
+        bowl_of_goblin_stew:       0
+        goblin_mushpot:            0
+
+  Balloon:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Battle_Bat:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Battue_Bats:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Blade_Bat_Inner_Horutoto:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Blob:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Boggart:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Goblin_Gambler:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Goblin_Leecher:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Goblin_Mugger:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Goblin_Thug:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Goblin_Weaver:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Magicked_Bones_club:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Magicked_Bones_dagger:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Wendigo_blm:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Wendigo_war:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Will-o-the-Wisp:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+spawns:
+
+  17563656:
+    template: Goblin_Weaver
+    at:       [419.943, 0.600, 77.170, 180]
+    level:    [1, 7]
+
+  17563661:
+    template: Goblin_Weaver
+    at:       [355.384, 0.600, 55.210, 180]
+    level:    [1, 7]
+
+  17563680:
+    template: Blade_Bat_Inner_Horutoto
+    at:       [422.160, -0.007, -18.388, 180]
+    level:    [4, 6]
+    script:   Blade_Bat
+
+  17563681:
+    template: Battue_Bats
+    at:       [299.062, 0.332, 134.917, 168]
+    level:    [1, 5]
+
+  17563682:
+    template: Battue_Bats
+    at:       [275.659, 0.568, 139.440, 127]
+    level:    [1, 5]
+
+  17563683:
+    template: Blade_Bat_Inner_Horutoto
+    at:       [292.701, 0.006, 141.877, 89]
+    level:    [4, 6]
+    script:   Blade_Bat
+
+  17563684:
+    template: Blade_Bat_Inner_Horutoto
+    at:       [259.701, 0.000, 122.420, 49]
+    level:    [4, 6]
+    script:   Blade_Bat
+
+  17563685:
+    template: Goblin_Thug
+    at:       [236.076, -0.030, 82.034, 81]
+    level:    [1, 6]
+
+  17563686:
+    template: Goblin_Thug
+    at:       [237.680, -0.035, 74.104, 37]
+    level:    [1, 6]
+
+  17563687:
+    template: Goblin_Weaver
+    at:       [244.997, 0.120, 75.757, 238]
+    level:    [1, 7]
+
+  17563688:
+    template: Battue_Bats
+    at:       [227.186, 0.269, 21.471, 3]
+    level:    [1, 5]
+
+  17563689:
+    template: Battue_Bats
+    at:       [213.939, -0.877, 17.396, 255]
+    level:    [1, 5]
+
+  17563690:
+    template: Goblin_Thug
+    at:       [216.695, -0.578, 24.854, 109]
+    level:    [1, 6]
+
+  17563691:
+    template: Goblin_Weaver
+    at:       [211.016, -0.040, 21.460, 119]
+    level:    [1, 7]
+
+  17563692:
+    template: Battue_Bats
+    at:       [262.495, -0.136, -35.943, 129]
+    level:    [1, 5]
+
+  17563693:
+    template: Battue_Bats
+    at:       [288.991, 0.184, -33.966, 206]
+    level:    [1, 5]
+
+  17563694:
+    template: Battue_Bats
+    at:       [235.624, 0.068, -33.027, 165]
+    level:    [1, 5]
+
+  17563695:
+    template: Battue_Bats
+    at:       [255.761, -0.273, -47.108, 134]
+    level:    [1, 5]
+
+  17563696:
+    template: Blade_Bat_Inner_Horutoto
+    at:       [275.417, 0.414, -28.324, 140]
+    level:    [4, 6]
+    script:   Blade_Bat
+
+  17563697:
+    template: Blade_Bat_Inner_Horutoto
+    at:       [286.728, 0.160, -41.302, 208]
+    level:    [4, 6]
+    script:   Blade_Bat
+
+  17563698:
+    template: Blade_Bat_Inner_Horutoto
+    at:       [274.919, 0.000, -48.233, 14]
+    level:    [4, 6]
+    script:   Blade_Bat
+
+  17563699:
+    template: Blade_Bat_Inner_Horutoto
+    at:       [245.273, -0.083, -42.491, 138]
+    level:    [4, 6]
+    script:   Blade_Bat
+
+  17563700:
+    template: Goblin_Thug
+    at:       [302.992, 0.000, -19.605, 74]
+    level:    [1, 6]
+
+  17563701:
+    template: Goblin_Thug
+    at:       [296.734, -0.002, -16.773, 92]
+    level:    [1, 6]
+
+  17563702:
+    template: Magicked_Bones_club
+    at:       [204.729, 0.488, 59.014, 255]
+    level:    [3, 8]
+    script:   Magicked_Bones
+
+  17563703:
+    template: Magicked_Bones_club
+    at:       [189.497, 0.500, 57.783, 119]
+    level:    [3, 8]
+    script:   Magicked_Bones
+
+  17563704:
+    template: Magicked_Bones_club
+    at:       [173.883, 0.500, 58.657, 163]
+    level:    [3, 8]
+    script:   Magicked_Bones
+
+  17563705:
+    template: Battue_Bats
+    at:       [185.516, -0.812, 25.219, 9]
+    level:    [1, 5]
+
+  17563706:
+    template: Battue_Bats
+    at:       [178.853, 0.000, -2.282, 16]
+    level:    [1, 5]
+
+  17563707:
+    template: Goblin_Thug
+    at:       [179.056, 0.028, 18.506, 123]
+    level:    [1, 6]
+
+  17563708:
+    template: Goblin_Weaver
+    at:       [183.907, 0.441, 12.477, 36]
+    level:    [1, 7]
+
+  17563709:
+    template: Goblin_Thug
+    at:       [120.823, 0.000, -20.540, 148]
+    level:    [1, 6]
+
+  17563710:
+    template: Goblin_Thug
+    at:       [112.484, -0.424, -20.849, 134]
+    level:    [1, 6]
+
+  17563711:
+    template: Goblin_Weaver
+    at:       [110.088, -0.330, -13.156, 178]
+    level:    [1, 7]
+
+  17563712:
+    template: Magicked_Bones_club
+    at:       [71.612, 0.500, 58.473, 43]
+    level:    [3, 8]
+    script:   Magicked_Bones
+
+  17563713:
+    template: Magicked_Bones_club
+    at:       [82.174, 0.500, 55.788, 247]
+    level:    [3, 8]
+    script:   Magicked_Bones
+
+  17563714:
+    template: Magicked_Bones_club
+    at:       [91.257, 0.500, 59.679, 245]
+    level:    [3, 8]
+    script:   Magicked_Bones
+
+  17563715:
+    template: Magicked_Bones_club
+    at:       [103.190, 0.500, 57.211, 3]
+    level:    [3, 8]
+    script:   Magicked_Bones
+
+  17563716:
+    template: Goblin_Thug
+    at:       [48.995, 0.500, 80.770, 225]
+    level:    [1, 6]
+
+  17563717:
+    template: Goblin_Weaver
+    at:       [39.680, 0.000, 84.103, 125]
+    level:    [1, 7]
+
+  17563718:
+    template: Goblin_Weaver
+    at:       [38.398, 0.000, 76.767, 63]
+    level:    [1, 7]
+
+  17563719:
+    template: Goblin_Thug
+    at:       [2.325, 1.286, 20.828, 54]
+    level:    [1, 6]
+
+  17563720:
+    template: Goblin_Weaver
+    at:       [-1.026, 0.904, 16.222, 239]
+    level:    [1, 7]
+
+  17563721:
+    template: Blade_Bat_Inner_Horutoto
+    at:       [20.834, -0.074, 43.696, 64]
+    level:    [4, 6]
+    script:   Blade_Bat
+
+  17563722:
+    template: Beady_Beetle
+    at:       [123.701, 0.444, -58.895, 101]
+    level:    [11, 16]
+
+  17563723:
+    template: Beady_Beetle
+    at:       [119.472, -0.185, -62.682, 97]
+    level:    [11, 16]
+
+  17563724:
+    template: Beady_Beetle
+    at:       [129.279, -1.199, -55.056, 86]
+    level:    [11, 16]
+
+  17563725:
+    template: Bat_Battalion
+    at:       [134.732, 0.257, -58.545, 131]
+    level:    [12, 15]
+
+  17563726:
+    template: Bat_Battalion
+    at:       [114.402, 0.410, -61.364, 147]
+    level:    [12, 15]
+
+  17563727:
+    template: Bat_Battalion
+    at:       [103.912, 1.870, -59.366, 144]
+    level:    [12, 15]
+
+  17563728:
+    template: Beady_Beetle
+    at:       [8.211, 7.477, -125.243, 153]
+    level:    [11, 16]
+
+  17563729:
+    template: Beady_Beetle
+    at:       [-8.787, 8.104, -124.415, 95]
+    level:    [11, 16]
+
+  17563730:
+    template: Bat_Battalion
+    at:       [44.561, 7.973, -116.651, 112]
+    level:    [12, 15]
+
+  17563731:
+    template: Bat_Battalion
+    at:       [34.160, 8.430, -112.426, 131]
+    level:    [12, 15]
+
+  17563732:
+    template: Bat_Battalion
+    at:       [-1.480, 8.000, -117.629, 141]
+    level:    [12, 15]
+
+  17563733:
+    template: Bat_Battalion
+    at:       [-19.055, 8.000, -134.581, 82]
+    level:    [12, 15]
+
+  17563734:
+    template: Beady_Beetle
+    at:       [-59.857, 8.102, -149.497, 65]
+    level:    [11, 16]
+
+  17563735:
+    template: Beady_Beetle
+    at:       [-61.207, 8.049, -164.320, 46]
+    level:    [11, 16]
+
+  17563736:
+    template: Beady_Beetle
+    at:       [-58.438, 8.025, -173.154, 54]
+    level:    [11, 16]
+
+  17563737:
+    template: Bat_Battalion
+    at:       [-68.438, 7.988, -181.352, 102]
+    level:    [12, 15]
+
+  17563738:
+    template: Bat_Battalion
+    at:       [-97.819, 8.500, -178.805, 12]
+    level:    [12, 15]
+
+  17563739:
+    template: Goblin_Ambusher
+    at:       [-98.736, 8.500, -185.683, 200]
+    level:    [20, 23]
+
+  17563740:
+    template: Goblin_Tinkerer
+    at:       [-97.582, 8.500, -167.009, 206]
+    level:    [20, 23]
+
+  17563741:
+    template: Bat_Battalion
+    at:       [-99.078, 8.494, -138.288, 62]
+    level:    [12, 15]
+
+  17563742:
+    template: Goblin_Ambusher
+    at:       [-98.144, 8.435, -129.410, 157]
+    level:    [20, 23]
+
+  17563743:
+    template: Goblin_Butcher
+    at:       [-99.637, 8.500, -120.037, 175]
+    level:    [20, 23]
+
+  17563744:
+    template: Goblin_Butcher
+    at:       [-96.215, 8.409, -110.624, 179]
+    level:    [20, 23]
+
+  17563745:
+    template: Goblin_Tinkerer
+    at:       [-96.284, 8.500, -100.400, 69]
+    level:    [20, 23]
+
+  17563746:
+    template: Beady_Beetle
+    at:       [-62.011, 8.215, -95.420, 102]
+    level:    [11, 16]
+
+  17563750:
+    template: Balloon
+    at:       [61.303, 0.399, 24.387, 151]
+    level:    [8, 10]
+
+  17563751:
+    template: Balloon
+    at:       [18.254, 8.352, -122.579, 101]
+    level:    [8, 10]

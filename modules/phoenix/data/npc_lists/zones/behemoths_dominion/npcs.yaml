@@ -1,0 +1,6 @@
+# Enables the Behemoth ??? so the king can be popped; core tags it abyssea.
+
+npcs:
+
+  17297459:
+    content: null

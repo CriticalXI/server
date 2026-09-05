@@ -1,0 +1,99 @@
+# Era mob layout for castle_oztroja.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Bastion_Bats:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Bulwark_Bat:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Cutter:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Earth_Elemental:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Fire_Elemental:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Meat_Maggot:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Ooze:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Conquistador:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Drummer:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Yagudo_Herald:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Yagudo_Interrogator:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Yagudo_Lutenist:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Oracle:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Yagudo_Parasite:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Priest:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Yagudo_Prior:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Yagudo_Theologist:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Yagudo_Votary:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Yagudo_Zealot:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers

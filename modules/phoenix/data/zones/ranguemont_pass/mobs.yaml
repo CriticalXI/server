@@ -1,0 +1,461 @@
+# Era mob layout for ranguemont_pass.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  # -- Custom templates for mobs the core file lacks, scaffolded from the module's mob_groups/mob_pools inserts --
+
+  Goblin_Furrier:
+    id:            1665
+    species:       goblin
+    skill_list_id: 133
+    attributes:
+      combat:
+        skill: dagger
+      jobs: [rng, rng]
+      render:
+        look:
+          type:  standard
+          model: 490
+        entity_flags: 131
+        model_size:   1
+        hitbox:       12
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        respawn: 720
+    loot:
+      drops:
+        - chance: rare
+          item: goblin_mask
+        - chance: very_rare
+          item: goblin_armor
+        - chance: very_rare
+          item: mythril_beastcoin
+        - chance: very_rare
+          item: square_of_sheep_leather
+        - chance: very_rare
+          item: square_of_dhalmel_leather
+        - chance: super_rare
+          item: square_of_black_tiger_leather
+        - chance: ultra_rare
+          item: square_of_coeurl_leather
+      steal: crossbow_bolt
+      despoil:
+        loaf_of_goblin_bread:      0
+        chunk_of_goblin_chocolate: 0
+        bowl_of_goblin_stew:       0
+        goblin_mushpot:            0
+
+  Goblin_Shaman:
+    id:            1710
+    species:       goblin
+    spell_list_id: 21
+    skill_list_id: 133
+    attributes:
+      combat:
+        skill: dagger
+      jobs: [blm, blm]
+      render:
+        look:
+          type:  standard
+          model: 507
+        entity_flags: 131
+        model_size:   1
+        hitbox:       12
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        respawn: 720
+    loot:
+      drops:
+        - chance: rare
+          item: goblin_mask
+        - chance: very_rare
+          item: goblin_armor
+        - chance: very_rare
+          item: mythril_beastcoin
+      steal: silver_beastcoin
+      despoil:
+        loaf_of_goblin_bread:      0
+        chunk_of_goblin_chocolate: 0
+        bowl_of_goblin_stew:       0
+        goblin_mushpot:            0
+
+  Goblin_Smithy:
+    id:            1715
+    species:       armored_goblin
+    skill_list_id: 133
+    attributes:
+      combat:
+        skill: great_sword
+      jobs: [war, war]
+      render:
+        look:
+          type:  standard
+          model: 497
+        entity_flags: 131
+        model_size:   1
+        hitbox:       12
+      behaviors:
+        aggressive: true
+        links:      true
+      spawn:
+        respawn: 720
+    loot:
+      drops:
+        - chance: rare
+          item: goblin_helm
+        - chance: very_rare
+          item: goblin_mail
+      steal: silver_beastcoin
+      despoil:
+        loaf_of_goblin_bread:      0
+        chunk_of_goblin_chocolate: 0
+        bowl_of_goblin_stew:       0
+        goblin_mushpot:            0
+
+  Bat_Eye:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Bilesucker:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Blade_Bat_Ranguemont_Pass:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Cave_Scorpion:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Giant_Scorpion:
+    attributes:
+      spawn:
+        respawn: 840 # Era dungeon timers
+
+  Goblin_Gambler:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Leecher:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Mugger:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Goblin_Thug:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Goblin_Weaver:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Hecteyes_RP:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Hovering_Oculus:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Oil_Slick_RP:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+  Ooze:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Seeker_Bats_KT_RP_Qufim:
+    attributes:
+      spawn:
+        respawn: 600 # Era dungeon timers
+
+  Stirge:
+    attributes:
+      spawn:
+        respawn: 720 # Era dungeon timers
+
+  Wind_Bats_RP:
+    attributes:
+      spawn:
+        respawn: 480 # Era dungeon timers
+
+spawns:
+
+  17457213:
+    template: Taisai
+    at:       [-89.510, -55.345, 218.766, 125]
+    level:    [35, 38]
+
+  17457214:
+    template: Taisai
+    at:       [-101.072, -55.846, 224.546, 119]
+    level:    [35, 38]
+
+  17457215:
+    template: Taisai
+    at:       [-109.713, -56.857, 219.000, 113]
+    level:    [35, 38]
+
+  17457216:
+    template: Taisaijin
+    at:       [-125.899, -56.000, 219.032, 112]
+    level:    [60, 60]
+
+  17457223:
+    template: Stirge
+    at:       [-243.871, -36.803, 140.445, 146]
+    level:    [30, 33]
+
+  17457224:
+    template: Stirge
+    at:       [-253.701, -43.206, 151.243, 180]
+    level:    [30, 33]
+
+  17457225:
+    template: Giant_Scorpion
+    at:       [-0.679, -36.000, 161.529, 165]
+    level:    [38, 40]
+
+  17457226:
+    template: Bat_Eye
+    at:       [4.285, -35.924, 153.007, 183]
+    level:    [42, 44]
+
+  17457248:
+    template: Seeker_Bats_KT_RP_Qufim
+    at:       [-26.222, -0.195, -105.919, 31]
+    level:    [25, 28]
+    script:   Seeker_Bats
+
+  17457249:
+    template: Seeker_Bats_KT_RP_Qufim
+    at:       [-19.151, 2.397, -114.892, 36]
+    level:    [25, 28]
+    script:   Seeker_Bats
+
+  17457250:
+    template: Seeker_Bats_KT_RP_Qufim
+    at:       [-20.595, 7.295, -129.418, 65]
+    level:    [25, 28]
+    script:   Seeker_Bats
+
+  17457251:
+    template: Goblin_Furrier
+    at:       [-88.885, -14.864, 21.999, 4]
+    level:    [32, 36]
+
+  17457252:
+    template: Goblin_Shaman
+    at:       [-76.053, -15.566, 22.933, 229]
+    level:    [32, 36]
+
+  17457253:
+    template: Stirge
+    at:       [-155.978, -35.188, 63.029, 247]
+    level:    [30, 33]
+
+  17457254:
+    template: Stirge
+    at:       [-148.952, -31.695, 53.939, 40]
+    level:    [30, 33]
+
+  17457255:
+    template: Stirge
+    at:       [-137.605, -26.499, 42.179, 90]
+    level:    [30, 33]
+
+  17457256:
+    template: Stirge
+    at:       [-200.230, -35.147, 107.568, 200]
+    level:    [30, 33]
+
+  17457257:
+    template: Stirge
+    at:       [-191.912, -35.740, 77.915, 251]
+    level:    [30, 33]
+
+  17457258:
+    template: Goblin_Smithy
+    at:       [-204.129, -36.000, 79.922, 61]
+    level:    [32, 36]
+
+  17457260:
+    template: Goblin_Smithy
+    at:       [-202.524, -36.070, 122.936, 138]
+    level:    [32, 36]
+
+  17457262:
+    template: Goblin_Smithy
+    at:       [192.479, -35.658, 118.512, 206]
+    level:    [32, 36]
+
+  17457263:
+    template: Goblin_Smithy
+    at:       [-196.598, -36.257, 68.545, 115]
+    level:    [32, 36]
+
+  17457264:
+    template: Stirge
+    at:       [-139.384, -53.927, 191.120, 44]
+    level:    [30, 33]
+
+  17457265:
+    template: Stirge
+    at:       [-140.092, -52.519, 179.310, 54]
+    level:    [30, 33]
+
+  17457266:
+    template: Stirge
+    at:       [-139.620, -47.315, 166.314, 89]
+    level:    [30, 33]
+
+  17457267:
+    template: Stirge
+    at:       [-45.550, -37.724, 180.097, 22]
+    level:    [30, 33]
+
+  17457268:
+    template: Stirge
+    at:       [-51.371, -41.525, 187.708, 205]
+    level:    [30, 33]
+
+  17457269:
+    template: Stirge
+    at:       [-61.822, -44.069, 193.159, 146]
+    level:    [30, 33]
+
+  17457270:
+    template: Stirge
+    at:       [61.187, -26.000, 119.927, 189]
+    level:    [30, 33]
+
+  17457271:
+    template: Stirge
+    at:       [49.694, -32.334, 139.216, 119]
+    level:    [30, 33]
+
+  17457272:
+    template: Stirge
+    at:       [-44.653, -16.000, 19.887, 155]
+    level:    [30, 33]
+
+  17457276:
+    template: Stirge
+    at:       [-34.406, -17.656, 20.663, 84]
+    level:    [30, 33]
+
+  17457277:
+    template: Stirge
+    at:       [-23.571, -22.676, 30.944, 94]
+    level:    [30, 33]
+
+  17457278:
+    template: Stirge
+    at:       [-19.129, -27.000, 90.395, 113]
+    level:    [30, 33]
+
+  17457279:
+    template: Stirge
+    at:       [10.757, -28.288, 90.455, 40]
+    level:    [30, 33]
+
+  17457280:
+    template: Stirge
+    at:       [31.783, -25.318, 103.509, 179]
+    level:    [30, 33]
+
+  17457281:
+    template: Bat_Eye
+    at:       [4.702, -25.610, 100.004, 3]
+    level:    [34, 36]
+    script:   Floating_Eye
+
+  17457282:
+    template: Bat_Eye
+    at:       [26.031, -26.500, 100.077, 11]
+    level:    [34, 36]
+    script:   Floating_Eye
+
+  17457283:
+    template: Bat_Eye
+    at:       [49.043, -25.288, 99.304, 1]
+    level:    [34, 36]
+    script:   Floating_Eye
+
+  17457284:
+    template: Stirge
+    at:       [136.361, -36.155, 145.658, 55]
+    level:    [30, 33]
+
+  17457285:
+    template: Stirge
+    at:       [135.582, -36.951, 160.808, 100]
+    level:    [30, 33]
+
+  17457286:
+    template: Stirge
+    at:       [147.529, -41.821, 170.247, 94]
+    level:    [30, 33]
+
+  17457287:
+    template: Stirge
+    at:       [152.274, -43.547, 180.329, 109]
+    level:    [30, 33]
+
+  17457288:
+    template: Stirge
+    at:       [169.920, -48.243, 175.616, 116]
+    level:    [30, 33]
+
+  17457289:
+    template: Stirge
+    at:       [181.638, -51.977, 178.529, 121]
+    level:    [30, 33]
+
+  17457290:
+    template: Stirge
+    at:       [261.228, -66.000, 241.079, 198]
+    level:    [30, 33]
+
+  17457291:
+    template: Stirge
+    at:       [247.387, -66.000, 222.145, 105]
+    level:    [30, 33]
+
+  17457292:
+    template: Stirge
+    at:       [226.687, -60.455, 214.926, 89]
+    level:    [30, 33]
+
+  17457293:
+    template: Stirge
+    at:       [222.580, -56.163, 199.317, 70]
+    level:    [30, 33]
+
+  17457294:
+    template: Stirge
+    at:       [205.388, -56.000, 181.491, 125]
+    level:    [30, 33]

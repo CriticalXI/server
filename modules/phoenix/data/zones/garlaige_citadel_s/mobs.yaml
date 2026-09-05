@@ -1,0 +1,74 @@
+# Era mob layout for garlaige_citadel_s.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Dire_Bat_Garlaige Citadel_S:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Earth_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Explosure_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Incubus_Bats_GCS:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mousse_SSG:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Scolopendrid:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Thunder_Elemental:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Abbot_outdoor_S:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Lutenist_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Missionary:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Prior_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Pythoness:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Templar_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Yagudo_Zealot_past:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers

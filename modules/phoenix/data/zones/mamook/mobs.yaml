@@ -1,0 +1,107 @@
+# Era mob layout for mamook.
+# Needs the Era DATs (https://github.com/phoenixffxi/Era-DATs) or the client shows the wrong mob names.
+
+templates:
+
+  Mamool_Ja_Blusterer_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Bounder:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Frogman:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Infiltrator_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Lurker_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Mimicker:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Philosopher_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Pikeman_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Savant:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Sophist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Spearman:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Stabler_Mamook:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Strapper:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Mamool_Ja_Zenist:
+    attributes:
+      spawn:
+        respawn: 960 # Era dungeon timers
+
+  Devout_Radol_Ja:
+    content: wotg # Disable besieged mobs
+
+  Dragonscaled_Bugaal_Ja:
+    content: wotg # Disable besieged mobs
+
+  Hundredfaced_Hapool_Ja:
+    content: wotg # Disable besieged mobs
+
+  Darting_Kachaal_Ja:
+    content: wotg # Disable besieged mobs
+
+  Sagelord_Molaal_Ja_M:
+    content: wotg # Disable besieged mobs
+
+  Shadelurking_Zolool_Ja:
+    content: wotg # Disable besieged mobs
+
+  Forbidding_Koheel_Ja:
+    content: wotg # Disable besieged mobs
+
+  Gulool_Ja_Ja:
+    content: wotg # Disable besieged mobs
+
+  Mamool_Ja_Chamberlain:
+    content: wotg # Disable besieged mobs
+
+  Mamool_Ja_Palatine:
+    content: wotg # Disable besieged mobs
+
+  Hundredfaced_clone:
+    content: wotg # Disable besieged mobs
