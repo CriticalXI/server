@@ -1,34 +1,33 @@
 -----------------------------------
--- Area: Apollyon NE
---   NM: Goobbue_Harvester
+-- Area: Apollyon NE, Floor 4
+--  Mob: Hyperion
 -----------------------------------
 ---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
+    mob:addImmunity(xi.immunity.PETRIFY)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.TERROR)
     mob:addImmunity(xi.immunity.PLAGUE)
-    mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 end
 
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.STORETP, 90)
-    mob:setMod(xi.mod.DEFP, 75)
-    mob:setMod(xi.mod.REGEN, 10)
+    mob:setMod(xi.mod.NULL_MAGICAL_DAMAGE, 100)
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200)
 end
 
-entity.onAdditionalEffect = function(mob, target, damage)
-    local pTable =
+entity.onMobMobskillChoose = function(mob, target)
+    local tpMoves =
     {
-        chance   = 25,
-        effectId = xi.effect.PARALYSIS,
-        power    = 30,
-        duration = 45,
+        xi.mobSkill.ICE_ROAR_1,
+        xi.mobSkill.IMPACT_ROAR_1,
+        xi.mobSkill.GRAND_SLAM_1,
+        xi.mobSkill.POWER_ATTACK_ARMED_1,
     }
 
-    return xi.combat.action.executeAddEffectEnfeeblement(mob, target, pTable)
+    return tpMoves[math.randomInt(1, #tpMoves)]
 end
 
 return entity
