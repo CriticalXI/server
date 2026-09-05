@@ -1,0 +1,97 @@
+# Goblin_Ambusher, Goblin_Butcher, Goblin_Gambler, Goblin_Leecher, Goblin_Mugger, Goblin_Tinkerer:
+#  no orcish_armor_plate drop before A Moogle Kupo d'Etat (July 20, 2009).
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(07/20/2009)
+
+templates:
+  Goblin_Ambusher:
+    loot:
+      drops:
+        - chance: common
+          item:   block_of_animal_glue
+        - chance: very_rare
+          item:   ranperre_chest_key
+        - chance: very_rare
+          item:   leather_bandana
+        - chance: very_rare
+          item:   leather_gloves
+        - chance: very_rare
+          item:   leather_trousers
+        - chance: very_rare
+          item:   leather_highboots
+  Goblin_Butcher:
+    loot:
+      drops:
+        - chance: very_rare
+          item:   ranperre_chest_key
+        - chance: very_rare
+          item:   faceguard
+        - chance: very_rare
+          item:   scale_finger_gauntlets
+        - chance: very_rare
+          item:   scale_cuisses
+        - chance: very_rare
+          item:   scale_greaves
+  Goblin_Gambler:
+    loot:
+      drops:
+        - chance: rare
+          item:   bag_of_poison_flour
+        - chance: very_rare
+          item:   poets_circlet
+        - chance: very_rare
+          item:   linen_cuffs
+        - chance: very_rare
+          item:   linen_slops
+        - chance: very_rare
+          item:   holly_clogs
+  Goblin_Leecher:
+    loot:
+      drops:
+        - chance: rare
+          item:   scroll_of_paralyze
+        - chance: rare
+          item:   scroll_of_barsleep
+        - chance: rare
+          item:   scroll_of_silence
+        - chance: very_rare
+          item:   scroll_of_barpoison
+        - chance: rare
+          item:   scroll_of_protectra
+        - chance: rare
+          item:   scroll_of_sneak
+        - chance: very_rare
+          item:   scroll_of_invisible
+        - chance: very_rare
+          item:   scroll_of_deodorize
+        - chance: very_rare
+          item:   poets_circlet
+        - chance: very_rare
+          item:   linen_cuffs
+        - chance: very_rare
+          item:   linen_slops
+        - chance: very_rare
+          item:   holly_clogs
+  Goblin_Mugger:
+    loot:
+      drops:
+        - chance: very_rare
+          item:   brass_cap
+        - chance: very_rare
+          item:   brass_mittens
+        - chance: very_rare
+          item:   brass_subligar
+        - chance: very_rare
+          item:   brass_leggings
+  Goblin_Tinkerer:
+    loot:
+      drops:
+        - chance: very_rare
+          item:   ranperre_chest_key
+        - chance: very_rare
+          item:   faceguard
+        - chance: very_rare
+          item:   scale_finger_gauntlets
+        - chance: very_rare
+          item:   scale_cuisses
+        - chance: very_rare
+          item:   scale_greaves

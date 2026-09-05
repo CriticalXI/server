@@ -1,0 +1,30 @@
+# Orcish_Cursemaker, Orcish_Cursemaker_3, Orcish_Fighter, Orcish_Grunt, Orcish_Neckchopper,
+#  Orcish_Serjeant, Orcish_Serjeant_3, Orcish_Stonechucker: no seedspall_lux drop before A
+#  Crystalline Prophecy (April 8, 2009).
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  Orcish_Cursemaker:
+    loot:
+      drops: []
+  Orcish_Cursemaker_3:
+    loot:
+      drops: []
+  Orcish_Fighter:
+    loot:
+      drops: []
+  Orcish_Grunt:
+    loot:
+      drops: []
+  Orcish_Neckchopper:
+    loot:
+      drops: []
+  Orcish_Serjeant:
+    loot:
+      drops: []
+  Orcish_Serjeant_3:
+    loot:
+      drops: []
+  Orcish_Stonechucker:
+    loot:
+      drops: []

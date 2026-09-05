@@ -1,0 +1,13 @@
+# Yagudo_Abbot: no scroll_of_auspice drop before the April 8, 2009 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  Yagudo_Abbot:
+    loot:
+      drops:
+        - chance: common
+          item:   canteen_of_yagudo_holy_water
+        - chance: very_rare
+          item:   scroll_of_reraise
+        - chance: super_rare
+          item:   white_cloak

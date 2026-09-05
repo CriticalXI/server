@@ -1,0 +1,13 @@
+# Despot: drops a single gem_of_the_west before the December 7, 2010 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(12/06/2010)
+
+templates:
+  Despot:
+    loot:
+      drops:
+        - chance: always
+          item:   gem_of_the_west
+        - chance: very_common
+          item:   oblation_abjuration
+        - chance: uncommon
+          item:   scarecrow_scythe

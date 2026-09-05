@@ -1,0 +1,11 @@
+# Magic_Jug: no scroll_of_enaero_ii drop before the April 8, 2009 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  Magic_Jug:
+    loot:
+      drops:
+        - chance: rare
+          item:   garlaige_coffer_key
+        - chance: rare
+          item:   scroll_of_shell_iv

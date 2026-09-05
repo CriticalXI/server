@@ -40,7 +40,6 @@
 
 # Sql things first
 phoenix/sql
-phoenix/dynamis/sql
 era/sql/abyssea
 era/sql/rov
 era/sql/soa
@@ -51,6 +50,17 @@ custom/cpp/ah_pagination.cpp
 
 # YAML
 era/data
+era/data/wotg/mob_droplist_removal
+era/data/acp/mob_droplist_removal
+era/data/amk/mob_droplist_removal
+era/data/asa/mob_droplist_removal
+era/data/abyssea/advanced_job_quest
+era/data/abyssea/cop_level_restrictions
+era/data/abyssea/job_adjustments
+era/data/abyssea/mob_droplist_removal
+era/data/abyssea/npc_list
+era/data/soa/mob_droplist_adjust
+era/data/rov/npc_list
 phoenix/data
 phoenix/data/bazaar_tax
 phoenix/data/npc_lists

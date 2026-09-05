@@ -1,0 +1,33 @@
+# Zipacna: drops a single gem_of_the_north before the December 7, 2010 update.
+# Steam_Cleaner: drops a single gem_of_the_east before the December 7, 2010 update.
+# Brigandish_Blade: drops a single gem_of_the_south before the December 7, 2010 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(12/06/2010)
+
+templates:
+  Zipacna:
+    loot:
+      drops:
+        - chance: always
+          item:   gem_of_the_north
+        - chance: common
+          item:   oblation_abjuration
+        - chance: uncommon
+          item:   ushikirimaru
+  Steam_Cleaner:
+    loot:
+      drops:
+        - chance: always
+          item:   gem_of_the_east
+        - chance: common
+          item:   libation_abjuration
+        - chance: uncommon
+          item:   indra_katars
+        - chance: rare
+          item:   freyas_tear
+  Brigandish_Blade:
+    loot:
+      drops:
+        - chance: always
+          item:   gem_of_the_south
+        - chance: very_common
+          item:   libation_abjuration

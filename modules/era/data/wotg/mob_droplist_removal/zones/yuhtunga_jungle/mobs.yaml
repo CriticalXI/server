@@ -1,0 +1,13 @@
+# River_Sahagin: no scroll_of_cura drop before the April 8, 2009 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  River_Sahagin:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   seashell
+        - chance: uncommon
+          item:   eastern_gem
+        - chance: rare
+          item:   shall_shell

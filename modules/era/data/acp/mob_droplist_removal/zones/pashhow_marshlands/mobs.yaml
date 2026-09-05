@@ -1,0 +1,48 @@
+# Brass_Quadav, Brass_Quadav_3, Copper_Quadav, Greater_Quadav, Old_Quadav, Onyx_Quadav,
+#  Onyx_Quadav_2, Veteran_Quadav: no seedspall_luna drop before A Crystalline Prophecy (April 8,
+#  2009).
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  Brass_Quadav:
+    loot:
+      drops:
+        - chance: common
+          item:   shell_bug
+        - chance: uncommon
+          one_of: [quadav_fetich_arms, quadav_fetich_legs, quadav_fetich_head, quadav_fetich_torso]
+  Brass_Quadav_3:
+    loot:
+      drops:
+        - chance: common
+          item:   shell_bug
+        - chance: uncommon
+          one_of: [quadav_fetich_arms, quadav_fetich_legs, quadav_fetich_head, quadav_fetich_torso]
+  Copper_Quadav:
+    loot:
+      drops: []
+  Greater_Quadav:
+    loot:
+      drops:
+        - chance: uncommon
+          one_of: [quadav_fetich_arms, quadav_fetich_legs, quadav_fetich_head, quadav_fetich_torso]
+  Old_Quadav:
+    loot:
+      drops:
+        - chance: uncommon
+          one_of: [quadav_fetich_arms, quadav_fetich_legs, quadav_fetich_head, quadav_fetich_torso]
+  Onyx_Quadav:
+    loot:
+      drops:
+        - chance: uncommon
+          one_of: [quadav_fetich_arms, quadav_fetich_legs, quadav_fetich_head, quadav_fetich_torso]
+  Onyx_Quadav_2:
+    loot:
+      drops:
+        - chance: uncommon
+          one_of: [quadav_fetich_arms, quadav_fetich_legs, quadav_fetich_head, quadav_fetich_torso]
+  Veteran_Quadav:
+    loot:
+      drops:
+        - chance: uncommon
+          one_of: [quadav_fetich_arms, quadav_fetich_legs, quadav_fetich_head, quadav_fetich_torso]

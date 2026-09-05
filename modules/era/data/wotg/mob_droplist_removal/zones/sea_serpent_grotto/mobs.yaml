@@ -1,0 +1,43 @@
+# Lagoon_Sahagin: no scroll_of_esuna drop before the April 8, 2009 update.
+# Rivulet_Sahagin: no scroll_of_auspice drop before the April 8, 2009 update.
+# Spring_Sahagin: no scroll_of_cura drop before the April 8, 2009 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  Lagoon_Sahagin:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   white_mages_testimony
+        - chance: very_rare
+          item:   scroll_of_banish_iii
+        - chance: very_rare
+          item:   scroll_of_curaga_iv
+        - chance: rare
+          item:   scroll_of_regen_iii
+        - chance: rare
+          item:   scroll_of_shellra_iv
+        - chance: rare
+          item:   scroll_of_cure_v
+        - chance: super_rare
+          item:   coral_fragment
+  Rivulet_Sahagin:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   seashell
+        - chance: uncommon
+          item:   elshimo_newt
+        - chance: rare
+          item:   grotto_chest_key
+        - chance: rare
+          item:   scroll_of_regen_ii
+  Spring_Sahagin:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   elshimo_frog
+        - chance: uncommon
+          item:   shall_shell
+        - chance: very_rare
+          item:   mermaid_body

@@ -1,0 +1,6 @@
+# WHM AF quest "Piejue's Decision" Altedour I Tavnazia before its May 9, 2011 relocation.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(05/09/2011)
+
+spawns:
+  17612836:
+    at: [173.643, -24.536, -81.385, 95]

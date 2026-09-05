@@ -1,0 +1,45 @@
+# Mother_Globe: drops a single springstone before the December 7, 2010 update.
+# Faust: drops a single summerstone before the December 7, 2010 update.
+# Ullikummi: drops a single autumnstone before the December 7, 2010 update.
+# Olla_Grande: drops a single winterstone before the December 7, 2010 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(12/06/2010)
+
+templates:
+  Mother_Globe:
+    loot:
+      drops:
+        - chance: always
+          item:   springstone
+        - chance: common
+          item:   libation_abjuration
+        - chance: uncommon
+          item:   shiranui
+  Faust:
+    loot:
+      drops:
+        - chance: always
+          item:   summerstone
+        - chance: common
+          item:   oblation_abjuration
+        - chance: uncommon
+          item:   tonbo-giri
+  Ullikummi:
+    loot:
+      drops:
+        - chance: always
+          item:   autumnstone
+        - chance: common
+          item:   oblation_abjuration
+        - chance: uncommon
+          item:   ulfhedinn_axe
+  Olla_Grande:
+    loot:
+      drops:
+        - chance: always
+          item:   winterstone
+        - chance: common
+          item:   libation_abjuration
+        - chance: uncommon
+          item:   skofnung
+        - chance: rare
+          item:   freyas_tear

@@ -1,0 +1,17 @@
+# Aquarius: square_of_damascene_cloth (very_rare) drop before the March 8, 2007 update.
+# Source: http://www.playonline.com/pcd/update/ff11us/20070308c2bbd1/detail.html
+
+templates:
+  Aquarius:
+    loot:
+      drops:
+        - chance: always
+          item:   crab_shell
+        - chance: always
+          item:   slice_of_land_crab_meat
+        - chance: always
+          one_of:
+            fransisca: 90
+            nothing:   10
+        - chance: very_rare
+          item:   square_of_damascene_cloth

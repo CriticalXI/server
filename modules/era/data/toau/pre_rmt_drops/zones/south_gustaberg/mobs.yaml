@@ -1,0 +1,13 @@
+# Leaping_Lizzy: leaping_boots in place of bounding_boots before the March 8, 2007 update.
+# Source: http://www.playonline.com/pcd/update/ff11us/20070308c2bbd1/detail.html
+
+templates:
+  Leaping_Lizzy:
+    loot:
+      drops:
+        - chance: very_common
+          item:   lizard_tail
+        - chance: common
+          item:   leaping_boots
+        - chance: uncommon
+          item:   lizard_skin

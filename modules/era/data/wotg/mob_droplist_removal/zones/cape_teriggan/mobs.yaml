@@ -1,0 +1,19 @@
+# Goblin_Alchemist: no scroll_of_esuna drop before the April 8, 2009 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  Goblin_Alchemist:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   white_mages_testimony
+        - chance: rare
+          item:   scroll_of_reraise_iii
+        - chance: rare
+          item:   scroll_of_regen_iii
+        - chance: rare
+          item:   scroll_of_shellra_iv
+        - chance: very_rare
+          item:   scroll_of_cure_v
+        - chance: super_rare
+          item:   scroll_of_curaga_iv

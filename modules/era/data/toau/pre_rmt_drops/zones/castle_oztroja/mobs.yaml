@@ -1,0 +1,19 @@
+# Mee_Deggi_the_Punisher: ochiudos_kote in place of ochimusha_kote before the March 8, 2007 update.
+# Quu_Domi_the_Gallant: fuma_kyahan in place of sarutobi_kyahan before the March 8, 2007 update.
+# Source: http://www.playonline.com/pcd/update/ff11us/20070308c2bbd1/detail.html
+
+templates:
+  Mee_Deggi_the_Punisher:
+    loot:
+      drops:
+        - chance: always
+          one_of:
+            impact_knuckles: 95
+            ochiudos_kote:    5
+  Quu_Domi_the_Gallant:
+    loot:
+      drops:
+        - chance: always
+          one_of:
+            strider_sword: 90
+            fuma_kyahan:   10

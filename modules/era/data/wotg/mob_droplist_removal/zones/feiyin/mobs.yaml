@@ -1,0 +1,13 @@
+# Droma_FY: no scroll_of_enfire_ii drop before the April 8, 2009 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  Droma_FY:
+    loot:
+      drops:
+        - chance: very_common
+          item:   magic_pot_shard
+        - chance: rare
+          item:   vial_of_mercury
+        - chance: very_rare
+          item:   painite

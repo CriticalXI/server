@@ -1,0 +1,19 @@
+# Western_Shadow: cross-counters in place of retaliators before the March 8, 2007 update.
+# Eastern_Shadow: eurytos_bow in place of valis_bow before the March 8, 2007 update.
+# Source: http://www.playonline.com/pcd/update/ff11us/20070308c2bbd1/detail.html
+
+templates:
+  Western_Shadow:
+    loot:
+      drops:
+        - chance: always
+          item:   revival_tree_root
+        - chance: common
+          item:   cross-counters
+  Eastern_Shadow:
+    loot:
+      drops:
+        - chance: always
+          item:   revival_tree_root
+        - chance: uncommon
+          item:   eurytos_bow

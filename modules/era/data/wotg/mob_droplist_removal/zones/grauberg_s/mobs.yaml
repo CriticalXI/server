@@ -1,0 +1,11 @@
+# Onyx_Quadav_past: no scroll_of_enblizzard_ii drop before the April 8, 2009 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  Onyx_Quadav_past:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   shard_of_obsidian
+        - chance: rare
+          item:   red_oven_mitt

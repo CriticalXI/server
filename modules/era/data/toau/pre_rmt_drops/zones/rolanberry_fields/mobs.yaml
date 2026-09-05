@@ -1,0 +1,17 @@
+# Simurgh: strider_boots in place of trotter_boots before the March 8, 2007 update.
+# Source: http://www.playonline.com/pcd/update/ff11us/20070308c2bbd1/detail.html
+
+templates:
+  Simurgh:
+    loot:
+      drops:
+        - chance: always
+          item:   reraiser
+        - chance: always
+          item:   vile_elixir
+        - chance: always
+          item:   arcana_breaker
+        - chance: common
+          item:   strider_boots
+        - chance: rare
+          item:   damascus_ingot

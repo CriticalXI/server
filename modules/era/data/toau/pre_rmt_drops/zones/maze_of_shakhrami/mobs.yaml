@@ -1,0 +1,15 @@
+# Argus: peacock_charm in place of peacock_amulet before the March 8, 2007 update.
+# Source: http://www.playonline.com/pcd/update/ff11us/20070308c2bbd1/detail.html
+
+templates:
+  Argus:
+    loot:
+      drops:
+        - chance: always
+          item:   vial_of_mercury
+        - chance: very_common
+          item:   hecteyes_eye
+        - chance: very_common
+          item:   hecteyes_eye
+        - chance: very_common
+          item:   peacock_charm

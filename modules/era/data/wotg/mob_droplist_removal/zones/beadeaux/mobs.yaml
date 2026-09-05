@@ -1,0 +1,33 @@
+# Garnet_Quadav: no scroll_of_cura drop before the April 8, 2009 update.
+# Topaz_Quadav: no scroll_of_auspice drop before the April 8, 2009 update.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/08/2009)
+
+templates:
+  Garnet_Quadav:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   maul
+        - chance: rare
+          item:   scroll_of_reraise
+        - chance: ultra_rare
+          item:   wool_hat
+        - chance: ultra_rare
+          item:   wool_cuffs
+        - chance: ultra_rare
+          item:   wool_slops
+        - chance: ultra_rare
+          item:   chestnut_sabots
+  Topaz_Quadav:
+    loot:
+      drops:
+        - chance: rare
+          item:   vial_of_quadav_mage_blood
+        - chance: uncommon
+          item:   scroll_of_reraise
+        - chance: ultra_rare
+          item:   black_mitts
+        - chance: ultra_rare
+          item:   white_slacks
+        - chance: ultra_rare
+          item:   moccasins

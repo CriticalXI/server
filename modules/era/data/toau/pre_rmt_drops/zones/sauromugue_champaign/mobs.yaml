@@ -1,0 +1,17 @@
+# Roc: healing_staff in place of dryad_staff before the March 8, 2007 update.
+# Source: http://www.playonline.com/pcd/update/ff11us/20070308c2bbd1/detail.html
+
+templates:
+  Roc:
+    loot:
+      drops:
+        - chance: always
+          item:   reraiser
+        - chance: always
+          item:   vile_elixir
+        - chance: always
+          item:   crimson_blade
+        - chance: common
+          item:   healing_staff
+        - chance: rare
+          item:   damascus_ingot

@@ -1,0 +1,102 @@
+# Yagudo_Mendicant, Yagudo_Persecutor, Yagudo_Priest, Yagudo_Theologist, Yagudo_Votary: no
+#  block_of_yagudo_caulk drop before A Moogle Kupo d'Etat (July 20, 2009).
+# Yagudo_Piper: no block_of_yagudo_caulk drop before A Moogle Kupo d'Etat (July 20, 2009); the
+#  scroll_of_mages_ballad removal belongs to era/data/abyssea but is folded in here because lists
+#  replace whole.
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(07/20/2009)
+
+templates:
+  Yagudo_Mendicant:
+    loot:
+      drops:
+        - chance: common
+          item:   yagudo_bead_necklace
+        - chance: uncommon
+          item:   silver_beastcoin
+        - chance: very_rare
+          item:   mitts
+        - chance: very_rare
+          item:   slacks
+        - chance: very_rare
+          item:   solea
+  Yagudo_Persecutor:
+    loot:
+      drops:
+        - chance: common
+          item:   yagudo_bead_necklace
+        - chance: uncommon
+          item:   silver_beastcoin
+        - chance: very_rare
+          item:   hachimaki
+        - chance: very_rare
+          item:   tekko
+        - chance: very_rare
+          item:   sitabaki
+        - chance: very_rare
+          item:   kyahan
+  Yagudo_Priest:
+    loot:
+      drops:
+        - chance: rare
+          item:   giddeus_chest_key
+        - chance: very_rare
+          item:   scroll_of_barpoisonra
+        - chance: very_rare
+          item:   scroll_of_invisible
+        - chance: very_rare
+          item:   scroll_of_deodorize
+        - chance: rare
+          item:   scroll_of_silence
+        - chance: very_rare
+          item:   poets_circlet
+        - chance: very_rare
+          item:   linen_cuffs
+        - chance: very_rare
+          item:   linen_slops
+        - chance: very_rare
+          item:   holly_clogs
+  Yagudo_Theologist:
+    loot:
+      drops:
+        - chance: rare
+          item:   giddeus_chest_key
+        - chance: very_rare
+          item:   poets_circlet
+        - chance: very_rare
+          item:   linen_cuffs
+        - chance: very_rare
+          item:   linen_slops
+        - chance: very_rare
+          item:   holly_clogs
+  Yagudo_Votary:
+    loot:
+      drops:
+        - chance: rare
+          item:   giddeus_chest_key
+        - chance: rare
+          item:   seven-knot_quipu
+        - chance: common
+          item:   king_locust
+        - chance: super_rare
+          item:   cotton_hachimaki
+        - chance: super_rare
+          item:   cotton_tekko
+        - chance: super_rare
+          item:   cotton_sitabaki
+        - chance: super_rare
+          item:   cotton_kyahan
+  Yagudo_Piper:
+    loot:
+      drops:
+        - chance: common
+          item:   yagudo_bead_necklace
+        - chance: uncommon
+          item:   scroll_of_foe_lullaby
+        - chance: very_rare
+          item:   circlet
+        - chance: very_rare
+          item:   slops
+        - chance: very_rare
+          item:   cuffs
+        - chance: very_rare
+          item:   ash_clogs

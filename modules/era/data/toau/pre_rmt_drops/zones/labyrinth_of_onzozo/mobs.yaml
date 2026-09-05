@@ -1,0 +1,15 @@
+# Lord_of_Onzozo: kraken_club in place of octave_club before the March 8, 2007 update.
+# Source: http://www.playonline.com/pcd/update/ff11us/20070308c2bbd1/detail.html
+
+templates:
+  Lord_of_Onzozo:
+    loot:
+      drops:
+        - chance: always
+          item:   shall_shell
+        - chance: common
+          item:   shall_shell
+        - chance: common
+          item:   shall_shell
+        - chance: rare
+          item:   kraken_club

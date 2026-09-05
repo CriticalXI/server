@@ -1,0 +1,17 @@
+# Carnivorous_Crawler_MS, Caterchipillar: no inferior_cocoon drop before A Shantotto Ascension
+#  (November 9, 2009).
+# Source: https://www.bg-wiki.com/ffxi/Version_Update_(11/09/2009)
+
+templates:
+  Carnivorous_Crawler_MS:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   spool_of_silk_thread
+  Caterchipillar:
+    loot:
+      drops:
+        - chance: uncommon
+          item:   spool_of_silk_thread
+        - chance: rare
+          item:   shakhrami_chest_key
