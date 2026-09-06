@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - arrowwood_log
+      - bastore_sardine
+      - cobalt_jellyfish
+      - greedie
+      - quus
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_subligar
+      - shall_shell
+      - silver_ring
+      - zafmlug_bass
+  pirates_chart_quest:
+    pool:
+      - mithra_snare
+      - tarutaru_snare
+monsters:
+  17199105: {}
+  17199106: {}
+  17199109: {}

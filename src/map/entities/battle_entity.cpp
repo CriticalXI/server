@@ -55,7 +55,6 @@
 #include "trust_entity.h"
 #include "utils/battleutils.h"
 #include "utils/charutils.h"
-#include "utils/fishingutils.h"
 #include "utils/messageutils.h"
 #include "utils/mobutils.h"
 #include "utils/petutils.h"
@@ -2291,7 +2290,7 @@ void CBattleEntity::processActionEffectFlags(const action_t& action) const
             // Hostile action cancels fishing on PC targets
             if (auto* PChar = dynamic_cast<CCharEntity*>(PTarget); PChar && PChar->isFishing())
             {
-                fishingutils::InterruptFishing(PChar);
+                luautils::OnFishingInterrupt(PChar);
             }
         }
 

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - bastore_bream
+      - bastore_sardine
+      - clump_of_pamtam_kelp
+      - quus
+      - ripped_cap
+      - rusty_leggings
+      - rusty_subligar

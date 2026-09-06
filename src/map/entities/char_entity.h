@@ -55,8 +55,6 @@
 
 #include <map/entities/types/automaton_info.h>
 
-#include "utils/fishingutils.h"
-
 #define MAX_QUESTAREA    11
 #define MAX_QUESTID      256
 #define MAX_MISSIONAREA  15
@@ -707,11 +705,7 @@ public:
 
     bool requestedInfoSync = false;
 
-    fishresponse_t* hookedFish;   // Currently hooked fish/item/monster
-    uint32          nextFishTime; // When char is allowed to fish again
-    uint32          lastCastTime; // When char last cast their rod
-    uint32          fishingToken; // To track fishing process
-    uint8           hookDelay;    // How long it takes to hook a fish
+    uint8 hookDelay; // How long it takes to hook a fish
 
     void ReloadPartyInc();
     void ReloadPartyDec();

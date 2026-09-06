@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  pool_e_8:
+    cylinder: {center: [175.0, 17.0, 176.0], radius: 20}
+    pool:
+      - bluetail
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_butterfly
+      - coral_fragment
+      - gold_lobster
+      - quus
+      - rusty_cap
+      - rusty_greatsword
+      - rusty_subligar
+      - zebra_eel
+  pool_f_11:
+    cylinder: {center: [-24.0, 17.0, -216.0], radius: 20}
+    pool:
+      - bluetail
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_butterfly
+      - coral_fragment
+      - fish_scale_shield
+      - quus
+      - rusty_greatsword
+      - rusty_subligar
+      - ryugu_titan
+  misc_water:
+    pool:
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - rusty_cap
+monsters:
+  17432577: {}
+  17432578: {}
+  17432579: {}

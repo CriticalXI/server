@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  north_seaside:
+    cylinder: {center: [291.891, 7.0, 198.639], radius: 200}
+    pool:
+      - bastore_sardine
+      - black_sole
+      - bluetail
+      - cobalt_jellyfish
+      - cone_calamary
+      - mythril_sword
+      - nosteau_herring
+      - rusty_greatsword
+      - rusty_pick
+      - silver_ring
+      - silver_shark
+      - tiger_cod
+      - yellow_globe
+  south_seaside:
+    cylinder: {center: [102.172, 8.0, -489.808], radius: 150}
+    pool:
+      - bastore_sardine
+      - black_sole
+      - bluetail
+      - cobalt_jellyfish
+      - cone_calamary
+      - mythril_sword
+      - nosteau_herring
+      - rusty_greatsword
+      - rusty_pick
+      - silver_ring
+      - silver_shark
+      - tiger_cod
+      - yellow_globe
+monsters:
+  17207297: {}
+  17207298: {}
+  17207299: {}
+  17207300: {}
+  17207301: {}

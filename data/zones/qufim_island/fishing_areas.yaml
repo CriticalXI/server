@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  northwest_seaside:
+    cylinder: {center: [-100.0, -21.0, 390.0], radius: 80}
+    pool:
+      - black_sole
+      - bluetail
+      - cone_calamary
+      - copper_ring
+      - fish_scale_shield
+      - gigant_squid
+      - nosteau_herring
+      - rusty_leggings
+      - rusty_subligar
+      - silver_ring
+      - tiger_cod
+      - yellow_globe
+  southwest_seaside:
+    cylinder: {center: [15.0, -19.0, -83.0], radius: 90}
+    pool:
+      - black_sole
+      - bluetail
+      - copper_ring
+      - mythril_sword
+      - nosteau_herring
+      - rusty_leggings
+      - rusty_subligar
+      - three-eyed_fish
+      - tiger_cod
+      - yellow_globe
+  other_seaside:
+    pool:
+      - black_sole
+      - bluetail
+      - copper_ring
+      - nosteau_herring
+      - rusty_leggings
+      - rusty_subligar
+      - tiger_cod
+      - yellow_globe
+monsters:
+  17293313: {}
+  17293315: {}
+  17293316: {}

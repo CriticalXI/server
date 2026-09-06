@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - alabaligi
+      - dark_bass
+      - kayabaligi
+      - morinabaligi
+      - rusty_bucket
+      - rusty_subligar
+      - sazanbaligi
+      - turnabaligi
+      - yilanbaligi
+monsters:
+  16990209: {}
+  16990210: {}
+  16990211: {}
+  16990212: {}
+  16990213: {}

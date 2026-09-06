@@ -22,6 +22,7 @@
 #include "0x110_fishing_2.h"
 
 #include "entities/char_entity.h"
+#include "lua/luautils.h"
 
 auto GP_CLI_COMMAND_FISHING_2::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
@@ -48,16 +49,8 @@ auto GP_CLI_COMMAND_FISHING_2::validate(MapSession* PSession, const CCharEntity*
                             // - Equals to 200 when client force exits the mini game
                             // - Equals to 0 when client successfully catches a fish
                             // - Else it is equal to the fish remaining stamina
+                            // para2 echoes the intuition value of the hooked catch; Lua holds that state and checks it
                             v.range("para", this->para, 0, 300);
-
-                            // if para2 is non-zero, it must equal current hooked fish special
-                            if (this->para2 != 0)
-                            {
-                                if (PChar->hookedFish)
-                                {
-                                    v.mustEqual(this->para2, PChar->hookedFish->special, "para2 not equal to current hooked fish special");
-                                }
-                            }
                             break;
                         case GP_CLI_COMMAND_FISHING_2_MODE::RequestRelease:
                             // para and para2 are both 0 for RequestRelease
@@ -77,5 +70,5 @@ auto GP_CLI_COMMAND_FISHING_2::validate(MapSession* PSession, const CCharEntity*
 
 void GP_CLI_COMMAND_FISHING_2::process(MapSession* PSession, CCharEntity* PChar) const
 {
-    fishingutils::FishingAction(PChar, static_cast<GP_CLI_COMMAND_FISHING_2_MODE>(this->mode), this->para, this->para2);
+    luautils::OnFishingAction(PChar, this->mode, this->para, this->para2);
 }

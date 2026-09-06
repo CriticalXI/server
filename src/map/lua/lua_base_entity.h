@@ -161,6 +161,8 @@ public:
     void  clearPath(const sol::object& pauseObj);                                  // removes current pathfind and stops moving
     void  continuePath();                                                          // resumes previous pathfind if it was paused
     float checkDistance(sol::variadic_args va);                                    // Check Distance and returns distance number
+    auto  isInsideCylinder(float x, float z, float radius) -> bool;                // within radius of x, z in the XZ plane
+    auto  isInsidePoly(const sol::table& corners) -> bool;                         // inside a ring of {x, y, z} corners in the XZ plane
     void  wait(const sol::object& milliseconds);                                   // make the npc wait a number of ms and then back into roam
     void  follow(CLuaBaseEntity* target, uint8 followType);                        // makes an npc follow or runaway from another target
     bool  hasFollowTarget();                                                       // checks if the mob has a target that it is currently following (via follow function)

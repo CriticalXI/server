@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - arrowwood_log
+      - bluetail
+      - clump_of_pamtam_kelp
+      - copper_ring
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_pick
+      - rusty_subligar
+      - shall_shell
+      - silver_ring
+      - yellow_globe
+  brigands_chart_quest:
+    pool: []
+monsters:
+  17260545: {}
+  17260546: {}
+  17260549: {}
+  17261040:
+    area: brigands_chart_quest

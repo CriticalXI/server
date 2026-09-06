@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  oasis_of_hubol:
+    cylinder: {center: [-640.0, 2.0, -313.0], radius: 50}
+    pool:
+      - crayfish
+      - gavial_fish
+      - giant_catfish
+      - giant_donko
+      - moat_carp
+      - rusty_cap
+      - rusty_leggings
+      - sandfish
+  central_spring:
+    pool:
+      - crayfish
+      - giant_catfish
+      - giant_donko
+      - moat_carp
+      - rusty_cap
+      - rusty_leggings
+      - sandfish
+monsters:
+  17289217: {}
+  17289218: {}
+  17289219: {}
+  17289220: {}
+  17289221: {}

@@ -528,6 +528,23 @@ end
 function CBaseEntity:checkDistance(targetEntity)
 end
 
+-- Whether the entity stands within radius of x, z. Height is ignored.
+---@nodiscard
+---@param x number
+---@param z number
+---@param radius number
+---@return boolean
+function CBaseEntity:isInsideCylinder(x, z, radius)
+end
+
+-- Whether the entity stands inside a ring of {x, y, z} corners, the shape a fishing area or roam
+-- region uses. The ring closes implicitly and height is ignored.
+---@nodiscard
+---@param corners { [1]: number, [2]: number, [3]: number }[]
+---@return boolean
+function CBaseEntity:isInsidePoly(corners)
+end
+
 ---@param milliseconds integer?
 ---@return nil
 function CBaseEntity:wait(milliseconds)

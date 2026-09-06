@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - hamsi
+      - hydrogauge
+      - kalamar
+      - kalkanbaligi
+      - kilicbaligi
+      - lakerda
+      - uskumru
+monsters:
+  17014785: {}
+  17014786: {}
+  17014787: {}
+  17014788: {}
+  17014789: {}
+  17014790:
+    area: whole_zone
+    bait: [minnow, sinking_minnow]

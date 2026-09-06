@@ -160,7 +160,6 @@ auto time_server(Scheduler& scheduler, MapConfig config) -> Task<void>
             TracyZoneScoped;
 
             zoneutils::TOTDChange(vanaTotd);
-            fishingutils::RestockFishingAreas();
 
             zoneutils::ForEachZone(
                 [](CZone* PZone)

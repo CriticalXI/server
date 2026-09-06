@@ -2,7 +2,7 @@
 -- func: addfish <fishId> <length> <weight>
 -- desc: Adds a measured fish to the GMs inventory.
 -----------------------------------
-require('scripts/globals/fishing_contest')
+require('scripts/globals/hobbies/fishing/contest')
 -----------------------------------
 local commandObj = {}
 

@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  giddeus_spring:
+    cylinder: {center: [224.758, -2.0, -296.078], radius: 15}
+    pool:
+      - crayfish
+      - dark_bass
+      - monke-onke
+      - rusty_bucket
+      - rusty_leggings
+      - silver_ring
+      - tricolored_carp
+  pond_west:
+    cylinder: {center: [-254.81, -2.0, -255.62], radius: 15}
+    pool:
+      - crayfish
+      - dark_bass
+      - rusty_bucket
+      - rusty_leggings
+      - silver_ring
+      - tricolored_carp
+  pond_north:
+    cylinder: {center: [-100.0, 1.5, -140.0], radius: 20}
+    pool:
+      - crayfish
+      - dark_bass
+      - giant_catfish
+      - red_terrapin
+      - rusty_bucket
+      - rusty_leggings
+      - silver_ring
+      - tricolored_carp
+  misc_puddles:
+    pool:
+      - crayfish
+      - rusty_bucket
+      - rusty_leggings
+      - silver_ring
+monsters:
+  17371137: {}
+  17371138: {}
+  17371139: {}
+  17371140: {}
+  17371141: {}
