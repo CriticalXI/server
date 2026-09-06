@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  salt_water:
+    poly:
+      - [-72.0, -2.0, 150.0]
+      - [-45.0, -2.0, 150.0]
+      - [-45.0, -2.0, -52.0]
+      - [-72.0, -2.0, -52.0]
+    pool:
+      - black_eel
+      - copper_frog
+      - coral_fragment
+      - crayfish
+      - moat_carp
+      - rusty_bucket
+      - rusty_cap
+      - rusty_greatsword
+      - rusty_leggings
+      - rusty_pick
+      - rusty_subligar
+      - sandfish
+  fresh_water:
+    pool:
+      - coral_fragment
+      - quus
+      - rusty_bucket
+      - rusty_cap
+      - rusty_greatsword
+      - rusty_leggings
+      - rusty_subligar
+monsters:
+  17485825: {}
+  17485826: {}
+  17485829: {}

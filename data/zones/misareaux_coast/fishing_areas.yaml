@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  cascade_edellaine:
+    cylinder: {center: [-192.0, -15.0, 640.0], radius: 62}
+    pool:
+      - dark_bass
+      - gold_carp
+      - moat_carp
+      - silver_ring
+      - takitaro
+      - tavnazian_goby
+  seaside:
+    cylinder: {center: [700.0, 0.0, -535.0], radius: 100}
+    pool:
+      - cobalt_jellyfish
+      - greedie
+      - quus
+  rafeloux_river:
+    pool:
+      - arrowwood_log
+      - gold_carp
+      - tavnazian_goby
+monsters:
+  16879617: {}
+  16879618: {}
+  16879619: {}
+  16879620: {}

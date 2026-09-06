@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  seaside:
+    cylinder: {center: [435.0, -1.0, -92.0], radius: 150}
+    pool:
+      - arrowwood_log
+      - black_sole
+      - bluetail
+      - cone_calamary
+      - copper_ring
+      - gigant_squid
+      - mythril_sword
+      - nosteau_herring
+      - rusty_subligar
+      - tiger_cod
+      - yellow_globe
+  ponds:
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - emperor_fish
+      - icefish
+      - mythril_dagger
+      - rusty_subligar
+      - silver_ring
+monsters:
+  17231873: {}
+  17231874: {}
+  17231875: {}
+  17231876: {}
+  17231877: {}

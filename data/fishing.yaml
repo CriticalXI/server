@@ -1,0 +1,1323 @@
+# yaml-language-server: $schema=schemas/fishing.schema.json
+
+fishing:
+  fish:
+    abaia:
+      size:      large
+      skill:     150
+      legendary: super
+      length:    [170, 350]
+    ahtapot:
+      size:   large
+      skill:  90
+      length: [55, 145]
+    alabaligi:
+      size:  small
+      skill: 37
+    armored_pisces:
+      size:   large
+      skill:  108
+      length: [50, 125]
+    arrowwood_log:
+      item:   true
+      size:   large
+      skill:  4
+      length: [1, 3]
+    bastore_bream:
+      size:  small
+      skill: 86
+    bastore_sardine:
+      size:     small
+      skill:    9
+      max_hook: 3
+    bastore_sweeper:
+      size:  small
+      skill: 12
+    betta:
+      size:  small
+      skill: 66
+    bhefhel_marlin:
+      size:   large
+      skill:  61
+      length: [60, 140]
+    bibiki_urchin:
+      size:  small
+      skill: 3
+    bibikibo:
+      size:  small
+      skill: 8
+    black_eel:
+      size:  small
+      skill: 47
+    black_ghost:
+      size:  small
+      skill: 88
+    black_sole:
+      size:  small
+      skill: 96
+    bladefish:
+      size:   large
+      skill:  71
+      length: [40, 120]
+    blindfish:
+      size:  small
+      skill: 27
+    bluetail:
+      size:  small
+      skill: 55
+    brass_loach:
+      size:  small
+      skill: 42
+    bugbear_mask:
+      item:  true
+      size:  small
+      skill: 54
+    ca_cuong:
+      size:  small
+      skill: 78
+    caedarva_frog:
+      size:  small
+      skill: 30
+    cave_cherax:
+      size:      large
+      skill:     130
+      legendary: basic
+      length:    [120, 235]
+    cheval_salmon:
+      size:  small
+      skill: 21
+    clump_of_adoulinian_kelp:
+      item:  true
+      size:  small
+      skill: 6
+    clump_of_pamtam_kelp:
+      item:  true
+      size:  small
+      skill: 3
+    cobalt_jellyfish:
+      item:  true
+      size:  small
+      skill: 5
+    cone_calamary:
+      size:     small
+      skill:    48
+      max_hook: 3
+    copper_frog:
+      size:  small
+      skill: 16
+    copper_ring:
+      item:  true
+      size:  small
+      skill: 24
+    coral_butterfly:
+      size:  small
+      skill: 40
+    coral_fragment:
+      item:  true
+      size:  small
+      skill: 74
+    crayfish:
+      size:  small
+      skill: 7
+    crescent_fish:
+      size:  small
+      skill: 69
+    crystal_bass:
+      size:  small
+      skill: 35
+    damp_scroll:
+      item:  true
+      size:  small
+      skill: 20
+    dark_bass:
+      size:  small
+      skill: 33
+    denizanasi:
+      item:  true
+      size:  small
+      skill: 5
+    dil:
+      size:  small
+      skill: 96
+    elshimo_frog:
+      size:  small
+      skill: 30
+    elshimo_newt:
+      size:  small
+      skill: 60
+    emperor_fish:
+      size:   large
+      skill:  91
+      length: [60, 180]
+    fat_greedie:
+      size:  small
+      skill: 24
+    fish_scale_shield:
+      item:  true
+      size:  small
+      skill: 7
+    forest_carp:
+      size:  small
+      skill: 20
+    garpike:
+      size:  small
+      skill: 83
+    gavial_fish:
+      size:   large
+      skill:  81
+      length: [40, 130]
+    gerrothorax:
+      size:      large
+      skill:     134
+      legendary: basic
+      length:    [120, 285]
+    giant_catfish:
+      size:   large
+      skill:  31
+      length: [40, 130]
+    giant_chirai:
+      size:      large
+      skill:     110
+      legendary: basic
+      length:    [75, 170]
+    giant_donko:
+      size:   large
+      skill:  50
+      length: [45, 150]
+    gigant_octopus:
+      size:   large
+      skill:  80
+      length: [65, 170]
+    gigant_squid:
+      size:   large
+      skill:  91
+      length: [80, 170]
+    gold_carp:
+      size:  small
+      skill: 56
+    gold_lobster:
+      size:  small
+      skill: 46
+    greedie:
+      size:  small
+      skill: 14
+    grimmonite:
+      size:   large
+      skill:  90
+      length: [55, 145]
+    gugru_tuna:
+      size:   large
+      skill:  41
+      length: [40, 120]
+    gugrusaurus:
+      size:      large
+      skill:     140
+      legendary: super
+      length:    [155, 420]
+      key_item:  1977
+    gurnard:
+      size:  small
+      skill: 26
+    hamsi:
+      size:     small
+      skill:    9
+      max_hook: 3
+    hydrogauge:
+      item:  true
+      size:  small
+      skill: 7
+      quest: {log: 6, id: 25}
+    icefish:
+      size:     small
+      skill:    49
+      max_hook: 3
+    istakoz:
+      size:  small
+      skill: 46
+    istavrit:
+      size:   large
+      skill:  18
+      length: [10, 20]
+    istiridye:
+      size:  small
+      skill: 53
+    jungle_catfish:
+      size:   large
+      skill:  80
+      length: [40, 110]
+    kalamar:
+      size:     small
+      skill:    48
+      max_hook: 3
+    kalkanbaligi:
+      size:      large
+      skill:     105
+      legendary: basic
+      length:    [60, 100]
+    kaplumbaga:
+      size:  small
+      skill: 53
+    kayabaligi:
+      size:  small
+      skill: 75
+    kilicbaligi:
+      size:  large
+      skill: 61
+    lakerda:
+      size:   large
+      skill:  41
+      length: [55, 100]
+    lamp_marimo:
+      size:  small
+      skill: 3
+    lik:
+      size:      large
+      skill:     140
+      legendary: super
+      length:    [185, 460]
+      key_item:  1977
+    lungfish:
+      size:  small
+      skill: 32
+    matsya:
+      size:      large
+      skill:     150
+      legendary: super
+      length:    [425, 950]
+    megalodon:
+      size:   large
+      skill:  93
+      length: [446, 625]
+    mercanbaligi:
+      size:  small
+      skill: 86
+    mithra_snare:
+      item:  true
+      size:  small
+      skill: 30
+    moat_carp:
+      size:  small
+      skill: 11
+    moblin_mask:
+      item:  true
+      size:  small
+      skill: 54
+    mola_mola:
+      size:      large
+      skill:     135
+      legendary: basic
+      length:    [110, 200]
+    monke-onke:
+      size:   large
+      skill:  51
+      length: [45, 115]
+    moorish_idol:
+      size:  small
+      skill: 26
+    morinabaligi:
+      size:  small
+      skill: 91
+    muddy_siredon:
+      size:  small
+      skill: 18
+    mythril_dagger:
+      item:  true
+      size:  small
+      skill: 90
+    mythril_sword:
+      item:  true
+      size:  small
+      skill: 90
+    nebimonite:
+      size:  small
+      skill: 27
+    noble_lady:
+      size:  small
+      skill: 66
+    norg_shell:
+      item:  true
+      size:  small
+      skill: 14
+    nosteau_herring:
+      size:  small
+      skill: 39
+    ogre_eel:
+      size:  small
+      skill: 35
+    phanauet_newt:
+      size:  small
+      skill: 4
+    pipira:
+      size:  small
+      skill: 29
+    pirarucu:
+      size:   large
+      skill:  81
+      length: [161, 210]
+    pterygotus:
+      size:   large
+      skill:  99
+      length: [25, 260]
+    quus:
+      size:     small
+      skill:    19
+      max_hook: 3
+    red_terrapin:
+      size:  small
+      skill: 53
+    rhinochimera:
+      size:   large
+      skill:  73
+      length: [10, 90]
+    ripped_cap:
+      item:  true
+      size:  small
+      skill: 20
+      quest: {log: 2, id: 23}
+    rusty_bucket:
+      item:  true
+      size:  small
+      skill: 1
+    rusty_cap:
+      item:  true
+      size:  small
+      skill: 30
+    rusty_greatsword:
+      item:  true
+      size:  small
+      skill: 60
+    rusty_leggings:
+      item:  true
+      size:  small
+      skill: 7
+    rusty_pick:
+      item:  true
+      size:  small
+      skill: 40
+    rusty_subligar:
+      item:  true
+      size:  small
+      skill: 5
+    ryugu_titan:
+      size:      large
+      skill:     150
+      legendary: basic
+      length:    [200, 490]
+    sandfish:
+      size:     small
+      skill:    50
+      max_hook: 3
+    sazanbaligi:
+      size:  small
+      skill: 56
+    sea_zombie:
+      size:      large
+      skill:     101
+      legendary: basic
+      length:    [80, 195]
+    shall_shell:
+      size:  small
+      skill: 53
+    shining_trout:
+      size:  small
+      skill: 37
+    silver_ring:
+      item:  true
+      size:  small
+      skill: 34
+    silver_shark:
+      size:  small
+      skill: 76
+    takitaro:
+      size:      large
+      skill:     101
+      legendary: basic
+      length:    [60, 130]
+    tarutaru_snare:
+      item:  true
+      size:  small
+      skill: 30
+    tavnazian_goby:
+      size:  small
+      skill: 75
+    three-eyed_fish:
+      size:   large
+      skill:  81
+      length: [50, 120]
+    tiger_cod:
+      size:  small
+      skill: 29
+    tiny_goldfish:
+      size:     small
+      skill:    20
+      max_hook: 3
+    titanic_sawfish:
+      size:      large
+      skill:     125
+      legendary: basic
+      length:    [75, 145]
+    titanictus:
+      size:      large
+      skill:     101
+      legendary: basic
+      length:    [75, 210]
+    tricolored_carp:
+      size:  small
+      skill: 27
+    tricorn:
+      size:      large
+      skill:     128
+      legendary: basic
+      length:    [105, 210]
+      key_item:  1976
+    trilobite:
+      size:  small
+      skill: 59
+    trumpet_shell:
+      size:  small
+      skill: 63
+    turnabaligi:
+      size:   large
+      skill:  105
+      length: [65, 175]
+    uskumru:
+      size:  small
+      skill: 55
+    veydal_wrasse:
+      size:   large
+      skill:  37
+      length: [40, 125]
+    vongola_clam:
+      size:  small
+      skill: 53
+    yayinbaligi:
+      size:   large
+      skill:  31
+      length: [40, 130]
+    yellow_globe:
+      size:     small
+      skill:    17
+      max_hook: 3
+    yilanbaligi:
+      size:  small
+      skill: 47
+    zafmlug_bass:
+      size:  small
+      skill: 43
+    zebra_eel:
+      size:  small
+      skill: 70
+  rods:
+    bamboo_fishing_rod:
+      size:      small
+      time:      30
+      breaks_to: broken_bamboo_fishing_rod
+    carbon_fishing_rod:
+      size:      small
+      time:      43
+      breaks_to: broken_carbon_fishing_rod
+    clothespole:
+      size:      large
+      time:      30
+      breaks_to: broken_clothespole
+    composite_fishing_rod:
+      size:      large
+      time:      43
+      breaks_to: broken_composite_fishing_rod
+    ebisu_fishing_rod:
+      size:           small
+      time:           30
+      legendary:      true
+      legendary_time: 10
+    ebisu_fishing_rod_+1:
+      size:           small
+      time:           40
+      legendary:      true
+      legendary_time: 10
+    fastwater_fishing_rod:
+      size:      small
+      time:      30
+      breaks_to: broken_fastwater_fishing_rod
+    glass_fiber_fishing_rod:
+      size:      small
+      time:      45
+      breaks_to: broken_glass_fiber_fishing_rod
+    goldfish_basket:
+      size: small
+      time: 20
+    halcyon_rod:
+      size:      small
+      time:      41
+      breaks_to: broken_halcyon_fishing_rod
+    hume_fishing_rod:
+      size:      small
+      time:      30
+      breaks_to: broken_hume_fishing_rod
+    judges_rod:
+      size:           small
+      time:           60
+      legendary:      true
+      legendary_time: 30
+    lu_shangs_fishing_rod:
+      size:           small
+      time:           40
+      legendary:      true
+      legendary_time: 10
+      breaks_to:      broken_lu_shangs_fishing_rod
+    lu_shangs_fishing_rod_+1:
+      size:           small
+      time:           50
+      legendary:      true
+      legendary_time: 10
+      breaks_to:      broken_lu_shangs_fishing_rod_+1
+    maze_monger_fishing_rod:
+      size:      small
+      time:      30
+      breaks_to: broken_mmm_fishing_rod
+    mithran_fishing_rod:
+      size:      large
+      time:      30
+      breaks_to: broken_mithran_fishing_rod
+    single_hook_fishing_rod:
+      size:      large
+      time:      45
+      breaks_to: broken_single_hook_fishing_rod
+    tarutaru_fishing_rod:
+      size:      small
+      time:      30
+      breaks_to: broken_tarutaru_fishing_rod
+    willow_fishing_rod:
+      size:      small
+      time:      30
+      breaks_to: broken_willow_fishing_rod
+    yew_fishing_rod:
+      size:      small
+      time:      30
+      breaks_to: broken_yew_fishing_rod
+  baits:
+    ball_of_crayfish_paste:
+      type: bait
+      affinity:
+        - ahtapot
+        - bastore_bream
+        - bastore_sweeper
+        - black_eel
+        - black_sole
+        - cobalt_jellyfish
+        - denizanasi
+        - dil
+        - fat_greedie
+        - gigant_octopus
+        - greedie
+        - grimmonite
+        - gurnard
+        - istiridye
+        - kalkanbaligi
+        - mercanbaligi
+        - moorish_idol
+        - nebimonite
+        - shall_shell
+        - trumpet_shell
+        - vongola_clam
+        - yellow_globe
+        - zafmlug_bass
+    ball_of_insect_paste:
+      type: bait
+      affinity:
+        - blindfish
+        - cobalt_jellyfish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - forest_carp
+        - gold_carp
+        - icefish
+        - moat_carp
+        - sandfish
+        - sazanbaligi
+        - tiny_goldfish
+        - tricolored_carp
+    ball_of_sardine_paste:
+      type: bait
+      affinity:
+        - abaia
+        - alabaligi
+        - armored_pisces
+        - black_eel
+        - blindfish
+        - cheval_salmon
+        - cobalt_jellyfish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - emperor_fish
+        - giant_catfish
+        - giant_chirai
+        - giant_donko
+        - jungle_catfish
+        - morinabaligi
+        - nosteau_herring
+        - shining_trout
+        - yilanbaligi
+    ball_of_trout_paste:
+      type: bait
+      affinity:
+        - abaia
+        - alabaligi
+        - armored_pisces
+        - black_eel
+        - blindfish
+        - cheval_salmon
+        - cobalt_jellyfish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - emperor_fish
+        - giant_catfish
+        - giant_chirai
+        - giant_donko
+        - jungle_catfish
+        - morinabaligi
+        - shining_trout
+        - yilanbaligi
+    dried_squid:
+      type: special
+    drill_calamary:
+      type: bait
+      affinity:
+        - gugrusaurus
+        - matsya
+        - sea_zombie
+    dwarf_pugil:
+      type: bait
+      affinity:
+        - lik
+    fly_lure:
+      type: lure
+      affinity:
+        - alabaligi
+        - betta
+        - bibikibo
+        - caedarva_frog
+        - cheval_salmon
+        - cobalt_jellyfish
+        - copper_frog
+        - crescent_fish
+        - denizanasi
+        - elshimo_frog
+        - elshimo_newt
+        - gerrothorax
+        - giant_chirai
+        - kaplumbaga
+        - lamp_marimo
+        - muddy_siredon
+        - phanauet_newt
+        - shining_trout
+        - takitaro
+        - tricorn
+    frog_lure:
+      type: lure
+      affinity:
+        - abaia
+        - armored_pisces
+        - cobalt_jellyfish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - elshimo_newt
+        - gavial_fish
+        - giant_catfish
+        - giant_donko
+        - jungle_catfish
+        - kaplumbaga
+        - lungfish
+        - muddy_siredon
+        - phanauet_newt
+        - pipira
+        - red_terrapin
+        - ryugu_titan
+        - yayinbaligi
+    giant_shell_bug:
+      type: bait
+      affinity:
+        - copper_frog
+        - crescent_fish
+        - crystal_bass
+        - dark_bass
+        - emperor_fish
+        - red_terrapin
+    goliath_worm:
+      type: bait
+    judge_fly:
+      type: lure
+    judge_minnow:
+      type: lure
+    judges_lure:
+      type: lure
+    large_maze_monger_ball:
+      type: lure
+    little_worm:
+      type: bait
+      affinity:
+        - armored_pisces
+        - black_eel
+        - black_ghost
+        - blindfish
+        - brass_loach
+        - ca_cuong
+        - cobalt_jellyfish
+        - crayfish
+        - crystal_bass
+        - denizanasi
+        - forest_carp
+        - giant_catfish
+        - giant_donko
+        - gold_carp
+        - icefish
+        - kayabaligi
+        - lungfish
+        - moat_carp
+        - monke-onke
+        - sandfish
+        - sazanbaligi
+        - shining_trout
+        - tavnazian_goby
+        - tiny_goldfish
+        - tricolored_carp
+        - yilanbaligi
+    lizard_lure:
+      type: lure
+      affinity:
+        - cobalt_jellyfish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - garpike
+        - gavial_fish
+        - giant_catfish
+        - giant_donko
+        - jungle_catfish
+        - pipira
+        - ryugu_titan
+    lufaise_fly:
+      type: bait
+      affinity:
+        - blindfish
+        - cheval_salmon
+        - cobalt_jellyfish
+        - copper_frog
+        - denizanasi
+        - gerrothorax
+        - giant_chirai
+        - lungfish
+        - muddy_siredon
+        - phanauet_newt
+        - shining_trout
+        - tricorn
+    lugworm:
+      type: bait
+      affinity:
+        - bastore_sardine
+        - cobalt_jellyfish
+        - coral_butterfly
+        - denizanasi
+        - fat_greedie
+        - greedie
+        - hamsi
+        - istavrit
+        - lamp_marimo
+        - moorish_idol
+        - nosteau_herring
+        - pterygotus
+        - quus
+        - tiger_cod
+        - trilobite
+        - yellow_globe
+        - zafmlug_bass
+    maze_monger_minnow:
+      type: special
+    meatball:
+      type: bait
+      affinity:
+        - armored_pisces
+        - bastore_sweeper
+        - bibikibo
+        - bladefish
+        - blindfish
+        - cave_cherax
+        - cobalt_jellyfish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - elshimo_newt
+        - garpike
+        - gavial_fish
+        - gerrothorax
+        - gugrusaurus
+        - jungle_catfish
+        - megalodon
+        - pipira
+        - pirarucu
+        - ryugu_titan
+        - sea_zombie
+        - silver_shark
+        - titanic_sawfish
+        - titanictus
+    minnow:
+      type: lure
+      affinity:
+        - abaia
+        - alabaligi
+        - armored_pisces
+        - bastore_bream
+        - black_ghost
+        - bluetail
+        - cave_cherax
+        - cheval_salmon
+        - cobalt_jellyfish
+        - cone_calamary
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - fat_greedie
+        - garpike
+        - gavial_fish
+        - gerrothorax
+        - giant_catfish
+        - giant_chirai
+        - gigant_squid
+        - greedie
+        - gugru_tuna
+        - istakoz
+        - jungle_catfish
+        - kalamar
+        - kayabaligi
+        - lakerda
+        - lik
+        - lungfish
+        - megalodon
+        - mercanbaligi
+        - mola_mola
+        - pipira
+        - pirarucu
+        - ryugu_titan
+        - shining_trout
+        - takitaro
+        - tavnazian_goby
+        - three-eyed_fish
+        - turnabaligi
+        - uskumru
+        - veydal_wrasse
+        - yayinbaligi
+        - zafmlug_bass
+    peeled_crayfish:
+      type: bait
+      affinity:
+        - bibikibo
+        - black_sole
+        - cave_cherax
+        - cobalt_jellyfish
+        - crayfish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - emperor_fish
+        - gavial_fish
+        - giant_donko
+        - lungfish
+        - monke-onke
+        - moorish_idol
+        - morinabaligi
+        - takitaro
+        - trilobite
+        - vongola_clam
+        - yilanbaligi
+    peeled_lobster:
+      type: bait
+      affinity:
+        - ahtapot
+        - bastore_bream
+        - bhefhel_marlin
+        - bibikibo
+        - bluetail
+        - cave_cherax
+        - cobalt_jellyfish
+        - denizanasi
+        - dil
+        - grimmonite
+        - gugru_tuna
+        - kilicbaligi
+        - mercanbaligi
+        - moorish_idol
+        - nebimonite
+        - noble_lady
+        - ogre_eel
+        - ryugu_titan
+        - titanictus
+    piece_of_rotten_meat:
+      type: bait
+      affinity:
+        - cave_cherax
+        - elshimo_newt
+        - jungle_catfish
+        - sea_zombie
+    regular_maze_monger_ball:
+      type: lure
+    robber_rig:
+      type: lure
+      affinity:
+        - abaia
+        - bastore_bream
+        - bastore_sardine
+        - bastore_sweeper
+        - bhefhel_marlin
+        - bibikibo
+        - black_eel
+        - bladefish
+        - blindfish
+        - bluetail
+        - cheval_salmon
+        - cobalt_jellyfish
+        - copper_frog
+        - crayfish
+        - dark_bass
+        - denizanasi
+        - dil
+        - elshimo_frog
+        - elshimo_newt
+        - emperor_fish
+        - fat_greedie
+        - forest_carp
+        - garpike
+        - gavial_fish
+        - gerrothorax
+        - giant_catfish
+        - giant_donko
+        - gigant_octopus
+        - gold_carp
+        - greedie
+        - grimmonite
+        - hamsi
+        - istakoz
+        - istiridye
+        - kaplumbaga
+        - kilicbaligi
+        - megalodon
+        - mercanbaligi
+        - moat_carp
+        - noble_lady
+        - ogre_eel
+        - pipira
+        - pirarucu
+        - quus
+        - sandfish
+        - shall_shell
+        - silver_shark
+        - tiger_cod
+        - tricolored_carp
+        - trilobite
+        - trumpet_shell
+        - vongola_clam
+        - yellow_globe
+        - zafmlug_bass
+    rogue_rig:
+      type: lure
+      affinity:
+        - abaia
+        - bastore_bream
+        - bastore_sardine
+        - bhefhel_marlin
+        - black_eel
+        - black_sole
+        - bladefish
+        - blindfish
+        - bluetail
+        - cave_cherax
+        - cobalt_jellyfish
+        - copper_frog
+        - crayfish
+        - crescent_fish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - dil
+        - elshimo_frog
+        - elshimo_newt
+        - emperor_fish
+        - fat_greedie
+        - forest_carp
+        - garpike
+        - gavial_fish
+        - gerrothorax
+        - giant_catfish
+        - giant_chirai
+        - giant_donko
+        - gigant_octopus
+        - gigant_squid
+        - gold_lobster
+        - greedie
+        - grimmonite
+        - gugru_tuna
+        - icefish
+        - istakoz
+        - istiridye
+        - jungle_catfish
+        - kaplumbaga
+        - kilicbaligi
+        - megalodon
+        - mercanbaligi
+        - monke-onke
+        - nebimonite
+        - noble_lady
+        - nosteau_herring
+        - ogre_eel
+        - pipira
+        - pirarucu
+        - pterygotus
+        - quus
+        - red_terrapin
+        - sandfish
+        - sea_zombie
+        - shall_shell
+        - shining_trout
+        - silver_shark
+        - takitaro
+        - three-eyed_fish
+        - tiger_cod
+        - titanictus
+        - tricolored_carp
+        - trumpet_shell
+        - vongola_clam
+        - yellow_globe
+        - zafmlug_bass
+        - zebra_eel
+    sabiki_rig:
+      type:     lure
+      max_hook: 3
+      affinity:
+        - bastore_sardine
+        - cobalt_jellyfish
+        - cone_calamary
+        - denizanasi
+        - hamsi
+        - icefish
+        - kalamar
+        - lamp_marimo
+        - quus
+        - sandfish
+        - yellow_globe
+    sea_dragon_liver:
+      type: bait
+    shell_bug:
+      type: bait
+      affinity:
+        - black_eel
+        - black_ghost
+        - blindfish
+        - cobalt_jellyfish
+        - dark_bass
+        - denizanasi
+        - elshimo_frog
+        - elshimo_newt
+        - istavrit
+        - jungle_catfish
+        - kaplumbaga
+        - kayabaligi
+        - lungfish
+        - muddy_siredon
+        - phanauet_newt
+        - pterygotus
+        - red_terrapin
+        - tavnazian_goby
+        - yilanbaligi
+    shrimp_lure:
+      type: lure
+      affinity:
+        - ahtapot
+        - bastore_bream
+        - bibikibo
+        - black_sole
+        - cave_cherax
+        - cobalt_jellyfish
+        - denizanasi
+        - dil
+        - gigant_octopus
+        - gold_carp
+        - grimmonite
+        - gugru_tuna
+        - kalkanbaligi
+        - lakerda
+        - lungfish
+        - mercanbaligi
+        - mola_mola
+        - monke-onke
+        - moorish_idol
+        - nebimonite
+        - noble_lady
+        - nosteau_herring
+        - ogre_eel
+        - ryugu_titan
+        - sazanbaligi
+        - tiger_cod
+        - tricolored_carp
+        - trilobite
+        - turnabaligi
+        - uskumru
+        - veydal_wrasse
+        - zebra_eel
+    sinking_minnow:
+      type: lure
+      affinity:
+        - alabaligi
+        - armored_pisces
+        - bastore_bream
+        - bastore_sweeper
+        - bibikibo
+        - black_ghost
+        - black_sole
+        - cave_cherax
+        - cheval_salmon
+        - cobalt_jellyfish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - dil
+        - fat_greedie
+        - garpike
+        - giant_catfish
+        - gigant_octopus
+        - gold_lobster
+        - greedie
+        - gugru_tuna
+        - istakoz
+        - istavrit
+        - jungle_catfish
+        - kalkanbaligi
+        - kayabaligi
+        - lakerda
+        - lik
+        - lungfish
+        - mercanbaligi
+        - morinabaligi
+        - noble_lady
+        - ogre_eel
+        - pterygotus
+        - rhinochimera
+        - ryugu_titan
+        - shining_trout
+        - takitaro
+        - tavnazian_goby
+        - trumpet_shell
+        - turnabaligi
+        - yayinbaligi
+        - yilanbaligi
+        - zafmlug_bass
+        - zebra_eel
+    slice_of_bluetail:
+      type: bait
+      affinity:
+        - bastore_sweeper
+        - bhefhel_marlin
+        - bibikibo
+        - bladefish
+        - cobalt_jellyfish
+        - cone_calamary
+        - denizanasi
+        - gigant_squid
+        - gugrusaurus
+        - kalamar
+        - kilicbaligi
+        - mola_mola
+        - ryugu_titan
+        - sea_zombie
+        - silver_shark
+        - veydal_wrasse
+    slice_of_cod:
+      type: bait
+      affinity:
+        - bastore_sweeper
+        - black_sole
+        - cobalt_jellyfish
+        - cone_calamary
+        - denizanasi
+        - dil
+        - gigant_squid
+        - kalkanbaligi
+        - lakerda
+        - megalodon
+        - mola_mola
+        - ryugu_titan
+        - three-eyed_fish
+        - titanic_sawfish
+        - veydal_wrasse
+    slice_of_moat_carp:
+      type: bait
+      affinity:
+        - abaia
+        - ca_cuong
+        - cobalt_jellyfish
+        - crayfish
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - emperor_fish
+        - gavial_fish
+        - giant_donko
+        - pipira
+    slice_of_sardine:
+      type: bait
+      affinity:
+        - bastore_bream
+        - bladefish
+        - bluetail
+        - cobalt_jellyfish
+        - denizanasi
+        - fat_greedie
+        - giant_catfish
+        - gold_lobster
+        - greedie
+        - gugru_tuna
+        - gurnard
+        - istakoz
+        - istavrit
+        - mercanbaligi
+        - noble_lady
+        - ogre_eel
+        - ryugu_titan
+        - veydal_wrasse
+        - zafmlug_bass
+        - zebra_eel
+    super_scoop:
+      type:     bait
+      max_hook: 3
+    worm_lure:
+      type: lure
+      affinity:
+        - armored_pisces
+        - bibikibo
+        - black_eel
+        - black_ghost
+        - brass_loach
+        - cobalt_jellyfish
+        - coral_butterfly
+        - crystal_bass
+        - dark_bass
+        - denizanasi
+        - fat_greedie
+        - giant_donko
+        - greedie
+        - jungle_catfish
+        - kayabaligi
+        - monke-onke
+        - moorish_idol
+        - pipira
+        - rhinochimera
+        - sandfish
+        - tavnazian_goby
+        - tiny_goldfish
+        - trilobite
+        - turnabaligi
+        - yayinbaligi
+        - yellow_globe
+        - yilanbaligi
+        - zafmlug_bass

@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  pld_af_fishing_spot:
+    cylinder: {center: [-80.0, 24.0, -40.0], radius: 15}
+    pool:     []
+  whole_zone:
+    pool:
+      - crayfish
+monsters:
+  17396141:
+    area:  pld_af_fishing_spot
+    bait:  [giant_shell_bug]
+    quest: {log: 0, id: 91}

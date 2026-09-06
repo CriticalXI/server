@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - crayfish
+      - hydrogauge
+      - kayabaligi
+      - moat_carp
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+      - sazanbaligi
+      - tiny_goldfish
+      - yilanbaligi

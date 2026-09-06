@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  pond_north:
+    cylinder: {center: [-174.165, -21.0, 414.486], radius: 12}
+    pool:
+      - crayfish
+      - giant_catfish
+      - red_terrapin
+  pond_south:
+    cylinder: {center: [-215.293, -10.0, 25.168], radius: 15}
+    pool:
+      - crayfish
+      - giant_catfish
+      - red_terrapin
+  river:
+    pool:
+      - cheval_salmon
+      - crayfish
+      - gold_carp
+      - shining_trout
+      - tricolored_carp
+monsters:
+  17350657: {}
+  17350658: {}
+  17350659: {}
+  17350660: {}
+  17350661: {}

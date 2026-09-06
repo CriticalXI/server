@@ -28,10 +28,12 @@ add_data_dataset(ecosystems)
 add_data_dataset(merits)
 add_data_dataset(grades)
 add_data_dataset(stats)
+add_data_dataset(fishing)
 add_data_dataset(zones/settings)
 add_data_dataset(zones/npcs)
 add_data_dataset(zones/mobs)
 add_data_dataset(zones/regions)
+add_data_dataset(zones/fishing_areas)
 
 set(DATA_MAP_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/loader.h

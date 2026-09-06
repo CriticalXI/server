@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  other_seaside:
+    cylinder: {center: [26.6, 10.0, 182.0], radius: 20}
+    pool:
+      - bastore_sardine
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_butterfly
+      - coral_fragment
+      - norg_shell
+      - quus
+      - rusty_bucket
+  pond_under_a_bridge:
+    cylinder: {center: [100.0, 10.0, -19.0], radius: 22}
+    pool:
+      - bastore_bream
+      - bastore_sardine
+      - bluetail
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_butterfly
+      - coral_fragment
+      - damp_scroll
+      - grimmonite
+      - nebimonite
+      - norg_shell
+      - quus
+      - rusty_bucket
+      - rusty_greatsword
+  interior_of_hidden_door_mythril:
+    cylinder: {center: [-306.0, 21.0, -62.0], radius: 20}
+    pool:
+      - bastore_bream
+      - bastore_sardine
+      - bluetail
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_butterfly
+      - coral_fragment
+      - grimmonite
+      - nebimonite
+      - norg_shell
+      - quus
+      - rusty_bucket
+      - rusty_greatsword
+      - silver_shark
+  interior_of_hidden_door_gold:
+    cylinder: {center: [-256.0, 51.0, -345.0], radius: 20}
+    pool:
+      - bastore_sardine
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_butterfly
+      - quus
+      - rusty_bucket
+  misc_puddles:
+    pool:
+      - bastore_sardine
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - quus
+      - rusty_bucket
+monsters:
+  17498113: {}
+  17498114: {}
+  17498117: {}

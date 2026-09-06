@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  north_side:
+    poly:
+      - [-266.366, -6.0, -30.548]
+      - [-9.807, -6.0, -26.534]
+      - [-7.548, -6.0, -118.593]
+      - [-132.644, -6.0, -119.732]
+      - [-185.563, -6.0, -94.356]
+      - [-216.813, -6.0, -96.579]
+      - [-227.638, -6.0, -116.85]
+      - [-248.343, -6.0, -119.637]
+      - [-269.124, -6.0, -109.913]
+    pool:
+      - black_eel
+      - copper_ring
+      - crayfish
+      - gold_carp
+      - moat_carp
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+      - tricolored_carp
+  south_side:
+    pool:
+      - black_eel
+      - copper_ring
+      - dark_bass
+      - giant_catfish
+      - moat_carp
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar

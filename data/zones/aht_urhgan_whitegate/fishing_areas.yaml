@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - denizanasi
+      - hamsi
+      - hydrogauge
+      - kalamar
+      - rusty_subligar

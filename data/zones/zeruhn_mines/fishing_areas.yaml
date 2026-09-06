@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  river:
+    cylinder: {center: [-100.31, -1.0, 20.168], radius: 20}
+    pool:
+      - black_eel
+      - copper_frog
+      - crayfish
+      - giant_catfish
+      - moat_carp
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+      - tricolored_carp
+  pool:
+    pool:
+      - black_eel
+      - copper_frog
+      - crayfish
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar

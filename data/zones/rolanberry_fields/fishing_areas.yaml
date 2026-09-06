@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  small_fountain_1:
+    cylinder: {center: [-538.75, -14.0, -179.103], radius: 20}
+    pool:
+      - crayfish
+      - moat_carp
+      - red_terrapin
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_pick
+      - rusty_subligar
+  fountain_of_promises:
+    cylinder: {center: [-670.355, -21.0, -175.25], radius: 70}
+    pool:
+      - crayfish
+      - dark_bass
+      - fish_scale_shield
+      - giant_catfish
+      - moat_carp
+      - mythril_sword
+      - red_terrapin
+      - rusty_bucket
+  fountain_of_partings:
+    cylinder: {center: [-721.715, -26.0, -423.003], radius: 60}
+    pool:
+      - crayfish
+      - dark_bass
+      - giant_catfish
+      - moat_carp
+      - red_terrapin
+      - rusty_bucket
+  small_fountain_2:
+    cylinder: {center: [257.238, -30.0, -258.576], radius: 20}
+    pool:
+      - crayfish
+      - moat_carp
+      - red_terrapin
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_pick
+      - rusty_subligar
+monsters:
+  17227777: {}
+  17227778: {}
+  17227779: {}
+  17227780: {}
+  17227781: {}

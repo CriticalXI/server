@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../schemas/enums/_enum.schema.json
+
+meta:
+  cpp:
+    underlying: uint8_t
+  lua:
+    table: xi.fishingLegendaryTier
+
+values:
+  none:  0
+  basic: 1 # Cave Cherax class
+  super: 2 # the JP wiki's 師範超級 class: Gugrusaurus, Lik, Hakuryu, Matsya, Abaia

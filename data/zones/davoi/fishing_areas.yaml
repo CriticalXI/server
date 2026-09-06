@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  basin_of_a_waterfall:
+    cylinder: {center: [180.24, 3.0, -384.46], radius: 10}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - gold_carp
+      - red_terrapin
+      - rusty_bucket
+      - rusty_cap
+      - rusty_pick
+      - takitaro
+      - tricolored_carp
+  wailing_pond:
+    cylinder: {center: [382.24, 0.0, -180.41], radius: 20}
+    pool:
+      - rusty_bucket
+      - rusty_cap
+      - rusty_greatsword
+      - rusty_leggings
+      - rusty_pick
+  pond:
+    cylinder: {center: [198.75, 2.0, -107.22], radius: 50}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - giant_catfish
+      - moat_carp
+      - red_terrapin
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_pick
+  other_waterside:
+    pool:
+      - crayfish
+      - red_terrapin
+      - rusty_bucket
+      - rusty_leggings
+monsters:
+  17387521: {}
+  17387522: {}
+  17387523: {}
+  17387524: {}
+  17387525: {}

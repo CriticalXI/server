@@ -20,6 +20,7 @@
   * [Articles](Development)
 * Data
   * [Ships and Elevators](Transports)
+  * [Fishing](Fishing)
 * Client Setup
   * [Windows 10/11](Client-Setup-Windows)
   * [Common Concerns](Miscellaneous-Client)

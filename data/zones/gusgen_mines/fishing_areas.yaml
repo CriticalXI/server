@@ -1,0 +1,83 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  pool_upper_west:
+    cylinder: {center: [-136.705, -59.0, -99.459], radius: 12}
+    pool:
+      - black_eel
+      - copper_frog
+      - crayfish
+      - mythril_sword
+      - rusty_bucket
+      - rusty_pick
+      - rusty_subligar
+      - tricolored_carp
+  pool_upper_east:
+    cylinder: {center: [216.119, -59.0, -100.126], radius: 12}
+    pool:
+      - black_eel
+      - copper_frog
+      - crayfish
+      - mythril_sword
+      - rusty_bucket
+      - rusty_pick
+      - rusty_subligar
+      - tricolored_carp
+  pool_lower_east:
+    cylinder: {center: [176.517, -39.0, -19.909], radius: 12}
+    pool:
+      - black_eel
+      - copper_frog
+      - crayfish
+      - mythril_sword
+      - rusty_bucket
+      - rusty_pick
+      - rusty_subligar
+      - tricolored_carp
+  interior_pool_west:
+    cylinder: {center: [-80.224, -27.0, 446.559], radius: 25}
+    pool:
+      - black_eel
+      - copper_frog
+      - crayfish
+      - gavial_fish
+      - gold_carp
+      - mythril_sword
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_pick
+      - rusty_subligar
+      - tricolored_carp
+  interior_pool_center:
+    cylinder: {center: [39.236, -11.0, 446.13], radius: 25}
+    pool:
+      - black_eel
+      - copper_frog
+      - crayfish
+      - gavial_fish
+      - gold_carp
+      - mythril_sword
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_pick
+      - rusty_subligar
+      - tricolored_carp
+  interior_pool_east:
+    cylinder: {center: [120.311, -19.0, 446.192], radius: 25}
+    pool:
+      - black_eel
+      - copper_frog
+      - crayfish
+      - gavial_fish
+      - gold_carp
+      - mythril_sword
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_pick
+      - rusty_subligar
+      - tricolored_carp
+monsters:
+  17580033: {}
+  17580034: {}
+  17580036: {}
+  17580037: {}

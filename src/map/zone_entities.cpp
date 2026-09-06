@@ -614,9 +614,9 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
     }
 
     // Need to interupt fishing on zone out otherwise fished up mobs get stuck in hooked state
-    if (PChar->hookedFish && PChar->hookedFish->hooked)
+    if (PChar->isFishing())
     {
-        fishingutils::InterruptFishing(PChar);
+        luautils::OnFishingInterrupt(PChar);
     }
 
     onEntityDespawned(PChar);

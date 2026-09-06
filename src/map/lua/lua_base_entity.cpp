@@ -170,6 +170,8 @@
 
 #include <magic_enum/magic_enum.hpp>
 
+#include <utility>
+
 //======================================================//
 
 CLuaBaseEntity::CLuaBaseEntity(CBaseEntity* PEntity)
@@ -2345,6 +2347,57 @@ float CLuaBaseEntity::checkDistance(sol::variadic_args va)
     }
 
     return calcdistance;
+}
+
+/************************************************************************
+ *  Function: isInsideCylinder()
+ *  Purpose : Whether the entity stands within radius of x, z; height is ignored
+ *  Example : if player:isInsideCylinder(area.cylinder.x, area.cylinder.z, area.cylinder.radius) then
+ ************************************************************************/
+
+auto CLuaBaseEntity::isInsideCylinder(const float x, const float z, const float radius) -> bool
+{
+    const auto dx = m_PBaseEntity->loc.p.x - x;
+    const auto dz = m_PBaseEntity->loc.p.z - z;
+    return dx * dx + dz * dz <= radius * radius;
+}
+
+/************************************************************************
+ *  Function: isInsidePoly()
+ *  Purpose : Whether the entity stands inside a ring of {x, y, z} corners; height is ignored
+ *  Example : if player:isInsidePoly(area.poly) then
+ *  Notes   : Even-odd rule over the ring's edges in the XZ plane; the ring closes implicitly
+ ************************************************************************/
+
+auto CLuaBaseEntity::isInsidePoly(const sol::table& corners) -> bool
+{
+    const auto count = corners.size();
+    if (count < 3)
+    {
+        return false;
+    }
+
+    const auto px = m_PBaseEntity->loc.p.x;
+    const auto pz = m_PBaseEntity->loc.p.z;
+
+    const auto corner = [&](const std::size_t index) -> std::pair<float, float>
+    {
+        const sol::table point = corners[index];
+        return { point.get<float>(1), point.get<float>(3) };
+    };
+
+    bool inside = false;
+    for (std::size_t i = 1, j = count; i <= count; j = i++)
+    {
+        const auto [xi, zi] = corner(i);
+        const auto [xj, zj] = corner(j);
+        if ((zi > pz) != (zj > pz) && px < (xj - xi) * (pz - zi) / (zj - zi) + xi)
+        {
+            inside = !inside;
+        }
+    }
+
+    return inside;
 }
 
 /************************************************************************
@@ -20632,6 +20685,8 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("clearPath", CLuaBaseEntity::clearPath);
     SOL_REGISTER("continuePath", CLuaBaseEntity::continuePath);
     SOL_REGISTER("checkDistance", CLuaBaseEntity::checkDistance);
+    SOL_REGISTER("isInsideCylinder", CLuaBaseEntity::isInsideCylinder);
+    SOL_REGISTER("isInsidePoly", CLuaBaseEntity::isInsidePoly);
     SOL_REGISTER("wait", CLuaBaseEntity::wait);
     SOL_REGISTER("follow", CLuaBaseEntity::follow);
     SOL_REGISTER("hasFollowTarget", CLuaBaseEntity::hasFollowTarget);
