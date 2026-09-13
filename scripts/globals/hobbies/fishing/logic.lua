@@ -1120,6 +1120,98 @@ xi.fishing.resolveCatch = function(player, cast, reported, echo)
 end
 
 -----------------------------------
+-- Skill-ups
+-----------------------------------
+
+-- Chance out of 100 to raise the skill on a fish the given number of levels over the player
+local function skillUpChance(player, gap, level)
+    if gap < 1 then
+        return 0
+    end
+
+    local chance = 0
+    for _, row in ipairs(xi.fishing.skillUpChances) do
+        if gap <= row.gap then
+            chance = row.chance
+            break
+        end
+    end
+
+    -- Higher skill lowers the chance
+    chance = math.floor(chance * (108 - math.floor(level * 4 / 5)) / 100)
+
+    chance = math.floor(chance * xi.settings.map.FISHING_SKILL_MULTIPLIER)
+
+    -- The Fisherman's Feast raises the chance by its percent, rounded to the nearest point
+    chance = math.floor(chance * (100 + player:getMod(xi.mod.FISHING_SKILL_GAIN)) / 100 + 0.5)
+
+    return chance
+end
+
+-- Raise fishing skill by tenths up to the guild rank cap and send the skill messages
+local function raiseSkill(player, amount)
+    local current = player:getCharSkillLevel(xi.skill.FISHING)
+    local cap     = (player:getSkillRank(xi.skill.FISHING) + 1) * 100
+    local raised  = math.min(current + amount, cap)
+    if raised <= current then
+        return
+    end
+
+    player:setSkillLevel(xi.skill.FISHING, raised)
+    player:messageBasic(xi.msg.basic.SKILL_RISES, xi.skill.FISHING, raised - current)
+
+    if math.floor(raised / 10) > math.floor(current / 10) then
+        player:messageBasic(xi.msg.basic.SKILL_REACHES_LEVEL, xi.skill.FISHING, math.floor(raised / 10))
+    end
+end
+
+-- Roll for a skill-up when the cast is released
+xi.fishing.rollSkillUp = function(player, cast)
+    -- Only a fish can raise the skill
+    if
+        not cast.catch or
+        cast.catch.type ~= xi.fishing.catchType.FISH
+    then
+        return
+    end
+
+    if cast.result ~= xi.fishing.result.CAUGHT then
+        local sizeLoss = cast.result == xi.fishing.result.LOST and cast.lossReason ~= nil
+
+        if
+            not cast.claimed or
+            not xi.settings.map.FISHING_SKILLUP_ON_FAILURE or
+            (not sizeLoss and cast.result ~= xi.fishing.result.ROD_BREAK)
+        then
+            return
+        end
+    end
+
+    local level  = math.floor(player:getCharSkillLevel(xi.skill.FISHING) / 10)
+    local gap    = cast.catch.record.skill - level
+    local chance = skillUpChance(player, gap, level)
+    if chance == 0 then
+        return
+    end
+
+    -- The Pelican Ring adds a second roll
+    for _ = 1, 1 + player:getMod(xi.mod.PELICAN_RING_EFFECT) do
+        if math.randomInt(1, 100) <= chance then
+            -- From 28 levels over, half the skill-ups give two tenths
+            local amount = 1
+            if
+                gap >= 28 and
+                math.randomInt(1, 2) == 1
+            then
+                amount = 2
+            end
+
+            raiseSkill(player, amount)
+        end
+    end
+end
+
+-----------------------------------
 -- Entry points
 -----------------------------------
 
@@ -1141,9 +1233,10 @@ xi.fishing.onAction = function(player, mode, para, para2)
         return nil
     end
 
-    -- RELEASE ends the cast from any stage and gives up a fight still in progress
+    -- RELEASE ends the cast from any stage, giving up a fight still in progress and rolling for a skill-up
     if mode == xi.fishing.mode.RELEASE then
         interruptFight(player, cast)
+        xi.fishing.rollSkillUp(player, cast)
         player:setAnimation(xi.animation.NONE)
         xi.fishing.casts[player:getID()] = nil
 

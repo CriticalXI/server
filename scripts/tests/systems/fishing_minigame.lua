@@ -890,3 +890,155 @@ describe('Fishing bait sweep', function()
         end
     end)
 end)
+
+describe('Fishing skill-up table', function()
+    ---@type CClientEntityPair
+    local player
+
+    -- The captured skill-up chance by how many levels the fish is over the player, lowered by the player's skill
+    local function chanceAt(gap, level)
+        if gap < 1 then
+            return 0
+        end
+
+        local base = 14
+        if gap == 1 then
+            base = 3
+        elseif gap == 2 then
+            base = 16
+        elseif gap <= 4 then
+            base = 21
+        elseif gap <= 7 then
+            base = 27
+        elseif gap <= 11 then
+            base = 34
+        elseif gap <= 19 then
+            base = 29
+        elseif gap <= 29 then
+            base = 16
+        elseif gap > 50 then
+            base = 0
+        end
+
+        return math.floor(base * (108 - math.floor(level * 4 / 5)) / 100)
+    end
+
+    -- A caught moat carp at the given level
+    local function landedAt(level)
+        return
+        {
+            catch   = { type = xi.fishing.catchType.FISH, itemId = xi.item.MOAT_CARP_1, record = { skill = level } },
+            result  = xi.fishing.result.CAUGHT,
+            claimed = true,
+        }
+    end
+
+    -- A claimed carp 10 levels over that ends with the given result and loss reason
+    local function raisesOn(result, reason)
+        local cast = landedAt(60)
+
+        cast.result     = result
+        cast.lossReason = reason
+
+        player:setSkillLevel(xi.skill.FISHING, 500)
+        xi.fishing.rollSkillUp(player, cast)
+
+        return player:getCharSkillLevel(xi.skill.FISHING) > 500
+    end
+
+    before_each(function()
+        player = xi.test.world:spawnPlayer()
+
+        xi.test.world:setSetting('map.FISHING_SKILL_MULTIPLIER', 1)
+        xi.test.world:setSetting('map.FISHING_SKILLUP_ON_FAILURE', true)
+
+        -- Rank 10 raises the skill cap above every level tested
+        player:setSkillRank(xi.skill.FISHING, 10)
+    end)
+
+    it('raises the skill at the captured rate for every gap from 4 under to 60 over, and only on a roll within it', function()
+        local forced = 1
+        stub('math.randomInt', function()
+            return forced
+        end)
+
+        for gap = -4, 60 do
+            local cast   = landedAt(50 + gap)
+            local chance = chanceAt(gap, 50)
+
+            if chance > 0 then
+                player:setSkillLevel(xi.skill.FISHING, 500)
+                forced = chance
+                xi.fishing.rollSkillUp(player, cast)
+
+                assert(player:getCharSkillLevel(xi.skill.FISHING) == 501, 'Expected a tenth at gap ' .. tostring(gap) .. ' on a roll of ' .. tostring(chance) .. ', got ' .. tostring(player:getCharSkillLevel(xi.skill.FISHING)))
+            end
+
+            player:setSkillLevel(xi.skill.FISHING, 500)
+            forced = chance + 1
+            xi.fishing.rollSkillUp(player, cast)
+
+            assert(player:getCharSkillLevel(xi.skill.FISHING) == 500, 'Expected no skill-up at gap ' .. tostring(gap) .. ' on a roll of ' .. tostring(chance + 1))
+        end
+    end)
+
+    it('raises the rate by the Fisherman\'s Feast percent, rounded to the nearest point', function()
+        local forced = 20
+        stub('math.randomInt', function()
+            return forced
+        end)
+
+        -- Doubling the chance of 10 at 2 levels over lets a roll of 20 through
+        player:setSkillLevel(xi.skill.FISHING, 500)
+        player:setMod(xi.mod.FISHING_SKILL_GAIN, 100)
+        xi.fishing.rollSkillUp(player, landedAt(52))
+
+        assert(player:getCharSkillLevel(xi.skill.FISHING) == 501, 'Expected the doubled rate to take a roll of 20')
+
+        player:setSkillLevel(xi.skill.FISHING, 500)
+        player:setMod(xi.mod.FISHING_SKILL_GAIN, 0)
+        xi.fishing.rollSkillUp(player, landedAt(52))
+
+        assert(player:getCharSkillLevel(xi.skill.FISHING) == 500, 'Expected the plain rate to miss a roll of 20')
+
+        -- A 5 percent bonus raises the chance of 23 at 10 levels over to 24
+        forced = 24
+        player:setSkillLevel(xi.skill.FISHING, 500)
+        player:setMod(xi.mod.FISHING_SKILL_GAIN, 5)
+        xi.fishing.rollSkillUp(player, landedAt(60))
+
+        assert(player:getCharSkillLevel(xi.skill.FISHING) == 501, 'Expected the feast to take a roll of 24')
+
+        player:setSkillLevel(xi.skill.FISHING, 500)
+        player:setMod(xi.mod.FISHING_SKILL_GAIN, 0)
+        xi.fishing.rollSkillUp(player, landedAt(60))
+
+        assert(player:getCharSkillLevel(xi.skill.FISHING) == 500, 'Expected the plain rate to miss a roll of 24')
+    end)
+
+    it('gives two tenths on half the rolls from 28 over, and one under it', function()
+        stub('math.randomInt', 1)
+
+        player:setSkillLevel(xi.skill.FISHING, 500)
+        xi.fishing.rollSkillUp(player, landedAt(78))
+
+        assert(player:getCharSkillLevel(xi.skill.FISHING) == 502, 'Expected two tenths at 28 over, the first gap the captures show one at')
+
+        player:setSkillLevel(xi.skill.FISHING, 500)
+        xi.fishing.rollSkillUp(player, landedAt(77))
+
+        assert(player:getCharSkillLevel(xi.skill.FISHING) == 501, 'Expected one tenth at 27 over, under the two tenths band')
+    end)
+
+    it('earns skill on a catch lost to its size, a snapped line or a broken rod, and on nothing else', function()
+        stub('math.randomInt', 1)
+
+        assert(raisesOn(xi.fishing.result.LOST, xi.fishing.failure.LOST_SMALL), 'Expected a catch too small for the rod to raise the skill, as retail did 235 times in 1037')
+        assert(raisesOn(xi.fishing.result.LOST, xi.fishing.failure.LOST_BIG), 'Expected a catch too big for the rod to raise the skill beside it')
+        assert(not raisesOn(xi.fishing.result.LOST, nil), 'Expected a claim lost to nothing named to raise nothing')
+        assert(raisesOn(xi.fishing.result.LINE_BREAK, nil), 'Expected a snapped line to raise the skill, as retail did 2 times in 92')
+        assert(raisesOn(xi.fishing.result.ROD_BREAK, nil), 'Expected a broken rod to raise the skill, as retail did 4 times in 13')
+        assert(not raisesOn(xi.fishing.result.GAVE_UP, nil), 'Expected a give-up to raise nothing, as retail did in 7727')
+        assert(not raisesOn(xi.fishing.result.LOW_SKILL, nil), 'Expected a lack-of-skill loss to raise nothing, as retail did twice in 471')
+    end)
+end)

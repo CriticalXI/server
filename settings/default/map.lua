@@ -157,6 +157,9 @@ xi.settings.map =
     -- Multiplier for fishing skill-up chance. Default = 1.0, very hard.
     FISHING_SKILL_MULTIPLIER = 1.0,
 
+    -- Enable/disable skill-ups from fish lost to their size. Default = true, retail behavior.
+    FISHING_SKILLUP_ON_FAILURE = true,
+
     -- Enable/disable skill-ups from bloodpacts
     SKILLUP_BLOODPACT = true,
 

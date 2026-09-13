@@ -881,6 +881,30 @@ describe('Fishing cast end to end', function()
         assert(not player:hasItem(xi.item.MOAT_CARP_1), 'Expected no carp')
     end)
 
+    it('raises the skill at the release on a landed carp two levels over', function()
+        player:setSkillLevel(xi.skill.FISHING, 90)
+
+        -- Every roll is 1 so the claim can't fail and the skill-up chance is met
+        stub('math.randomInt', function()
+            return 1
+        end)
+
+        biteMoatCarp()
+
+        local cast  = openCast(player)
+        local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(fight ~= nil, 'Expected the fight')
+
+        xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 0, fight.intuition)
+
+        assert(cast.result == xi.fishing.result.CAUGHT, 'Expected the catch')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(player:getCharSkillLevel(xi.skill.FISHING) == 91, 'Expected a tenth of a point at the release, got ' .. tostring(player:getCharSkillLevel(xi.skill.FISHING)))
+    end)
+
     it('answers the client packets on an empty cast, where every answer crosses the seam as nil', function()
         stub('xi.fishing.rollBite', function()
             return nil
