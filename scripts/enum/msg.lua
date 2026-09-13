@@ -91,6 +91,7 @@ xi.msg.basic =
     NO_NINJA_TOOLS                  = 35,  -- The <player> lacks the ninja tools to cast (NULL).
     LOSE_SIGHT                      = 36,  -- You lose sight of <target>.
     WAIT_LONGER_RED                 = 38,  -- You must wait longer to perform that action (but in red)
+    SKILL_RISES                     = 38,  -- <target>'s <skill> skill rises <amount> points.
     READIES_SKILL                   = 43,  -- <entity> readies <skill>.
     READIES_WS                      = 43,  -- <actor> readies <weapon_skill>.
     SPIKES_EFFECT_DMG               = 44,  -- <Defender>'s spikes deal <number> points of damage to the <Attacker>.

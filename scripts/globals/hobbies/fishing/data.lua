@@ -97,6 +97,19 @@ xi.fishing.results =
     [xi.fishing.result.ROD_BREAK ] = { animation = xi.animation.NEW_FISHING_ROD_BREAK,  message = xi.fishingMessage.ROD_BREAK      },
 }
 
+-- Skill-up chance for fish up to each number of levels over the player
+xi.fishing.skillUpChances =
+{
+    { gap =  1, chance =  3 },
+    { gap =  2, chance = 16 },
+    { gap =  4, chance = 21 },
+    { gap =  7, chance = 27 },
+    { gap = 11, chance = 34 },
+    { gap = 19, chance = 29 },
+    { gap = 29, chance = 16 },
+    { gap = 50, chance = 14 },
+}
+
 -----------------------------------
 -- To YAML?
 -----------------------------------
