@@ -10,6 +10,7 @@ xi.fishing.catchType =
     NOTHING = 0,
     FISH    = 1,
     ITEM    = 2,
+    MONSTER = 3,
 }
 
 xi.fishing.stage =
@@ -76,6 +77,17 @@ xi.fishing.entryBuckets =
 {
     xi.fishing.catchType.FISH,
     xi.fishing.catchType.ITEM,
+    xi.fishing.catchType.MONSTER,
+}
+
+-- Capture needed
+-- TODO: Capture a wide range of monster levels from 1 to 99 to prove out this table
+xi.fishing.monsterFightStats =
+{
+    { level = 19, arrowDamage = 320, arrowDelay = 14, moveFrequency = 15 },
+    { level = 29, arrowDamage = 320, arrowDelay = 11, moveFrequency = 15 },
+    { level = 39, arrowDamage = 320, arrowDelay = 10, moveFrequency = 15 },
+    { level = 99, arrowDamage = 320, arrowDelay =  9, moveFrequency = 15 },
 }
 
 -----------------------------------
@@ -360,4 +372,12 @@ xi.fishing.preferredCatches =
     [xi.item.SLICE_OF_MOAT_CARP    ] = { xi.item.CA_CUONG, xi.item.CRAYFISH_1 },
     [xi.item.SLICE_OF_SARDINE      ] = { xi.item.ZEBRA_EEL },
     [xi.item.WORM_LURE             ] = { xi.item.CORAL_BUTTERFLY, xi.item.MOORISH_IDOL, xi.item.SANDFISH, xi.item.TRILOBITE, xi.item.YELLOW_GLOBE, xi.item.ZAFMLUG_BASS },
+}
+
+-- Fatigue class and cooldown in seconds for the monsters that have them
+xi.fishing.monsters =
+{
+    ['Devil_Manta'    ] = { fatigue = xi.fishing.fatigueClass.VALUABLE, cooldown = 600 },
+    ['Northern_Piranu'] = { cooldown = 14400 },
+    ['Southern_Piranu'] = { cooldown = 14400 },
 }

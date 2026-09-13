@@ -50,7 +50,7 @@ xi.fishing.currentMeters = function(player)
     return meters
 end
 
--- The fatigue event a caught fish or item costs
+-- The fatigue event a caught fish, item or monster costs
 xi.fishing.catchFatigueEvent = function(cast)
     local catch = cast.catch
 
@@ -67,12 +67,16 @@ xi.fishing.catchFatigueEvent = function(cast)
         return xi.fishing.fatigueEvent.SMALL_FISH
     end
 
-    -- Items cost by fatigue class, countable unless the item's row says otherwise
+    -- Items cost by fatigue class, countable unless the item's row says otherwise; monsters only when their row gives a class
     local class = nil
     if catch.type == xi.fishing.catchType.ITEM then
         local stats = xi.fishing.catchStats[catch.itemId]
 
         class = catch.record.fatigue or (stats and stats.fatigue) or xi.fishing.fatigueClass.COUNTABLE
+    elseif catch.type == xi.fishing.catchType.MONSTER then
+        local monster = xi.fishing.monsters[catch.mob:getName()]
+
+        class = monster and monster.fatigue
     end
 
     if class == xi.fishing.fatigueClass.VALUABLE then
@@ -398,6 +402,58 @@ local function itemEntries(player, area, data)
     return entries, bonus
 end
 
+-- Check if a monster can be fished up
+xi.fishing.confirmMonsterEntry = function(player, record, monster)
+    if not monster then
+        return false
+    end
+
+    -- Monster must not be spawned
+    if monster:isSpawned() then
+        return false
+    end
+
+    -- Monster must not be already on a player's reel
+    if monster:getLocalVar('hooked') ~= 0 then
+        return false
+    end
+
+    -- Monster must have served its cooldown since it last left the world
+    if monster:getLocalVar('respawnAt') > GetSystemTime() then
+        return false
+    end
+
+    -- If the monster requires a quest, check if player is properly on it
+    if
+        record.quest and
+        player:getQuestStatus(record.quest.log, record.quest.id) ~= xi.questStatus.QUEST_ACCEPTED
+    then
+        return false
+    end
+
+    return true
+end
+
+-- Obtain the monsters that can be fished up in the area with the bait
+local function monsterEntries(player, cast, areaName)
+    local entries = {}
+    local bonus   = 0
+    for spawnId, record in pairs(cast.zone.monsters) do
+        if
+            (not record.area or record.area == areaName) and
+            (not record.bait or record.bait[cast.baitId]) and
+            xi.fishing.confirmMonsterEntry(player, record, GetMobByID(spawnId))
+        then
+            table.insert(entries, { spawnId, 100 })
+            if record.quest then
+                bonus = bonus + 1000
+            end
+        end
+    end
+
+    return entries, bonus
+end
+
 -- Select an entry from a weighted list of values
 -- Used to select which pool to draw from, and subsequently which item/fish to draw from that pool
 local function chooseWeightedEntry(entries)
@@ -426,13 +482,15 @@ end
 -- Bite roll
 -----------------------------------
 
--- Craft the weights for fish and items in the available pool to draw from
-local function setupWeights(player, entries, itemBonus)
+-- Craft the weights for fish, items and monsters in the available pool to draw from
+local function setupWeights(player, entries, itemBonus, monsterBonus)
     local weights = {}
 
     if bit.band(player:getZone():getTypeMask(), xi.zoneType.CITY) ~= 0 then
+        weights[xi.fishing.catchType.MONSTER] = 0
         weights[xi.fishing.catchType.NOTHING] = 38
     else
+        weights[xi.fishing.catchType.MONSTER] = 10
         weights[xi.fishing.catchType.NOTHING] = 26
     end
 
@@ -445,6 +503,8 @@ local function setupWeights(player, entries, itemBonus)
     for _, entry in ipairs(entries[xi.fishing.catchType.ITEM]) do
         weights[xi.fishing.catchType.ITEM] = weights[xi.fishing.catchType.ITEM] + entry[2]
     end
+
+    weights[xi.fishing.catchType.MONSTER] = weights[xi.fishing.catchType.MONSTER] + monsterBonus
 
     -- Pick the fish now so the rod can read its level
     local fishId = chooseWeightedEntry(entries[xi.fishing.catchType.FISH])
@@ -482,7 +542,7 @@ local function setupWeights(player, entries, itemBonus)
     return weights, fishId
 end
 
--- Choose which pool to draw from, then choose a fish or item from that pool
+-- Choose which pool to draw from, then choose a fish, item or monster from that pool
 local function chooseOutcome(cast, data, buckets)
     local bucketList = {}
     for catchType, weight in pairs(buckets.weights) do
@@ -520,21 +580,32 @@ local function chooseOutcome(cast, data, buckets)
         return { type = catchType, itemId = itemId, record = data.fish[itemId] }
     end
 
+    if catchType == xi.fishing.catchType.MONSTER then
+        local spawnId = chooseWeightedEntry(buckets.entries[catchType])
+        if not spawnId then
+            return nil
+        end
+
+        return { type = catchType, spawnId = spawnId, mob = GetMobByID(spawnId), record = cast.zone.monsters[spawnId] }
+    end
+
     return nil
 end
 
 xi.fishing.biteBuckets = function(player, cast, data)
-    -- Generate available pools of items and fish
-    local entries          = {}
-    local fish             = fishEntries(player, cast, cast.area, data)
-    local items, itemBonus = itemEntries(player, cast.area, data)
+    -- Generate available pools of items, monsters and fish
+    local entries                = {}
+    local fish                   = fishEntries(player, cast, cast.area, data)
+    local items, itemBonus       = itemEntries(player, cast.area, data)
+    local monsters, monsterBonus = monsterEntries(player, cast, cast.areaName)
 
     -- Populate entry list from the generated pools
-    entries[xi.fishing.catchType.FISH] = fish
-    entries[xi.fishing.catchType.ITEM] = items
+    entries[xi.fishing.catchType.FISH   ] = fish
+    entries[xi.fishing.catchType.ITEM   ] = items
+    entries[xi.fishing.catchType.MONSTER] = monsters
 
     -- Calculate the weights for each catch type based on the entries and bonuses
-    local weights, fishId = setupWeights(player, entries, itemBonus)
+    local weights, fishId = setupWeights(player, entries, itemBonus, monsterBonus)
 
     -- Can anything bite? If no catch bucket carries weight, force a certain empty cast so the roll cannot land an empty bucket.
     local canBite = false
@@ -581,15 +652,29 @@ local function fightContext(player, cast, catch)
         rod   = rod,
     }
 
-    local stats = xi.fishing.catchStats[catch.itemId]
-    if not stats then
-        return nil
-    end
+    -- Monsters fight on the stats row for their level
+    if catch.type == xi.fishing.catchType.MONSTER then
+        context.level = catch.mob:getMainLvl()
+        context.size  = xi.fishingSize.LARGE
+        context.stats = xi.fishing.monsterFightStats[#xi.fishing.monsterFightStats]
 
-    context.level = catch.record.skill
-    context.size  = catch.record.size
-    context.tier  = catch.record.legendary
-    context.stats = stats
+        for _, stats in ipairs(xi.fishing.monsterFightStats) do
+            if context.level <= stats.level then
+                context.stats = stats
+                break
+            end
+        end
+    else
+        local stats = xi.fishing.catchStats[catch.itemId]
+        if not stats then
+            return nil
+        end
+
+        context.level = catch.record.skill
+        context.size  = catch.record.size
+        context.tier  = catch.record.legendary
+        context.stats = stats
+    end
 
     return context
 end
@@ -656,7 +741,7 @@ local function heal(context, damage, keen)
 end
 
 -- The gauge the client fights against, sent at 128: under it the catch drains stamina, over it stamina comes back.
-local function regen(context, catch, roll)
+local function regen(cast, context, catch, roll)
     -- A legendary catch holds a point over the bias whatever the gap, two on a super
     if context.tier then
         return 128 + (context.tier == xi.fishingLegendaryTier.SUPER and 2 or 1)
@@ -686,6 +771,14 @@ local function regen(context, catch, roll)
 
         -- The stamina roll moves the drain a point per point off 100, so a heavy catch drains harder
         value = value - (roll - 100)
+    end
+
+    -- A legendary rod holds a monster 3 under the bias
+    if
+        cast.rod.legendary and
+        catch.type == xi.fishing.catchType.MONSTER
+    then
+        value = value - 3
     end
 
     return value
@@ -949,7 +1042,7 @@ local function buildFight(player, cast, catch)
     return
     {
         stamina        = stamina(context, staminaRoll),
-        regen          = regen(context, catch, staminaRoll),
+        regen          = regen(cast, context, catch, staminaRoll),
         move_frequency = arrowValue(player, context, context.stats.moveFrequency, context.rod.smallMove, context.rod.largeMove),
         arrow_damage   = damage,
         arrow_delay    = arrowValue(player, context, context.stats.arrowDelay, context.rod.smallDelay, context.rod.largeDelay),
@@ -965,16 +1058,31 @@ local function buildFight(player, cast, catch)
 end
 
 xi.fishing.hookCatch = function(player, cast, catch)
+    -- A monster that isn't loaded or is already in the world cancels the cast
+    if
+        catch.type == xi.fishing.catchType.MONSTER and
+        (not catch.mob or catch.mob:isAlive() or catch.mob:getStatus() ~= xi.status.DISAPPEAR)
+    then
+        return nil
+    end
+
     local fight = buildFight(player, cast, catch)
     if not fight then
         return nil
+    end
+
+    -- Mark the monster hooked so no one else can fish it up while it is on the line
+    if catch.type == xi.fishing.catchType.MONSTER then
+        catch.mob:setLocalVar('hooked', 1)
     end
 
     -- The hook line by class
     local hookLine = xi.fishingMessage.HOOKED_ITEM
     local large    = catch.type ~= xi.fishing.catchType.ITEM
 
-    if catch.type == xi.fishing.catchType.FISH then
+    if catch.type == xi.fishing.catchType.MONSTER then
+        hookLine = xi.fishingMessage.HOOKED_MONSTER
+    elseif catch.type == xi.fishing.catchType.FISH then
         large    = catch.record.size == xi.fishingSize.LARGE
         hookLine = large and xi.fishingMessage.HOOKED_LARGE_FISH or xi.fishingMessage.HOOKED_SMALL_FISH
     end
@@ -990,7 +1098,7 @@ xi.fishing.hookCatch = function(player, cast, catch)
         player:messageText(player, base + xi.fishing.feelingMessages[fight.feeling])
     end
 
-    -- The bite scheduler pulls hard for a large fish and lightly for the rest
+    -- The bite scheduler pulls hard for a large fish or monster and lightly for the rest
     player:entityAnimationPacket(large and xi.animationString.FISHING_BITE_LARGE or xi.animationString.FISHING_BITE_SMALL)
     player:setAnimation(xi.animation.NEW_FISHING_FISH)
 
@@ -1156,6 +1264,60 @@ local function catchItem(player, cast)
     return true
 end
 
+-- Start a fished monster's cooldown when it despawns and remove the listener
+local function stampCooldown(mobArg)
+    mobArg:setLocalVar('respawnAt', GetSystemTime() + xi.fishing.monsters[mobArg:getName()].cooldown)
+    mobArg:removeListener('FISHING_COOLDOWN')
+end
+
+-- Spawn the monster next to the player, returns false if it is gone or already up
+local function catchMonster(player, cast)
+    local mob    = cast.catch.mob
+    local record = cast.catch.record
+
+    if
+        not mob or
+        mob:isAlive()
+    then
+        failCatch(player, cast, xi.fishing.result.LOST, false)
+        return false
+    end
+
+    local radians = player:getRotPos() * math.pi / 128
+    local x       = player:getXPos() - 2 * math.cos(radians)
+    local z       = player:getZPos() + 2 * math.sin(radians)
+
+    player:setAnimation(xi.animation.NEW_FISHING_MONSTER)
+    player:messageName(zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + xi.fishingMessage.MONSTER, player, nil, nil, nil, nil, nil, true)
+
+    mob:setSpawn(x, player:getYPos() - 0.5, z, utils.getWorldRotation({ x = x, z = z }, { x = player:getXPos(), z = player:getZPos() }))
+    mob:spawn(180)
+    mob:setMobMod(xi.mobMod.CHARMABLE, 0)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
+    mob:setLocalVar('hooked', 0)
+
+    -- The cooldown starts when the monster despawns
+    local monster = xi.fishing.monsters[mob:getName()]
+    if
+        monster and
+        monster.cooldown
+    then
+        mob:addListener('DESPAWN', 'FISHING_COOLDOWN', stampCooldown)
+    end
+
+    -- Sneak keeps the monster from attacking, except quest monsters and those that track by scent
+    if
+        record.quest or
+        bit.band(mob:getMobMod(xi.mobMod.DETECTION), xi.detects.SCENT) ~= 0 or
+        not player:hasStatusEffect(xi.effect.SNEAK)
+    then
+        mob:engage(player:getTargID())
+        mob:updateClaim(player)
+    end
+
+    return true
+end
+
 -- Work out the result of the minigame, only rolling for failures when the player claims the catch
 local function decideResult(cast, reported, echo)
     local result = classify(reported)
@@ -1180,6 +1342,14 @@ end
 local function interruptFight(player, cast)
     if cast.stage ~= xi.fishing.stage.FIGHTING then
         return
+    end
+
+    -- A hooked monster goes back to the pool
+    if
+        cast.catch.type == xi.fishing.catchType.MONSTER and
+        cast.catch.mob
+    then
+        cast.catch.mob:setLocalVar('hooked', 0)
     end
 
     consumeBait(player, cast, xi.fishing.result.GAVE_UP)
@@ -1231,6 +1401,8 @@ xi.fishing.resolveCatch = function(player, cast, reported, echo)
         local landed = false
         if cast.catch.type == xi.fishing.catchType.FISH then
             landed = catchFish(player, cast)
+        elseif cast.catch.type == xi.fishing.catchType.MONSTER then
+            landed = catchMonster(player, cast)
         else
             landed = catchItem(player, cast)
         end
@@ -1238,6 +1410,15 @@ xi.fishing.resolveCatch = function(player, cast, reported, echo)
         if not landed then
             result = xi.fishing.result.LOST
         end
+    end
+
+    -- A monster that wasn't caught goes back to the pool
+    if
+        result ~= xi.fishing.result.CAUGHT and
+        cast.catch.type == xi.fishing.catchType.MONSTER and
+        cast.catch.mob
+    then
+        cast.catch.mob:setLocalVar('hooked', 0)
     end
 
     local baitTaken = consumeBait(player, cast, result)
