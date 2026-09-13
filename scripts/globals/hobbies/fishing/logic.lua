@@ -249,14 +249,20 @@ local function confirmItemEntry(player, itemId, item)
     return true
 end
 
--- Junk bites at 6
+-- Junk bites at 6 an item, a ring, blade, pick or coral at 1
 local function itemEntries(player, area, data)
     local entries = {}
     local bonus   = 0
     for _, itemId in ipairs(area.pool) do
         local item = data.fish[itemId]
         if confirmItemEntry(player, itemId, item) then
-            table.insert(entries, { itemId, 6 })
+            local stats  = xi.fishing.catchStats[itemId]
+            local weight = 6
+            if stats and stats.fatigue == xi.fishing.fatigueClass.VALUABLE then
+                weight = 1
+            end
+
+            table.insert(entries, { itemId, weight })
             if item.quest then
                 bonus = bonus + 1000
             end
@@ -425,6 +431,440 @@ end
 
 xi.fishing.rollBite = function(player, cast, data)
     return chooseOutcome(cast, data, xi.fishing.biteBuckets(player, cast, data))
+end
+
+-----------------------------------
+-- Minigame
+-----------------------------------
+
+-- What the fight is built from: the angler's skill and rod against the catch's level, size, legendary tier and stats.
+local function fightContext(player, cast, catch)
+    local rod = xi.fishing.rodStats[cast.rodId]
+    if not rod then
+        return nil
+    end
+
+    local context =
+    {
+        skill = math.floor(player:getCharSkillLevel(xi.skill.FISHING) / 10) + player:getMod(xi.mod.FISH),
+        count = catch.count or 1,
+        rod   = rod,
+    }
+
+    local stats = xi.fishing.catchStats[catch.itemId]
+    if not stats then
+        return nil
+    end
+
+    context.level = catch.record.skill
+    context.size  = catch.record.size
+    context.tier  = catch.record.legendary
+    context.stats = stats
+
+    return context
+end
+
+local function stamina(context, roll)
+    -- Every catch starts from 1800 and gains 50 a level, the level taken in pairs
+    local base = 18 + math.floor(context.level / 2)
+
+    -- A sabiki rig hooks up to three fish, each one past the first adding a tenth of the base
+    base = base + math.floor(base * (context.count - 1) / 10)
+
+    -- The roll spreads the stamina five percent either side of the base
+    return base * roll
+end
+
+-- An arrow value the client reads from 1 to 15: the delay between arrows and how often the catch moves both take this shape.
+local function arrowValue(player, context, base, smallBonus, largeBonus)
+    -- A sabiki rig raises the catch's base a tenth per fish past the first, as it does the stamina
+    local value = base + math.floor(base * (context.count - 1) / 10)
+
+    -- The rod adds its bonus for the size of the catch
+    if context.size == xi.fishingSize.SMALL then
+        value = value + smallBonus
+    else
+        value = value + largeBonus
+    end
+
+    if player:getMod(xi.mod.PENGUIN_RING_EFFECT) > 0 then
+        value = value + 2
+    end
+
+    return utils.clamp(value, 1, 15)
+end
+
+-- The stamina one arrow takes off the catch.
+local function attack(context)
+    -- The rod's attack percent, raised by its legendary bonus on a legendary catch
+    local percent = context.rod.attack
+    if context.tier then
+        percent = percent + (context.rod.legendaryAttack or 0)
+    end
+
+    -- The catch's damage at attack 100, scaled by the rod's percent in the steps of 20 the client counts damage in
+    return math.floor(context.stats.arrowDamage * percent / 2000) * 20
+end
+
+-- The stamina the catch heals back, sent as arrow_regen.
+local function heal(context, damage, keen)
+    -- The rod's recovery percent, raised by its legendary bonus on a legendary catch
+    local percent = context.rod.recovery
+    if context.tier then
+        percent = percent + (context.rod.legendaryRecovery or 0)
+    end
+
+    -- The damage's steps of 20 at the rod's percent, in the steps of 10 the client counts healing in
+    local value = math.floor(damage / 20 * percent / 100) * 10
+
+    -- A keen angler's sense cuts the heal to seven tenths, in whole numbers because 0.7 is not exact
+    if keen then
+        value = math.floor(value * 7 / 10)
+    end
+
+    return value
+end
+
+-- The gauge the client fights against, sent at 128: under it the catch drains stamina, over it stamina comes back.
+local function regen(context, catch, roll)
+    -- A legendary catch holds a point over the bias whatever the gap, two on a super
+    if context.tier then
+        return 128 + (context.tier == xi.fishingLegendaryTier.SUPER and 2 or 1)
+    end
+
+    local gap = context.skill - context.level
+
+    -- Under a fish by 28 or more the gauge rises 2, and 2 more every 12 levels beyond that
+    if
+        catch.type == xi.fishing.catchType.FISH and
+        gap <= -28
+    then
+        return 128 + 2 + 2 * math.floor((-gap - 28) / 12)
+    end
+
+    local value = 128
+
+    -- A legendary rod holds the gauge further over the catch and drains it on its own slope
+    local start = context.rod.drainStart or 12
+    local slope = context.rod.drainSlope or 1.3
+
+    -- Over the catch by the rod's start the gauge drains at the rod's slope, no deeper than 86 on a fish or 98 on anything else
+    if gap >= start then
+        local floorAt = catch.type == xi.fishing.catchType.FISH and 86 or 98
+
+        value = value - math.min(math.floor((gap - start) * slope), floorAt)
+
+        -- The stamina roll moves the drain a point per point off 100, so a heavy catch drains harder
+        value = value - (roll - 100)
+    end
+
+    return value
+end
+
+local function fightTime(player, cast, context)
+    local time = cast.rod.time
+
+    if context.rod.penalty == context.size then
+        time = time - 10
+    end
+
+    if
+        context.tier and
+        cast.rod.legendary
+    then
+        time = time + (cast.rod.legendaryTime or 0)
+    end
+
+    time = time + (context.stats.timeBonus or 0)
+
+    if
+        player:hasKeyItem(xi.keyItem.MOOCHING) and
+        (cast.baitId == xi.item.DRILL_CALAMARY or cast.baitId == xi.item.DWARF_PUGIL)
+    then
+        time = time + 30
+    end
+
+    if player:getMod(xi.mod.ALBATROSS_RING_EFFECT) > 0 then
+        time = time + 30
+    end
+
+    return time
+end
+
+-- TODO: Capture needed to prove out when a fish reports an epic catch
+local function bigFishStats(context, catch)
+    local length = catch.record and catch.record.length
+    if
+        catch.type ~= xi.fishing.catchType.FISH or
+        not length or
+        length[2] <= 1
+    then
+        return nil
+    end
+
+    local ratio = (465 + math.randomInt(0, 50)) / 100
+    local size  = math.floor((math.randomInt(length[1], length[2]) + math.randomInt(length[1], length[2])) / 2)
+
+    return
+    {
+        length = size,
+        weight = math.floor(size * ratio),
+        epic   = context.tier and size > (length[1] + length[2]) / 2,
+    }
+end
+
+-- The chance a fish is lost to lack of skill
+local function lowSkillChance(context, catch)
+    if catch.type ~= xi.fishing.catchType.FISH then
+        return 0
+    end
+
+    local gap = context.level - context.skill
+
+    if context.stats.lowSkill then
+        return gap >= context.stats.lowSkill.gap and context.stats.lowSkill.chance or 0
+    end
+
+    if
+        gap >= 20 and
+        context.size == xi.fishingSize.LARGE
+    then
+        return math.min(100, 80 + math.floor((gap - 20) * 0.8))
+    end
+
+    -- Apply chance to reel in fish based on skill gap
+    if gap >= 50 then
+        return 95
+    elseif gap >= 45 then
+        return 70
+    elseif gap >= 25 then
+        return 5
+    end
+
+    return 0
+end
+
+-- The rod break, lack-of-skill, line snap and size loss chances a claim is rolled against, before the hook feeling adjusts them
+local function breakChances(cast, context, catch)
+    local stats   = context.stats
+    local chances = { lowSkill = lowSkillChance(context, catch), lineSnap = 0, rodBreak = 0, sizeLoss = 0 }
+
+    -- A catch heavier than the rod holds (its strength plus half the angler's skill) fails at 3 percent a level over: the rod
+    -- breaks when it is a starter rod, the catch is large or the catch is junk, and the line snaps on a small fish otherwise
+    local over = (stats.weight or context.level) - (context.rod.strength or 0) - math.floor(context.skill / 2)
+    if
+        context.rod.strength and
+        over > 0
+    then
+        local snaps = context.rod.strength >= 35 and
+            context.size ~= xi.fishingSize.LARGE and
+            catch.type == xi.fishing.catchType.FISH
+
+        chances[snaps and 'lineSnap' or 'rodBreak'] = math.min(100, over * 3)
+    end
+
+    -- A catch with its own snap rate cuts the line at least that often
+    chances.lineSnap = math.max(chances.lineSnap, stats.lineSnap or 0)
+
+    -- Lu Shang's breaks on the legendaries its list names at the list's rate
+    if
+        (cast.rodId == xi.item.LU_SHANGS_FISHING_ROD or cast.rodId == xi.item.LU_SHANGS_FISHING_ROD_P1) and
+        xi.fishing.luShangBreaks[catch.itemId]
+    then
+        chances.rodBreak = xi.fishing.luShangBreaks[catch.itemId]
+    end
+
+    -- A rod penalised against the catch's size loses it at the fish's own rate, or near twice its level where none is known
+    if context.rod.penalty == context.size then
+        chances.sizeLoss = stats.sizeLoss or math.min(90, math.floor(context.level * 1.8))
+        chances.lostAs   = context.size == xi.fishingSize.LARGE and xi.fishing.failure.LOST_BIG or xi.fishing.failure.LOST_SMALL
+    end
+
+    return chances
+end
+
+local function feeling(context, chances, bigFish)
+    -- A large fish measuring past its midpoint is epic before anything else
+    if bigFish and bigFish.epic then
+        return xi.fishing.feeling.EPIC
+    end
+
+    local gap = context.level - context.skill
+
+    -- A catch 12 or more levels over always doubts the angler's skill, and half the hooks 8 to 11 over do
+    if
+        gap >= 12 or
+        (gap >= 8 and math.randomInt(1, 100) <= 50)
+    then
+        -- The doubt is worded one way in three: 39 percent positive, 11 fairly sure, the rest not knowing, whatever the gap
+        local roll = math.randomInt(1, 100)
+
+        if roll <= 39 then
+            return xi.fishing.feeling.NO_SKILL_POSITIVE
+        elseif roll <= 50 then
+            return xi.fishing.feeling.NO_SKILL_SURE
+        end
+
+        return xi.fishing.feeling.NO_SKILL
+    end
+
+    -- A snap or break chance of 45 or more feels terrible
+    if
+        chances.lineSnap >= 45 or
+        chances.rodBreak >= 45
+    then
+        return xi.fishing.feeling.TERRIBLE
+    end
+
+    -- One hook in 25 up to 11 levels over feels bad on any rod
+    if
+        gap >= 1 and
+        gap <= 11 and
+        math.randomInt(1, 100) <= 4
+    then
+        return xi.fishing.feeling.BAD
+    end
+
+    return xi.fishing.feeling.GOOD
+end
+
+-- TODO: Capture needed to prove out keen sense rate
+local function keenSense(context, catch, sense)
+    -- Only a fish that already feels good can give it
+    if
+        sense ~= xi.fishing.feeling.GOOD or
+        catch.type ~= xi.fishing.catchType.FISH
+    then
+        return false
+    end
+
+    -- The rod's keen bonus counts as skill, and the fish must be within 4 levels of that
+    local skill = context.skill + (context.rod.keenBonus or 0)
+    if context.level - 4 > skill then
+        return false
+    end
+
+    -- 5 percent at the edge and 2 more per level of skill past it
+    local chance = 5 + math.max(skill - math.max(0, context.level - 4), 0) * 2
+
+    -- Never past 70
+    return math.randomInt(1, 100) <= utils.clamp(chance, 0, 70)
+end
+
+local function intuition(context, keen)
+    -- 10, and 2 more for every ten points of skill
+    local value = 10 + 2 * math.floor(context.skill / 10)
+    local moon  = getVanadielMoonCycle()
+    local hour  = VanadielHour()
+
+    -- A new or full moon adds 10, and 10 more on two hooks in five, a quarter moon adds 5 or 10 at even odds
+    if
+        moon == xi.moonCycle.NEW_MOON or
+        moon == xi.moonCycle.FULL_MOON
+    then
+        value = value + 10
+        if math.randomInt(1, 100) <= 40 then
+            value = value + 10
+        end
+    elseif
+        moon == xi.moonCycle.FIRST_QUARTER or
+        moon == xi.moonCycle.THIRD_QUARTER
+    then
+        value = value + 5
+        if math.randomInt(1, 100) <= 50 then
+            value = value + 5
+        end
+    end
+
+    -- Dawn and dusk add 1 to 3
+    if
+        hour == 5 or
+        hour == 17
+    then
+        value = value + math.randomInt(1, 3)
+    end
+
+    -- A keen sense adds 50
+    if keen then
+        value = value + 50
+    end
+
+    return value
+end
+
+local function buildFight(player, cast, catch)
+    local context  = fightContext(player, cast, catch)
+    if not context then
+        return nil
+    end
+
+    local staminaRoll = math.randomInt(95, 105)
+    local bigFish     = bigFishStats(context, catch)
+    local chances     = breakChances(cast, context, catch)
+    local sense       = feeling(context, chances, bigFish)
+    local keen        = keenSense(context, catch, sense)
+    local damage      = attack(context)
+    local largeBite   = context.size == xi.fishingSize.LARGE and 1 or 0
+
+    if sense == xi.fishing.feeling.NO_SKILL_SURE then
+        chances.lineSnap = math.min(100, chances.lineSnap * 3)
+    elseif sense == xi.fishing.feeling.NO_SKILL then
+        chances.lineSnap = math.floor(chances.lineSnap / 10)
+    end
+
+    if keen then
+        sense = xi.fishing.feeling.KEEN
+    end
+
+    return
+    {
+        stamina        = stamina(context, staminaRoll),
+        regen          = regen(context, catch, staminaRoll),
+        move_frequency = arrowValue(player, context, context.stats.moveFrequency, context.rod.smallMove, context.rod.largeMove),
+        arrow_damage   = damage,
+        arrow_delay    = arrowValue(player, context, context.stats.arrowDelay, context.rod.smallDelay, context.rod.largeDelay),
+        arrow_regen    = heal(context, damage, keen),
+        time           = fightTime(player, cast, context),
+        angler_sense   = largeBite + (keen and 2 or 0),
+        intuition      = intuition(context, keen),
+        feeling        = sense,
+        chances        = chances,
+        bigFish        = bigFish,
+        roll           = staminaRoll,
+    }
+end
+
+xi.fishing.hookCatch = function(player, cast, catch)
+    local fight = buildFight(player, cast, catch)
+    if not fight then
+        return nil
+    end
+
+    -- The hook line by class
+    local hookLine = xi.fishingMessage.HOOKED_ITEM
+    local large    = catch.type ~= xi.fishing.catchType.ITEM
+
+    if catch.type == xi.fishing.catchType.FISH then
+        large    = catch.record.size == xi.fishingSize.LARGE
+        hookLine = large and xi.fishingMessage.HOOKED_LARGE_FISH or xi.fishingMessage.HOOKED_SMALL_FISH
+    end
+
+    local base = zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET
+
+    player:messageText(player, base + hookLine)
+
+    -- A keen angler's sense names the fish in place of the feeling
+    if fight.feeling == xi.fishing.feeling.KEEN then
+        player:messageSpecial(base + xi.fishingMessage.KEEN_ANGLERS_SENSE, catch.itemId)
+    else
+        player:messageText(player, base + xi.fishing.feelingMessages[fight.feeling])
+    end
+
+    -- The bite scheduler pulls hard for a large fish and lightly for the rest
+    player:entityAnimationPacket(large and xi.animationString.FISHING_BITE_LARGE or xi.animationString.FISHING_BITE_SMALL)
+    player:setAnimation(xi.animation.NEW_FISHING_FISH)
+
+    return fight
 end
 
 -----------------------------------
