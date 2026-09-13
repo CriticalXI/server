@@ -868,6 +868,258 @@ xi.fishing.hookCatch = function(player, cast, catch)
 end
 
 -----------------------------------
+-- Outcomes
+-----------------------------------
+
+-- Convert the value the client reports at the end of the minigame into a result
+local function classify(reported)
+    if reported <= 4 then
+        return xi.fishing.result.CAUGHT
+    elseif reported <= 20 then
+        return xi.fishing.result.LOW_SKILL
+    elseif reported <= 100 then
+        return xi.fishing.result.LINE_BREAK
+    elseif reported <= 256 then
+        return xi.fishing.result.GAVE_UP
+    end
+
+    return xi.fishing.result.LOST
+end
+
+-- Roll the fight's rod break, lack-of-skill, line snap and size loss chances in that order
+local function rollResult(cast)
+    local chances = cast.fight.chances
+
+    if math.randomInt(1, 100) <= chances.rodBreak then
+        return xi.fishing.result.ROD_BREAK
+    end
+
+    if math.randomInt(1, 100) <= chances.lowSkill then
+        return xi.fishing.result.LOW_SKILL
+    end
+
+    if math.randomInt(1, 100) <= chances.lineSnap then
+        return xi.fishing.result.LINE_BREAK
+    end
+
+    if math.randomInt(1, 100) <= chances.sizeLoss then
+        cast.lossReason = chances.lostAs
+
+        return xi.fishing.result.LOST
+    end
+
+    return xi.fishing.result.CAUGHT
+end
+
+-- Remove the bait after a fight, returns true if it was used up
+local function consumeBait(player, cast, result)
+    -- Catching an item keeps the bait
+    if
+        result == xi.fishing.result.CAUGHT and
+        cast.catch.type == xi.fishing.catchType.ITEM
+    then
+        return false
+    end
+
+    if not player:getEquippedItem(xi.slot.AMMO) then
+        return false
+    end
+
+    -- Lures are only lost with the line
+    local lineGone = result == xi.fishing.result.LINE_BREAK or result == xi.fishing.result.ROD_BREAK
+    if
+        cast.bait.type == xi.fishingBaitType.LURE and
+        not lineGone
+    then
+        return false
+    end
+
+    player:removeAmmo(1)
+
+    return true
+end
+
+-- Play the animation and message for a failed catch
+local function failCatch(player, cast, result, baitTaken)
+    local effect    = xi.fishing.results[result]
+    local animation = effect.animation
+    local line      = effect.message
+
+    if
+        result == xi.fishing.result.LOW_SKILL and
+        not cast.claimed
+    then
+        animation = xi.animation.NEW_FISHING_LINE_BREAK
+    elseif result == xi.fishing.result.LOST then
+        line = xi.fishing.lostMessages[cast.lossReason] or line
+    elseif
+        result == xi.fishing.result.GAVE_UP and
+        baitTaken
+    then
+        line = xi.fishingMessage.GIVE_UP_BAIT_LOSS
+    end
+
+    player:setAnimation(animation)
+    player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + line)
+
+    -- Swap a broken rod for its broken version
+    if
+        result == xi.fishing.result.ROD_BREAK and
+        cast.rod.breaksTo
+    then
+        player:unequipItem(xi.slot.RANGED)
+        if player:delItem(cast.rodId, 1) then
+            player:addItem({ id = cast.rod.breaksTo, silent = true })
+        end
+    end
+end
+
+-- Give the player the fish, returns false if the inventory is full
+local function catchFish(player, cast)
+    local catch   = cast.catch
+    local bigFish = cast.fight.bigFish
+    local count   = catch.count or 1
+    local base    = zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET
+
+    player:setAnimation(xi.animation.NEW_FISHING_CAUGHT)
+
+    if player:getFreeSlotsCount() == 0 then
+        player:messageName(base + xi.fishingMessage.CATCH_INVENTORY_FULL, player, catch.itemId, count, nil, nil, nil, true)
+        return false
+    end
+
+    -- Big fish carry their size and weight
+    local item = { id = catch.itemId, quantity = count, silent = true }
+    if bigFish then
+        item.exdata = { size = bigFish.length, weight = bigFish.weight }
+    end
+
+    player:addItem(item)
+
+    if count > 1 then
+        player:messageName(base + xi.fishingMessage.CATCH_MULTI, player, catch.itemId, count, nil, nil, nil, true)
+    elseif bigFish then
+        local heavy = cast.fight.roll >= 103 and 7 or 5
+
+        player:messageName(base + xi.fishingMessage.CATCH, player, catch.itemId, bigFish.weight, heavy, math.floor(cast.fight.stamina * 0.12), nil, true)
+    else
+        player:messageName(base + xi.fishingMessage.CATCH, player, catch.itemId, count, nil, nil, nil, true)
+    end
+
+    return true
+end
+
+-- Give the player the item, returns false if the inventory is full
+local function catchItem(player, cast)
+    local base = zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET
+
+    player:setAnimation(xi.animation.NEW_FISHING_CAUGHT)
+
+    if player:getFreeSlotsCount() == 0 then
+        player:messageName(base + xi.fishingMessage.CATCH_INVENTORY_FULL, player, cast.catch.itemId, 1, nil, nil, nil, true)
+        return false
+    end
+
+    player:addItem({ id = cast.catch.itemId, silent = true })
+    player:messageName(base + xi.fishingMessage.CATCH, player, cast.catch.itemId, 1, nil, nil, nil, true)
+
+    return true
+end
+
+-- Work out the result of the minigame, only rolling for failures when the player claims the catch
+local function decideResult(cast, reported, echo)
+    local result = classify(reported)
+
+    cast.claimed = result == xi.fishing.result.CAUGHT
+    if not cast.claimed then
+        return result
+    end
+
+    -- The catch is lost if the intuition echo is wrong or the claim comes within 2 seconds of the bite
+    if
+        echo ~= cast.fight.intuition or
+        GetSystemTime() < cast.hookedAt + 2
+    then
+        return xi.fishing.result.LOST
+    end
+
+    return rollResult(cast)
+end
+
+-- A fight that is cut short counts as giving up
+local function interruptFight(player, cast)
+    if cast.stage ~= xi.fishing.stage.FIGHTING then
+        return
+    end
+
+    consumeBait(player, cast, xi.fishing.result.GAVE_UP)
+end
+
+-- Roll for a bite and return the fight to send to the client, or nil if nothing bites
+local function checkHook(player, cast)
+    -- The client checks about a second before its timer ends, anything earlier is an empty cast
+    local catch = nil
+    if GetSystemTime() >= cast.startedAt + cast.hookTime - 2 then
+        catch = xi.fishing.rollBite(player, cast, xi.fishing.getData())
+    end
+
+    -- Nothing bit or the catch has no fight stats
+    local fight = catch and xi.fishing.hookCatch(player, cast, catch)
+    if not fight then
+        player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + xi.fishingMessage.NO_CATCH)
+        player:setAnimation(xi.animation.NEW_FISHING_STOP)
+        cast.stage = xi.fishing.stage.EMPTY
+
+        -- Warn about catches missing from catchStats
+        if
+            catch and
+            catch.itemId and
+            not xi.fishing.catchStats[catch.itemId]
+        then
+            printf('[warning] fishing: no fight row for item %i', catch.itemId)
+        end
+
+        return nil
+    end
+
+    -- The bite lands when the client's timer ends, about a second after the check
+    cast.catch    = catch
+    cast.fight    = fight
+    cast.stage    = xi.fishing.stage.FIGHTING
+    cast.hookedAt = cast.startedAt + cast.hookTime
+
+    return fight
+end
+
+-- Land the catch or show the failure, then use up the bait
+xi.fishing.resolveCatch = function(player, cast, reported, echo)
+    local result = decideResult(cast, reported, echo)
+    local failed = result ~= xi.fishing.result.CAUGHT
+
+    -- Give the player the catch, a catch that can't be added to the inventory is lost
+    if not failed then
+        local landed = false
+        if cast.catch.type == xi.fishing.catchType.FISH then
+            landed = catchFish(player, cast)
+        else
+            landed = catchItem(player, cast)
+        end
+
+        if not landed then
+            result = xi.fishing.result.LOST
+        end
+    end
+
+    local baitTaken = consumeBait(player, cast, result)
+
+    if failed then
+        failCatch(player, cast, result, baitTaken)
+    end
+
+    return result
+end
+
+-----------------------------------
 -- Entry points
 -----------------------------------
 
@@ -882,6 +1134,60 @@ xi.fishing.onStart = function(player)
     return castLine(player, data, areaName, area)
 end
 
+-- Handle the client's fishing packet by mode, only CHECK_HOOK returns the fight
+xi.fishing.onAction = function(player, mode, para, para2)
+    local cast = xi.fishing.casts[player:getID()]
+    if not cast then
+        return nil
+    end
+
+    -- RELEASE ends the cast from any stage and gives up a fight still in progress
+    if mode == xi.fishing.mode.RELEASE then
+        interruptFight(player, cast)
+        player:setAnimation(xi.animation.NONE)
+        xi.fishing.casts[player:getID()] = nil
+
+        return nil
+    end
+
+    -- CHECK_HOOK is only valid while the line is out
+    if
+        mode == xi.fishing.mode.CHECK_HOOK and
+        cast.stage == xi.fishing.stage.CAST
+    then
+        return checkHook(player, cast)
+    end
+
+    -- END_MINIGAME at 201 while the line is out cancels the cast and reels in empty
+    if
+        mode == xi.fishing.mode.END_MINIGAME and
+        para == 201 and
+        cast.stage == xi.fishing.stage.CAST
+    then
+        player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + xi.fishingMessage.NO_CATCH)
+        player:setAnimation(xi.animation.NEW_FISHING_STOP)
+        cast.stage = xi.fishing.stage.EMPTY
+
+        return nil
+    end
+
+    -- The other modes are only valid during the fight
+    if cast.stage ~= xi.fishing.stage.FIGHTING then
+        return nil
+    end
+
+    -- END_MINIGAME sends the client's result and its echo of the fight's intuition
+    if mode == xi.fishing.mode.END_MINIGAME then
+        cast.result = xi.fishing.resolveCatch(player, cast, para, para2)
+        cast.stage  = xi.fishing.stage.RESOLVED
+    elseif mode == xi.fishing.mode.POTENTIAL_TIMEOUT then
+        -- POTENTIAL_TIMEOUT only warns the player and the fight continues
+        player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + xi.fishingMessage.WARNING)
+    end
+
+    return nil
+end
+
 -- The animation is cleared here and nowhere in the core, and the next cast is refused until it is.
 xi.fishing.onInterrupt = function(player)
     local cast = xi.fishing.casts[player:getID()]
@@ -889,6 +1195,7 @@ xi.fishing.onInterrupt = function(player)
         return
     end
 
+    interruptFight(player, cast)
     player:setAnimation(xi.animation.NONE)
     xi.fishing.casts[player:getID()] = nil
 end
