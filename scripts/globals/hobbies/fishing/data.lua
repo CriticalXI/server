@@ -57,6 +57,20 @@ xi.fishing.result =
     ROD_BREAK  = 5,
 }
 
+xi.fishing.fatigueEvent =
+{
+    BASIC_LEGENDARY = 0,
+    COUNTABLE_ITEM  = 1,
+    EMPTY_CAST      = 2,
+    JUNK_ITEM       = 3,
+    LARGE_FISH      = 4,
+    LOW_SKILL       = 5,
+    RELEASE         = 6,
+    SMALL_FISH      = 7,
+    SUPER_LEGENDARY = 8,
+    VALUABLE_ITEM   = 9,
+}
+
 -- The buckets that need entries behind their weight
 xi.fishing.entryBuckets =
 {
@@ -108,6 +122,21 @@ xi.fishing.skillUpChances =
     { gap = 19, chance = 29 },
     { gap = 29, chance = 16 },
     { gap = 50, chance = 14 },
+}
+
+-- Daily points and fatigue each event costs, with a separate fatigue cost when over level.
+xi.fishing.fatigueCosts =
+{
+    [xi.fishing.fatigueEvent.BASIC_LEGENDARY] = { daily = 1, fatigue =  140 },
+    [xi.fishing.fatigueEvent.COUNTABLE_ITEM ] = { daily = 1, fatigue =   25 },
+    [xi.fishing.fatigueEvent.EMPTY_CAST     ] = { daily = 0, fatigue =    0 },
+    [xi.fishing.fatigueEvent.JUNK_ITEM      ] = { daily = 0, fatigue =    0 },
+    [xi.fishing.fatigueEvent.LARGE_FISH     ] = { daily = 1, fatigue =   50, overLevel = 200 },
+    [xi.fishing.fatigueEvent.LOW_SKILL      ] = { daily = 0, fatigue = 1000 },
+    [xi.fishing.fatigueEvent.RELEASE        ] = { daily = 0, fatigue =    0, overLevel = 100 },
+    [xi.fishing.fatigueEvent.SMALL_FISH     ] = { daily = 1, fatigue =   25, overLevel = 100 },
+    [xi.fishing.fatigueEvent.SUPER_LEGENDARY] = { daily = 1, fatigue =  780 },
+    [xi.fishing.fatigueEvent.VALUABLE_ITEM  ] = { daily = 1, fatigue =  400 },
 }
 
 -----------------------------------
