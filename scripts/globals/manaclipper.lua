@@ -95,6 +95,23 @@ local getNextEvent = function(currentTime, schedule)
     return nextEvent
 end
 
+-- The destination names the Manaclipper's fishing areas are keyed by.
+local routeNames =
+{
+    [dest.DHALMEL_ROCK]      = 'dhalmel_rock',
+    [dest.MALIYAKALEYA_REEF] = 'maliyakaleya_reef',
+    [dest.PURGONORGO_ISLE]   = 'purgonorgo_isle',
+    [dest.SUNSET_DOCKS]      = 'sunset_docks',
+}
+
+-- The leg in progress by the name of its destination, from the schedule the timekeeper aboard reads.
+xi.manaclipper.currentRoute = function()
+    local currentTime = VanadielHour() * 60 + VanadielMinute()
+    local nextEvent   = getNextEvent(currentTime, manaclipperSchedule[xi.manaclipper.location.MANACLIPPER])
+
+    return routeNames[nextEvent.route]
+end
+
 xi.manaclipper.timekeeperOnTrigger = function(player, location, eventId)
     local schedule = manaclipperSchedule[location]
 

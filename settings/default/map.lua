@@ -148,14 +148,24 @@ xi.settings.map =
     -- Multiplier applied to high quality chance
     CRAFT_HQ_CHANCE_MULTIPLIER = 1.0,
 
-    -- Enable/disable all fishing, including quests. ENABLE AT YOUR OWN RISK.
+    -- Enable/disable all fishing
     FISHING_ENABLE = false,
 
-    -- Sets the minimum level a character must be to fish.
-    FISHING_MIN_LEVEL = 1,
+    -- Sets the minimum level a character must be to fish. (Retail = 20)
+    FISHING_MIN_LEVEL = 20,
 
-    -- Multiplier for fishing skill-up chance. Default = 1.0, very hard.
+    -- Multiplier for fishing skill-up chance. Default = 1.0
     FISHING_SKILL_MULTIPLIER = 1.0,
+
+    -- Enable/disable skill-ups from failed fishing attempts. Default = true, retail behavior.
+    FISHING_SKILLUP_ON_FAILURE = true,
+
+    -- Enable/disable daily fishing meters (daily cap / fatigue). Default = true, retail behavior.
+    FISHING_FATIGUE_ENABLE = true,
+
+    -- Setting daily fish cap parameters
+    FISHING_DAILY_CAP   = 200,
+    FISHING_FATIGUE_CAP = 20000,
 
     -- Enable/disable skill-ups from bloodpacts
     SKILLUP_BLOODPACT = true,

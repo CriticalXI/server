@@ -78,6 +78,7 @@ zones[xi.zone.BUBURIMU_PENINSULA] =
         HOBGOBLIN_THIEF       = GetFirstID('Hobgoblin_Thief'),
         HOBGOBLIN_WARRIOR     = GetFirstID('Hobgoblin_Warrior'),
         HOBGOBLIN_WHITE_MAGE  = GetFirstID('Hobgoblin_White_Mage'),
+        PUFFER_PUGIL_BRIGAND  = GetFirstID('Puffer_Pugil_Brigand'),
         THEOYAGUDO_BARD       = GetFirstID('Theoyagudo_Bard'),
         THEOYAGUDO_BLACK_MAGE = GetFirstID('Theoyagudo_Black_Mage'),
         THEOYAGUDO_MONK       = GetFirstID('Theoyagudo_Monk'),

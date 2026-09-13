@@ -143,6 +143,23 @@ xi.barge.timekeeperOnTrigger = function(player, location, eventId)
     end
 end
 
+-- The destination names the channel's fishing areas are keyed by.
+local routeNames =
+{
+    [destinations.CENTRAL_LANDING]       = 'central_landing',
+    [destinations.CENTRAL_LANDING_EMFEA] = 'central_landing_emfea',
+    [destinations.NORTH_LANDING]         = 'north_landing',
+    [destinations.SOUTH_LANDING]         = 'south_landing',
+}
+
+-- The leg in progress by the name of its destination, from the schedule the timekeeper aboard reads.
+xi.barge.currentRoute = function()
+    local currentTime = VanadielHour() * 60 + VanadielMinute()
+    local nextEvent   = getNextEvent(currentTime, bargeSchedule[xi.barge.location.PHANAUET_CHANNEL])
+
+    return routeNames[nextEvent.route]
+end
+
 -- defines which NPCs to display for a route
 -- # is the offset from each ID.npc entry
 local npcList =

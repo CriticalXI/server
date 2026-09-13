@@ -476,10 +476,11 @@ void CLuaBaseEntity::messageBasic(uint16 messageID, const sol::object& p0, const
  *  Function: messageName()
  *  Purpose : Message displayed with an entity's name in it
  *  Example : target:messageName(messageID, entity, param0, param1, param2, param3, chatType);
- *  Notes   : Used in Doom countdown messages, as an example
+ *            player:messageName(messageID, player, itemId, count, nil, nil, nil, true); -- everyone in range, the player included
+ *  Notes   : Used in Doom countdown messages, as an example. A character receives it alone unless broadcast is set.
  ************************************************************************/
 
-void CLuaBaseEntity::messageName(uint16 messageID, const sol::object& entity, const sol::object& p0, const sol::object& p1, const sol::object& p2, const sol::object& p3, const sol::object& chat)
+void CLuaBaseEntity::messageName(uint16 messageID, const sol::object& entity, const sol::object& p0, const sol::object& p1, const sol::object& p2, const sol::object& p3, const sol::object& chat, const sol::object& broadcast)
 {
     CLuaBaseEntity* PLuaEntity  = (entity != sol::lua_nil) ? entity.as<CLuaBaseEntity*>() : nullptr;
     CBaseEntity*    PNameEntity = PLuaEntity ? PLuaEntity->m_PBaseEntity : nullptr;
@@ -489,15 +490,18 @@ void CLuaBaseEntity::messageName(uint16 messageID, const sol::object& entity, co
     int32 param2 = (p2 != sol::lua_nil) ? p2.as<int32>() : 0;
     int32 param3 = (p3 != sol::lua_nil) ? p3.as<int32>() : 0;
 
-    int32 chatType = (chat != sol::lua_nil) ? chat.as<int32>() : 4;
+    int32      chatType = (chat != sol::lua_nil) ? chat.as<int32>() : 4;
+    const bool toArea   = (broadcast != sol::lua_nil) ? broadcast.as<bool>() : false;
 
-    if (CCharEntity* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    CCharEntity* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    if (PChar && !toArea)
     {
         PChar->pushPacket<GP_SERV_COMMAND_TALKNUMWORK2>(PChar, messageID, PNameEntity, param0, param1, param2, param3, chatType);
     }
     else if (m_PBaseEntity->loc.zone)
     {
-        m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, std::make_unique<GP_SERV_COMMAND_TALKNUMWORK2>(m_PBaseEntity, messageID, PNameEntity, param0, param1, param2, param3, chatType));
+        // CHAR_INRANGE_SELF hands a character its own copy on the way to the area
+        m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, toArea ? CHAR_INRANGE_SELF : CHAR_INRANGE, std::make_unique<GP_SERV_COMMAND_TALKNUMWORK2>(m_PBaseEntity, messageID, PNameEntity, param0, param1, param2, param3, chatType));
     }
 }
 

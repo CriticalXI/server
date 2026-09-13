@@ -100,10 +100,13 @@ xi.animationString =
 
     -- Effects
     EFFECT_DEATH              = 'dead',
-    EFFECT_SWEATING           = 'hitl',
     EFFECT_SILENCE            = 'sils',
     EFFECT_RAISE_PLAYER       = 'stnd',
     EFFECT_HOME_POINT         = 'bind', -- Home Point Set animation, only used in a module
+
+    -- Fishing bite scheduler
+    FISHING_BITE_LARGE        = 'hits',
+    FISHING_BITE_SMALL        = 'hitl',
 
     -- Status
     STATUS_VISIBLE            = 'deru',
