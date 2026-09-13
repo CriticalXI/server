@@ -59,6 +59,18 @@ local function spawnAngler(zone, level)
     return player
 end
 
+-- The Land Crab the zone data lets a West Ronfaure cast fish up
+local crabId = 17186819
+
+-- Get the crab, failing clearly if its ID has changed
+local function landCrab()
+    local crab = GetMobByID(crabId)
+
+    assert(crab ~= nil, 'Expected the Land Crab the West Ronfaure zone data pools')
+
+    return crab
+end
+
 -- The offset of the last fishing line sent to the player, read from the 0x036 packets against the West Ronfaure base. The id
 -- carries 0x8000 when the speaker is the player.
 local function lastFishingMessage(player)
@@ -102,6 +114,17 @@ local function readMeters(player)
         fatigue = player:getCharVar('[Fish]Fatigue'),
         today   = player:getCharVar('[Fish]Today'),
     }
+end
+
+-- A caught monster with only the type and mob name the fatigue classifier reads
+local function fishedMonster(name)
+    local mob = {}
+
+    mob.getName = function()
+        return name
+    end
+
+    return { type = xi.fishing.catchType.MONSTER, mob = mob }
 end
 
 describe('Fishing lifecycle', function()
@@ -368,7 +391,13 @@ describe('Fishing bite roll', function()
         player          = spawnAngler()
     end)
 
+    -- Reset the crab in case a failed test left it hooked or on a cooldown
     after_each(function()
+        local crab = landCrab()
+
+        crab:setLocalVar('hooked', 0)
+        crab:setLocalVar('respawnAt', 0)
+
         xi.fishing.preferredCatches[xi.item.LITTLE_WORM] = preferredWorm
         xi.fishing.data                                  = originalData
     end)
@@ -479,7 +508,7 @@ describe('Fishing bite roll', function()
 
             local ebisu = xi.fishing.biteBuckets(player, cast, xi.fishing.data)
 
-            for _, catchType in ipairs({ xi.fishing.catchType.FISH, xi.fishing.catchType.ITEM, xi.fishing.catchType.NOTHING }) do
+            for _, catchType in ipairs({ xi.fishing.catchType.FISH, xi.fishing.catchType.ITEM, xi.fishing.catchType.MONSTER, xi.fishing.catchType.NOTHING }) do
                 assert(ebisu.weights[catchType] == willow.weights[catchType], 'Expected weight ' .. tostring(willow.weights[catchType]) .. ' for catch type ' .. tostring(catchType) .. ' on the Ebisu at skill ' .. tostring(skill) .. ', got ' .. tostring(ebisu.weights[catchType]))
             end
 
@@ -501,6 +530,7 @@ describe('Fishing bite roll', function()
         assert(#items == 1 and items[1] == xi.item.RUSTY_BUCKET, 'Expected only the bucket, the leggings quest is not accepted')
         assert(buckets.weights[xi.fishing.catchType.FISH] == entryWeight(buckets, xi.fishing.catchType.FISH, xi.item.GOLD_CARP), 'Expected the fish bucket to hold the carp alone')
         assert(buckets.weights[xi.fishing.catchType.ITEM] == 6, 'Expected the junk weight of the bucket alone')
+        assert(buckets.weights[xi.fishing.catchType.MONSTER] == 0, 'Expected no monster weight with no monsters')
         assert(buckets.weights[xi.fishing.catchType.NOTHING] > 0, 'Expected an empty cast weight')
 
         player:addKeyItem(xi.keyItem.SERPENT_RUMORS)
@@ -527,7 +557,7 @@ describe('Fishing bite roll', function()
     end)
 
     -- A full lunar cycle is 84 days, so the walk ends on the phase it started from
-    it('draws the same item and empty cast weights at every moon phase', function()
+    it('draws the same item, monster and empty cast weights at every moon phase', function()
         xi.test.world:setVanaTime(12, 0)
 
         assert(xi.fishing.onStart(player) ~= nil, 'Expected a cast')
@@ -548,7 +578,7 @@ describe('Fishing bite roll', function()
                 seen         = seen + 1
             end
 
-            for _, catchType in ipairs({ xi.fishing.catchType.ITEM, xi.fishing.catchType.NOTHING }) do
+            for _, catchType in ipairs({ xi.fishing.catchType.ITEM, xi.fishing.catchType.MONSTER, xi.fishing.catchType.NOTHING }) do
                 assert(weights[catchType] == first[catchType], 'Expected weight ' .. tostring(first[catchType]) .. ' for catch type ' .. tostring(catchType) .. ' at moon phase ' .. tostring(moon) .. ', got ' .. tostring(weights[catchType]))
             end
         end
@@ -566,6 +596,28 @@ describe('Fishing bite roll', function()
 
         assert(buckets.weights[xi.fishing.catchType.NOTHING] == 1000, 'Expected a certain empty cast')
         assert(xi.fishing.rollBite(player, cast, xi.fishing.data) == nil, 'Expected nothing to bite')
+    end)
+
+    it('lets a dead crab bite until it is hooked or on its respawn time', function()
+        local crab = landCrab()
+
+        xi.fishing.data.zones[xi.zone.WEST_RONFAURE].monsters = { [crabId] = {} }
+
+        assert(xi.fishing.onStart(player) ~= nil, 'Expected a cast')
+        assert(not crab:isSpawned(), 'Expected the fished crab dead in the water')
+
+        local cast = xi.fishing.casts[player:getID()]
+
+        assert(#entryIds(xi.fishing.biteBuckets(player, cast, xi.fishing.data), xi.fishing.catchType.MONSTER) == 1, 'Expected the crab to bite')
+
+        crab:setLocalVar('hooked', 1)
+
+        assert(#entryIds(xi.fishing.biteBuckets(player, cast, xi.fishing.data), xi.fishing.catchType.MONSTER) == 0, 'Expected no bite while another line holds it')
+
+        crab:setLocalVar('hooked', 0)
+        crab:setLocalVar('respawnAt', GetSystemTime() + 600)
+
+        assert(#entryIds(xi.fishing.biteBuckets(player, cast, xi.fishing.data), xi.fishing.catchType.MONSTER) == 0, 'Expected no bite on its respawn time')
     end)
 
     it('answers an early hook check with an empty cast', function()
@@ -723,7 +775,7 @@ describe('Fishing cast end to end', function()
     local player
     local originalData
 
-    -- A moat carp the worm attracts as the only thing in the water, and an Ebisu beside the Willow rod.
+    -- A moat carp the worm attracts as the only thing in the water, an Ebisu beside the Willow rod, and the crab.
     local function riverCatalog()
         local data = testCatalog()
 
@@ -731,6 +783,7 @@ describe('Fishing cast end to end', function()
         data.rods[xi.item.EBISU_FISHING_ROD]                    = { name = 'ebisu_fishing_rod', size = xi.fishingSize.SMALL, time = 30, legendary = true, legendaryTime = 10 }
         data.baits[xi.item.LITTLE_WORM].affinity                = { [xi.item.MOAT_CARP_1] = true }
         data.zones[xi.zone.WEST_RONFAURE].areas.whole_zone.pool = { xi.item.MOAT_CARP_1 }
+        data.zones[xi.zone.WEST_RONFAURE].monsters              = { [crabId] = {} }
 
         return data
     end
@@ -788,6 +841,13 @@ describe('Fishing cast end to end', function()
         return count
     end
 
+    -- Serves the crab on every bite roll.
+    local function biteCrab(crab)
+        stub('xi.fishing.rollBite', function()
+            return { type = xi.fishing.catchType.MONSTER, spawnId = crabId, mob = crab, record = xi.fishing.data.zones[xi.zone.WEST_RONFAURE].monsters[crabId] }
+        end)
+    end
+
     before_each(function()
         originalData    = xi.fishing.data
         xi.fishing.data = riverCatalog()
@@ -800,8 +860,20 @@ describe('Fishing cast end to end', function()
         player:setSkillLevel(xi.skill.FISHING, 980)
     end)
 
+    -- Clean up the crab in case a failed test left it spawned, hooked or on a cooldown
     after_each(function()
-        xi.fishing.data = originalData
+        local crab = landCrab()
+
+        if crab:isSpawned() then
+            player.entities:get(crab):despawn()
+        end
+
+        crab:removeListener('FISHING_COOLDOWN')
+        crab:setLocalVar('hooked', 0)
+        crab:setLocalVar('respawnAt', 0)
+
+        xi.fishing.monsters[crab:getName()] = nil
+        xi.fishing.data                     = originalData
     end)
 
     it('lands a moat carp from the cast to the release', function()
@@ -938,6 +1010,22 @@ describe('Fishing cast end to end', function()
         assert(xi.fishing.onStart(player) ~= nil, 'Expected a cast to open again')
     end)
 
+    it('gives the crab back and takes the worm on a release sent mid-fight', function()
+        local crab = landCrab()
+
+        biteCrab(crab)
+        openCast(player)
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) ~= nil, 'Expected the fight')
+        assert(crab:getLocalVar('hooked') == 1, 'Expected the crab on the line')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(crab:getLocalVar('hooked') == 0, 'Expected the crab back in the water')
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the cast closed')
+        assert(not player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm gone as on a give-up')
+    end)
+
     it('loses a claim sent inside two seconds of the bite', function()
         biteMoatCarp()
 
@@ -975,6 +1063,68 @@ describe('Fishing cast end to end', function()
         xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
 
         assert(player:getCharSkillLevel(xi.skill.FISHING) == 91, 'Expected a tenth of a point at the release, got ' .. tostring(player:getCharSkillLevel(xi.skill.FISHING)))
+    end)
+
+    it('fishes up the crab, engages it and stamps its cooldown when it leaves the world', function()
+        local crab = landCrab()
+
+        assert(not crab:isSpawned(), 'Expected the fished crab dead in the water')
+
+        xi.fishing.monsters[crab:getName()] = { cooldown = 600 }
+
+        player:addItem(xi.item.EBISU_FISHING_ROD)
+        player:equipItem(xi.item.EBISU_FISHING_ROD, nil, xi.slot.RANGED)
+        biteCrab(crab)
+
+        local cast  = openCast(player)
+        local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(fight ~= nil, 'Expected the fight')
+        assert(crab:getLocalVar('hooked') == 1, 'Expected the crab on the line')
+        assert(fishingMessages(player)[1] == xi.fishingMessage.HOOKED_MONSTER, 'Expected the monster hook line')
+        assert(bit.band(fight.angler_sense, 1) == 1, 'Expected the large bit on a monster')
+
+        xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 0, fight.intuition)
+
+        assert(cast.result == xi.fishing.result.CAUGHT, 'Expected the crab landed, nothing can fail on Ebisu')
+        assert(crab:isSpawned(), 'Expected the crab in the world')
+        assert(crab:getLocalVar('hooked') == 0, 'Expected the line freed')
+        assert(crab:getLocalVar('respawnAt') == 0, 'Expected no cooldown while the crab is up')
+        assert(crab:hasListener('DESPAWN'), 'Expected the cooldown waiting on the despawn')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_MONSTER, 'Expected the monster animation')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the cast closed')
+
+        -- Despawn the crab so its cooldown starts and keeps it out of the pool
+        player.entities:get(crab):despawn()
+
+        assert(not crab:isSpawned(), 'Expected the crab gone')
+
+        local record = xi.fishing.data.zones[xi.zone.WEST_RONFAURE].monsters[crabId]
+
+        assert(crab:getLocalVar('respawnAt') >= GetSystemTime() + 599, 'Expected the cooldown stamped 600 seconds out from the despawn')
+        assert(not crab:hasListener('DESPAWN'), 'Expected the listener gone with its one use')
+        assert(not xi.fishing.confirmMonsterEntry(player, record, crab), 'Expected the crab off the pool on its cooldown')
+
+        crab:setLocalVar('respawnAt', 0)
+
+        assert(xi.fishing.confirmMonsterEntry(player, record, crab), 'Expected the crab back on the pool once the cooldown is served')
+    end)
+
+    it('ends the cast empty when the crab drawn is already in the world', function()
+        local crab = landCrab()
+
+        crab:spawn()
+        biteCrab(crab)
+
+        local cast = openCast(player)
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) == nil, 'Expected no fight on a crab that is up')
+        assert(cast.stage == xi.fishing.stage.EMPTY, 'Expected the empty stage')
+        assert(lastFishingMessage(player) == xi.fishingMessage.NO_CATCH, 'Expected the no catch line')
+        assert(player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm kept')
     end)
 
     it('answers the client packets on an empty cast, where every answer crosses the seam as nil', function()
@@ -1171,7 +1321,7 @@ describe('Fishing fatigue meters', function()
         assert(not xi.fishing.mayBite(player), 'Expected one loss to end the day')
     end)
 
-    it('classifies a catch by tier, size and item class', function()
+    it('classifies a catch by tier, size, item class and monster', function()
         local classify = xi.fishing.catchFatigueEvent
         local fish     = xi.fishing.catchType.FISH
         local item     = xi.fishing.catchType.ITEM
@@ -1185,6 +1335,8 @@ describe('Fishing fatigue meters', function()
         assert(classify({ catch = { type = item, record = { item = true, fatigue = xi.fishing.fatigueClass.JUNK } } }) == event.JUNK_ITEM, 'junk item')
         assert(classify({ catch = { type = item, itemId = xi.item.CORAL_FRAGMENT, record = { item = true } } }) == event.VALUABLE_ITEM, 'coral fragment by id')
         assert(classify({ catch = { type = item, itemId = xi.item.RUSTY_LEGGINGS, record = { item = true } } }) == event.JUNK_ITEM, 'rusty leggings by id')
+        assert(classify({ catch = fishedMonster('Devil_Manta') }) == event.VALUABLE_ITEM, 'the monster the notes price as a valuable by-catch')
+        assert(classify({ catch = fishedMonster('Land_Crab') }) == event.EMPTY_CAST, 'any other monster')
     end)
 
     it('spends one daily point on a sabiki event whatever it lands', function()
