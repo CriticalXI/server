@@ -1,7 +1,9 @@
 -----------------------------------
 -- Fishing lifecycle framework
 --
--- The entry checks open or refuse a cast against an injected catalog.
+-- A player with no cast live is ignored by the entry points that need
+-- one, the entry checks open or refuse a cast against an injected
+-- catalog, and casts run through the client packets and the seam.
 -----------------------------------
 
 -- A catalog in the GetFishingData shape with one rod, one bait and a whole-zone area in West Ronfaure. Built fresh per test so a test can reshape it.
@@ -21,6 +23,29 @@ local function testCatalog()
         },
     }
 end
+
+local ffi = require('ffi')
+
+-- The 0x01A action and the 0x110 fishing packets as the client sends them, header first
+ffi.cdef [[
+    typedef struct {
+        uint32_t header;
+        uint32_t UniqueNo;
+        uint16_t ActIndex;
+        uint16_t ActionID;
+        uint32_t ActionBuf[4];
+    } FISHING_TEST_ACTION;
+
+    typedef struct {
+        uint32_t header;
+        uint32_t UniqueNo;
+        int32_t  para;
+        uint16_t ActIndex;
+        int8_t   mode;
+        uint8_t  dammy;
+        int32_t  para2;
+    } FISHING_TEST_FISHING_2;
+]]
 
 -- A player in West Ronfaure, or the zone given, holding the catalog's rod and bait. Level 1 unless given; the leveled gear needs more.
 local function spawnAngler(zone, level)
@@ -48,6 +73,36 @@ local function lastFishingMessage(player)
 
     return last
 end
+
+-- Every fishing line sent to the player, as offsets from the same base, in order.
+local function fishingMessages(player)
+    local base     = zones[xi.zone.WEST_RONFAURE].text.FISHING_MESSAGE_OFFSET
+    local messages = {}
+
+    for _, packet in ipairs(player.packets:getIncoming()) do
+        if packet.type == 0x036 then
+            table.insert(messages, bit.band(packet.data[10] + packet.data[11] * 256, 0x7FFF) - base)
+        end
+    end
+
+    return messages
+end
+
+describe('Fishing lifecycle', function()
+    ---@type CClientEntityPair
+    local player
+
+    before_each(function()
+        player = xi.test.world:spawnPlayer()
+    end)
+
+    it('ignores a fishing action and an interrupt while the player is idle', function()
+        assert(xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) == nil, 'Expected no fight')
+        xi.fishing.onInterrupt(player)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected no cast to be opened')
+    end)
+end)
 
 describe('Fishing cast entry', function()
     ---@type CClientEntityPair
@@ -495,5 +550,399 @@ describe('Fishing bite roll', function()
 
         assert(buckets.weights[xi.fishing.catchType.NOTHING] == 1000, 'Expected a certain empty cast')
         assert(xi.fishing.rollBite(player, cast, xi.fishing.data) == nil, 'Expected nothing to bite')
+    end)
+
+    it('answers an early hook check with an empty cast', function()
+        assert(xi.fishing.onStart(player) ~= nil, 'Expected a cast')
+        assert(xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) == nil, 'Expected no fight before the timer')
+
+        assert(xi.fishing.casts[player:getID()].stage == xi.fishing.stage.EMPTY, 'Expected the empty stage')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_STOP, 'Expected the stop animation')
+        assert(lastFishingMessage(player) == xi.fishingMessage.NO_CATCH, 'Expected the no catch line')
+    end)
+end)
+
+describe('Fishing outcome', function()
+    ---@type CClientEntityPair
+    local player
+    local originalData
+
+    local function outcomeCatalog()
+        local data = testCatalog()
+
+        data.fish[xi.item.MOAT_CARP_1]       = { name = 'moat_carp', size = xi.fishingSize.SMALL, skill = 11 }
+        data.rods[xi.item.EBISU_FISHING_ROD] = { name = 'ebisu_fishing_rod', size = xi.fishingSize.SMALL, time = 30, legendary = true, legendaryTime = 10 }
+
+        return data
+    end
+
+    -- A cast in the fighting stage with a moat carp on the line, as the hook check leaves it, the bite long past.
+    local function fightingCast(rodId)
+        local cast =
+        {
+            zone     = xi.fishing.data.zones[xi.zone.WEST_RONFAURE],
+            rodId    = rodId,
+            rod      = xi.fishing.data.rods[rodId],
+            baitId   = xi.item.LITTLE_WORM,
+            bait     = xi.fishing.data.baits[xi.item.LITTLE_WORM],
+            stage    = xi.fishing.stage.FIGHTING,
+            hookedAt = 0,
+        }
+
+        cast.catch = { type = xi.fishing.catchType.FISH, itemId = xi.item.MOAT_CARP_1, record = xi.fishing.data.fish[xi.item.MOAT_CARP_1], count = 1 }
+        cast.fight = xi.fishing.hookCatch(player, cast, cast.catch)
+
+        return cast
+    end
+
+    before_each(function()
+        originalData    = xi.fishing.data
+        xi.fishing.data = outcomeCatalog()
+        player          = spawnAngler()
+        player:setSkillLevel(xi.skill.FISHING, 980)
+    end)
+
+    after_each(function()
+        xi.fishing.data = originalData
+    end)
+
+    it('lands a claimed moat carp and takes the bait', function()
+        local cast   = fightingCast(xi.item.EBISU_FISHING_ROD)
+        local result = xi.fishing.resolveCatch(player, cast, 0, cast.fight.intuition)
+
+        assert(result == xi.fishing.result.CAUGHT, 'Expected the catch, nothing can fail on Ebisu at 98')
+        assert(player:hasItem(xi.item.MOAT_CARP_1), 'Expected the fish in the inventory')
+        assert(not player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm gone')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_CAUGHT, 'Expected the caught animation')
+    end)
+
+    it('loses a claim whose intuition echo is wrong', function()
+        local cast   = fightingCast(xi.item.EBISU_FISHING_ROD)
+        local result = xi.fishing.resolveCatch(player, cast, 0, cast.fight.intuition + 1)
+
+        assert(result == xi.fishing.result.LOST, 'Expected the catch lost')
+        assert(not player:hasItem(xi.item.MOAT_CARP_1), 'Expected no fish')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_STOP, 'Expected the stop animation')
+        assert(lastFishingMessage(player) == xi.fishingMessage.LOST, 'Expected the lost line')
+    end)
+
+    it('ends a give-up with the bait gone and says so', function()
+        local cast   = fightingCast(xi.item.EBISU_FISHING_ROD)
+        local result = xi.fishing.resolveCatch(player, cast, 200, cast.fight.intuition)
+
+        assert(result == xi.fishing.result.GAVE_UP, 'Expected the give-up the corpus saw at 200')
+        assert(not player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm gone')
+        assert(lastFishingMessage(player) == xi.fishingMessage.GIVE_UP_BAIT_LOSS, 'Expected the give-up line with the bait')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_STOP, 'Expected the stop animation')
+    end)
+
+    it('takes the client at its word on a line break', function()
+        local cast   = fightingCast(xi.item.EBISU_FISHING_ROD)
+        local result = xi.fishing.resolveCatch(player, cast, 100, 0)
+
+        assert(result == xi.fishing.result.LINE_BREAK, 'Expected the line break')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_LINE_BREAK, 'Expected the line break animation')
+        assert(lastFishingMessage(player) == xi.fishingMessage.LINE_BREAK, 'Expected the line break line')
+    end)
+end)
+
+describe('Fishing cast end to end', function()
+    ---@type CClientEntityPair
+    local player
+    local originalData
+
+    -- A moat carp the worm attracts as the only thing in the water, and an Ebisu beside the Willow rod.
+    local function riverCatalog()
+        local data = testCatalog()
+
+        data.fish[xi.item.MOAT_CARP_1]                          = { name = 'moat_carp', size = xi.fishingSize.SMALL, skill = 11 }
+        data.rods[xi.item.EBISU_FISHING_ROD]                    = { name = 'ebisu_fishing_rod', size = xi.fishingSize.SMALL, time = 30, legendary = true, legendaryTime = 10 }
+        data.baits[xi.item.LITTLE_WORM].affinity                = { [xi.item.MOAT_CARP_1] = true }
+        data.zones[xi.zone.WEST_RONFAURE].areas.whole_zone.pool = { xi.item.MOAT_CARP_1 }
+
+        return data
+    end
+
+    -- Opens a cast and moves its start back past the hook timer and the claim floor, so the hook check and the claim that follow are on time.
+    local function openCast(angler)
+        assert(xi.fishing.onStart(angler) ~= nil, 'Expected the cast to open')
+
+        local cast = xi.fishing.casts[angler:getID()]
+
+        cast.startedAt = cast.startedAt - cast.hookTime - 2
+
+        return cast
+    end
+
+    -- Serves the moat carp on every bite roll.
+    local function biteMoatCarp()
+        stub('xi.fishing.rollBite', function()
+            return { type = xi.fishing.catchType.FISH, itemId = xi.item.MOAT_CARP_1, record = xi.fishing.data.fish[xi.item.MOAT_CARP_1], count = 1 }
+        end)
+    end
+
+    -- The 0x01A fishing action and the 0x110 fishing packets, through the C++ seam
+    ---@diagnostic disable: inject-field
+    local function sendCastPacket(angler)
+        local action    = ffi.new('FISHING_TEST_ACTION')
+        action.UniqueNo = angler:getID()
+        action.ActIndex = angler:getTargID()
+        action.ActionID = 14 -- GP_CLI_COMMAND_ACTION_ACTIONID::Fish
+
+        angler.packets:send(0x01A, action, ffi.sizeof(action))
+    end
+
+    local function sendFishingPacket(angler, mode, para, para2)
+        local fishing    = ffi.new('FISHING_TEST_FISHING_2')
+        fishing.UniqueNo = angler:getID()
+        fishing.ActIndex = angler:getTargID()
+        fishing.mode     = mode
+        fishing.para     = para
+        fishing.para2    = para2
+
+        angler.packets:send(0x110, fishing, ffi.sizeof(fishing))
+    end
+
+    ---@diagnostic enable: inject-field
+
+    local function countPackets(angler, packetType)
+        local count = 0
+        for _, packet in ipairs(angler.packets:getIncoming()) do
+            if packet.type == packetType then
+                count = count + 1
+            end
+        end
+
+        return count
+    end
+
+    before_each(function()
+        originalData    = xi.fishing.data
+        xi.fishing.data = riverCatalog()
+
+        xi.test.world:setSetting('map.FISHING_ENABLE', true)
+
+        -- The core refuses the fishing packets from a character under the fishing minimum level
+        player = spawnAngler(nil, xi.settings.map.FISHING_MIN_LEVEL)
+
+        player:setSkillLevel(xi.skill.FISHING, 980)
+    end)
+
+    after_each(function()
+        xi.fishing.data = originalData
+    end)
+
+    it('lands a moat carp from the cast to the release', function()
+        biteMoatCarp()
+
+        local cast  = openCast(player)
+        local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(fight ~= nil and fight == cast.fight, 'Expected the hook check to answer with the fight')
+
+        assert(cast.stage == xi.fishing.stage.FIGHTING, 'Expected the fighting stage')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_FISH, 'Expected the fighting animation')
+        assert(fishingMessages(player)[1] == xi.fishingMessage.HOOKED_SMALL_FISH, 'Expected the small fish hook line')
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 0, fight.intuition) == nil, 'Expected nothing back on the claim')
+        assert(cast.result == xi.fishing.result.CAUGHT, 'Expected the catch, nothing can fail 87 levels over')
+        assert(cast.stage == xi.fishing.stage.RESOLVED, 'Expected the resolved stage')
+        assert(player:hasItem(xi.item.MOAT_CARP_1), 'Expected the carp in the inventory')
+        assert(not player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm gone')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_CAUGHT, 'Expected the caught animation')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the cast closed at the release')
+        assert(player:getAnimation() == xi.animation.NONE, 'Expected the animation cleared')
+    end)
+
+    it('closes the cast empty and warns on a fish with no fight row', function()
+        assert(xi.fishing.catchStats[60001] == nil, 'Expected no fight row at the test id')
+
+        xi.fishing.data.fish[60001] = { name = 'rowless fish', size = xi.fishingSize.SMALL, skill = 11 }
+
+        stub('xi.fishing.rollBite', function()
+            return { type = xi.fishing.catchType.FISH, itemId = 60001, record = xi.fishing.data.fish[60001], count = 1 }
+        end)
+
+        local warned = spy('printf')
+        local cast   = openCast(player)
+
+        xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        warned:calledWith('[warning] fishing: no fight row for item %i', 60001)
+        assert(cast.stage == xi.fishing.stage.EMPTY, 'Expected the empty stage')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_STOP, 'Expected the stop animation')
+        assert(lastFishingMessage(player) == xi.fishingMessage.NO_CATCH, 'Expected the no catch line')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the cast closed at the release')
+    end)
+
+    it('ends an empty cast at the release with the worm still on the hook', function()
+        stub('xi.fishing.rollBite', function()
+            return nil
+        end)
+
+        local cast = openCast(player)
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) == nil, 'Expected no fight')
+        assert(cast.stage == xi.fishing.stage.EMPTY, 'Expected the empty stage')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_STOP, 'Expected the stop animation')
+        assert(lastFishingMessage(player) == xi.fishingMessage.NO_CATCH, 'Expected the no catch line')
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 200, 0) == nil, 'Expected a claim with nothing hooked ignored')
+        assert(cast.stage == xi.fishing.stage.EMPTY, 'Expected the stage untouched by it')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the cast closed')
+        assert(player:getAnimation() == xi.animation.NONE, 'Expected the animation cleared')
+        assert(player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm kept')
+    end)
+
+    it('gives up on a hooked carp and loses the worm', function()
+        biteMoatCarp()
+
+        local cast = openCast(player)
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) ~= nil, 'Expected the fight')
+
+        xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 200, 0)
+
+        assert(cast.result == xi.fishing.result.GAVE_UP, 'Expected the give-up the corpus saw at 200')
+        assert(not player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm gone')
+        assert(not player:hasItem(xi.item.MOAT_CARP_1), 'Expected no carp')
+        assert(lastFishingMessage(player) == xi.fishingMessage.GIVE_UP_BAIT_LOSS, 'Expected the give-up line with the bait')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_STOP, 'Expected the stop animation')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the cast closed')
+    end)
+
+    it('ignores a claim before the bite and warns on a timeout during the fight', function()
+        local cast = openCast(player)
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 0, 0) == nil, 'Expected nothing back')
+        assert(cast.stage == xi.fishing.stage.CAST and cast.result == nil, 'Expected a claim before the bite ignored')
+
+        biteMoatCarp()
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) ~= nil, 'Expected the fight')
+
+        xi.fishing.onAction(player, xi.fishing.mode.POTENTIAL_TIMEOUT, 5, 0)
+
+        assert(lastFishingMessage(player) == xi.fishingMessage.WARNING, 'Expected the warning line')
+        assert(cast.stage == xi.fishing.stage.FIGHTING, 'Expected the fight to go on')
+    end)
+
+    -- Mode 0 is outside the 0x110 enum, which the core hands over unchecked
+    it('ignores a mode the client never sends', function()
+        local cast = openCast(player)
+
+        assert(xi.fishing.onAction(player, 0, 0, 0) == nil, 'Expected nothing back')
+        assert(cast.stage == xi.fishing.stage.CAST, 'Expected the cast untouched')
+    end)
+
+    it('takes the worm and closes the cast on an interrupt mid-fight', function()
+        biteMoatCarp()
+
+        openCast(player)
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) ~= nil, 'Expected the fight')
+
+        xi.fishing.onInterrupt(player)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the cast closed')
+        assert(player:getAnimation() == xi.animation.NONE, 'Expected the animation cleared')
+        assert(not player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm gone as on a give-up')
+
+        player:addItem(xi.item.LITTLE_WORM)
+        player:equipItem(xi.item.LITTLE_WORM, nil, xi.slot.AMMO)
+
+        assert(xi.fishing.onStart(player) ~= nil, 'Expected a cast to open again')
+    end)
+
+    it('loses a claim sent inside two seconds of the bite', function()
+        biteMoatCarp()
+
+        local cast  = openCast(player)
+        local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(fight ~= nil, 'Expected the fight')
+
+        cast.hookedAt = GetSystemTime()
+        xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 0, fight.intuition)
+
+        assert(cast.result == xi.fishing.result.LOST, 'Expected the instant claim lost')
+        assert(not player:hasItem(xi.item.MOAT_CARP_1), 'Expected no carp')
+    end)
+
+    it('answers the client packets on an empty cast, where every answer crosses the seam as nil', function()
+        stub('xi.fishing.rollBite', function()
+            return nil
+        end)
+
+        sendCastPacket(player)
+
+        local cast = xi.fishing.casts[player:getID()]
+
+        assert(cast ~= nil and cast.stage == xi.fishing.stage.CAST, 'Expected the action packet to open the cast')
+
+        cast.startedAt = cast.startedAt - cast.hookTime - 2
+        sendFishingPacket(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(cast.stage == xi.fishing.stage.EMPTY, 'Expected the hook check to end the cast empty')
+        assert(countPackets(player, 0x115) == 0, 'Expected no fight packet')
+
+        sendFishingPacket(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the release to close the cast')
+    end)
+
+    it('stops a cast the client cancels before the bite and keeps the worm', function()
+        sendCastPacket(player)
+
+        local cast = xi.fishing.casts[player:getID()]
+
+        assert(cast ~= nil and cast.stage == xi.fishing.stage.CAST, 'Expected the action packet to open the cast')
+
+        sendFishingPacket(player, xi.fishing.mode.END_MINIGAME, 201, 0)
+
+        assert(cast.stage == xi.fishing.stage.EMPTY, 'Expected the cancel to end the cast empty')
+        assert(player:getAnimation() == xi.animation.NEW_FISHING_STOP, 'Expected the stop animation')
+        assert(lastFishingMessage(player) == xi.fishingMessage.NO_CATCH, 'Expected the no catch line')
+
+        sendFishingPacket(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the release to close the cast')
+        assert(player:getAnimation() == xi.animation.NONE, 'Expected the animation cleared')
+        assert(player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm kept')
+    end)
+
+    it('sends the fight packet on a bite and resolves the claim the client packets make', function()
+        biteMoatCarp()
+        sendCastPacket(player)
+
+        local cast = xi.fishing.casts[player:getID()]
+
+        assert(cast ~= nil, 'Expected the action packet to open the cast')
+
+        cast.startedAt = cast.startedAt - cast.hookTime - 2
+        sendFishingPacket(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(cast.stage == xi.fishing.stage.FIGHTING, 'Expected the hook check to start the fight')
+        assert(countPackets(player, 0x115) == 1, 'Expected one fight packet')
+
+        sendFishingPacket(player, xi.fishing.mode.END_MINIGAME, 0, cast.fight.intuition)
+
+        assert(cast.stage == xi.fishing.stage.RESOLVED, 'Expected the end of the minigame to resolve the cast')
+
+        sendFishingPacket(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the release to close the cast')
     end)
 end)

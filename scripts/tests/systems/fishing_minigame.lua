@@ -545,3 +545,348 @@ describe('Fishing minigame fish ladder', function()
         end
     end)
 end)
+
+describe('Fishing claim on every rod', function()
+    ---@type CClientEntityPair
+    local player
+    local data
+
+    -- The five species the corpus measured across rods
+    local species =
+    {
+        xi.item.MOAT_CARP_1,
+        xi.item.CRAYFISH_1,
+        xi.item.ISTAVRIT_1,
+        xi.item.CHEVAL_SALMON,
+        xi.item.SHINING_TROUT_1,
+    }
+
+    -- The fight on the rod and catch, with the lines it sent dropped
+    local function fightOn(rodId, itemId)
+        local fight = xi.fishing.hookCatch(player, castOn(data, rodId, xi.item.LITTLE_WORM), hookedCatch(data, itemId))
+
+        if not fight then
+            error('No fight row for rod ' .. tostring(rodId) .. ' and catch ' .. tostring(itemId))
+        end
+
+        player.packets:clear()
+
+        return fight
+    end
+
+    before_each(function()
+        data   = xi.fishing.getData()
+        player = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE })
+
+        xi.test.world:setVanaTime(12, 0)
+    end)
+
+    it('breaks the Lu Shang\'s only on the legendaries the JP wiki lists, and snaps its line on the coral fragment', function()
+        player:setSkillLevel(xi.skill.FISHING, 1000)
+
+        -- The wiki's fourteen, less the three Abyssea dragons the catalog does not carry
+        local breakers =
+        {
+            [xi.item.ABAIA          ] = true,
+            [xi.item.CAVE_CHERAX    ] = true,
+            [xi.item.GERROTHORAX    ] = true,
+            [xi.item.GUGRUSAURUS    ] = true,
+            [xi.item.HAKURYU        ] = true,
+            [xi.item.LIK            ] = true,
+            [xi.item.MATSYA         ] = true,
+            [xi.item.MOLA_MOLA      ] = true,
+            [xi.item.PIRARUCU       ] = true,
+            [xi.item.RYUGU_TITAN    ] = true,
+            [xi.item.TITANIC_SAWFISH] = true,
+        }
+
+        for itemId in pairs(breakers) do
+            assert(fightOn(xi.item.LU_SHANGS_FISHING_ROD, itemId).chances.rodBreak > 0, 'Expected ' .. data.fish[itemId].name .. ' to break the rod')
+        end
+
+        -- Nothing a zone pools breaks it otherwise, the Tricorn and Giant Chirai the wiki names among them
+        local pooled = {}
+        for _, zone in pairs(data.zones) do
+            for _, area in pairs(zone.areas) do
+                for _, itemId in ipairs(area.pool) do
+                    pooled[itemId] = true
+                end
+            end
+        end
+
+        assert(pooled[xi.item.TRICORN] and pooled[xi.item.GIANT_CHIRAI], 'Expected the two named non-breakers in a pool')
+
+        for itemId in pairs(pooled) do
+            if not breakers[itemId] then
+                assert(fightOn(xi.item.LU_SHANGS_FISHING_ROD, itemId).chances.rodBreak == 0, 'Expected ' .. data.fish[itemId].name .. ' to leave the rod whole')
+            end
+        end
+
+        local coral = fightOn(xi.item.LU_SHANGS_FISHING_ROD, xi.item.CORAL_FRAGMENT).chances
+
+        assert(coral.lineSnap > 0 and coral.rodBreak == 0, 'Expected the coral fragment to cut the line and spare the rod')
+    end)
+
+    it('resolves a claim into the first failure its chances carry, and lands the catch when they carry none', function()
+        local original = math.randomInt
+        local forced   = nil
+
+        -- The fight rolls as it likes; the claim rolls what the test sets
+        stub('math.randomInt', function(low, high)
+            if forced then
+                return forced
+            end
+
+            return original(low, high)
+        end)
+
+        local seed = 200000
+        for _, rodId in ipairs(sortedIds(data.rods)) do
+            for _, skill in ipairs({ 1, 20, 50, 100 }) do
+                player:setSkillLevel(xi.skill.FISHING, skill * 10)
+
+                for _, itemId in ipairs(species) do
+                    seed = seed + 1
+                    xi.test.world:setSeed(seed)
+
+                    local cast = castOn(data, rodId, xi.item.LITTLE_WORM)
+                    cast.catch = hookedCatch(data, itemId)
+                    cast.fight = xi.fishing.hookCatch(player, cast, cast.catch)
+                    cast.stage = xi.fishing.stage.FIGHTING
+                    player.packets:clear()
+
+                    local chances  = cast.fight.chances
+                    local expected = xi.fishing.result.CAUGHT
+                    if chances.rodBreak > 0 then
+                        expected = xi.fishing.result.ROD_BREAK
+                    elseif chances.lowSkill > 0 then
+                        expected = xi.fishing.result.LOW_SKILL
+                    elseif chances.lineSnap > 0 then
+                        expected = xi.fishing.result.LINE_BREAK
+                    elseif chances.sizeLoss > 0 then
+                        expected = xi.fishing.result.LOST
+                    end
+
+                    -- Every roll lands on 1, so the first chance above zero is met
+                    forced = 1
+                    local result = xi.fishing.resolveCatch(player, cast, 0, cast.fight.intuition)
+                    forced = nil
+
+                    local label    = tostring(data.rods[rodId].name) .. ' on ' .. tostring(data.fish[itemId].name) .. ' at skill ' .. tostring(skill) .. ': '
+                    local messages = fishingMessages(player)
+
+                    assert(result == expected, label .. 'resolved to ' .. tostring(result) .. ', expected ' .. tostring(expected))
+
+                    if result == xi.fishing.result.LOST then
+                        assert(cast.lossReason == chances.lostAs, label .. 'the loss carries the wrong reason')
+                        assert(messages[#messages] == xi.fishing.lostMessages[chances.lostAs], label .. 'the lost line does not name the reason')
+                        assert(player:getAnimation() == xi.animation.NEW_FISHING_STOP, label .. 'wrong animation on a loss')
+                    elseif result == xi.fishing.result.LOW_SKILL then
+                        assert(messages[#messages] == xi.fishingMessage.LOST_LOW_SKILL, label .. 'no lack of skill line')
+                        assert(player:getAnimation() == xi.animation.NEW_FISHING_STOP, label .. 'wrong animation on a rolled lack of skill')
+                    elseif result == xi.fishing.result.LINE_BREAK then
+                        assert(messages[#messages] == xi.fishingMessage.LINE_BREAK, label .. 'no line break line')
+                        assert(player:getAnimation() == xi.animation.NEW_FISHING_LINE_BREAK, label .. 'wrong animation on a line break')
+                    elseif result == xi.fishing.result.ROD_BREAK then
+                        assert(messages[#messages] == xi.fishingMessage.ROD_BREAK, label .. 'no rod break line')
+                        assert(player:getAnimation() == xi.animation.NEW_FISHING_ROD_BREAK, label .. 'wrong animation on a rod break')
+                    else
+                        assert(player:hasItem(itemId), label .. 'the catch is not in the inventory')
+                        assert(player:getAnimation() == xi.animation.NEW_FISHING_CAUGHT, label .. 'wrong animation on a catch')
+                        player:delItem(itemId, 1)
+                    end
+
+                    player.packets:clear()
+                end
+            end
+        end
+    end)
+
+    it('loses to the wrong size where retail did and nowhere else, at the corpus anglers\' skill', function()
+        player:setSkillLevel(xi.skill.FISHING, 80)
+
+        assert(fightOn(xi.item.HUME_FISHING_ROD, xi.item.ISTAVRIT_1).chances.lostAs == xi.fishing.failure.LOST_BIG, 'Expected the Hume rod to lose the istavrit to its size, as retail did 43 times in 110')
+        -- The corpus counts the Mithran rod's 81 size losses over the moat carp and the crayfish together, so only the carp is asserted
+        assert(fightOn(xi.item.MITHRAN_FISHING_ROD, xi.item.MOAT_CARP_1).chances.lostAs == xi.fishing.failure.LOST_SMALL, 'Expected the Mithran rod to lose the moat carp to its size, as retail did 81 times in 482 with the crayfish')
+
+        assert(fightOn(xi.item.SINGLE_HOOK_FISHING_ROD, xi.item.ISTAVRIT_1).chances.sizeLoss == 0, 'Expected the Single Hook rod to hold the istavrit, as retail did 147 times in 149')
+
+        -- The Fastwater rod is flagged against neither size, so it loses nothing to one
+        assert(fightOn(xi.item.FASTWATER_FISHING_ROD, xi.item.ISTAVRIT_1).chances.sizeLoss == 0, 'Expected the Fastwater rod to hold the istavrit, as retail did 155 times in 155')
+
+        for _, rodId in ipairs({ xi.item.LU_SHANGS_FISHING_ROD, xi.item.EBISU_FISHING_ROD }) do
+            for _, itemId in ipairs(species) do
+                assert(fightOn(rodId, itemId).chances.sizeLoss == 0, 'Expected ' .. tostring(data.rods[rodId].name) .. ' to hold ' .. tostring(data.fish[itemId].name) .. ', as retail held 612 in 612')
+            end
+        end
+    end)
+
+    -- Every rod but the Ebisu and the Judge's holds a catch up to its strength plus half the angler's skill: the gold carp broke
+    -- the starter rods 10 times in 11 on retail, the jungle catfish the Mithran rod 2 in 28, the arrowwood log a Tarutaru rod, and
+    -- the Ebisu snapped on its three legendaries at a rate set by the hook feeling
+    it('breaks a rod or snaps the line on a catch over the rod\'s hold, and snaps the Ebisu only by its legendaries\' own rates', function()
+        player:setSkillLevel(xi.skill.FISHING, 80)
+
+        -- Within the hold nothing happens: the Hume rod held the istavrit 110 times in 110, the Yew rod the moat carp 200 in 200, the Halcyon the rusty subligar
+        for _, pair in ipairs({ { xi.item.HUME_FISHING_ROD, xi.item.ISTAVRIT_1 }, { xi.item.YEW_FISHING_ROD, xi.item.MOAT_CARP_1 }, { xi.item.HALCYON_FISHING_ROD, xi.item.RUSTY_SUBLIGAR }, { xi.item.LU_SHANGS_FISHING_ROD, xi.item.ZEBRA_EEL } }) do
+            local chances = fightOn(pair[1], pair[2]).chances
+
+            assert(chances.lineSnap == 0 and chances.rodBreak == 0, 'Expected rod ' .. tostring(pair[1]) .. ' to hold ' .. tostring(data.fish[pair[2]].name) .. ', got snap ' .. tostring(chances.lineSnap) .. ' break ' .. tostring(chances.rodBreak))
+        end
+
+        -- The gold carp, 56, over a starter rod's hold of 26 to 30 at skill 8 breaks it 78 to 90 percent of the time, whatever the hook feels like
+        for _, row in ipairs({ { xi.item.WILLOW_FISHING_ROD, 90 }, { xi.item.YEW_FISHING_ROD, 84 }, { xi.item.BAMBOO_FISHING_ROD, 78 } }) do
+            local fight = fightOn(row[1], xi.item.GOLD_CARP)
+
+            assert(fight.chances.rodBreak == row[2] and fight.chances.lineSnap == 0, 'Expected the gold carp to break rod ' .. tostring(row[1]) .. ' at ' .. tostring(row[2]) .. ' on feeling ' .. tostring(fight.feeling) .. ', got ' .. tostring(fight.chances.rodBreak))
+        end
+
+        -- Junk breaks a rod too weak for it and reads terrible: the arrowwood log, 70, over the Tarutaru rod's 34
+        local log = fightOn(xi.item.TARUTARU_FISHING_ROD, xi.item.ARROWWOOD_LOG)
+
+        assert(log.feeling == xi.fishing.feeling.TERRIBLE and log.chances.rodBreak == 100 and log.chances.lineSnap == 0, 'Expected the arrowwood log to feel terrible and break the Tarutaru rod, got feeling ' .. tostring(log.feeling) .. ' break ' .. tostring(log.chances.rodBreak))
+
+        player:setSkillLevel(xi.skill.FISHING, 300)
+
+        -- The jungle catfish, 80, over the Mithran rod's 75 at skill 30 breaks it 15 percent of the time
+        local catfish = fightOn(xi.item.MITHRAN_FISHING_ROD, xi.item.JUNGLE_CATFISH)
+
+        assert(catfish.chances.rodBreak == 15 and catfish.chances.lineSnap == 0, 'Expected the jungle catfish to break the Mithran rod at 15, got ' .. tostring(catfish.chances.rodBreak))
+
+        -- A small fish over a small-fish rod's hold snaps the line instead: the bastore bream, 86, over the Halcyon's 70
+        local bream = fightOn(xi.item.HALCYON_FISHING_ROD, xi.item.BASTORE_BREAM)
+
+        assert(bream.chances.rodBreak == 0 and bream.chances.lineSnap > 0, 'Expected the bastore bream to snap the Halcyon\'s line and spare the rod, got snap ' .. tostring(bream.chances.lineSnap) .. ' break ' .. tostring(bream.chances.rodBreak))
+
+        player:setSkillLevel(xi.skill.FISHING, 1000)
+
+        -- On the Ebisu the Cave Cherax snapped 15 percent of reels, the Gugrusaurus 31 and the Lik 35: three times that on a
+        -- fairly-sure hook, a tenth of it on a hook that doesn't know
+        for _, row in ipairs({ { xi.item.CAVE_CHERAX, 15 }, { xi.item.GUGRUSAURUS, 31 }, { xi.item.LIK, 35 } }) do
+            local fight = fightOn(xi.item.EBISU_FISHING_ROD, row[1])
+            local snap  = row[2]
+
+            if fight.feeling == xi.fishing.feeling.NO_SKILL_SURE then
+                snap = math.min(100, row[2] * 3)
+            elseif fight.feeling == xi.fishing.feeling.NO_SKILL then
+                snap = math.floor(row[2] / 10)
+            end
+
+            assert(fight.chances.lineSnap == snap and fight.chances.rodBreak == 0, 'Expected ' .. tostring(data.fish[row[1]].name) .. ' to snap the Ebisu at ' .. tostring(snap) .. ' on feeling ' .. tostring(fight.feeling) .. ', got ' .. tostring(fight.chances.lineSnap))
+        end
+
+        -- The cone calamary read terrible on all 43 Ebisu hooks, so it carries a snap rate high enough to say so
+        local calamary = fightOn(xi.item.EBISU_FISHING_ROD, xi.item.CONE_CALAMARY)
+
+        assert(calamary.feeling == xi.fishing.feeling.TERRIBLE and calamary.chances.lineSnap == 50 and calamary.chances.rodBreak == 0, 'Expected the cone calamary to feel terrible and snap the Ebisu at 50, got feeling ' .. tostring(calamary.feeling) .. ' snap ' .. tostring(calamary.chances.lineSnap))
+    end)
+end)
+
+describe('Fishing bait sweep', function()
+    ---@type CClientEntityPair
+    local player
+    local data
+
+    -- A whole-zone pool of every ungated fish and item in the catalog, so the bait's affinity alone decides what bites
+    local function openPool()
+        local pool = {}
+        for _, itemId in ipairs(sortedIds(data.fish)) do
+            local record = data.fish[itemId]
+            if
+                not record.keyItem and
+                not record.quest
+            then
+                table.insert(pool, itemId)
+            end
+        end
+
+        return { areas = { whole_zone = { pool = pool } }, monsters = {} }
+    end
+
+    before_each(function()
+        data   = xi.fishing.getData()
+        player = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE })
+
+        xi.test.world:setVanaTime(12, 0)
+    end)
+
+    it('offers every bait the fish of its affinity in the pool and nothing outside it, and hooks within its count', function()
+        local zone = openPool()
+        local seed = 300000
+
+        for _, baitId in ipairs(sortedIds(data.baits)) do
+            local bait = data.baits[baitId]
+            local cast = castOn(data, xi.item.WILLOW_FISHING_ROD, baitId)
+
+            cast.zone     = zone
+            cast.area     = zone.areas.whole_zone
+            cast.areaName = 'whole_zone'
+
+            local buckets = xi.fishing.biteBuckets(player, cast, data)
+            local offered = {}
+
+            for _, entry in ipairs(buckets.entries[xi.fishing.catchType.FISH]) do
+                assert(bait.affinity[entry[1]], tostring(bait.name) .. ' offers ' .. tostring(data.fish[entry[1]].name) .. ' outside its affinity')
+                offered[entry[1]] = true
+            end
+
+            for _, itemId in ipairs(zone.areas.whole_zone.pool) do
+                local record = data.fish[itemId]
+                if
+                    not record.item and
+                    bait.affinity[itemId]
+                then
+                    assert(offered[itemId], tostring(bait.name) .. ' does not offer ' .. tostring(record.name))
+                end
+            end
+
+            assert(buckets.fishId == nil or bait.affinity[buckets.fishId], tostring(bait.name) .. ' drew a fish outside its affinity')
+
+            for _ = 1, 5 do
+                seed = seed + 1
+                xi.test.world:setSeed(seed)
+
+                local catch = xi.fishing.rollBite(player, cast, data)
+                if
+                    catch and
+                    catch.type == xi.fishing.catchType.FISH
+                then
+                    local rig = (bait.maxHook or 1) > 1 and (catch.record.maxHook or 1) > 1
+
+                    assert(bait.affinity[catch.itemId], tostring(bait.name) .. ' hooked ' .. tostring(catch.record.name) .. ' outside its affinity')
+                    assert(catch.count >= 1 and catch.count <= (rig and bait.maxHook or 1), tostring(bait.name) .. ' hooked ' .. tostring(catch.count) .. ' of ' .. tostring(catch.record.name))
+                end
+            end
+        end
+    end)
+
+    it('loses every bait to a give-up and every lure only to a broken line', function()
+        for _, baitId in ipairs(sortedIds(data.baits)) do
+            local bait = data.baits[baitId]
+
+            player:addItem(baitId)
+            player:equipItem(baitId, nil, xi.slot.AMMO)
+
+            assert(player:getEquipID(xi.slot.AMMO) == baitId, 'Expected ' .. tostring(bait.name) .. ' on the ammo slot')
+
+            local cast = castOn(data, xi.item.WILLOW_FISHING_ROD, baitId)
+            cast.catch = hookedCatch(data, xi.item.MOAT_CARP_1)
+            cast.fight = xi.fishing.hookCatch(player, cast, cast.catch)
+            cast.stage = xi.fishing.stage.FIGHTING
+
+            xi.fishing.resolveCatch(player, cast, 200, 0)
+
+            local kept = player:getEquipID(xi.slot.AMMO) == baitId
+
+            assert(kept == (bait.type == xi.fishingBaitType.LURE), tostring(bait.name) .. (kept and ' stayed on the hook through a give-up' or ' was lost to a give-up'))
+
+            if kept then
+                xi.fishing.resolveCatch(player, cast, 100, 0)
+
+                assert(player:getEquipID(xi.slot.AMMO) ~= baitId, tostring(bait.name) .. ' survived a broken line')
+            end
+
+            player.packets:clear()
+        end
+    end)
+end)

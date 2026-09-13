@@ -55,8 +55,9 @@ end
 ---@param p2 integer?
 ---@param p3 integer?
 ---@param chat integer?
+---@param broadcast boolean?
 ---@return nil
-function CBaseEntity:messageName(messageID, entity, p0, p1, p2, p3, chat)
+function CBaseEntity:messageName(messageID, entity, p0, p1, p2, p3, chat, broadcast)
 end
 
 ---@param messageID integer

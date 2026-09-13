@@ -21,6 +21,14 @@ xi.fishing.stage =
     RESOLVED = 4,
 }
 
+xi.fishing.mode =
+{
+    CHECK_HOOK        = 2,
+    END_MINIGAME      = 3,
+    RELEASE           = 4,
+    POTENTIAL_TIMEOUT = 5,
+}
+
 xi.fishing.feeling =
 {
     GOOD              = 0,
@@ -37,6 +45,16 @@ xi.fishing.failure =
 {
     LOST_BIG   = 2,
     LOST_SMALL = 3,
+}
+
+xi.fishing.result =
+{
+    CAUGHT     = 0,
+    GAVE_UP    = 1,
+    LINE_BREAK = 2,
+    LOST       = 3,
+    LOW_SKILL  = 4,
+    ROD_BREAK  = 5,
 }
 
 -- The buckets that need entries behind their weight
@@ -60,6 +78,23 @@ xi.fishing.feelingMessages =
     [xi.fishing.feeling.NO_SKILL_SURE    ] = xi.fishingMessage.NO_SKILL_SURE_FEELING,
     [xi.fishing.feeling.NO_SKILL_POSITIVE] = xi.fishingMessage.NO_SKILL_POSITIVE_FEELING,
     [xi.fishing.feeling.EPIC             ] = xi.fishingMessage.EPIC_CATCH,
+}
+
+-- Messages for a catch lost to its size
+xi.fishing.lostMessages =
+{
+    [xi.fishing.failure.LOST_BIG  ] = xi.fishingMessage.LOST_TOO_BIG,
+    [xi.fishing.failure.LOST_SMALL] = xi.fishingMessage.LOST_TOO_SMALL,
+}
+
+-- Animation and message for each failed result
+xi.fishing.results =
+{
+    [xi.fishing.result.GAVE_UP   ] = { animation = xi.animation.NEW_FISHING_STOP,       message = xi.fishingMessage.GIVE_UP        },
+    [xi.fishing.result.LINE_BREAK] = { animation = xi.animation.NEW_FISHING_LINE_BREAK, message = xi.fishingMessage.LINE_BREAK     },
+    [xi.fishing.result.LOST      ] = { animation = xi.animation.NEW_FISHING_STOP,       message = xi.fishingMessage.LOST           },
+    [xi.fishing.result.LOW_SKILL ] = { animation = xi.animation.NEW_FISHING_STOP,       message = xi.fishingMessage.LOST_LOW_SKILL },
+    [xi.fishing.result.ROD_BREAK ] = { animation = xi.animation.NEW_FISHING_ROD_BREAK,  message = xi.fishingMessage.ROD_BREAK      },
 }
 
 -----------------------------------
