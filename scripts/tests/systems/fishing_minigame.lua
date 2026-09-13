@@ -220,6 +220,11 @@ local function sortedIds(catalog)
     return ids
 end
 
+-- Keep the meters off the char vars so every bite is allowed and nothing is written
+local function stubMeters()
+    stub('xi.fishing.updateMeters', true)
+end
+
 -- Every bound the fight holds to for the angler and the catch given, each failure naming the rod, the catch and the skill.
 local function checkFight(player, data, cast, catch, skill, fight)
     local record  = catch.record
@@ -579,6 +584,7 @@ describe('Fishing claim on every rod', function()
         player = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE })
 
         xi.test.world:setVanaTime(12, 0)
+        stubMeters()
     end)
 
     it('breaks the Lu Shang\'s only on the legendaries the JP wiki lists, and snaps its line on the coral fragment', function()
@@ -808,6 +814,7 @@ describe('Fishing bait sweep', function()
         player = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE })
 
         xi.test.world:setVanaTime(12, 0)
+        stubMeters()
     end)
 
     it('offers every bait the fish of its affinity in the pool and nothing outside it, and hooks within its count', function()

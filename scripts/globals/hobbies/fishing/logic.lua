@@ -19,6 +19,132 @@ xi.fishing.getData = function()
 end
 
 -----------------------------------
+-- Meters
+-----------------------------------
+
+-- Save the meters to char vars that expire at JST midnight
+xi.fishing.updateMeters = function(player, meters)
+    local resetDays    = math.ceil(meters.fatigue / math.floor(xi.settings.map.FISHING_FATIGUE_CAP * 4 / 5))
+    local nextMidnight = JstMidnight()
+    local lastMidnight = nextMidnight + 86400 * math.max(0, resetDays - 1)
+
+    -- Player may increase fatigue without increasing daily points. Set Today var to track for fatigue resets
+    player:setCharVar('[Fish]DailyPoints', meters.daily, nextMidnight)
+    player:setCharVar('[Fish]Today', 1, nextMidnight)
+    player:setCharVar('[Fish]Fatigue', meters.fatigue, lastMidnight)
+end
+
+-- Read the meters, dropping a day's fatigue if midnight has passed since the last write
+xi.fishing.currentMeters = function(player)
+    local meters =
+    {
+        daily   = player:getCharVar('[Fish]DailyPoints'),
+        fatigue = player:getCharVar('[Fish]Fatigue'),
+        today   = player:getCharVar('[Fish]Today'),
+    }
+
+    if meters.today ~= 1 then
+        meters.fatigue = math.max(0, meters.fatigue - math.floor(xi.settings.map.FISHING_FATIGUE_CAP * 4 / 5))
+    end
+
+    return meters
+end
+
+-- The fatigue event a caught fish or item costs
+xi.fishing.catchFatigueEvent = function(cast)
+    local catch = cast.catch
+
+    -- Fish cost by legendary tier, then by size
+    if catch.type == xi.fishing.catchType.FISH then
+        if catch.record.legendary == xi.fishingLegendaryTier.SUPER then
+            return xi.fishing.fatigueEvent.SUPER_LEGENDARY
+        elseif catch.record.legendary == xi.fishingLegendaryTier.BASIC then
+            return xi.fishing.fatigueEvent.BASIC_LEGENDARY
+        elseif catch.record.size == xi.fishingSize.LARGE then
+            return xi.fishing.fatigueEvent.LARGE_FISH
+        end
+
+        return xi.fishing.fatigueEvent.SMALL_FISH
+    end
+
+    -- Items cost by fatigue class, countable unless the item's row says otherwise
+    local class = nil
+    if catch.type == xi.fishing.catchType.ITEM then
+        local stats = xi.fishing.catchStats[catch.itemId]
+
+        class = catch.record.fatigue or (stats and stats.fatigue) or xi.fishing.fatigueClass.COUNTABLE
+    end
+
+    if class == xi.fishing.fatigueClass.VALUABLE then
+        return xi.fishing.fatigueEvent.VALUABLE_ITEM
+    elseif class == xi.fishing.fatigueClass.JUNK then
+        return xi.fishing.fatigueEvent.JUNK_ITEM
+    elseif class == xi.fishing.fatigueClass.COUNTABLE then
+        return xi.fishing.fatigueEvent.COUNTABLE_ITEM
+    end
+
+    return xi.fishing.fatigueEvent.EMPTY_CAST
+end
+
+-- Add an event's daily points and fatigue to the player's meters
+xi.fishing.accrueFatigue = function(player, cast, event, overLevel)
+    if not xi.settings.map.FISHING_FATIGUE_ENABLE then
+        return
+    end
+
+    local cost    = xi.fishing.fatigueCosts[event]
+    local daily   = cost.daily
+    local fatigue = overLevel and cost.overLevel or cost.fatigue
+
+    -- Legendary rods scale fatigue by their own percent, but not a loss to lack of skill
+    local rod = xi.fishing.rodStats[cast.rodId]
+    if
+        rod and
+        rod.fatigue and
+        event ~= xi.fishing.fatigueEvent.LOW_SKILL
+    then
+        fatigue = math.floor(fatigue * rod.fatigue / 100)
+    end
+
+    -- A player with no job at FISHING_MIN_LEVEL takes 20 times the fatigue
+    local lowLevel = true
+    for job = xi.job.WAR, xi.job.RUN do
+        if player:getJobLevel(job) >= xi.settings.map.FISHING_MIN_LEVEL then
+            lowLevel = false
+            break
+        end
+    end
+
+    if lowLevel then
+        fatigue = fatigue * 20
+    end
+
+    if
+        daily == 0 and
+        fatigue == 0
+    then
+        return
+    end
+
+    local meters   = xi.fishing.currentMeters(player)
+    meters.daily   = meters.daily + daily
+    meters.fatigue = meters.fatigue + fatigue
+
+    xi.fishing.updateMeters(player, meters)
+end
+
+-- Nothing bites once the daily cap or the fatigue cap is reached
+xi.fishing.mayBite = function(player)
+    if not xi.settings.map.FISHING_FATIGUE_ENABLE then
+        return true
+    end
+
+    local meters = xi.fishing.currentMeters(player)
+
+    return meters.daily < xi.settings.map.FISHING_DAILY_CAP and meters.fatigue < xi.settings.map.FISHING_FATIGUE_CAP
+end
+
+-----------------------------------
 -- Fishing Start
 -----------------------------------
 
@@ -430,6 +556,10 @@ xi.fishing.biteBuckets = function(player, cast, data)
 end
 
 xi.fishing.rollBite = function(player, cast, data)
+    if not xi.fishing.mayBite(player) then
+        return nil
+    end
+
     return chooseOutcome(cast, data, xi.fishing.biteBuckets(player, cast, data))
 end
 
@@ -1114,6 +1244,30 @@ xi.fishing.resolveCatch = function(player, cast, reported, echo)
 
     if failed then
         failCatch(player, cast, result, baitTaken)
+    end
+
+    -- A catch costs by its fatigue event\
+    local event = nil
+    if not failed then
+        event = xi.fishing.catchFatigueEvent(cast)
+    elseif result == xi.fishing.result.GAVE_UP then
+        event = xi.fishing.fatigueEvent.RELEASE
+    elseif result == xi.fishing.result.LOW_SKILL then
+        event = xi.fishing.fatigueEvent.LOW_SKILL
+    end
+
+    if event then
+        -- Over level is a catch 17 or more levels above the player's skill, gear included
+        local overLevel = false
+        if
+            cast.catch.record and
+            cast.catch.record.skill
+        then
+            local skill = math.floor(player:getCharSkillLevel(xi.skill.FISHING) / 10) + player:getMod(xi.mod.FISH)
+            overLevel   = cast.catch.record.skill - skill >= 17
+        end
+
+        xi.fishing.accrueFatigue(player, cast, event, overLevel)
     end
 
     return result

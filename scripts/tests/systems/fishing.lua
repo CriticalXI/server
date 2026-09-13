@@ -88,6 +88,22 @@ local function fishingMessages(player)
     return messages
 end
 
+-- Write and read the three meter char vars directly
+local function setMeters(player, meters)
+    player:setCharVar('[Fish]DailyPoints', meters.daily)
+    player:setCharVar('[Fish]Fatigue', meters.fatigue)
+    player:setCharVar('[Fish]Today', meters.today)
+end
+
+local function readMeters(player)
+    return
+    {
+        daily   = player:getCharVar('[Fish]DailyPoints'),
+        fatigue = player:getCharVar('[Fish]Fatigue'),
+        today   = player:getCharVar('[Fish]Today'),
+    }
+end
+
 describe('Fishing lifecycle', function()
     ---@type CClientEntityPair
     local player
@@ -626,6 +642,62 @@ describe('Fishing outcome', function()
         assert(lastFishingMessage(player) == xi.fishingMessage.LOST, 'Expected the lost line')
     end)
 
+    it('charges a loss to lack of skill ten daily points', function()
+        local angler = spawnAngler(nil, xi.settings.map.FISHING_MIN_LEVEL)
+        local cast   = fightingCast(xi.item.WILLOW_FISHING_ROD)
+
+        xi.test.world:setSetting('map.FISHING_FATIGUE_ENABLE', true)
+
+        -- Put the claim roll on the lack-of-skill loss
+        cast.fight.chances = { lowSkill = 100, lineSnap = 0, rodBreak = 0, sizeLoss = 0 }
+
+        local result = xi.fishing.resolveCatch(angler, cast, 0, cast.fight.intuition)
+
+        assert(result == xi.fishing.result.LOW_SKILL, 'Expected the lack-of-skill loss')
+        assert(angler:getCharVar('[Fish]DailyPoints') == 10, 'Expected 10 daily points, got ' .. tostring(angler:getCharVar('[Fish]DailyPoints')))
+    end)
+
+    it('charges a catch won into a full inventory its point', function()
+        local angler = spawnAngler(nil, xi.settings.map.FISHING_MIN_LEVEL)
+        local cast   = fightingCast(xi.item.EBISU_FISHING_ROD)
+
+        xi.test.world:setSetting('map.FISHING_FATIGUE_ENABLE', true)
+
+        while angler:getFreeSlotsCount() > 0 do
+            angler:addItem({ id = xi.item.WILLOW_FISHING_ROD, silent = true })
+        end
+
+        local result = xi.fishing.resolveCatch(angler, cast, 0, cast.fight.intuition)
+
+        assert(result == xi.fishing.result.LOST, 'Expected the catch lost to the full inventory')
+        assert(not angler:hasItem(xi.item.MOAT_CARP_1), 'Expected no fish')
+        assert(angler:getCharVar('[Fish]DailyPoints') == 1, 'Expected the won catch to cost its point, got ' .. tostring(angler:getCharVar('[Fish]DailyPoints')))
+    end)
+
+    it('reads over-level as 17 or more levels above the effective skill, gear included', function()
+        local carp = xi.fishing.data.fish[xi.item.MOAT_CARP_1]
+
+        xi.test.world:setSetting('map.FISHING_FATIGUE_ENABLE', true)
+
+        -- A give-up only costs fatigue when over level and skips the claim roll
+        local function fatigueAfterGiveUp(level)
+            carp.skill = level
+            setMeters(player, { daily = 0, fatigue = 0, today = 1 })
+            xi.fishing.resolveCatch(player, fightingCast(xi.item.WILLOW_FISHING_ROD), 200, 0)
+
+            return player:getCharVar('[Fish]Fatigue')
+        end
+
+        assert(fatigueAfterGiveUp(98 + 16) == 0, 'Expected 16 over to be in range')
+        assert(fatigueAfterGiveUp(98 + 17) == 100, 'Expected 17 over to be over-level')
+
+        player:setMod(xi.mod.FISH, 3)
+
+        assert(fatigueAfterGiveUp(98 + 19) == 0, 'Expected gear skill to count')
+
+        player:setMod(xi.mod.FISH, 0)
+    end)
+
     it('ends a give-up with the bait gone and says so', function()
         local cast   = fightingCast(xi.item.EBISU_FISHING_ROD)
         local result = xi.fishing.resolveCatch(player, cast, 200, cast.fight.intuition)
@@ -722,7 +794,7 @@ describe('Fishing cast end to end', function()
 
         xi.test.world:setSetting('map.FISHING_ENABLE', true)
 
-        -- The core refuses the fishing packets from a character under the fishing minimum level
+        -- A job at the fishing minimum level keeps the full daily allowance
         player = spawnAngler(nil, xi.settings.map.FISHING_MIN_LEVEL)
 
         player:setSkillLevel(xi.skill.FISHING, 980)
@@ -947,6 +1019,25 @@ describe('Fishing cast end to end', function()
         assert(player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm kept')
     end)
 
+    it('answers the fishing packets of a character under the fishing minimum level', function()
+        xi.test.world:setSetting('map.FISHING_MIN_LEVEL', xi.settings.map.FISHING_MIN_LEVEL + 1)
+
+        sendCastPacket(player)
+
+        local cast = xi.fishing.casts[player:getID()]
+
+        assert(cast ~= nil and cast.stage == xi.fishing.stage.CAST, 'Expected the action packet to open the cast')
+
+        sendFishingPacket(player, xi.fishing.mode.END_MINIGAME, 201, 0)
+
+        assert(cast.stage == xi.fishing.stage.EMPTY, 'Expected the cancel answered under the minimum level')
+
+        sendFishingPacket(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(xi.fishing.casts[player:getID()] == nil, 'Expected the release to close the cast')
+        assert(player:getAnimation() == xi.animation.NONE, 'Expected the animation cleared')
+    end)
+
     it('sends the fight packet on a bite and resolves the claim the client packets make', function()
         biteMoatCarp()
         sendCastPacket(player)
@@ -968,5 +1059,189 @@ describe('Fishing cast end to end', function()
         sendFishingPacket(player, xi.fishing.mode.RELEASE, 0, 0)
 
         assert(xi.fishing.casts[player:getID()] == nil, 'Expected the release to close the cast')
+    end)
+end)
+
+describe('Fishing fatigue meters', function()
+    local event = xi.fishing.fatigueEvent
+
+    -- Use the retail caps and a job at 20 regardless of the server's settings
+    before_each(function()
+        xi.test.world:setSetting('map.FISHING_FATIGUE_ENABLE', true)
+        xi.test.world:setSetting('map.FISHING_MIN_LEVEL', 20)
+        xi.test.world:setSetting('map.FISHING_DAILY_CAP', 200)
+        xi.test.world:setSetting('map.FISHING_FATIGUE_CAP', 40000)
+    end)
+
+    it('reads the meters from the char vars and writes them back through updateMeters', function()
+        local player = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 20 })
+        local update = stub('xi.fishing.updateMeters', true)
+
+        setMeters(player, { daily = 200, fatigue = 0, today = 1 })
+
+        assert(not xi.fishing.mayBite(player), 'Expected the stored points to be read')
+
+        xi.fishing.accrueFatigue(player, { rodId = xi.item.WILLOW_FISHING_ROD }, event.SMALL_FISH, false)
+
+        update:called(1)
+    end)
+
+    it('charges the cost table, with the over-level fatigue on an ordinary fish and a release only', function()
+        local player   = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 20 })
+        local cast     = { rodId = xi.item.WILLOW_FISHING_ROD }
+        local expected =
+        {
+            [event.SMALL_FISH     ] = { 1, 25 },
+            [event.LARGE_FISH     ] = { 1, 50 },
+            [event.BASIC_LEGENDARY] = { 1, 140 },
+            [event.SUPER_LEGENDARY] = { 1, 780 },
+            [event.VALUABLE_ITEM  ] = { 1, 400 },
+            [event.COUNTABLE_ITEM ] = { 1, 25 },
+            [event.JUNK_ITEM      ] = { 0, 0 },
+            [event.EMPTY_CAST     ] = { 0, 0 },
+            [event.RELEASE        ] = { 0, 0 },
+            [event.LOW_SKILL      ] = { 10, 1000 },
+        }
+
+        for ev, pair in pairs(expected) do
+            setMeters(player, { daily = 0, fatigue = 0, today = 1 })
+            xi.fishing.accrueFatigue(player, cast, ev, false)
+
+            local meters = readMeters(player)
+            assert(meters.daily == pair[1] and meters.fatigue == pair[2], 'Wrong cost for event ' .. tostring(ev) .. ': ' .. tostring(meters.daily) .. ' / ' .. tostring(meters.fatigue))
+        end
+
+        local overLevel =
+        {
+            [event.SMALL_FISH     ] = { 1, 100 },
+            [event.LARGE_FISH     ] = { 1, 200 },
+            [event.RELEASE        ] = { 0, 100 },
+            [event.SUPER_LEGENDARY] = { 1, 780 },
+            [event.LOW_SKILL      ] = { 10, 1000 },
+        }
+
+        for ev, pair in pairs(overLevel) do
+            setMeters(player, { daily = 0, fatigue = 0, today = 1 })
+            xi.fishing.accrueFatigue(player, cast, ev, true)
+
+            local meters = readMeters(player)
+            assert(meters.daily == pair[1] and meters.fatigue == pair[2], 'Wrong over-level cost for event ' .. tostring(ev) .. ': ' .. tostring(meters.daily) .. ' / ' .. tostring(meters.fatigue))
+        end
+    end)
+
+    it('applies the legendary rod percent to the fatigue side only, and not to a loss to lack of skill', function()
+        local player = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 20 })
+
+        setMeters(player, { daily = 0, fatigue = 0, today = 1 })
+        xi.fishing.accrueFatigue(player, { rodId = xi.item.EBISU_FISHING_ROD }, event.SUPER_LEGENDARY, false)
+
+        local meters = readMeters(player)
+        assert(meters.daily == 1 and meters.fatigue == 663, 'Expected 780 at 85 percent to be 663, got ' .. tostring(meters.fatigue))
+
+        setMeters(player, { daily = 0, fatigue = 0, today = 1 })
+        xi.fishing.accrueFatigue(player, { rodId = xi.item.EBISU_FISHING_ROD }, event.LOW_SKILL, false)
+
+        meters = readMeters(player)
+        assert(meters.daily == 10 and meters.fatigue == 1000, 'Expected the loss unscaled, got ' .. tostring(meters.fatigue))
+    end)
+
+    it('charges a character with no job at 20 twenty times on both meters, so ten catches or one loss fill the day', function()
+        local player = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 1 })
+        local cast   = { rodId = xi.item.WILLOW_FISHING_ROD }
+
+        setMeters(player, { daily = 0, fatigue = 0, today = 1 })
+        xi.fishing.accrueFatigue(player, cast, event.SMALL_FISH, false)
+
+        local meters = readMeters(player)
+        assert(meters.daily == 20 and meters.fatigue == 500, 'Expected 20 daily points and 500 fatigue, got ' .. tostring(meters.daily) .. ' / ' .. tostring(meters.fatigue))
+
+        for _ = 1, 8 do
+            xi.fishing.accrueFatigue(player, cast, event.SMALL_FISH, false)
+        end
+
+        assert(xi.fishing.mayBite(player), 'Expected bites after nine catches')
+
+        xi.fishing.accrueFatigue(player, cast, event.SMALL_FISH, false)
+
+        assert(not xi.fishing.mayBite(player), 'Expected no bites after ten catches')
+
+        setMeters(player, { daily = 0, fatigue = 0, today = 1 })
+        xi.fishing.accrueFatigue(player, cast, event.LOW_SKILL, false)
+
+        assert(not xi.fishing.mayBite(player), 'Expected one loss to end the day')
+    end)
+
+    it('classifies a catch by tier, size and item class', function()
+        local classify = xi.fishing.catchFatigueEvent
+        local fish     = xi.fishing.catchType.FISH
+        local item     = xi.fishing.catchType.ITEM
+
+        assert(classify({ catch = { type = fish, record = { size = xi.fishingSize.SMALL } } }) == event.SMALL_FISH, 'small fish')
+        assert(classify({ catch = { type = fish, record = { size = xi.fishingSize.LARGE } } }) == event.LARGE_FISH, 'large fish')
+        assert(classify({ catch = { type = fish, record = { size = xi.fishingSize.LARGE, legendary = xi.fishingLegendaryTier.BASIC } } }) == event.BASIC_LEGENDARY, 'basic legendary')
+        assert(classify({ catch = { type = fish, record = { size = xi.fishingSize.LARGE, legendary = xi.fishingLegendaryTier.SUPER } } }) == event.SUPER_LEGENDARY, 'super legendary')
+        assert(classify({ catch = { type = item, record = { item = true } } }) == event.COUNTABLE_ITEM, 'item with no class yet')
+        assert(classify({ catch = { type = item, record = { item = true, fatigue = xi.fishing.fatigueClass.VALUABLE } } }) == event.VALUABLE_ITEM, 'valuable item')
+        assert(classify({ catch = { type = item, record = { item = true, fatigue = xi.fishing.fatigueClass.JUNK } } }) == event.JUNK_ITEM, 'junk item')
+        assert(classify({ catch = { type = item, itemId = xi.item.CORAL_FRAGMENT, record = { item = true } } }) == event.VALUABLE_ITEM, 'coral fragment by id')
+        assert(classify({ catch = { type = item, itemId = xi.item.RUSTY_LEGGINGS, record = { item = true } } }) == event.JUNK_ITEM, 'rusty leggings by id')
+    end)
+
+    it('spends one daily point on a sabiki event whatever it lands', function()
+        local player = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 20 })
+
+        setMeters(player, { daily = 0, fatigue = 0, today = 1 })
+        xi.fishing.accrueFatigue(player, { rodId = xi.item.WILLOW_FISHING_ROD, catch = { count = 3 } }, event.SMALL_FISH, false)
+
+        local meters = readMeters(player)
+        assert(meters.daily == 1 and meters.fatigue == 25, 'Expected one point and 25 fatigue for the event')
+    end)
+
+    it('stops the bites at either cap, letting the reel that crosses it land in full', function()
+        local player = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 20 })
+        local cast   = { rodId = xi.item.WILLOW_FISHING_ROD }
+
+        setMeters(player, { daily = 199, fatigue = 0, today = 1 })
+
+        assert(xi.fishing.mayBite(player), 'Expected bites at 199 points')
+
+        xi.fishing.accrueFatigue(player, cast, event.LOW_SKILL, false)
+
+        assert(player:getCharVar('[Fish]DailyPoints') == 209, 'Expected the loss to overshoot to 209, got ' .. tostring(player:getCharVar('[Fish]DailyPoints')))
+        assert(not xi.fishing.mayBite(player), 'Expected no bites past 200 points')
+
+        setMeters(player, { daily = 0, fatigue = 39999, today = 1 })
+
+        assert(xi.fishing.mayBite(player), 'Expected bites under the fatigue cap')
+
+        xi.fishing.accrueFatigue(player, cast, event.SMALL_FISH, false)
+
+        assert(player:getCharVar('[Fish]Fatigue') == 40024, 'Expected the catch to overshoot the pool, got ' .. tostring(player:getCharVar('[Fish]Fatigue')))
+        assert(not xi.fishing.mayBite(player), 'Expected no bites with the pool full')
+    end)
+
+    -- The meters expire at midnight on their own, and a full fatigue pool sheds 80 percent a night so it lasts until the second midnight
+    it('expires the daily points and the day marker at JST midnight for a character kept online, and sheds 32000 fatigue', function()
+        local player = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 20 })
+
+        xi.fishing.updateMeters(player, { daily = 200, fatigue = 40000, today = 1 })
+
+        assert(player:getCharVar('[Fish]DailyPoints') == 200, 'Expected the points stored while their midnight is still ahead')
+        assert(not xi.fishing.mayBite(player), 'Expected no bites with both meters spent')
+
+        -- The daily tick lands on the midnight boundary, so a Vana'diel hour moves the clock past it
+        xi.test.world:tick(xi.tick.JST_DAY)
+        xi.test.world:tick(xi.tick.VANA_HOUR)
+
+        assert(player:getCharVar('[Fish]DailyPoints') == 0, 'Expected the points to expire at the rollover')
+        assert(player:getCharVar('[Fish]Today') == 0, 'Expected the day marker to expire with it')
+        assert(player:getCharVar('[Fish]Fatigue') == 40000, 'Expected a full pool to outlive the first midnight')
+        assert(xi.fishing.mayBite(player), 'Expected bites once the points have gone and the pool has shed a night')
+
+        xi.fishing.accrueFatigue(player, { rodId = xi.item.WILLOW_FISHING_ROD }, event.SMALL_FISH, false)
+
+        assert(player:getCharVar('[Fish]DailyPoints') == 1, 'Expected a fresh count')
+        assert(player:getCharVar('[Fish]Fatigue') == 8025, 'Expected the carried 8000 plus the catch, got ' .. tostring(player:getCharVar('[Fish]Fatigue')))
+        assert(player:getCharVar('[Fish]Today') == 1, 'Expected the day marked again')
     end)
 end)
