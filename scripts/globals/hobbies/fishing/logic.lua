@@ -171,10 +171,25 @@ local function confirmArea(player, area)
     return false
 end
 
--- Find the fishing area the player is currently in: a shape, then the unshaped fallback.
+-- Find the fishing area the player is currently in: the transport's route, then a shape, then the unshaped fallback.
 local function findArea(player, zone)
     if not zone then
         return nil
+    end
+
+    -- A transport fishes the area named after its current route
+    local route = nil
+    if player:getZoneID() == xi.zone.MANACLIPPER then
+        route = xi.manaclipper.currentRoute()
+    elseif player:getZoneID() == xi.zone.PHANAUET_CHANNEL then
+        route = xi.barge.currentRoute()
+    end
+
+    if
+        route and
+        zone.areas[route]
+    then
+        return route, zone.areas[route]
     end
 
     local names = {}
