@@ -264,6 +264,32 @@ describe('Fishing cast entry', function()
         assert(xi.fishing.casts[sailor:getID()].areaName == 'dhalmel_rock', 'Expected the first unshaped area by name')
     end)
 
+    it('fishes the area named after the leg a transport is on, else falls back', function()
+        xi.fishing.data.zones[xi.zone.MANACLIPPER] =
+        {
+            areas    =
+            {
+                east_bank  = { pool = {} },
+                west_bank  = { pool = {} },
+                whole_zone = { pool = {} },
+            },
+            monsters = {},
+        }
+
+        local leg    = stub('xi.manaclipper.currentRoute', 'west_bank')
+        local sailor = spawnAngler(xi.zone.MANACLIPPER)
+
+        assert(xi.fishing.onStart(sailor) ~= nil, 'Expected a cast')
+        assert(xi.fishing.casts[sailor:getID()].areaName == 'west_bank', 'Expected the area of the leg in progress')
+
+        leg:returnValue('harbour')
+
+        local drifter = spawnAngler(xi.zone.MANACLIPPER)
+
+        assert(xi.fishing.onStart(drifter) ~= nil, 'Expected a cast')
+        assert(xi.fishing.casts[drifter:getID()].areaName == 'whole_zone', 'Expected the fallback on a leg no area names')
+    end)
+
     it('opens a cast again once an interrupt has cleared the last one', function()
         assert(xi.fishing.onStart(player) ~= nil, 'Expected the first cast to open')
 
@@ -1209,6 +1235,24 @@ describe('Fishing cast end to end', function()
         sendFishingPacket(player, xi.fishing.mode.RELEASE, 0, 0)
 
         assert(xi.fishing.casts[player:getID()] == nil, 'Expected the release to close the cast')
+    end)
+end)
+
+describe('Transport routes', function()
+    it('names the leg each transport is on from its schedule', function()
+        -- The Manaclipper heads for Dhalmel Rock from 00:10 to 04:50 and the barge for North Landing from 08:55 to 16:00
+        xi.test.world:setVanaTime(2, 0)
+
+        assert(xi.manaclipper.currentRoute() == 'dhalmel_rock', 'Expected the Dhalmel Rock leg, got ' .. tostring(xi.manaclipper.currentRoute()))
+
+        -- The trip back from Purgonorgo Isle fishes the same waters as the trip out
+        xi.test.world:setVanaTime(10, 0)
+
+        assert(xi.manaclipper.currentRoute() == 'purgonorgo_isle', 'Expected the Purgonorgo Isle crossing on the way back, got ' .. tostring(xi.manaclipper.currentRoute()))
+
+        xi.test.world:setVanaTime(12, 0)
+
+        assert(xi.barge.currentRoute() == 'north_landing', 'Expected the North Landing leg, got ' .. tostring(xi.barge.currentRoute()))
     end)
 end)
 
