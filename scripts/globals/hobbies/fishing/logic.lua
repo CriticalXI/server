@@ -306,6 +306,9 @@ local function castLine(player, data, areaName, area)
     player:setAnimation(xi.animation.NEW_FISHING_START)
     player:setCharVar('[Fish]LastCastTime', cast.startedAt)
 
+    -- Katsunaga counts every cast; the count reaches the database on the next persist sweep rather than a query per cast
+    player:setVolatileCharVar('[Fish]Casts', player:getCharVar('[Fish]Casts') + 1)
+
     return cast.hookTime
 end
 
@@ -1245,6 +1248,17 @@ local function catchFish(player, cast)
     local item = { id = catch.itemId, quantity = count, silent = true }
     if bigFish then
         item.exdata = { size = bigFish.length, weight = bigFish.weight }
+
+        -- Katsunaga names the longest and the heaviest fish ever landed, so a big fish past either record takes it
+        if bigFish.length > player:getCharVar('[Fish]Longest') then
+            player:setVolatileCharVar('[Fish]Longest', bigFish.length)
+            player:setVolatileCharVar('[Fish]LongestFish', catch.itemId)
+        end
+
+        if bigFish.weight > player:getCharVar('[Fish]Heaviest') then
+            player:setVolatileCharVar('[Fish]Heaviest', bigFish.weight)
+            player:setVolatileCharVar('[Fish]HeaviestFish', catch.itemId)
+        end
     end
 
     player:addItem(item)
@@ -1396,6 +1410,9 @@ local function checkHook(player, cast)
 
         return nil
     end
+
+    -- Katsunaga counts every hit, whatever took the hook and however the fight ends
+    player:setVolatileCharVar('[Fish]Hits', player:getCharVar('[Fish]Hits') + 1)
 
     -- The bite lands when the client's timer ends, about a second after the check
     cast.catch    = catch
