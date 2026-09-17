@@ -973,6 +973,53 @@ describe('Fishing cast end to end', function()
         assert(player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm kept')
     end)
 
+    it('counts the casts and the hits for Katsunaga and keeps the longest and heaviest carp', function()
+        -- The first carp is 30 ilms, the second 20, and the third cast hooks nothing
+        local castsMade = 0
+        stub('xi.fishing.rollBite', function()
+            castsMade = castsMade + 1
+            if castsMade == 3 then
+                return nil
+            end
+
+            xi.fishing.data.fish[xi.item.MOAT_CARP_1].length = { 40 - castsMade * 10, 40 - castsMade * 10 }
+
+            return { type = xi.fishing.catchType.FISH, itemId = xi.item.MOAT_CARP_1, record = xi.fishing.data.fish[xi.item.MOAT_CARP_1], count = 1 }
+        end)
+
+        local cast = openCast(player)
+        xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+        xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 0, cast.fight.intuition)
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(player:getCharVar('[Fish]Casts') == 1, 'Expected the cast counted')
+        assert(player:getCharVar('[Fish]Hits') == 1, 'Expected the hit counted')
+        assert(player:getCharVar('[Fish]Longest') == 30, 'Expected the carp as the longest fish')
+        assert(player:getCharVar('[Fish]LongestFish') == xi.item.MOAT_CARP_1, 'Expected the carp named for its length')
+        assert(player:getCharVar('[Fish]HeaviestFish') == xi.item.MOAT_CARP_1, 'Expected the carp named for its weight')
+
+        local heaviest = player:getCharVar('[Fish]Heaviest')
+        assert(heaviest > 0, 'Expected the carp as the heaviest fish')
+
+        -- The smaller carp leaves both records, and the empty cast counts a cast but no hit
+        for _ = 1, 2 do
+            player:addItem(xi.item.LITTLE_WORM)
+            player:equipItem(xi.item.LITTLE_WORM, nil, xi.slot.AMMO)
+
+            cast = openCast(player)
+            if xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) then
+                xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 0, cast.fight.intuition)
+            end
+
+            xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+        end
+
+        assert(player:getCharVar('[Fish]Casts') == 3, 'Expected three casts counted')
+        assert(player:getCharVar('[Fish]Hits') == 2, 'Expected two hits, the empty cast not among them')
+        assert(player:getCharVar('[Fish]Longest') == 30, 'Expected the longest record kept')
+        assert(player:getCharVar('[Fish]Heaviest') == heaviest, 'Expected the heaviest record kept')
+    end)
+
     it('gives up on a hooked carp and loses the worm', function()
         biteMoatCarp()
 
