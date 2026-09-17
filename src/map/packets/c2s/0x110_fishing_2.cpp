@@ -29,7 +29,6 @@ auto GP_CLI_COMMAND_FISHING_2::validate(MapSession* PSession, const CCharEntity*
     return PacketValidator(PChar)
         .blockedBy({ BlockedState::InEvent })
         .mustEqual(settings::get<bool>("map.FISHING_ENABLE"), true, "Fishing is disabled")
-        .mustEqual(PChar->GetMLevel() >= settings::get<uint8>("map.FISHING_MIN_LEVEL"), true, "Character below fishing minimum level")
         .mustEqual(this->UniqueNo, PChar->id, "Character id mismatch")
         .mustEqual(this->ActIndex, PChar->targid, "Character targid mismatch")
         .oneOf<GP_CLI_COMMAND_FISHING_2_MODE>(this->mode)

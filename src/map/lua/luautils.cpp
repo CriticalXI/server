@@ -5828,7 +5828,7 @@ void OnFishingStart(CCharEntity* PChar)
     TracyZoneScoped;
 
     const auto result = callGlobal<sol::object>("xi.fishing.onStart", PChar);
-    if (result.get_type() == sol::type::number)
+    if (result.valid() && result.get_type() == sol::type::number)
     {
         PChar->hookDelay = result.as<uint8>();
         return;
@@ -5837,13 +5837,12 @@ void OnFishingStart(CCharEntity* PChar)
     PChar->pushPacket<GP_SERV_COMMAND_EVENTUCOFF>(PChar, GP_SERV_COMMAND_EVENTUCOFF_MODE::Fishing);
 }
 
-// Lua returns the fight the client should run, named as the 0x115 packet names its fields, or nothing.
 void OnFishingAction(CCharEntity* PChar, const uint8 mode, const int32 para, const int32 para2)
 {
     TracyZoneScoped;
 
     const auto result = callGlobal<sol::object>("xi.fishing.onAction", PChar, mode, para, para2);
-    if (result.get_type() != sol::type::table)
+    if (!result.valid() || result.get_type() != sol::type::table)
     {
         return;
     }
