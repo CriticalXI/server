@@ -23,7 +23,6 @@
 
 #include "data/enums/key_item.h"
 #include "entities/char_entity.h"
-#include "enums/key_items.h"
 #include "enums/msg_std.h"
 #include "utils/charutils.h"
 

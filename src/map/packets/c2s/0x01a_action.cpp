@@ -29,7 +29,6 @@
 #include "enmity_container.h"
 #include "entities/char_entity.h"
 #include "entities/trust_entity.h"
-#include "enums/key_items.h"
 #include "enums/msg_std.h"
 #include "items.h"
 #include "items/transactions/item_claim.h"

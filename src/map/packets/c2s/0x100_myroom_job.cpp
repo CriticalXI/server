@@ -26,7 +26,6 @@
 #include "ai/states/magic_state.h"
 #include "data/enums/key_item.h"
 #include "entities/char_entity.h"
-#include "enums/key_items.h"
 #include "items/item_weapon.h"
 #include "job_points.h"
 #include "latent_effect_container.h"
