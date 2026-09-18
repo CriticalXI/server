@@ -163,7 +163,7 @@ TEST_CASE("fishing: the shipped catalog carries every table the SQL held", "[dat
 {
     const auto& records = *fishing();
 
-    CHECK(records.Fish.size() == 137);
+    CHECK(records.Fish.size() == 138);
     CHECK(records.Rods.size() == 20);
     CHECK(records.Baits.size() == 39);
 
@@ -172,7 +172,7 @@ TEST_CASE("fishing: the shipped catalog carries every table the SQL held", "[dat
     {
         affinities += bait.Affinity.size();
     }
-    CHECK(affinities == 617);
+    CHECK(affinities == 620);
 
     CHECK(records.Fish.at("gugrusaurus").Legendary == xi::FishingLegendaryTier::Super);
     CHECK(records.Fish.at("cave_cherax").Legendary == xi::FishingLegendaryTier::Basic);

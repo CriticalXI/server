@@ -133,7 +133,7 @@ xi.fishing.accrueFatigue = function(player, cast, event, overLevel)
         fatigue = math.floor(fatigue * rod.fatigue / 100)
     end
 
-    -- A player with no job at FISHING_MIN_LEVEL takes 20 times the fatigue
+    -- A player with no job at FISHING_MIN_LEVEL takes 20 times the cost on both meters
     local lowLevel = true
     for job = xi.job.WAR, xi.job.RUN do
         if player:getJobLevel(job) >= xi.settings.map.FISHING_MIN_LEVEL then
@@ -143,6 +143,7 @@ xi.fishing.accrueFatigue = function(player, cast, event, overLevel)
     end
 
     if lowLevel then
+        daily   = daily * 20
         fatigue = fatigue * 20
     end
 
@@ -1592,12 +1593,13 @@ xi.fishing.rollSkillUp = function(player, cast)
     end
 
     if cast.result ~= xi.fishing.result.CAUGHT then
-        local sizeLoss = cast.result == xi.fishing.result.LOST and cast.lossReason ~= nil
+        local sizeLoss  = cast.result == xi.fishing.result.LOST and cast.lossReason ~= nil
+        local gearBreak = cast.result == xi.fishing.result.ROD_BREAK or cast.result == xi.fishing.result.LINE_BREAK
 
         if
             not cast.claimed or
             not xi.settings.map.FISHING_SKILLUP_ON_FAILURE or
-            (not sizeLoss and cast.result ~= xi.fishing.result.ROD_BREAK)
+            (not sizeLoss and not gearBreak)
         then
             return
         end

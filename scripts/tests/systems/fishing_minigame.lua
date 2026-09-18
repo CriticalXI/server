@@ -527,7 +527,7 @@ describe('Fishing minigame fish ladder', function()
                     checkFight(player, ladder, cast, catch, skill, fight)
 
                     -- The loss to lack of skill on every rod, from the ledger's Table 4: none under 20 over, a large fish 80 at 20 rising
-                    -- to 100 by 45, a small fish 5 from 25, 70 from 45 and 100 from 50
+                    -- to 100 by 45, a small fish 5 from 25, 70 from 45 and 95 from 50
                     local lowSkill = 0
                     if
                         gap >= 20 and
@@ -535,7 +535,7 @@ describe('Fishing minigame fish ladder', function()
                     then
                         lowSkill = math.min(100, 80 + math.floor((gap - 20) * 0.8))
                     elseif gap >= 50 then
-                        lowSkill = 100
+                        lowSkill = 95
                     elseif gap >= 45 then
                         lowSkill = 70
                     elseif gap >= 25 then

@@ -215,6 +215,11 @@ fishing:
       legendary: super
       length:    [155, 420]
       key_item:  1977
+    hakuryu:
+      size:      large
+      skill:     127 # Capture needed
+      legendary: super
+      key_item:  1977
     gurnard:
       size:  small
       skill: 26
@@ -888,6 +893,7 @@ fishing:
         - gigant_squid
         - greedie
         - gugru_tuna
+        - hakuryu
         - istakoz
         - jungle_catfish
         - kalamar
@@ -1189,6 +1195,7 @@ fishing:
         - gold_lobster
         - greedie
         - gugru_tuna
+        - hakuryu
         - istakoz
         - istavrit
         - jungle_catfish
@@ -1242,6 +1249,7 @@ fishing:
         - denizanasi
         - dil
         - gigant_squid
+        - hakuryu
         - kalkanbaligi
         - lakerda
         - megalodon
