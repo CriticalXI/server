@@ -5827,10 +5827,16 @@ void OnFishingStart(CCharEntity* PChar)
 {
     TracyZoneScoped;
 
-    const auto result = callGlobal<sol::object>("xi.fishing.onStart", PChar);
-    if (result.valid() && result.get_type() == sol::type::number)
+    // Called directly rather than through callGlobal, which has no way to accept a nil return
+    const auto result = detail::findGlobalLuaFunction("xi.fishing.onStart")(PChar);
+    if (!result.valid())
     {
-        PChar->hookDelay = result.as<uint8>();
+        const sol::error err = result;
+        ShowError("luautils::OnFishingStart: %s", err.what());
+    }
+    else if (result.get_type() == sol::type::number)
+    {
+        PChar->hookDelay = result.get<uint8>();
         return;
     }
 
@@ -5841,13 +5847,21 @@ void OnFishingAction(CCharEntity* PChar, const uint8 mode, const int32 para, con
 {
     TracyZoneScoped;
 
-    const auto result = callGlobal<sol::object>("xi.fishing.onAction", PChar, mode, para, para2);
-    if (!result.valid() || result.get_type() != sol::type::table)
+    const auto result = detail::findGlobalLuaFunction("xi.fishing.onAction")(PChar, mode, para, para2);
+    if (!result.valid())
+    {
+        const sol::error err = result;
+        ShowError("luautils::OnFishingAction: %s", err.what());
+        return;
+    }
+
+    // Only a hook check that hooked something answers with the fight table
+    if (result.get_type() != sol::type::table)
     {
         return;
     }
 
-    const sol::table fight = result;
+    const auto fight = result.get<sol::table>();
     PChar->pushPacket<GP_SERV_COMMAND_FISH>(
         fight.get_or("stamina", uint16{}),
         fight.get_or("regen", uint16{}),
@@ -5865,6 +5879,9 @@ void OnFishingInterrupt(CCharEntity* PChar)
     TracyZoneScoped;
 
     callGlobal<void>("xi.fishing.onInterrupt", PChar);
+
+    // The client stays in its fishing event until told otherwise
+    PChar->pushPacket<GP_SERV_COMMAND_EVENTUCOFF>(PChar, GP_SERV_COMMAND_EVENTUCOFF_MODE::Fishing);
 }
 
 // Loads a Lua function with a fallback hierarchy

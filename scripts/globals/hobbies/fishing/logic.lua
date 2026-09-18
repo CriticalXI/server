@@ -18,6 +18,29 @@ xi.fishing.getData = function()
     return xi.fishing.data
 end
 
+-- The animations the core counts as fishing, so a cleanup never touches death or anything else
+local function isFishingAnimation(animation)
+    return (animation >= xi.animation.NEW_FISHING_START and animation <= xi.animation.NEW_FISHING_STOP) or animation == xi.animation.FISHING_START
+end
+
+-- Every fishing line is a self-addressed 0x036 carrying type 6, as retail sends them
+local fishingMessageType = 6
+
+local function sendFishingMessage(player, line)
+    player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + line, fishingMessageType)
+end
+
+-- A monster on the line goes back to the pool when the cast ends without landing it
+local function releaseHookedMonster(cast)
+    if
+        cast.stage == xi.fishing.stage.FIGHTING and
+        cast.catch.type == xi.fishing.catchType.MONSTER and
+        cast.catch.mob
+    then
+        cast.catch.mob:setLocalVar('hooked', 0)
+    end
+end
+
 -----------------------------------
 -- Meters
 -----------------------------------
@@ -259,7 +282,7 @@ local function checkEntry(player, data)
     -- A zone with no fishing text has no line for the cast it refuses
     if not area then
         if base then
-            player:messageText(player, base + xi.fishingMessage.CANNOT_FISH_HERE)
+            sendFishingMessage(player, xi.fishingMessage.CANNOT_FISH_HERE)
         end
 
         return nil
@@ -271,12 +294,12 @@ local function checkEntry(player, data)
     end
 
     if not data.rods[player:getEquipID(xi.slot.RANGED)] then
-        player:messageText(player, base + xi.fishingMessage.NO_ROD)
+        sendFishingMessage(player, xi.fishingMessage.NO_ROD)
         return nil
     end
 
     if not data.baits[player:getEquipID(xi.slot.AMMO)] then
-        player:messageText(player, base + xi.fishingMessage.NO_BAIT)
+        sendFishingMessage(player, xi.fishingMessage.NO_BAIT)
         return nil
     end
 
@@ -1105,15 +1128,13 @@ xi.fishing.hookCatch = function(player, cast, catch)
         hookLine = large and xi.fishingMessage.HOOKED_LARGE_FISH or xi.fishingMessage.HOOKED_SMALL_FISH
     end
 
-    local base = zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET
-
-    player:messageText(player, base + hookLine)
+    sendFishingMessage(player, hookLine)
 
     -- A keen angler's sense names the fish in place of the feeling
     if fight.feeling == xi.fishing.feeling.KEEN then
-        player:messageSpecial(base + xi.fishingMessage.KEEN_ANGLERS_SENSE, catch.itemId)
+        player:messageSpecial(zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + xi.fishingMessage.KEEN_ANGLERS_SENSE, catch.itemId)
     else
-        player:messageText(player, base + xi.fishing.feelingMessages[fight.feeling])
+        sendFishingMessage(player, xi.fishing.feelingMessages[fight.feeling])
     end
 
     -- The bite scheduler pulls hard for a large fish or monster and lightly for the rest
@@ -1167,8 +1188,8 @@ local function rollResult(cast)
     return xi.fishing.result.CAUGHT
 end
 
--- Remove the bait after a fight, returns true if it was used up
-local function consumeBait(player, cast, result)
+-- Whether the fight uses up the bait; the removal follows the result line, as retail orders them
+local function baitIsLost(player, cast, result)
     -- Catching an item keeps the bait
     if
         result == xi.fishing.result.CAUGHT and
@@ -1189,8 +1210,6 @@ local function consumeBait(player, cast, result)
     then
         return false
     end
-
-    player:removeAmmo(1)
 
     return true
 end
@@ -1216,7 +1235,7 @@ local function failCatch(player, cast, result, baitTaken)
     end
 
     player:setAnimation(animation)
-    player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + line)
+    sendFishingMessage(player, line)
 
     -- Swap a broken rod for its broken version
     if
@@ -1261,8 +1280,7 @@ local function catchFish(player, cast)
         end
     end
 
-    player:addItem(item)
-
+    -- The catch line goes out ahead of the item packets, as retail orders them
     if count > 1 then
         player:messageName(base + xi.fishingMessage.CATCH_MULTI, player, catch.itemId, count, nil, nil, nil, true)
     elseif bigFish then
@@ -1272,6 +1290,8 @@ local function catchFish(player, cast)
     else
         player:messageName(base + xi.fishingMessage.CATCH, player, catch.itemId, count, nil, nil, nil, true)
     end
+
+    player:addItem(item)
 
     return true
 end
@@ -1287,8 +1307,8 @@ local function catchItem(player, cast)
         return false
     end
 
-    player:addItem({ id = cast.catch.itemId, silent = true })
     player:messageName(base + xi.fishingMessage.CATCH, player, cast.catch.itemId, 1, nil, nil, nil, true)
+    player:addItem({ id = cast.catch.itemId, silent = true })
 
     return true
 end
@@ -1373,15 +1393,38 @@ local function interruptFight(player, cast)
         return
     end
 
-    -- A hooked monster goes back to the pool
-    if
-        cast.catch.type == xi.fishing.catchType.MONSTER and
-        cast.catch.mob
-    then
-        cast.catch.mob:setLocalVar('hooked', 0)
+    releaseHookedMonster(cast)
+
+    if baitIsLost(player, cast, xi.fishing.result.GAVE_UP) then
+        player:removeAmmo(1)
+    end
+end
+
+-- A quest can force the catch through the interaction framework: an item id, or a mob entity for a monster
+local function forcedCatch(player, cast, data)
+    local forced = InteractionGlobal.onFishingHook(player, cast.areaName)
+
+    if type(forced) == 'number' then
+        local record = data.fish[forced]
+        if not record then
+            return nil
+        end
+
+        local catchType = xi.fishing.catchType.FISH
+        if record.item then
+            catchType = xi.fishing.catchType.ITEM
+        end
+
+        return { type = catchType, itemId = forced, record = record, count = 1 }
     end
 
-    consumeBait(player, cast, xi.fishing.result.GAVE_UP)
+    if type(forced) == 'userdata' then
+        local spawnId = forced:getID()
+
+        return { type = xi.fishing.catchType.MONSTER, spawnId = spawnId, mob = forced, record = cast.zone.monsters[spawnId] or {} }
+    end
+
+    return nil
 end
 
 -- Roll for a bite and return the fight to send to the client, or nil if nothing bites
@@ -1389,13 +1432,15 @@ local function checkHook(player, cast)
     -- The client checks about a second before its timer ends, anything earlier is an empty cast
     local catch = nil
     if GetSystemTime() >= cast.startedAt + cast.hookTime - 2 then
-        catch = xi.fishing.rollBite(player, cast, xi.fishing.getData())
+        local data = xi.fishing.getData()
+
+        catch = forcedCatch(player, cast, data) or xi.fishing.rollBite(player, cast, data)
     end
 
     -- Nothing bit or the catch has no fight stats
     local fight = catch and xi.fishing.hookCatch(player, cast, catch)
     if not fight then
-        player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + xi.fishingMessage.NO_CATCH)
+        sendFishingMessage(player, xi.fishingMessage.NO_CATCH)
         player:setAnimation(xi.animation.NEW_FISHING_STOP)
         cast.stage = xi.fishing.stage.EMPTY
 
@@ -1453,13 +1498,17 @@ xi.fishing.resolveCatch = function(player, cast, reported, echo)
         cast.catch.mob:setLocalVar('hooked', 0)
     end
 
-    local baitTaken = consumeBait(player, cast, result)
+    local baitTaken = baitIsLost(player, cast, result)
 
     if failed then
         failCatch(player, cast, result, baitTaken)
     end
 
-    -- A catch costs by its fatigue event\
+    if baitTaken then
+        player:removeAmmo(1)
+    end
+
+    -- A catch costs by its fatigue event
     local event = nil
     if not failed then
         event = xi.fishing.catchFatigueEvent(cast)
@@ -1596,7 +1645,27 @@ end
 -- Handle the client's fishing packet by mode, only CHECK_HOOK returns the fight
 xi.fishing.onAction = function(player, mode, para, para2)
     local cast = xi.fishing.casts[player:getID()]
+
+    -- A dead angler keeps the death animation and the cast simply ends, as retail answers their packets with nothing
+    if player:isDead() then
+        if cast then
+            releaseHookedMonster(cast)
+            xi.fishing.casts[player:getID()] = nil
+        end
+
+        return nil
+    end
+
+    -- A fishing animation with no cast behind it (the cast state was lost) is still walked to idle so the client is not left waiting
     if not cast then
+        if isFishingAnimation(player:getAnimation()) then
+            if mode == xi.fishing.mode.RELEASE then
+                player:setAnimation(xi.animation.NONE)
+            else
+                player:setAnimation(xi.animation.NEW_FISHING_STOP)
+            end
+        end
+
         return nil
     end
 
@@ -1604,7 +1673,10 @@ xi.fishing.onAction = function(player, mode, para, para2)
     if mode == xi.fishing.mode.RELEASE then
         interruptFight(player, cast)
         xi.fishing.rollSkillUp(player, cast)
-        player:setAnimation(xi.animation.NONE)
+        if isFishingAnimation(player:getAnimation()) then
+            player:setAnimation(xi.animation.NONE)
+        end
+
         xi.fishing.casts[player:getID()] = nil
 
         return nil
@@ -1624,7 +1696,7 @@ xi.fishing.onAction = function(player, mode, para, para2)
         para == 201 and
         cast.stage == xi.fishing.stage.CAST
     then
-        player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + xi.fishingMessage.NO_CATCH)
+        sendFishingMessage(player, xi.fishingMessage.NO_CATCH)
         player:setAnimation(xi.animation.NEW_FISHING_STOP)
         cast.stage = xi.fishing.stage.EMPTY
 
@@ -1642,7 +1714,7 @@ xi.fishing.onAction = function(player, mode, para, para2)
         cast.stage  = xi.fishing.stage.RESOLVED
     elseif mode == xi.fishing.mode.POTENTIAL_TIMEOUT then
         -- POTENTIAL_TIMEOUT only warns the player and the fight continues
-        player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + xi.fishingMessage.WARNING)
+        sendFishingMessage(player, xi.fishingMessage.WARNING)
     end
 
     return nil
@@ -1651,11 +1723,22 @@ end
 -- The animation is cleared here and nowhere in the core, and the next cast is refused until it is.
 xi.fishing.onInterrupt = function(player)
     local cast = xi.fishing.casts[player:getID()]
-    if not cast then
+
+    if player:isDead() then
+        if cast then
+            releaseHookedMonster(cast)
+            xi.fishing.casts[player:getID()] = nil
+        end
+
         return
     end
 
-    interruptFight(player, cast)
-    player:setAnimation(xi.animation.NONE)
-    xi.fishing.casts[player:getID()] = nil
+    if cast then
+        interruptFight(player, cast)
+        xi.fishing.casts[player:getID()] = nil
+    end
+
+    if isFishingAnimation(player:getAnimation()) then
+        player:setAnimation(xi.animation.NONE)
+    end
 end
