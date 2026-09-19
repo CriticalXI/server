@@ -11,7 +11,7 @@ describe('Fishing data', function()
     it('hands Lua every table the YAML holds', function()
         local data = xi.fishing.getData()
 
-        assert(count(data.fish) == 137)
+        assert(count(data.fish) == 138)
         assert(count(data.rods) == 20)
         assert(count(data.baits) == 39)
         assert(count(data.zones) == 98)
@@ -36,7 +36,7 @@ describe('Fishing data', function()
         local lik = data.fish[xi.item.LIK]
         assert(lik.legendary == xi.fishingLegendaryTier.SUPER)
         assert(lik.length[1] == 185 and lik.length[2] == 460)
-        assert(lik.keyItem == xi.ki.SERPENT_RUMORS)
+        assert(lik.keyItem == xi.keyItem.SERPENT_RUMORS)
 
         local bucket = data.fish[xi.item.RUSTY_BUCKET]
         assert(bucket.item == true)

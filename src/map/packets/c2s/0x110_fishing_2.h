@@ -35,11 +35,13 @@ enum class GP_CLI_COMMAND_FISHING_2_MODE : uint8_t
 // Note: 0x066 handles the old fishing system, while 0x110 handles the new fishing mini-game.
 // However, both packets use the exact same structure and are processed the same way.
 // Note that 0x066 packet is aliased to this struct.
-GP_CLI_PACKET(GP_CLI_COMMAND_FISHING_2,
-              uint32_t UniqueNo;  // PS2: UniqueNo
-              int32_t  para;      // PS2: para
-              uint16_t ActIndex;  // PS2: ActIndex
-              int8_t   mode;      // PS2: mode
-              uint8_t  unknown00; // PS2: dammy
-              int32_t  para2;     // PS2: (New; did not exist.)
+// RequestEndMiniGame arrives as 44 bytes on retail, the other modes as 20. The end is zero padding.
+GP_CLI_PACKET_VLA(GP_CLI_COMMAND_FISHING_2, padding,
+                  uint32_t UniqueNo;    // PS2: UniqueNo
+                  int32_t  para;        // PS2: para
+                  uint16_t ActIndex;    // PS2: ActIndex
+                  int8_t   mode;        // PS2: mode
+                  uint8_t  unknown00;   // PS2: dammy
+                  int32_t  para2;       // PS2: (New; did not exist.)
+                  uint8_t  padding[24]; // PS2: (New; did not exist.)
 );
