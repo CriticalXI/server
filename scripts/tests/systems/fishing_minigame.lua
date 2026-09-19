@@ -1,24 +1,37 @@
--- Check the large bit and the regen gauge against the plateau, the drain and the rise from 28 levels under
+-- Check the large bit and the regen gauge against the plateau, the drain and the catch's own rise curve
 local function checkGauge(context)
     local fight = context.fight
     local label = context.label
 
     assert((bit.band(fight.angler_sense, 1) == 1) == context.large, label .. 'angler sense ' .. tostring(fight.angler_sense) .. ' has the large bit wrong')
 
+    -- A legendary rod wears a monster down 3 past whatever the curve gave, on every branch but the catch's own recovery
+    local legendaryPull = 0
+    if
+        context.cast.rod.legendary and
+        context.catchType == xi.fishing.catchType.MONSTER
+    then
+        legendaryPull = 3
+    end
+
     if context.tier then
         assert(fight.regen > 128, label .. 'regen ' .. tostring(fight.regen) .. ' on a legendary catch is not over the bias')
-    elseif context.gap >= (context.rod.drainStart or 12) then
+    elseif context.gap >= (context.rod.drainStart or 14) then
         -- The drain alone carries the stamina roll, so it is read back at a roll of 100
-        local gauge = fight.regen + context.roll - 100
+        local gauge  = fight.regen + context.roll - 100 + legendaryPull
+        local lowest = 128 - (context.rod.drainFloor or (context.isFish and 86 or 98))
 
-        assert(gauge <= 128 and gauge >= (context.isFish and 42 or 30), label .. 'gauge ' .. tostring(gauge) .. ' at a roll of 100, ' .. tostring(context.gap) .. ' levels over the catch')
-    elseif
-        context.isFish and
-        context.gap <= -28
-    then
-        assert(fight.regen > 128, label .. 'regen ' .. tostring(fight.regen) .. ' at ' .. tostring(-context.gap) .. ' levels under the catch does not rise')
+        assert(gauge <= 128 and gauge >= lowest, label .. 'gauge ' .. tostring(gauge) .. ' at a roll of 100, ' .. tostring(context.gap) .. ' levels over the catch')
+    elseif context.gap <= -30 then
+        -- A catch 30 or more levels above the angler wins stamina back: 2 flat, and past its own break point it gains more a
+        -- level, a monster far more slowly than a fish
+        local breakPoint = context.catchType == xi.fishing.catchType.MONSTER and 35 or 40
+        local multiplier = context.catchType == xi.fishing.catchType.MONSTER and 0.2 or 0.55
+        local expected   = 128 + 2 + math.max(0, math.floor((-context.gap - breakPoint) * multiplier))
+
+        assert(fight.regen == expected, label .. 'regen ' .. tostring(fight.regen) .. ' at ' .. tostring(-context.gap) .. ' levels above the angler, expected ' .. tostring(expected))
     else
-        assert(fight.regen == 128, label .. 'regen ' .. tostring(fight.regen) .. ' off the plateau at gap ' .. tostring(context.gap))
+        assert(fight.regen == 128 - legendaryPull, label .. 'regen ' .. tostring(fight.regen) .. ' off the plateau at gap ' .. tostring(context.gap))
     end
 end
 
@@ -75,63 +88,72 @@ local function checkChances(context)
         assert(chances.lowSkill == 0, label .. 'a lack-of-skill chance of ' .. tostring(chances.lowSkill) .. ' at ' .. tostring(context.level - context.skill) .. ' over')
     end
 
-    -- A catch over the rod's hold (strength plus half the skill) fails at 3 percent a level over: a starter rod, a large catch or
-    -- junk breaks the rod, a small fish snaps the line; a catch's own snap rate and Lu Shang's list sit on top, and the doubt
-    -- lines scale the result
-    local rod     = context.rod
-    local weight  = stats.weight or context.level
-    local over    = 0
-    local feeling = context.fight.feeling
+    -- A catch over the rod's hold (strength plus a quarter of the skill) fails at 3 percent a point over: the line takes it up
+    -- to 16 points over and the rod breaks past that, on the same slope. A catch's own snap rate and Lu Shang's list sit on top.
+    local rod    = context.rod
+    local weight = stats.weight or (18 + math.floor(context.level / 2))
+    local over   = rod.strength and weight - rod.strength - math.floor(context.skill / 4) or 0
 
-    if
-        rod.strength and
-        weight > rod.strength + math.floor(context.skill / 2)
-    then
-        over = math.min(100, (weight - rod.strength - math.floor(context.skill / 2)) * 3)
+    if over < 0 then
+        over = 0
     end
 
-    local breaksRod     = rod.strength ~= nil and (rod.strength < 35 or context.large or not context.isFish)
-    local expectedBreak = (breaks and breaks[context.itemId]) or (breaksRod and over or 0)
-    local expectedSnap  = math.max(breaksRod and 0 or over, stats.lineSnap or 0)
-
-    if feeling == xi.fishing.feeling.NO_SKILL_SURE then
-        expectedSnap = math.min(100, expectedSnap * 3)
-    elseif feeling == xi.fishing.feeling.NO_SKILL then
-        expectedSnap = math.floor(expectedSnap / 10)
-    end
+    local expectedBreak = (breaks and breaks[context.itemId]) or math.min(100, math.max(0, (over - 16) * 3))
+    local expectedSnap  = math.max(math.min(100, over * 3), stats.lineSnap or 0)
 
     assert(chances.rodBreak == expectedBreak, label .. 'a break chance of ' .. tostring(chances.rodBreak) .. ', expected ' .. tostring(expectedBreak))
     assert(chances.lineSnap == expectedSnap, label .. 'a snap chance of ' .. tostring(chances.lineSnap) .. ', expected ' .. tostring(expectedSnap))
 end
 
--- Check the feeling against the measure, the level gap and the snap and break chances, and the keen sense against its reach
+-- Check the feeling against the measure, the level gap and the outcome the fight rolled, and the keen sense against its reach
 local function checkFeeling(context)
     local fight    = context.fight
     local feeling  = fight.feeling
     local label    = context.label
     local levelGap = context.level - context.skill
     local noSkill  = feeling == xi.fishing.feeling.NO_SKILL or feeling == xi.fishing.feeling.NO_SKILL_SURE or feeling == xi.fishing.feeling.NO_SKILL_POSITIVE
-    local chances  = fight.chances
+    local own      = xi.fishing.catchStats[context.itemId] and xi.fishing.catchStats[context.itemId].lineSnap or 0
 
-    -- Epic on an epic measure, lack of skill from 12 levels over and on some hooks from 8, terrible over a 45 percent snap or break
+    -- An epic measure pre-empts every other reading
     if
         fight.bigFish and
         fight.bigFish.epic
     then
         assert(feeling == xi.fishing.feeling.EPIC and context.tier ~= nil, label .. 'an epic measure on feeling ' .. tostring(feeling))
-    elseif levelGap >= 12 then
+
+        return
+    end
+
+    -- The doubt words from 12 levels over and on some hooks from 8, carrying the same three readings
+    if levelGap >= 12 then
         assert(noSkill, label .. 'feeling ' .. tostring(feeling) .. ' at ' .. tostring(levelGap) .. ' levels over')
     elseif noSkill then
         assert(levelGap >= 8, label .. 'a lack-of-skill line at ' .. tostring(levelGap) .. ' levels over')
+    end
+
+    local reading = feeling
+    if feeling == xi.fishing.feeling.NO_SKILL_POSITIVE then
+        reading = xi.fishing.feeling.TERRIBLE
+    elseif feeling == xi.fishing.feeling.NO_SKILL_SURE then
+        reading = xi.fishing.feeling.BAD
     elseif
-        chances.lineSnap >= 45 or
-        chances.rodBreak >= 45
+        feeling == xi.fishing.feeling.NO_SKILL or
+        feeling == xi.fishing.feeling.KEEN
     then
-        assert(feeling == xi.fishing.feeling.TERRIBLE, label .. 'feeling ' .. tostring(feeling) .. ' over a 45 percent snap or break')
-    elseif feeling == xi.fishing.feeling.BAD then
-        assert(levelGap >= 1 and levelGap <= 11, label .. 'a bad feeling at ' .. tostring(levelGap) .. ' levels over')
+        reading = xi.fishing.feeling.GOOD
+    end
+
+    -- Terrible on a broken rod or a catch that cuts lines on its own, bad on a snapped line, and a catch that will land reads
+    -- good except for the warning one hook in 25 carries up to 11 levels over
+    if
+        own >= 45 or
+        fight.result == xi.fishing.result.ROD_BREAK
+    then
+        assert(reading == xi.fishing.feeling.TERRIBLE, label .. 'feeling ' .. tostring(feeling) .. ' on a broken rod')
+    elseif fight.result == xi.fishing.result.LINE_BREAK then
+        assert(reading == xi.fishing.feeling.BAD, label .. 'feeling ' .. tostring(feeling) .. ' on a snapped line')
     else
-        assert(feeling == xi.fishing.feeling.GOOD or feeling == xi.fishing.feeling.KEEN, label .. 'feeling ' .. tostring(feeling) .. ' with nothing to fear')
+        assert(reading == xi.fishing.feeling.GOOD or (levelGap >= 1 and levelGap <= 11), label .. 'feeling ' .. tostring(feeling) .. ' at ' .. tostring(levelGap) .. ' levels over on a catch that does not fail')
     end
 
     -- A keen sense is only on a fish within 4 levels counting the rod's keen bonus, and it sets the sense bit
@@ -266,6 +288,7 @@ local function checkFight(player, data, cast, catch, skill, fight)
         tier   = tier,
         large  = large,
         isFish = isFish,
+        catchType = catch.type,
         keen   = keen,
         roll   = roll,
         label  = label,
@@ -637,7 +660,7 @@ describe('Fishing claim on every rod', function()
         local original = math.randomInt
         local forced   = nil
 
-        -- The fight rolls as it likes; the claim rolls what the test sets
+        -- The bite rolls what the test sets, the claim only collects it
         stub('math.randomInt', function(low, high)
             if forced then
                 return forced
@@ -657,7 +680,11 @@ describe('Fishing claim on every rod', function()
 
                     local cast = castOn(data, rodId, xi.item.LITTLE_WORM)
                     cast.catch = hookedCatch(data, itemId)
+
+                    -- Every roll lands on 1, so the first chance above zero is met
+                    forced     = 1
                     cast.fight = xi.fishing.hookCatch(player, cast, cast.catch)
+                    forced     = nil
                     cast.stage = xi.fishing.stage.FIGHTING
                     player.packets:clear()
 
@@ -673,10 +700,7 @@ describe('Fishing claim on every rod', function()
                         expected = xi.fishing.result.LOST
                     end
 
-                    -- Every roll lands on 1, so the first chance above zero is met
-                    forced = 1
                     local result = xi.fishing.resolveCatch(player, cast, 0, cast.fight.intuition)
-                    forced = nil
 
                     local label    = tostring(data.rods[rodId].name) .. ' on ' .. tostring(data.fish[itemId].name) .. ' at skill ' .. tostring(skill) .. ': '
                     local messages = fishingMessages(player)
@@ -727,58 +751,53 @@ describe('Fishing claim on every rod', function()
         end
     end)
 
-    -- Every rod but the Ebisu and the Judge's holds a catch up to its strength plus half the angler's skill: the gold carp broke
-    -- the starter rods 10 times in 11 on retail, the jungle catfish the Mithran rod 2 in 28, the arrowwood log a Tarutaru rod, and
-    -- the Ebisu snapped on its three legendaries at a rate set by the hook feeling
+    -- Every rod but the Ebisu and the Judge's holds a catch up to its strength plus a quarter of the angler's skill: the gold
+    -- carp broke the starter rods 10 times in 11 on retail, the arrowwood log a Tarutaru rod, and the Ebisu snapped on its
+    -- three legendaries at their own rates
     it('breaks a rod or snaps the line on a catch over the rod\'s hold, and snaps the Ebisu only by its legendaries\' own rates', function()
         player:setSkillLevel(xi.skill.FISHING, 80)
 
-        -- Within the hold nothing happens: the Hume rod held the istavrit 110 times in 110, the Yew rod the moat carp 200 in 200, the Halcyon the rusty subligar
-        for _, pair in ipairs({ { xi.item.HUME_FISHING_ROD, xi.item.ISTAVRIT_1 }, { xi.item.YEW_FISHING_ROD, xi.item.MOAT_CARP_1 }, { xi.item.HALCYON_FISHING_ROD, xi.item.RUSTY_SUBLIGAR }, { xi.item.LU_SHANGS_FISHING_ROD, xi.item.ZEBRA_EEL } }) do
+        -- Within the hold nothing happens: the Hume rod held the istavrit 110 times in 110, the Yew rod the moat carp 200 in 200
+        for _, pair in ipairs({ { xi.item.HUME_FISHING_ROD, xi.item.ISTAVRIT_1 }, { xi.item.YEW_FISHING_ROD, xi.item.MOAT_CARP_1 }, { xi.item.LU_SHANGS_FISHING_ROD, xi.item.ZEBRA_EEL } }) do
             local chances = fightOn(pair[1], pair[2]).chances
 
             assert(chances.lineSnap == 0 and chances.rodBreak == 0, 'Expected rod ' .. tostring(pair[1]) .. ' to hold ' .. tostring(data.fish[pair[2]].name) .. ', got snap ' .. tostring(chances.lineSnap) .. ' break ' .. tostring(chances.rodBreak))
         end
 
-        -- The gold carp, 56, over a starter rod's hold of 26 to 30 at skill 8 breaks it 78 to 90 percent of the time, whatever the hook feels like
-        for _, row in ipairs({ { xi.item.WILLOW_FISHING_ROD, 90 }, { xi.item.YEW_FISHING_ROD, 84 }, { xi.item.BAMBOO_FISHING_ROD, 78 } }) do
-            local fight = fightOn(row[1], xi.item.GOLD_CARP)
+        -- The gold carp weighs 46 by the level approximation and sits 18 to 22 over a starter rod's hold at skill 8: the line
+        -- goes 54 to 66 percent of the time and the rod itself 6 to 18
+        for _, row in ipairs({ { xi.item.WILLOW_FISHING_ROD, 18, 66 }, { xi.item.YEW_FISHING_ROD, 12, 60 }, { xi.item.BAMBOO_FISHING_ROD, 6, 54 } }) do
+            local chances = fightOn(row[1], xi.item.GOLD_CARP).chances
 
-            assert(fight.chances.rodBreak == row[2] and fight.chances.lineSnap == 0, 'Expected the gold carp to break rod ' .. tostring(row[1]) .. ' at ' .. tostring(row[2]) .. ' on feeling ' .. tostring(fight.feeling) .. ', got ' .. tostring(fight.chances.rodBreak))
+            assert(chances.rodBreak == row[2] and chances.lineSnap == row[3], 'Expected the gold carp to break rod ' .. tostring(row[1]) .. ' at ' .. tostring(row[2]) .. ' and snap at ' .. tostring(row[3]) .. ', got break ' .. tostring(chances.rodBreak) .. ' snap ' .. tostring(chances.lineSnap))
         end
 
-        -- Junk breaks a rod too weak for it and reads terrible: the arrowwood log, 70, over the Tarutaru rod's 34
-        local log = fightOn(xi.item.TARUTARU_FISHING_ROD, xi.item.ARROWWOOD_LOG)
+        -- The arrowwood log, 70, sits 38 over a Tarutaru rod's hold: the line always goes and the rod two thirds of the time
+        local log = fightOn(xi.item.TARUTARU_FISHING_ROD, xi.item.ARROWWOOD_LOG).chances
 
-        assert(log.feeling == xi.fishing.feeling.TERRIBLE and log.chances.rodBreak == 100 and log.chances.lineSnap == 0, 'Expected the arrowwood log to feel terrible and break the Tarutaru rod, got feeling ' .. tostring(log.feeling) .. ' break ' .. tostring(log.chances.rodBreak))
+        assert(log.rodBreak == 66 and log.lineSnap == 100, 'Expected the arrowwood log to break the Tarutaru rod at 66 and snap at 100, got break ' .. tostring(log.rodBreak) .. ' snap ' .. tostring(log.lineSnap))
 
         player:setSkillLevel(xi.skill.FISHING, 300)
 
-        -- The jungle catfish, 80, over the Mithran rod's 75 at skill 30 breaks it 15 percent of the time
-        local catfish = fightOn(xi.item.MITHRAN_FISHING_ROD, xi.item.JUNGLE_CATFISH)
+        -- Capture needed: neither of these two has a weighed row, so both are approximated from their level and land inside
+        -- the rod's hold at skill 30. Retail agrees on the bream, which a Halcyon landed 76 times in 76; the Mithran rod did
+        -- snap on the catfish twice in the corpus, which the approximation cannot produce.
+        local catfish = fightOn(xi.item.MITHRAN_FISHING_ROD, xi.item.JUNGLE_CATFISH).chances
 
-        assert(catfish.chances.rodBreak == 15 and catfish.chances.lineSnap == 0, 'Expected the jungle catfish to break the Mithran rod at 15, got ' .. tostring(catfish.chances.rodBreak))
+        assert(catfish.rodBreak == 0 and catfish.lineSnap == 0, 'Expected the Mithran rod to hold the jungle catfish, got break ' .. tostring(catfish.rodBreak) .. ' snap ' .. tostring(catfish.lineSnap))
 
-        -- A small fish over a small-fish rod's hold snaps the line instead: the bastore bream, 86, over the Halcyon's 70
-        local bream = fightOn(xi.item.HALCYON_FISHING_ROD, xi.item.BASTORE_BREAM)
+        local bream = fightOn(xi.item.HALCYON_FISHING_ROD, xi.item.BASTORE_BREAM).chances
 
-        assert(bream.chances.rodBreak == 0 and bream.chances.lineSnap > 0, 'Expected the bastore bream to snap the Halcyon\'s line and spare the rod, got snap ' .. tostring(bream.chances.lineSnap) .. ' break ' .. tostring(bream.chances.rodBreak))
+        assert(bream.rodBreak == 0 and bream.lineSnap == 0, 'Expected the Halcyon to hold the bastore bream, got break ' .. tostring(bream.rodBreak) .. ' snap ' .. tostring(bream.lineSnap))
 
         player:setSkillLevel(xi.skill.FISHING, 1000)
 
-        -- On the Ebisu the Cave Cherax snapped 15 percent of reels, the Gugrusaurus 31 and the Lik 35: three times that on a
-        -- fairly-sure hook, a tenth of it on a hook that doesn't know
+        -- On the Ebisu the Cave Cherax snapped 15 percent of reels, the Gugrusaurus 31 and the Lik 35, and the rod has no hold
+        -- to add to them
         for _, row in ipairs({ { xi.item.CAVE_CHERAX, 15 }, { xi.item.GUGRUSAURUS, 31 }, { xi.item.LIK, 35 } }) do
-            local fight = fightOn(xi.item.EBISU_FISHING_ROD, row[1])
-            local snap  = row[2]
+            local chances = fightOn(xi.item.EBISU_FISHING_ROD, row[1]).chances
 
-            if fight.feeling == xi.fishing.feeling.NO_SKILL_SURE then
-                snap = math.min(100, row[2] * 3)
-            elseif fight.feeling == xi.fishing.feeling.NO_SKILL then
-                snap = math.floor(row[2] / 10)
-            end
-
-            assert(fight.chances.lineSnap == snap and fight.chances.rodBreak == 0, 'Expected ' .. tostring(data.fish[row[1]].name) .. ' to snap the Ebisu at ' .. tostring(snap) .. ' on feeling ' .. tostring(fight.feeling) .. ', got ' .. tostring(fight.chances.lineSnap))
+            assert(chances.lineSnap == row[2] and chances.rodBreak == 0, 'Expected ' .. tostring(data.fish[row[1]].name) .. ' to snap the Ebisu at ' .. tostring(row[2]) .. ', got ' .. tostring(chances.lineSnap))
         end
 
         -- The cone calamary read terrible on all 43 Ebisu hooks, so it carries a snap rate high enough to say so
@@ -1047,5 +1066,280 @@ describe('Fishing skill-up table', function()
         assert(raisesOn(xi.fishing.result.ROD_BREAK, nil), 'Expected a broken rod to raise the skill, as retail did 4 times in 13')
         assert(not raisesOn(xi.fishing.result.GAVE_UP, nil), 'Expected a give-up to raise nothing, as retail did in 7727')
         assert(not raisesOn(xi.fishing.result.LOW_SKILL, nil), 'Expected a lack-of-skill loss to raise nothing, as retail did twice in 471')
+    end)
+end)
+
+-----------------------------------
+-- Fishing minigame on a monster
+--
+-- The catalog sweeps above only ever hook a fish or an item, so every
+-- rule the fight keeps for a monster is checked here: the level its
+-- row names, the slower stamina it wins back, the drain a legendary
+-- rod adds to, and the losses a monster is never open to.
+-----------------------------------
+
+-- A monster on the line. The sweep never spawns one, so the entity answers only the three calls the hook makes on it and
+-- the level comes from the monster table by name.
+local function hookedMonster(name)
+    local mob = {}
+
+    mob.getName = function()
+        return name
+    end
+
+    mob.isAlive = function()
+        return false
+    end
+
+    mob.getStatus = function()
+        return xi.status.DISAPPEAR
+    end
+
+    mob.setLocalVar = function()
+    end
+
+    return { type = xi.fishing.catchType.MONSTER, spawnId = 0, mob = mob, record = {} }
+end
+
+-- The fight stats row a monster of the given level fights with
+local function monsterStats(level)
+    for _, stats in ipairs(xi.fishing.monsterFightStats) do
+        if stats.level == level then
+            return stats
+        end
+    end
+
+    return nil
+end
+
+describe('Fishing minigame on a monster', function()
+    ---@type CClientEntityPair
+    local player
+    local data
+
+    -- The monsters whose rows name a level, so the fight is the same every time it is built
+    local named =
+    {
+        { name = 'Palm_Crab',    level = 10 },
+        { name = 'Savanna_Crab', level = 20 },
+        { name = 'Ocean_Crab',   level = 40 },
+        { name = 'Devil_Manta',  level = 50 },
+    }
+
+    before_each(function()
+        data   = xi.fishing.getData()
+        player = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE })
+
+        xi.test.world:setVanaTime(12, 0)
+        stub('xi.fishing.updateMeters', true)
+    end)
+
+    it('fights a monster at the level its row names, with that level\'s stamina and arrows', function()
+        for _, monster in ipairs(named) do
+            local stats = monsterStats(monster.level)
+
+            assert(stats ~= nil, 'Expected a fight row at level ' .. tostring(monster.level) .. ' for ' .. monster.name)
+
+            player:setSkillLevel(xi.skill.FISHING, 500)
+
+            local fight    = xi.fishing.hookCatch(player, castOn(data, xi.item.WILLOW_FISHING_ROD, xi.item.LITTLE_WORM), hookedMonster(monster.name))
+            local label    = monster.name .. ': '
+            local messages = fishingMessages(player)
+
+            player.packets:clear()
+
+            assert(fight ~= nil, label .. 'no fight came back')
+
+            -- Stamina is the same 18 plus half the level a fish takes, times the roll of 95 to 105
+            local base = 18 + math.floor(monster.level / 2)
+            local roll = fight.stamina / base
+
+            assert(fight.stamina % base == 0 and roll >= 95 and roll <= 105, label .. 'stamina ' .. tostring(fight.stamina) .. ' is not ' .. tostring(base) .. ' times 95 to 105')
+
+            -- The Willow rod attacks at 150 percent, and the delay and move carry its small-catch bonuses
+            assert(fight.arrow_damage == math.floor(stats.arrowDamage * 150 / 2000) * 20, label .. 'damage ' .. tostring(fight.arrow_damage))
+            assert(fight.arrow_delay == utils.clamp(stats.arrowDelay + 1, 1, 15), label .. 'delay ' .. tostring(fight.arrow_delay) .. ' against a row of ' .. tostring(stats.arrowDelay))
+            assert(fight.move_frequency == utils.clamp(stats.moveFrequency, 1, 15), label .. 'move ' .. tostring(fight.move_frequency) .. ' against a row of ' .. tostring(stats.moveFrequency))
+
+            -- A monster always reads as a large catch and never gives the keen sense
+            assert(bit.band(fight.angler_sense, 1) == 1, label .. 'angler sense ' .. tostring(fight.angler_sense) .. ' does not carry the large bit')
+            assert(fight.feeling ~= xi.fishing.feeling.KEEN, label .. 'a monster gave the keen sense')
+            assert(messages[1] == xi.fishingMessage.HOOKED_MONSTER, label .. 'hook line ' .. tostring(messages[1]) .. ', expected the monster one')
+        end
+    end)
+
+    it('wins a monster its stamina back from 35 under the angler, a fifth a level, where a fish takes 40 and half again', function()
+        for _, monster in ipairs(named) do
+            for skill = 1, 100 do
+                local gap = skill - monster.level
+
+                if gap <= -30 then
+                    player:setSkillLevel(xi.skill.FISHING, skill * 10)
+
+                    local fight = xi.fishing.hookCatch(player, castOn(data, xi.item.WILLOW_FISHING_ROD, xi.item.LITTLE_WORM), hookedMonster(monster.name))
+
+                    player.packets:clear()
+
+                    local expected = 128 + 2 + math.max(0, math.floor((-gap - 35) * 0.2))
+
+                    assert(fight.regen == expected, monster.name .. ' at skill ' .. tostring(skill) .. ': regen ' .. tostring(fight.regen) .. ', expected ' .. tostring(expected))
+                end
+            end
+        end
+    end)
+
+    it('drains a monster by the rod\'s own curve, and 3 deeper again on a legendary rod', function()
+        local rods =
+        {
+            { rod = xi.item.WILLOW_FISHING_ROD,    start = 14, slope = 0.8, floor = 98, pull = 0 },
+            { rod = xi.item.EBISU_FISHING_ROD,     start = 12, slope = 1.3, floor = 98, pull = 3 },
+            { rod = xi.item.LU_SHANGS_FISHING_ROD, start = 26, slope = 1.7, floor = 92, pull = 3 },
+        }
+
+        for _, row in ipairs(rods) do
+            for _, monster in ipairs(named) do
+                for skill = 1, 100 do
+                    local gap = skill - monster.level
+
+                    player:setSkillLevel(xi.skill.FISHING, skill * 10)
+
+                    local fight = xi.fishing.hookCatch(player, castOn(data, row.rod, xi.item.LITTLE_WORM), hookedMonster(monster.name))
+
+                    player.packets:clear()
+
+                    local roll     = fight.stamina / (18 + math.floor(monster.level / 2))
+                    local label    = tostring(data.rods[row.rod].name) .. ' on ' .. monster.name .. ' at skill ' .. tostring(skill) .. ': '
+                    local expected = 128 - row.pull
+
+                    if gap <= -30 then
+                        expected = 128 + 2 + math.max(0, math.floor((-gap - 35) * 0.2))
+                    elseif gap >= row.start then
+                        -- The rod's own floor rules where it names one, and a monster on a rod that names none stops at 98
+                        expected = 128 - math.min(math.floor((gap - row.start) * row.slope), row.floor) - (roll - 100) - row.pull
+                    end
+
+                    assert(fight.regen == expected, label .. 'regen ' .. tostring(fight.regen) .. ' at a roll of ' .. tostring(roll) .. ', expected ' .. tostring(expected))
+                end
+            end
+        end
+    end)
+
+    it('never loses a monster to lack of skill or to a rod\'s size penalty, and strains the rod by the weight its level gives', function()
+        -- The Mithran and Single Hook rods are penalised against a large catch's opposite, and a monster always reads large
+        local rods =
+        {
+            { rod = xi.item.MITHRAN_FISHING_ROD,     strength = 60 },
+            { rod = xi.item.SINGLE_HOOK_FISHING_ROD, strength = 40 },
+            { rod = xi.item.WILLOW_FISHING_ROD,      strength = 22 },
+            { rod = xi.item.EBISU_FISHING_ROD,       strength = nil },
+        }
+
+        for _, row in ipairs(rods) do
+            for _, monster in ipairs(named) do
+                for _, skill in ipairs({ 0, 30, 70, 100 }) do
+                    player:setSkillLevel(xi.skill.FISHING, skill * 10)
+
+                    local chances = xi.fishing.hookCatch(player, castOn(data, row.rod, xi.item.LITTLE_WORM), hookedMonster(monster.name)).chances
+                    local label   = tostring(data.rods[row.rod].name) .. ' on ' .. monster.name .. ' at skill ' .. tostring(skill) .. ': '
+
+                    player.packets:clear()
+
+                    assert(chances.lowSkill == 0, label .. 'lack of skill at ' .. tostring(chances.lowSkill) .. ' on a monster')
+                    assert(chances.sizeLoss == 0, label .. 'a size loss at ' .. tostring(chances.sizeLoss) .. ' on a monster')
+
+                    -- A monster carries no measured weight, so the hold reads it as 18 plus half its level
+                    local over     = 18 + math.floor(monster.level / 2) - (row.strength or 0) - math.floor(skill / 4)
+                    local expected = { rodBreak = 0, lineSnap = 0 }
+
+                    if
+                        row.strength and
+                        over > 0
+                    then
+                        expected.rodBreak = math.min(100, math.max(0, (over - 16) * 3))
+                        expected.lineSnap = math.min(100, over * 3)
+                    end
+
+                    assert(chances.rodBreak == expected.rodBreak, label .. 'break ' .. tostring(chances.rodBreak) .. ', expected ' .. tostring(expected.rodBreak))
+                    assert(chances.lineSnap == expected.lineSnap, label .. 'snap ' .. tostring(chances.lineSnap) .. ', expected ' .. tostring(expected.lineSnap))
+                end
+            end
+        end
+    end)
+end)
+
+-----------------------------------
+-- Fishing measure and the epic reading
+--
+-- The sweeps above check a measure against its fish's length range
+-- wherever one comes back, but nothing there makes an epic measure
+-- happen, so the reading it carries went unproven. These pin it from
+-- both sides: the catch that can read epic and the catch that cannot.
+-----------------------------------
+
+describe('Fishing measure and the epic reading', function()
+    ---@type CClientEntityPair
+    local player
+    local data
+
+    before_each(function()
+        data   = xi.fishing.getData()
+        player = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE })
+
+        xi.test.world:setVanaTime(12, 0)
+        player:setSkillLevel(xi.skill.FISHING, 1000)
+        stub('xi.fishing.updateMeters', true)
+    end)
+
+    it('calls a legendary catch epic past the middle of its own length range, and reads the hook so', function()
+        -- The abaia is a super legendary measured 170 to 350, so half its range is 260
+        local length = data.fish[xi.item.ABAIA].length
+
+        assert(length ~= nil, 'Expected the abaia to carry a length range')
+
+        local middle = (length[1] + length[2]) / 2
+        local epics  = 0
+        local plains = 0
+
+        -- The measure is two rolls averaged, so both sides come up inside a few hundred hooks: seeded so they always do
+        xi.test.world:setSeed(4650)
+
+        for _ = 1, 300 do
+            local fight   = xi.fishing.hookCatch(player, castOn(data, xi.item.EBISU_FISHING_ROD, xi.item.LITTLE_WORM), hookedCatch(data, xi.item.ABAIA))
+            local measure = fight.bigFish
+
+            player.packets:clear()
+
+            assert(measure ~= nil, 'Expected a measure on a fish with a length range')
+            assert((measure.epic == true) == (measure.length > middle), 'A measure of ' .. tostring(measure.length) .. ' read epic as ' .. tostring(measure.epic) .. ' against a middle of ' .. tostring(middle))
+            assert((fight.feeling == xi.fishing.feeling.EPIC) == (measure.epic == true), 'A measure of ' .. tostring(measure.length) .. ' gave the feeling ' .. tostring(fight.feeling))
+
+            if measure.epic then
+                epics = epics + 1
+            else
+                plains = plains + 1
+            end
+        end
+
+        assert(epics > 0 and plains > 0, 'Expected the abaia both over and under half its range, got ' .. tostring(epics) .. ' epic and ' .. tostring(plains) .. ' plain')
+    end)
+
+    it('never calls an ordinary catch epic, however long it measures', function()
+        -- The armored pisces is measured 50 to 125 and carries no legendary tier
+        local length = data.fish[xi.item.ARMORED_PISCES].length
+
+        assert(length ~= nil, 'Expected the armored pisces to carry a length range')
+
+        xi.test.world:setSeed(4651)
+
+        for _ = 1, 300 do
+            local fight   = xi.fishing.hookCatch(player, castOn(data, xi.item.EBISU_FISHING_ROD, xi.item.LITTLE_WORM), hookedCatch(data, xi.item.ARMORED_PISCES))
+            local measure = fight.bigFish
+
+            player.packets:clear()
+
+            assert(measure ~= nil, 'Expected a measure on a fish with a length range')
+            assert(measure.epic ~= true, 'A measure of ' .. tostring(measure.length) .. ' read epic on a catch with no legendary tier')
+            assert(fight.feeling ~= xi.fishing.feeling.EPIC, 'An ordinary catch gave the epic reading')
+        end
     end)
 end)

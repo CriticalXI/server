@@ -217,7 +217,7 @@ fishing:
       key_item:  1977
     hakuryu:
       size:      large
-      skill:     127 # Capture needed
+      skill:     127   # Capture needed
       legendary: super
       key_item:  1977
     gurnard:

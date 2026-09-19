@@ -155,7 +155,9 @@ describe('Fishing cast entry', function()
     end)
 
     after_each(function()
-        xi.fishing.data = originalData
+        -- A spawned angler can take an id a previous test left a cast under, so the open casts go with the catalog
+        xi.fishing.casts[player:getID()] = nil
+        xi.fishing.data                  = originalData
     end)
 
     it('opens a cast with a rod, bait and an area', function()
@@ -720,20 +722,21 @@ describe('Fishing outcome', function()
         assert(lastFishingMessage(player) == xi.fishingMessage.LOST, 'Expected the lost line')
     end)
 
-    it('charges a loss to lack of skill its fatigue and no daily point', function()
+    it('charges a loss to lack of skill the fatigue pool alone', function()
         local angler = spawnAngler(nil, xi.settings.map.FISHING_MIN_LEVEL)
         local cast   = fightingCast(xi.item.WILLOW_FISHING_ROD)
 
         xi.test.world:setSetting('map.FISHING_FATIGUE_ENABLE', true)
+        xi.test.world:setSetting('map.FISHING_MIN_LEVEL', 1)
 
-        -- Put the claim roll on the lack-of-skill loss
-        cast.fight.chances = { lowSkill = 100, lineSnap = 0, rodBreak = 0, sizeLoss = 0 }
+        -- The bite already rolled the fight: put its outcome on the lack-of-skill loss
+        cast.fight.result = xi.fishing.result.LOW_SKILL
 
         local result = xi.fishing.resolveCatch(angler, cast, 0, cast.fight.intuition)
 
         assert(result == xi.fishing.result.LOW_SKILL, 'Expected the lack-of-skill loss')
-        assert(angler:getCharVar('[Fish]DailyPoints') == 0, 'Expected no daily point, got ' .. tostring(angler:getCharVar('[Fish]DailyPoints')))
-        assert(angler:getCharVar('[Fish]Fatigue') == 1000, 'Expected 1000 fatigue, got ' .. tostring(angler:getCharVar('[Fish]Fatigue')))
+        assert(angler:getCharVar('[Fish]DailyPoints') == 0, 'Expected no daily points, got ' .. tostring(angler:getCharVar('[Fish]DailyPoints')))
+        assert(angler:getCharVar('[Fish]Fatigue') == 1000, 'Expected the loss charged to the pool, got ' .. tostring(angler:getCharVar('[Fish]Fatigue')))
     end)
 
     it('charges a catch won into a full inventory its point', function()
@@ -757,6 +760,10 @@ describe('Fishing outcome', function()
         local carp = xi.fishing.data.fish[xi.item.MOAT_CARP_1]
 
         xi.test.world:setSetting('map.FISHING_FATIGUE_ENABLE', true)
+        xi.test.world:setSetting('map.FISHING_MIN_LEVEL', 1)
+
+        -- The angler is spawned at level 1, so give it a job at the minimum: the no-job multiplier would scale the cost
+        -- under test and hide the threshold it is measuring
         xi.test.world:setSetting('map.FISHING_MIN_LEVEL', 1)
 
         -- A give-up only costs fatigue when over level and skips the claim roll
@@ -795,6 +802,40 @@ describe('Fishing outcome', function()
         assert(result == xi.fishing.result.LINE_BREAK, 'Expected the line break')
         assert(player:getAnimation() == xi.animation.NEW_FISHING_LINE_BREAK, 'Expected the line break animation')
         assert(lastFishingMessage(player) == xi.fishingMessage.LINE_BREAK, 'Expected the line break line')
+    end)
+
+    it('reads the stamina the client reports into the result its band stands for', function()
+        -- The bands the client reports at the end of the minigame, each tested on both of its edges
+        local bands =
+        {
+            { reported =   0, result = xi.fishing.result.CAUGHT     },
+            { reported =   4, result = xi.fishing.result.CAUGHT     },
+            { reported =   5, result = xi.fishing.result.LOW_SKILL  },
+            { reported =  20, result = xi.fishing.result.LOW_SKILL  },
+            { reported =  21, result = xi.fishing.result.LINE_BREAK },
+            { reported = 100, result = xi.fishing.result.LINE_BREAK },
+            { reported = 101, result = xi.fishing.result.GAVE_UP    },
+            { reported = 256, result = xi.fishing.result.GAVE_UP    },
+            { reported = 257, result = xi.fishing.result.LOST       },
+        }
+
+        for _, band in ipairs(bands) do
+            if player:getEquippedItem(xi.slot.AMMO) == nil then
+                player:addItem({ id = xi.item.LITTLE_WORM, quantity = 12, silent = true })
+                player:equipItem(xi.item.LITTLE_WORM, nil, xi.slot.AMMO)
+            end
+
+            if player:hasItem(xi.item.MOAT_CARP_1) then
+                player:delItem(xi.item.MOAT_CARP_1, 1)
+            end
+
+            local cast   = fightingCast(xi.item.EBISU_FISHING_ROD)
+            local result = xi.fishing.resolveCatch(player, cast, band.reported, cast.fight.intuition)
+
+            player.packets:clear()
+
+            assert(result == band.result, 'A reported stamina of ' .. tostring(band.reported) .. ' resolved to ' .. tostring(result) .. ', expected ' .. tostring(band.result))
+        end
     end)
 end)
 
@@ -1101,6 +1142,48 @@ describe('Fishing cast end to end', function()
         assert(not player:hasItem(xi.item.LITTLE_WORM), 'Expected the worm gone as on a give-up')
     end)
 
+    -- A monster that got away was still drawn out of the water, so cancelling the fight or losing it is not a way to keep
+    -- re-rolling the same spawn
+    it('serves the crab\'s cooldown when it comes off the line without being landed', function()
+        local crab   = landCrab()
+        local record = xi.fishing.data.zones[xi.zone.WEST_RONFAURE].monsters[crabId]
+
+        xi.fishing.monsters[crab:getName()] = { cooldown = 600 }
+
+        -- Cancelled mid-fight
+        biteCrab(crab)
+        openCast(player)
+
+        assert(xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0) ~= nil, 'Expected the fight')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        assert(crab:getLocalVar('hooked') == 0, 'Expected the crab back in the water')
+        assert(crab:getLocalVar('respawnAt') >= GetSystemTime() + 599, 'Expected the cancelled crab on its cooldown')
+        assert(not xi.fishing.confirmMonsterEntry(player, record, crab), 'Expected the crab off the pool')
+
+        crab:setLocalVar('respawnAt', 0)
+        player:addItem(xi.item.LITTLE_WORM)
+        player:equipItem(xi.item.LITTLE_WORM, nil, xi.slot.AMMO)
+
+        -- Lost with the line. The bite roll is still stubbed from above: a double-stub of one path never comes back, because
+        -- the second call captures the first stub as the original and restores it in its place.
+        local cast  = openCast(player)
+        local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(fight ~= nil, 'Expected the second fight')
+
+        cast.fight.result = xi.fishing.result.LINE_BREAK
+
+        xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 0, fight.intuition)
+
+        assert(cast.result == xi.fishing.result.LINE_BREAK, 'Expected the line to snap')
+        assert(not crab:isSpawned(), 'Expected the crab left in the water')
+        assert(crab:getLocalVar('hooked') == 0, 'Expected the line freed')
+        assert(crab:getLocalVar('respawnAt') >= GetSystemTime() + 599, 'Expected the lost crab on its cooldown')
+        assert(not xi.fishing.confirmMonsterEntry(player, record, crab), 'Expected the crab off the pool')
+    end)
+
     it('loses a claim sent inside two seconds of the bite', function()
         biteMoatCarp()
 
@@ -1186,6 +1269,104 @@ describe('Fishing cast end to end', function()
         crab:setLocalVar('respawnAt', 0)
 
         assert(xi.fishing.confirmMonsterEntry(player, record, crab), 'Expected the crab back on the pool once the cooldown is served')
+    end)
+
+    -- The one Devil Manta on the wire: Falisa, Kuftal Tunnel, 2026-04-16, a Composite rod at skill 0 to 7. Retail sent
+    -- stamina 4300, damage 380, delay 9, move 15, regen 132, heal 130 and 43 seconds, and the manta was landed.
+    it('builds the fight retail sent for the Devil Manta', function()
+        local crab = landCrab()
+        local rod  = xi.item.COMPOSITE_FISHING_ROD
+
+        -- The manta fights on the level 50 monster row, which is what its damage of 380 and stamina of 4300 name, and the
+        -- Composite rod carries 43 seconds in the shipped catalog, which is the fight time retail sent
+        xi.fishing.monsters[crab:getName()] = { level = 50 }
+        xi.fishing.data.rods[rod]           = { name = 'composite_fishing_rod', size = xi.fishingSize.LARGE, time = 43 }
+
+        player:setSkillLevel(xi.skill.FISHING, 0)
+        player:addItem(rod)
+        player:equipItem(rod, nil, xi.slot.RANGED)
+        player:addItem(xi.item.LITTLE_WORM)
+        player:equipItem(xi.item.LITTLE_WORM, nil, xi.slot.AMMO)
+
+        biteCrab(crab)
+        openCast(player)
+
+        local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(fight ~= nil, 'Expected the fight')
+
+        -- Stamina is 43 a point of the level over a roll of 95 to 105, and retail's 4300 is that base at 100
+        assert(fight.stamina % 43 == 0 and fight.stamina >= 4085 and fight.stamina <= 4515, 'Expected a stamina off a base of 43, got ' .. tostring(fight.stamina))
+
+        local rows =
+        {
+            { 'arrow_damage', fight.arrow_damage, 380 },
+            { 'arrow_delay',  fight.arrow_delay,    9 },
+            { 'move_frequency', fight.move_frequency, 15 },
+            { 'arrow_regen',  fight.arrow_regen,  130 },
+            { 'time',         fight.time,          43 },
+            { 'angler_sense', bit.band(fight.angler_sense, 1), 1 },
+        }
+
+        for _, row in ipairs(rows) do
+            assert(row[2] == row[3], 'Expected ' .. row[1] .. ' ' .. tostring(row[3]) .. ' as retail sent, got ' .. tostring(row[2]))
+        end
+
+        -- Retail sent 132 on the manta itself and 132 to 135 over the ten captured hooks 50 levels under a catch
+        assert(fight.regen >= 132 and fight.regen <= 135, 'Expected a gauge of 132 to 135 as retail sent 50 levels under, got ' .. tostring(fight.regen))
+        assert(lastFishingMessage(player) == xi.fishingMessage.NO_SKILL_FEELING, 'Expected the doubt line 50 levels under the catch')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+        xi.fishing.data.rods[rod] = nil
+        player:unequipItem(xi.slot.RANGED)
+        player:delItem(rod, 1)
+    end)
+
+    -- A monster is sized large only so the client pulls hard on the bite, not because the rod has to lift it. The Devil Manta's
+    -- row names a level of 50, which put the fallback size loss at its 90 percent cap on the two rods penalised against a large
+    -- catch, and retail landed a fished monster on a Halcyon at skill 0.
+    it('never loses a monster to a rod penalised against large catches', function()
+        local crab = landCrab()
+
+        xi.fishing.monsters[crab:getName()] = { level = 50 }
+
+        for _, rodId in ipairs({ xi.item.HALCYON_FISHING_ROD, xi.item.HUME_FISHING_ROD }) do
+            local label = 'rod ' .. tostring(rodId) .. ': '
+
+            assert(xi.fishing.rodStats[rodId].penalty == xi.fishingSize.LARGE, label .. 'expected a rod penalised against a large catch')
+
+            xi.fishing.data.rods[rodId] = { name = 'penalised_rod', size = xi.fishingSize.LARGE, time = 30 }
+
+            player:addItem(rodId)
+            player:equipItem(rodId, nil, xi.slot.RANGED)
+            player:addItem(xi.item.LITTLE_WORM)
+            player:equipItem(xi.item.LITTLE_WORM, nil, xi.slot.AMMO)
+
+            biteCrab(crab)
+
+            local cast  = openCast(player)
+            local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+            assert(fight ~= nil, label .. 'expected the fight')
+            assert(fight.chances.sizeLoss == 0, label .. 'a size loss of ' .. tostring(fight.chances.sizeLoss) .. ' on a monster')
+            assert(fight.chances.lostAs == nil, label .. 'a size loss reason on a monster')
+
+            xi.fishing.onAction(player, xi.fishing.mode.END_MINIGAME, 0, fight.intuition)
+
+            assert(cast.result == xi.fishing.result.CAUGHT, label .. 'the monster was lost, result ' .. tostring(cast.result))
+            assert(crab:isSpawned(), label .. 'expected the monster in the world')
+
+            xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+
+            player.entities:get(crab):despawn()
+            crab:removeListener('FISHING_COOLDOWN')
+            crab:setLocalVar('respawnAt', 0)
+            player:unequipItem(xi.slot.RANGED)
+            player:delItem(rodId, 1)
+
+            xi.fishing.data.rods[rodId] = nil
+        end
     end)
 
     it('ends the cast empty when the crab drawn is already in the world', function()
@@ -1284,6 +1465,61 @@ describe('Fishing cast end to end', function()
         sendFishingPacket(player, xi.fishing.mode.RELEASE, 0, 0)
 
         assert(xi.fishing.casts[player:getID()] == nil, 'Expected the release to close the cast')
+    end)
+
+    it('puts the catch a quest forces on the hook in place of the bite roll', function()
+        stub('InteractionGlobal.onFishingHook', function()
+            return xi.item.MOAT_CARP_1
+        end)
+
+        -- Nothing is in the water, so only the forced catch can come up
+        xi.fishing.data.zones[xi.zone.WEST_RONFAURE].areas.whole_zone.pool = {}
+        xi.fishing.data.zones[xi.zone.WEST_RONFAURE].monsters              = {}
+
+        local cast  = openCast(player)
+        local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(fight ~= nil, 'Expected the forced carp on the line with nothing in the water')
+        assert(cast.catch.itemId == xi.item.MOAT_CARP_1, 'Expected the carp the quest forced, got ' .. tostring(cast.catch.itemId))
+        assert(cast.catch.type == xi.fishing.catchType.FISH, 'Expected the carp to come up as a fish')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+    end)
+
+    it('falls back to the bite roll when the id a quest forces is not in the catalog', function()
+        stub('InteractionGlobal.onFishingHook', function()
+            return 60003
+        end)
+
+        biteMoatCarp()
+
+        local cast  = openCast(player)
+        local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(fight ~= nil, 'Expected the roll to carry the cast once the forced id was refused')
+        assert(cast.catch.itemId == xi.item.MOAT_CARP_1, 'Expected the rolled carp, got ' .. tostring(cast.catch.itemId))
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
+    end)
+
+    it('puts the monster a quest forces on the hook and marks it hooked', function()
+        local crab = landCrab()
+
+        player.entities:get(crab):despawn()
+
+        stub('InteractionGlobal.onFishingHook', function()
+            return crab
+        end)
+
+        local cast  = openCast(player)
+        local fight = xi.fishing.onAction(player, xi.fishing.mode.CHECK_HOOK, 0, 0)
+
+        assert(fight ~= nil, 'Expected the forced crab on the line')
+        assert(cast.catch.type == xi.fishing.catchType.MONSTER, 'Expected the crab to come up as a monster')
+        assert(cast.catch.spawnId == crabId, 'Expected the crab that was forced, got ' .. tostring(cast.catch.spawnId))
+        assert(crab:getLocalVar('hooked') == 1, 'Expected the crab marked hooked while it is on the line')
+
+        xi.fishing.onAction(player, xi.fishing.mode.RELEASE, 0, 0)
     end)
 end)
 
@@ -1385,10 +1621,12 @@ describe('Fishing fatigue meters', function()
         xi.fishing.accrueFatigue(player, { rodId = xi.item.EBISU_FISHING_ROD }, event.LOW_SKILL, false)
 
         meters = readMeters(player)
-        assert(meters.daily == 0 and meters.fatigue == 1000, 'Expected the loss unscaled, got ' .. tostring(meters.fatigue))
+        assert(meters.daily == 0 and meters.fatigue == 1000, 'Expected the loss unscaled and off the daily meter, got ' .. tostring(meters.daily) .. ' / ' .. tostring(meters.fatigue))
     end)
 
-    it('charges a character with no job at 20 twenty times on both meters, so ten catches fill the day', function()
+    -- The multiplier lands on both meters, so a character with no job at the minimum burns its day twenty times as fast: ten
+    -- ordinary catches fill the 200 daily points, long before the pool it is also filling twenty times over
+    it('charges a character with no job at 20 twenty times on both meters, so ten catches fill its day', function()
         local player = xi.test.world:spawnPlayer({ job = xi.job.WAR, level = 1 })
         local cast   = { rodId = xi.item.WILLOW_FISHING_ROD }
 
@@ -1408,10 +1646,12 @@ describe('Fishing fatigue meters', function()
 
         assert(not xi.fishing.mayBite(player), 'Expected no bites after ten catches')
 
+        -- A loss costs the pool alone, so even at twenty times the daily count never sees it
         setMeters(player, { daily = 0, fatigue = 0, today = 1 })
         xi.fishing.accrueFatigue(player, cast, event.LOW_SKILL, false)
 
-        assert(readMeters(player).fatigue == 20000, 'Expected one loss to cost twenty times its fatigue')
+        meters = readMeters(player)
+        assert(meters.daily == 0 and meters.fatigue == 20000, 'Expected the loss to cost the pool alone, got ' .. tostring(meters.daily) .. ' / ' .. tostring(meters.fatigue))
     end)
 
     it('classifies a catch by tier, size, item class and monster', function()
