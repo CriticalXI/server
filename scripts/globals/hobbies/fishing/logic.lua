@@ -30,17 +30,6 @@ local function sendFishingMessage(player, line)
     player:messageText(player, zones[player:getZoneID()].text.FISHING_MESSAGE_OFFSET + line, fishingMessageType)
 end
 
--- A monster on the line goes back to the pool when the cast ends without landing it
-local function releaseHookedMonster(cast)
-    if
-        cast.stage == xi.fishing.stage.FIGHTING and
-        cast.catch.type == xi.fishing.catchType.MONSTER and
-        cast.catch.mob
-    then
-        cast.catch.mob:setLocalVar('hooked', 0)
-    end
-end
-
 -----------------------------------
 -- Meters
 -----------------------------------
@@ -694,14 +683,22 @@ local function fightContext(player, cast, catch)
         rod   = rod,
     }
 
-    -- Monsters fight on the stats row for their level
+    -- A monster whose row names a level always fights there, the rest roll one out of 100 on the hook
     if catch.type == xi.fishing.catchType.MONSTER then
-        context.level = catch.mob:getMainLvl()
-        context.size  = xi.fishingSize.LARGE
-        context.stats = xi.fishing.monsterFightStats[#xi.fishing.monsterFightStats]
+        context.size = xi.fishingSize.LARGE
+
+        local monster = xi.fishing.monsters[catch.mob:getName()]
+        local level   = monster and monster.level
+        local roll    = math.randomInt(1, 100)
+        local sum     = 0
 
         for _, stats in ipairs(xi.fishing.monsterFightStats) do
-            if context.level <= stats.level then
+            sum = sum + stats.chance
+            if
+                level == stats.level or
+                (not level and roll <= sum)
+            then
+                context.level = stats.level
                 context.stats = stats
                 break
             end
@@ -782,48 +779,51 @@ local function heal(context, damage, keen)
     return value
 end
 
--- The gauge the client fights against, sent at 128: under it the catch drains stamina, over it stamina comes back.
+-- The gauge the client fights against. 128 baseline stamina, value above or below results in either a drain or regen
 local function regen(cast, context, catch, roll)
-    -- A legendary catch holds a point over the bias whatever the gap, two on a super
+    local regenValue     = 128
+    local levelDiff      = context.skill - context.level
+
+    -- Calculate the recovery of the fish or monster's stamina
+    local diffBreakPoint = catch.type == xi.fishing.catchType.MONSTER and 35 or 40
+    local multiplier     = catch.type == xi.fishing.catchType.MONSTER and 0.2 or 0.55
+
+    -- A legendary catch recovers a point whatever the gap, two on a super legendary
     if context.tier then
-        return 128 + (context.tier == xi.fishingLegendaryTier.SUPER and 2 or 1)
+        return regenValue + (context.tier == xi.fishingLegendaryTier.SUPER and 2 or 1)
     end
 
-    local gap = context.skill - context.level
+    -- Return increased regen if the player is 30 or below the fish or monster's level
+    if levelDiff <= -30 then
+        local regenBoost = math.max(0, math.floor((-levelDiff - diffBreakPoint) * multiplier))
 
-    -- Under a fish by 28 or more the gauge rises 2, and 2 more every 12 levels beyond that
-    if
-        catch.type == xi.fishing.catchType.FISH and
-        gap <= -28
-    then
-        return 128 + 2 + 2 * math.floor((-gap - 28) / 12)
+        return 2 + regenValue + regenBoost
     end
 
-    local value = 128
+    -- Check for legendary rod drain or apply default
+    local drainDiff = context.rod.drainStart or 14
+    local drainMult = context.rod.drainSlope or 0.8
 
-    -- A legendary rod holds the gauge further over the catch and drains it on its own slope
-    local start = context.rod.drainStart or 12
-    local slope = context.rod.drainSlope or 1.3
+    if levelDiff >= drainDiff then
+        -- The drain stops at the rod's own floor. A rod that names none holds a fish to 86 and anything sturdier to 98:
+        -- retail floored a monster on Lu Shang's at 92, the same floor its fish take, over 29 hooks at 45 to 91 levels over
+        local deepest = context.rod.drainFloor or (catch.type == xi.fishing.catchType.FISH and 86 or 98)
 
-    -- Over the catch by the rod's start the gauge drains at the rod's slope, no deeper than 86 on a fish or 98 on anything else
-    if gap >= start then
-        local floorAt = catch.type == xi.fishing.catchType.FISH and 86 or 98
-
-        value = value - math.min(math.floor((gap - start) * slope), floorAt)
+        regenValue = regenValue - math.min(math.floor((levelDiff - drainDiff) * drainMult), deepest)
 
         -- The stamina roll moves the drain a point per point off 100, so a heavy catch drains harder
-        value = value - (roll - 100)
+        regenValue = regenValue - (roll - 100)
     end
 
-    -- A legendary rod holds a monster 3 under the bias
+    -- A legendary rod wears a monster down past whatever the curve gave
     if
         cast.rod.legendary and
         catch.type == xi.fishing.catchType.MONSTER
     then
-        value = value - 3
+        regenValue = regenValue - 3
     end
 
-    return value
+    return regenValue
 end
 
 local function fightTime(player, cast, context)
@@ -909,23 +909,29 @@ local function lowSkillChance(context, catch)
     return 0
 end
 
--- The rod break, lack-of-skill, line snap and size loss chances a claim is rolled against, before the hook feeling adjusts them
-local function breakChances(cast, context, catch)
+-- The rod break, lack-of-skill, line snap and size loss chances the fight is rolled against at the bite
+local function calculateLoss(cast, context, catch)
     local stats   = context.stats
-    local chances = { lowSkill = lowSkillChance(context, catch), lineSnap = 0, rodBreak = 0, sizeLoss = 0 }
+    local chances =
+    {
+        lowSkill   = lowSkillChance(context, catch),
+        lineSnap   = 0,
+        rodBreak   = 0,
+        sizeLoss   = 0,
+        falseAlarm = 0
+    }
 
-    -- A catch heavier than the rod holds (its strength plus half the angler's skill) fails at 3 percent a level over: the rod
-    -- breaks when it is a starter rod, the catch is large or the catch is junk, and the line snaps on a small fish otherwise
-    local over = (stats.weight or context.level) - (context.rod.strength or 0) - math.floor(context.skill / 2)
+    -- Calculate the catch's weight vs the rod's strength. Failure increases at 3% per point over.
+    -- TODO: Current hypothesis is that each fish has a unique weight, along with a unique strenght for each rod not passed in packets
+    -- Proper implementation requires further captures to prove out this formula more precisely
+    local weight = stats.weight or (18 + math.floor(context.level / 2))
+    local over   = weight - (context.rod.strength or 0) - math.floor(context.skill / 4)
     if
         context.rod.strength and
         over > 0
     then
-        local snaps = context.rod.strength >= 35 and
-            context.size ~= xi.fishingSize.LARGE and
-            catch.type == xi.fishing.catchType.FISH
-
-        chances[snaps and 'lineSnap' or 'rodBreak'] = math.min(100, over * 3)
+        chances.rodBreak = math.min(100, math.max(0, (over - 16) * 3))
+        chances.lineSnap = math.min(100, over * 3)
     end
 
     -- A catch with its own snap rate cuts the line at least that often
@@ -939,58 +945,92 @@ local function breakChances(cast, context, catch)
         chances.rodBreak = xi.fishing.luShangBreaks[catch.itemId]
     end
 
-    -- A rod penalised against the catch's size loses it at the fish's own rate, or near twice its level where none is known
-    if context.rod.penalty == context.size then
+    -- Check if the rod has a penalty against this fish size
+    if
+        context.rod.penalty == context.size and
+        catch.type ~= xi.fishing.catchType.MONSTER
+    then
         chances.sizeLoss = stats.sizeLoss or math.min(90, math.floor(context.level * 1.8))
         chances.lostAs   = context.size == xi.fishingSize.LARGE and xi.fishing.failure.LOST_BIG or xi.fishing.failure.LOST_SMALL
+    end
+
+    -- A catch just above the angler can read bad or terrible and still land. Retail did so on 3 percent of hooks one level
+    -- over, climbing to 9 by eleven; the flat rate here stands in for that climb.
+    -- Capture needed: the climb, and the terrible half, which no reeled hook in the corpus ever shows.
+    local levelsAboveAngler = context.level - context.skill
+    if
+        levelsAboveAngler >= 1 and
+        levelsAboveAngler <= 11
+    then
+        chances.falseAlarm = 4
     end
 
     return chances
 end
 
-local function feeling(context, chances, bigFish)
-    -- A large fish measuring past its midpoint is epic before anything else
+local function rollOutcome(chances)
+    if math.randomInt(1, 100) <= chances.rodBreak then
+        return xi.fishing.result.ROD_BREAK
+    end
+
+    if math.randomInt(1, 100) <= chances.lowSkill then
+        return xi.fishing.result.LOW_SKILL
+    end
+
+    if math.randomInt(1, 100) <= chances.lineSnap then
+        return xi.fishing.result.LINE_BREAK
+    end
+
+    if math.randomInt(1, 100) <= chances.sizeLoss then
+        return xi.fishing.result.LOST
+    end
+
+    return xi.fishing.result.CAUGHT
+end
+
+-- The hook feeling the angler is given for the outcome the fight has already rolled
+local function feeling(context, bigFish, result, chances)
     if bigFish and bigFish.epic then
         return xi.fishing.feeling.EPIC
     end
 
-    local gap = context.level - context.skill
+    local snapChance = context.stats.lineSnap or 0
+    local reading    = xi.fishing.feeling.GOOD
 
-    -- A catch 12 or more levels over always doubts the angler's skill, and half the hooks 8 to 11 over do
     if
-        gap >= 12 or
-        (gap >= 8 and math.randomInt(1, 100) <= 50)
+    snapChance >= 45 or
+    result == xi.fishing.result.ROD_BREAK
     then
-        -- The doubt is worded one way in three: 39 percent positive, 11 fairly sure, the rest not knowing, whatever the gap
-        local roll = math.randomInt(1, 100)
+        reading = xi.fishing.feeling.TERRIBLE
 
-        if roll <= 39 then
-            return xi.fishing.feeling.NO_SKILL_POSITIVE
-        elseif roll <= 50 then
+    elseif result == xi.fishing.result.LINE_BREAK then
+        reading = xi.fishing.feeling.BAD
+
+    elseif chances.falseAlarm > 0 then
+        if math.randomInt(1, 100) <= chances.falseAlarm then
+            reading = xi.fishing.feeling.BAD
+        elseif math.randomInt(1, 100) <= chances.falseAlarm then
+            reading = xi.fishing.feeling.TERRIBLE
+        end
+    end
+
+    -- Feeling returns a comment about skill feelings at 12 or over level diff, with a random chance between 8 and 11
+    local levelDiff = context.level - context.skill
+    if
+        levelDiff >= 12 or
+        (levelDiff >= 8 and math.randomInt(1, 100) <= 50)
+    then
+        if reading == xi.fishing.feeling.BAD then
             return xi.fishing.feeling.NO_SKILL_SURE
+
+        elseif reading == xi.fishing.feeling.TERRIBLE then
+            return xi.fishing.feeling.NO_SKILL_POSITIVE
         end
 
         return xi.fishing.feeling.NO_SKILL
     end
 
-    -- A snap or break chance of 45 or more feels terrible
-    if
-        chances.lineSnap >= 45 or
-        chances.rodBreak >= 45
-    then
-        return xi.fishing.feeling.TERRIBLE
-    end
-
-    -- One hook in 25 up to 11 levels over feels bad on any rod
-    if
-        gap >= 1 and
-        gap <= 11 and
-        math.randomInt(1, 100) <= 4
-    then
-        return xi.fishing.feeling.BAD
-    end
-
-    return xi.fishing.feeling.GOOD
+    return reading
 end
 
 -- TODO: Capture needed to prove out keen sense rate
@@ -1065,17 +1105,12 @@ local function buildFight(player, cast, catch)
 
     local staminaRoll = math.randomInt(95, 105)
     local bigFish     = bigFishStats(context, catch)
-    local chances     = breakChances(cast, context, catch)
-    local sense       = feeling(context, chances, bigFish)
+    local chances     = calculateLoss(cast, context, catch)
+    local result      = rollOutcome(chances)
+    local sense       = feeling(context, bigFish, result, chances)
     local keen        = keenSense(context, catch, sense)
     local damage      = attack(context)
     local largeBite   = context.size == xi.fishingSize.LARGE and 1 or 0
-
-    if sense == xi.fishing.feeling.NO_SKILL_SURE then
-        chances.lineSnap = math.min(100, chances.lineSnap * 3)
-    elseif sense == xi.fishing.feeling.NO_SKILL then
-        chances.lineSnap = math.floor(chances.lineSnap / 10)
-    end
 
     if keen then
         sense = xi.fishing.feeling.KEEN
@@ -1093,6 +1128,7 @@ local function buildFight(player, cast, catch)
         angler_sense   = largeBite + (keen and 2 or 0),
         intuition      = intuition(context, keen),
         feeling        = sense,
+        result         = result,
         chances        = chances,
         bigFish        = bigFish,
         roll           = staminaRoll,
@@ -1164,31 +1200,6 @@ local function classify(reported)
     return xi.fishing.result.LOST
 end
 
--- Roll the fight's rod break, lack-of-skill, line snap and size loss chances in that order
-local function rollResult(cast)
-    local chances = cast.fight.chances
-
-    if math.randomInt(1, 100) <= chances.rodBreak then
-        return xi.fishing.result.ROD_BREAK
-    end
-
-    if math.randomInt(1, 100) <= chances.lowSkill then
-        return xi.fishing.result.LOW_SKILL
-    end
-
-    if math.randomInt(1, 100) <= chances.lineSnap then
-        return xi.fishing.result.LINE_BREAK
-    end
-
-    if math.randomInt(1, 100) <= chances.sizeLoss then
-        cast.lossReason = chances.lostAs
-
-        return xi.fishing.result.LOST
-    end
-
-    return xi.fishing.result.CAUGHT
-end
-
 -- Whether the fight uses up the bait; the removal follows the result line, as retail orders them
 local function baitIsLost(player, cast, result)
     -- Catching an item keeps the bait
@@ -1233,6 +1244,12 @@ local function failCatch(player, cast, result, baitTaken)
         baitTaken
     then
         line = xi.fishingMessage.GIVE_UP_BAIT_LOSS
+    -- An item that breaks the rod says whether it was too big or too heavy
+    elseif
+        result == xi.fishing.result.ROD_BREAK and
+        cast.catch.type == xi.fishing.catchType.ITEM
+    then
+        line = cast.catch.record.size == xi.fishingSize.LARGE and xi.fishingMessage.ROD_BREAK_TOO_BIG or xi.fishingMessage.ROD_BREAK_TOO_HEAVY
     end
 
     player:setAnimation(animation)
@@ -1314,9 +1331,32 @@ local function catchItem(player, cast)
     return true
 end
 
--- Start a fished monster's cooldown when it despawns and remove the listener
+-- A monster serves its cooldown from the moment it leaves the line, landed or not
+local function startCooldown(mob)
+    local monster = xi.fishing.monsters[mob:getName()]
+
+    if monster and monster.cooldown then
+        mob:setLocalVar('respawnAt', GetSystemTime() + monster.cooldown)
+    end
+end
+
+-- A monster on the line goes back to the pool when the cast ends without landing it, and still serves its cooldown
+local function releaseHookedMonster(cast)
+    if
+        cast.stage ~= xi.fishing.stage.FIGHTING or
+        cast.catch.type ~= xi.fishing.catchType.MONSTER or
+        not cast.catch.mob
+    then
+        return
+    end
+
+    cast.catch.mob:setLocalVar('hooked', 0)
+    startCooldown(cast.catch.mob)
+end
+
+-- A landed monster's cooldown runs from the despawn instead, so the listener restamps it and goes
 local function stampCooldown(mobArg)
-    mobArg:setLocalVar('respawnAt', GetSystemTime() + xi.fishing.monsters[mobArg:getName()].cooldown)
+    startCooldown(mobArg)
     mobArg:removeListener('FISHING_COOLDOWN')
 end
 
@@ -1368,7 +1408,7 @@ local function catchMonster(player, cast)
     return true
 end
 
--- Work out the result of the minigame, only rolling for failures when the player claims the catch
+-- Work out the result of the minigame: the fight rolled it at the bite, and a claim collects it
 local function decideResult(cast, reported, echo)
     local result = classify(reported)
 
@@ -1385,7 +1425,11 @@ local function decideResult(cast, reported, echo)
         return xi.fishing.result.LOST
     end
 
-    return rollResult(cast)
+    if cast.fight.result == xi.fishing.result.LOST then
+        cast.lossReason = cast.fight.chances.lostAs
+    end
+
+    return cast.fight.result
 end
 
 -- A fight that is cut short counts as giving up
@@ -1490,13 +1534,9 @@ xi.fishing.resolveCatch = function(player, cast, reported, echo)
         end
     end
 
-    -- A monster that wasn't caught goes back to the pool
-    if
-        result ~= xi.fishing.result.CAUGHT and
-        cast.catch.type == xi.fishing.catchType.MONSTER and
-        cast.catch.mob
-    then
-        cast.catch.mob:setLocalVar('hooked', 0)
+    -- A monster that wasn't caught goes back to the pool on its cooldown
+    if result ~= xi.fishing.result.CAUGHT then
+        releaseHookedMonster(cast)
     end
 
     local baitTaken = baitIsLost(player, cast, result)

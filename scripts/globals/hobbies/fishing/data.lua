@@ -80,14 +80,14 @@ xi.fishing.entryBuckets =
     xi.fishing.catchType.MONSTER,
 }
 
--- Capture needed
--- TODO: Capture a wide range of monster levels from 1 to 99 to prove out this table
+-- The fight a hooked monster puts up, rolled out of 100 on every hook whatever the monster and the zone
 xi.fishing.monsterFightStats =
 {
-    { level = 19, arrowDamage = 320, arrowDelay = 14, moveFrequency = 15 },
-    { level = 29, arrowDamage = 320, arrowDelay = 11, moveFrequency = 15 },
-    { level = 39, arrowDamage = 320, arrowDelay = 10, moveFrequency = 15 },
-    { level = 99, arrowDamage = 320, arrowDelay =  9, moveFrequency = 15 },
+    { chance = 36, level = 10, arrowDamage = 320, arrowDelay = 14, moveFrequency = 15 },
+    { chance = 26, level = 20, arrowDamage = 300, arrowDelay = 11, moveFrequency = 15 },
+    { chance = 19, level = 30, arrowDamage = 320, arrowDelay = 10, moveFrequency = 15 },
+    { chance = 13, level = 40, arrowDamage = 340, arrowDelay =  9, moveFrequency = 15 },
+    { chance =  6, level = 50, arrowDamage = 380, arrowDelay =  8, moveFrequency = 15 },
 }
 
 -----------------------------------
@@ -169,8 +169,8 @@ xi.fishing.rodStats =
     [xi.item.HALCYON_FISHING_ROD      ] = { attack = 100, recovery =  70, strength =  55, smallDelay = 2, smallMove = 1, largeDelay = 0, largeMove =  2, penalty = xi.fishingSize.LARGE },
     [xi.item.HUME_FISHING_ROD         ] = { attack = 125, recovery =  75, strength =  45, smallDelay = 2, smallMove = 1, largeDelay = 0, largeMove =  2, penalty = xi.fishingSize.LARGE },
     [xi.item.JUDGES_ROD               ] = { attack = 200, recovery = 100, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 100 },
-    [xi.item.LU_SHANGS_FISHING_ROD    ] = { attack = 110, recovery = 100, strength =  95, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 20, fatigue = 95, drainStart = 20, drainSlope = 1.5 },
-    [xi.item.LU_SHANGS_FISHING_ROD_P1 ] = { attack = 110, recovery = 100, strength =  95, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 20, fatigue = 95, drainStart = 20, drainSlope = 1.5 },
+    [xi.item.LU_SHANGS_FISHING_ROD    ] = { attack = 110, recovery = 100, strength =  95, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 20, fatigue = 95, drainStart = 26, drainSlope = 1.7, drainFloor = 92 },
+    [xi.item.LU_SHANGS_FISHING_ROD_P1 ] = { attack = 110, recovery = 100, strength =  95, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 20, fatigue = 95, drainStart = 26, drainSlope = 1.7, drainFloor = 92 },
     [xi.item.MAZE_MONGER_FISHING_ROD  ] = { attack = 100, recovery = 100, strength =  55, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove = 10 },
     [xi.item.MITHRAN_FISHING_ROD      ] = { attack = 130, recovery =  65, strength =  60, smallDelay = 0, smallMove = 0, largeDelay = 1, largeMove =  0, penalty = xi.fishingSize.SMALL },
     [xi.item.SINGLE_HOOK_FISHING_ROD  ] = { attack = 100, recovery =  80, strength =  40, smallDelay = 0, smallMove = 0, largeDelay = 1, largeMove =  0, penalty = xi.fishingSize.SMALL },
@@ -296,7 +296,7 @@ xi.fishing.catchStats =
     [xi.item.MUDDY_SIREDON            ] = { arrowDamage =  460, arrowDelay = 12, moveFrequency = 11 },
     [xi.item.MYTHRIL_DAGGER           ] = { arrowDamage = 1560, arrowDelay = 13, moveFrequency =  2, fatigue = xi.fishing.fatigueClass.VALUABLE },
     [xi.item.MYTHRIL_SWORD            ] = { arrowDamage =  300, arrowDelay = 13, moveFrequency =  2, fatigue = xi.fishing.fatigueClass.VALUABLE },
-    [xi.item.NEBIMONITE               ] = { arrowDamage =  600, arrowDelay =  9, moveFrequency =  5, sizeLoss = 66 },
+    [xi.item.NEBIMONITE               ] = { arrowDamage =  600, arrowDelay =  9, moveFrequency =  5, weight = 56, sizeLoss = 66 }, -- Heavier than its level: it strains a starter rod
     [xi.item.NOBLE_LADY               ] = { arrowDamage =  600, arrowDelay =  7, moveFrequency = 10 },
     [xi.item.NORG_SHELL               ] = { arrowDamage =  620, arrowDelay = 13, moveFrequency =  2 },
     [xi.item.NOSTEAU_HERRING_1        ] = { arrowDamage =  420, arrowDelay =  7, moveFrequency =  8, sizeLoss = 92 },
@@ -314,7 +314,7 @@ xi.fishing.catchStats =
     [xi.item.RUSTY_GREATSWORD         ] = { arrowDamage = 1140, arrowDelay = 13, moveFrequency =  2, weight = 50 },
     [xi.item.RUSTY_LEGGINGS           ] = { arrowDamage =  520, arrowDelay = 13, moveFrequency =  2, weight = 50, fatigue = xi.fishing.fatigueClass.JUNK },
     [xi.item.RUSTY_PICK               ] = { arrowDamage =  940, arrowDelay = 13, moveFrequency =  2, weight = 50, fatigue = xi.fishing.fatigueClass.VALUABLE },
-    [xi.item.RUSTY_SUBLIGAR           ] = { arrowDamage =  440, arrowDelay = 13, moveFrequency =  2, weight = 50, fatigue = xi.fishing.fatigueClass.JUNK },
+    [xi.item.RUSTY_SUBLIGAR           ] = { arrowDamage =  440, arrowDelay = 13, moveFrequency =  2, weight = 78, fatigue = xi.fishing.fatigueClass.JUNK }, -- Broke a Tarutaru rod on all 13 retail reels
     [xi.item.RYUGU_TITAN              ] = { arrowDamage =  960, arrowDelay =  1, moveFrequency = 15 },
     [xi.item.SANDFISH                 ] = { arrowDamage =  720, arrowDelay =  3, moveFrequency = 10 },
     [xi.item.SAZANBALIGI              ] = { arrowDamage =  360, arrowDelay = 10, moveFrequency = 14 },
@@ -374,10 +374,16 @@ xi.fishing.preferredCatches =
     [xi.item.WORM_LURE             ] = { xi.item.CORAL_BUTTERFLY, xi.item.MOORISH_IDOL, xi.item.SANDFISH, xi.item.TRILOBITE, xi.item.YELLOW_GLOBE, xi.item.ZAFMLUG_BASS },
 }
 
--- Fatigue class and cooldown in seconds for the monsters that have them
+-- Fatigue class, cooldown in seconds and pinned fight level for the monsters that have them
 xi.fishing.monsters =
 {
-    ['Devil_Manta'    ] = { fatigue = xi.fishing.fatigueClass.VALUABLE, cooldown = 600 },
+    ['Devil_Manta'    ] = { fatigue = xi.fishing.fatigueClass.VALUABLE, cooldown = 600, level = 50 },
+    ['Fighting_Pugil' ] = { level = 50 },
     ['Northern_Piranu'] = { cooldown = 14400 },
+    ['Ocean_Crab'     ] = { level = 40 },
+    ['Palm_Crab'      ] = { level = 10 },
+    ['Savanna_Crab'   ] = { level = 20 },
+    ['Scavenger_Crab' ] = { level = 20 },
+    ['Sea_Pugil'      ] = { level = 10 },
     ['Southern_Piranu'] = { cooldown = 14400 },
 }
