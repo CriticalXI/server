@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  pond:
+    cylinder: {center: [-103.0, 11.0, -65.0], radius: 60}
+    pool:
+      - alabaligi
+      - betta
+      - kayabaligi
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+      - sazanbaligi
+      - yilanbaligi
+  other_waterside:
+    pool:
+      - crayfish
+      - rusty_bucket
+monsters:
+  17043460: {}
+  17043461: {}

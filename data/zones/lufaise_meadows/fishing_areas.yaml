@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  leremieu_lagoon:
+    cylinder: {center: [96.0, -5.0, 28.0], radius: 50}
+    pool:
+      - arrowwood_log
+      - dark_bass
+      - emperor_fish
+      - lik
+      - tavnazian_goby
+  seaside:
+    cylinder: {center: [0.0, 0.0, -320.0], radius: 60}
+    pool:
+      - cobalt_jellyfish
+      - greedie
+      - quus
+  rafeloux_river:
+    pool:
+      - arrowwood_log
+      - gold_carp
+      - tavnazian_goby
+monsters:
+  16875521: {}
+  16875522: {}
+  16875523: {}
+  16875524: {}
+  16875525: {}

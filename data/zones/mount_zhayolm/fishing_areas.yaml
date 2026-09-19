@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - denizanasi
+      - hamsi
+      - kalamar
+      - rusty_subligar
+monsters:
+  17027073: {}
+  17027074: {}
+  17027075: {}
+  17027076: {}
+  17027077: {}
+  17027078:
+    area: whole_zone
+    bait: [minnow, sinking_minnow]

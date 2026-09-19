@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - ahtapot
+      - hydrogauge
+      - istakoz
+      - istiridye
+      - mercanbaligi
+      - pterygotus
+      - rusty_leggings
+      - rusty_subligar

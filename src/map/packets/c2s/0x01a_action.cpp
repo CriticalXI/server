@@ -33,6 +33,7 @@
 #include "items.h"
 #include "items/transactions/item_claim.h"
 #include "latent_effect_container.h"
+#include "lua/luautils.h"
 #include "packets/s2c/0x01d_item_same.h"
 #include "packets/s2c/0x029_battle_message.h"
 #include "packets/s2c/0x02f_dig.h"
@@ -405,12 +406,11 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
         {
             if (PChar->inMogHouse())
             {
-                ShowWarningFmt("GP_CLI_COMMAND_ACTION: Player {} trying to fish in Mog House", PChar->getName());
                 PChar->pushPacket<GP_SERV_COMMAND_EVENTUCOFF>(PChar, GP_SERV_COMMAND_EVENTUCOFF_MODE::Fishing);
                 return;
             }
 
-            fishingutils::StartFishing(PChar);
+            luautils::OnFishingStart(PChar);
         }
         break;
         case GP_CLI_COMMAND_ACTION_ACTIONID::ChangeTarget:

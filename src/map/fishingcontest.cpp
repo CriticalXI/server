@@ -114,7 +114,7 @@ void ProgressContest()
 {
     /***********************************************
      *  Update the phase of the fishing contest
-     *  See enum FISHING_CONTEST_STATUS in fishingutils.h
+     *  See enum FISHING_CONTEST_STATUS in fishingcontest.h
      *  CALLED BY ZONE TICK IN SELBINA - DO NOT ADD TO FUNCTION
      ***********************************************/
     if (CurrentFishingContest.status == FISHING_CONTEST_STATUS::CLOSED)

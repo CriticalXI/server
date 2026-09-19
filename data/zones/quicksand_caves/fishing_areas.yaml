@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - cave_cherax
+      - crayfish
+      - rusty_subligar

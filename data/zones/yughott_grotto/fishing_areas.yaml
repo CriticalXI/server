@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - crayfish
+      - rusty_cap
+      - rusty_leggings
+      - rusty_pick
+      - silver_ring

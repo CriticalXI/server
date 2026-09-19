@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  south_landing:
+    cylinder: {center: [172.25, -2.0, -475.286], radius: 150}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - muddy_siredon
+      - rusty_bucket
+      - rusty_leggings
+      - shining_trout
+  other_waterside_south:
+    cylinder: {center: [-101.576, 0.0, -484.401], radius: 60}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - giant_catfish
+      - muddy_siredon
+      - phanauet_newt
+  other_waterside_center:
+    cylinder: {center: [-221.249, 0.0, -283.157], radius: 60}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - giant_catfish
+      - muddy_siredon
+      - phanauet_newt
+  other_waterside_north:
+    cylinder: {center: [-179.219, 1.0, -131.611], radius: 20}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - giant_catfish
+      - muddy_siredon
+      - phanauet_newt
+  central_landing:
+    cylinder: {center: [-164.099, 0.0, 59.123], radius: 80}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - muddy_siredon
+      - rusty_bucket
+  north_landing:
+    cylinder: {center: [-332.92, -2.0, 564.747], radius: 150}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - muddy_siredon
+      - rusty_bucket
+      - rusty_leggings
+      - shining_trout
+monsters:
+  16785409: {}
+  16785410: {}
+  16785411: {}
+  16785412: {}
+  16785413: {}

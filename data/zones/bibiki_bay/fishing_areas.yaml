@@ -1,0 +1,108 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  pi_south_beach:
+    poly:
+      - [-440.0, 0.0, -860.0]
+      - [-260.0, 0.0, -860.0]
+      - [-260.0, 0.0, -980.0]
+      - [-450.0, 0.0, -980.0]
+    pool:
+      - bibiki_urchin
+      - bibikibo
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_fragment
+      - moorish_idol
+      - quus
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_subligar
+      - shall_shell
+      - trilobite
+      - vongola_clam
+  pi_north_beach:
+    cylinder: {center: [-360.0, 0.0, -390.0], radius: 150}
+    pool:
+      - bastore_sardine
+      - bibiki_urchin
+      - bluetail
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_fragment
+      - moorish_idol
+      - quus
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_subligar
+      - shall_shell
+      - trilobite
+      - vongola_clam
+  pi_west_beach:
+    cylinder: {center: [-660.0, 0.0, -680.0], radius: 150}
+    pool:
+      - bastore_sardine
+      - bibiki_urchin
+      - bluetail
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_fragment
+      - moorish_idol
+      - quus
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_subligar
+      - shall_shell
+      - vongola_clam
+  pi_east_beach:
+    cylinder: {center: [-110.0, 0.0, -640.0], radius: 150}
+    pool:
+      - bastore_sardine
+      - bibiki_urchin
+      - bluetail
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - coral_fragment
+      - moorish_idol
+      - quus
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_subligar
+      - shall_shell
+      - vongola_clam
+  bb_south_seaside:
+    cylinder: {center: [309.0, -10.0, 186.0], radius: 40}
+    pool:
+      - bastore_sardine
+      - bladefish
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - cone_calamary
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_subligar
+      - zafmlug_bass
+  bb_other_seaside:
+    pool:
+      - bastore_sardine
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - cone_calamary
+      - fish_scale_shield
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_subligar
+      - zafmlug_bass
+monsters:
+  16793601: {}
+  16793602: {}
+  16793603: {}
+  16793604: {}
+  16793606:
+    quest: {log: 4, id: 30}

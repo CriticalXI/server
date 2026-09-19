@@ -61,12 +61,15 @@
 #include "items/item_puppet.h"
 
 #include "packets/s2c/0x017_chat_std.h"
+#include "packets/s2c/0x052_eventucoff.h"
 #include "packets/s2c/0x05a_motionmes.h"
+#include "packets/s2c/0x115_fish.h"
 
 #include "persist_batch.h"
 #include "utils/battleutils.h"
 
 #include "utils/charutils.h"
+#include "utils/fishingutils.h"
 #include "utils/instanceutils.h"
 #include "utils/itemutils.h"
 #include "utils/mobutils.h"
@@ -112,6 +115,7 @@
 #include <limits>
 #include <ranges>
 #include <string>
+#include <utility>
 
 #include <fmt/ranges.h>
 
@@ -369,6 +373,7 @@ void init(IPP mapIPP, bool isRunningInCI)
     lua.set_function("ClearCharVarFromAll", &luautils::ClearCharVarFromAll);
     lua.set_function("SendEntityVisualPacket", &luautils::SendEntityVisualPacket);
     lua.set_function("GetMobRespawnTime", &luautils::GetMobRespawnTime);
+    lua.set_function("GetFishingData", &luautils::GetFishingData);
     lua.set_function("DisallowRespawn", &luautils::DisallowRespawn);
     lua.set_function("GetRecentFishers", &luautils::GetRecentFishers);
     lua.set_function("NearLocation", &luautils::NearLocation);
@@ -5509,6 +5514,175 @@ sol::table GetRecentFishers(uint16 minutes)
     return fishers;
 }
 
+// The loaded fishing catalog and every zone's areas as plain tables, keyed by item id, zone id and
+// spawn id with names resolved. Absent fields are absent, matching the YAML.
+auto GetFishingData() -> sol::table
+{
+    TracyZoneScoped;
+
+    const auto itemId = [](const std::string& name) -> uint16
+    {
+        return xi::items::lookupIdByName(name).value_or(0);
+    };
+
+    const auto idSet = [&](const std::vector<std::string>& names) -> sol::table
+    {
+        auto set = lua.create_table();
+        for (const auto& name : names)
+        {
+            set[itemId(name)] = true;
+        }
+
+        return set;
+    };
+
+    const auto& catalog = fishingutils::GetCatalog();
+    auto        data    = lua.create_table();
+
+    auto fish = lua.create_table();
+    for (const auto& [name, record] : catalog.Fish)
+    {
+        auto entry     = lua.create_table();
+        entry["name"]  = name;
+        entry["size"]  = std::to_underlying(record.Size);
+        entry["skill"] = record.Skill;
+        if (record.Item)
+        {
+            entry["item"] = true;
+        }
+
+        if (record.Legendary != xi::FishingLegendaryTier::None)
+        {
+            entry["legendary"] = std::to_underlying(record.Legendary);
+        }
+
+        if (record.MinLength > 1 || record.MaxLength > 1)
+        {
+            entry["length"] = lua.create_table_with(1, record.MinLength, 2, record.MaxLength);
+        }
+
+        if (record.MaxHook > 1)
+        {
+            entry["maxHook"] = record.MaxHook;
+        }
+
+        if (record.KeyItem != 0)
+        {
+            entry["keyItem"] = record.KeyItem;
+        }
+
+        if (record.QuestLog != 255)
+        {
+            entry["quest"] = lua.create_table_with("log", record.QuestLog, "id", record.QuestId);
+        }
+
+        fish[itemId(name)] = entry;
+    }
+    data["fish"] = fish;
+
+    auto rods = lua.create_table();
+    for (const auto& [name, record] : catalog.Rods)
+    {
+        auto entry    = lua.create_table();
+        entry["name"] = name;
+        entry["size"] = std::to_underlying(record.Size);
+        entry["time"] = record.Time;
+        if (record.Legendary)
+        {
+            entry["legendary"] = true;
+        }
+
+        if (record.LegendaryTime != 0)
+        {
+            entry["legendaryTime"] = record.LegendaryTime;
+        }
+
+        if (!record.BreaksTo.empty())
+        {
+            entry["breaksTo"] = itemId(record.BreaksTo);
+        }
+
+        rods[itemId(name)] = entry;
+    }
+    data["rods"] = rods;
+
+    auto baits = lua.create_table();
+    for (const auto& [name, record] : catalog.Baits)
+    {
+        auto entry        = lua.create_table();
+        entry["name"]     = name;
+        entry["type"]     = std::to_underlying(record.Type);
+        entry["affinity"] = idSet(record.Affinity);
+        if (record.MaxHook > 1)
+        {
+            entry["maxHook"] = record.MaxHook;
+        }
+
+        baits[itemId(name)] = entry;
+    }
+    data["baits"] = baits;
+
+    auto zones = lua.create_table();
+    for (const auto& [zoneId, records] : fishingutils::GetZones())
+    {
+        auto areas = lua.create_table();
+        for (const auto& area : records.Areas)
+        {
+            auto entry = lua.create_table();
+            if (area.Bound == xi::data::FishingBoundKind::Cylinder)
+            {
+                entry["cylinder"] = lua.create_table_with("x", area.Center[0], "y", area.Center[1], "z", area.Center[2], "radius", area.Radius);
+            }
+            else if (area.Bound == xi::data::FishingBoundKind::Polygon)
+            {
+                auto corners = lua.create_table();
+                for (const auto& corner : area.Corners)
+                {
+                    corners.add(lua.create_table_with(1, corner[0], 2, corner[1], 3, corner[2]));
+                }
+
+                entry["poly"] = corners;
+            }
+
+            auto pool = lua.create_table();
+            for (const auto& item : area.Pool)
+            {
+                pool.add(itemId(item));
+            }
+
+            entry["pool"]    = pool;
+            areas[area.Name] = entry;
+        }
+
+        auto monsters = lua.create_table();
+        for (const auto& monster : records.Monsters)
+        {
+            auto entry = lua.create_table();
+            if (!monster.Area.empty())
+            {
+                entry["area"] = monster.Area;
+            }
+
+            if (!monster.Baits.empty())
+            {
+                entry["bait"] = idSet(monster.Baits);
+            }
+
+            if (monster.QuestLog != 255)
+            {
+                entry["quest"] = lua.create_table_with("log", monster.QuestLog, "id", monster.QuestId);
+            }
+
+            monsters[monster.SpawnId] = entry;
+        }
+
+        zones[static_cast<uint16>(zoneId)] = lua.create_table_with("areas", areas, "monsters", monsters);
+    }
+    data["zones"] = zones;
+
+    return data;
+}
+
 std::string GetServerMessage(uint8 language)
 {
     TracyZoneScoped;
@@ -5646,6 +5820,51 @@ bool OnChocoboDig(CCharEntity* PChar)
     TracyZoneScoped;
 
     return callGlobal<bool>("xi.chocoboDig.start", PChar);
+}
+
+// Lua returns the hook timer in seconds to start the cast, or nothing to refuse it.
+void OnFishingStart(CCharEntity* PChar)
+{
+    TracyZoneScoped;
+
+    const auto result = callGlobal<sol::object>("xi.fishing.onStart", PChar);
+    if (result.valid() && result.get_type() == sol::type::number)
+    {
+        PChar->hookDelay = result.as<uint8>();
+        return;
+    }
+
+    PChar->pushPacket<GP_SERV_COMMAND_EVENTUCOFF>(PChar, GP_SERV_COMMAND_EVENTUCOFF_MODE::Fishing);
+}
+
+void OnFishingAction(CCharEntity* PChar, const uint8 mode, const int32 para, const int32 para2)
+{
+    TracyZoneScoped;
+
+    const auto result = callGlobal<sol::object>("xi.fishing.onAction", PChar, mode, para, para2);
+    if (!result.valid() || result.get_type() != sol::type::table)
+    {
+        return;
+    }
+
+    const sol::table fight = result;
+    PChar->pushPacket<GP_SERV_COMMAND_FISH>(
+        fight.get_or("stamina", uint16{}),
+        fight.get_or("regen", uint16{}),
+        fight.get_or("move_frequency", uint16{}),
+        fight.get_or("arrow_damage", uint16{}),
+        fight.get_or("arrow_delay", uint16{}),
+        fight.get_or("arrow_regen", uint16{}),
+        fight.get_or("time", uint16{}),
+        fight.get_or("angler_sense", uint8{}),
+        fight.get_or("intuition", uint32{}));
+}
+
+void OnFishingInterrupt(CCharEntity* PChar)
+{
+    TracyZoneScoped;
+
+    callGlobal<void>("xi.fishing.onInterrupt", PChar);
 }
 
 // Loads a Lua function with a fallback hierarchy

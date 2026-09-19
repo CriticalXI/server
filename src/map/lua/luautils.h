@@ -496,6 +496,7 @@ void   DisallowRespawn(uint32 mobid, bool allowRespawn);
 
 std::string GetServerMessage(uint8 language);               // Get the message to be delivered to player on first zone in of a session
 auto        GetRecentFishers(uint16 minutes) -> sol::table; // returns a list of recently active fishers (that fished in the last specified minutes)
+auto        GetFishingData() -> sol::table;                 // the fishing catalog and every zone's areas, keyed by id
 
 void  OnAdditionalEffect(CBattleEntity* PAttacker, CBattleEntity* PDefender, action_result_t* Action, int32 damage);                                      // for mobs with additional effects
 void  OnSpikesDamage(CBattleEntity* PDefender, CBattleEntity* PAttacker, action_result_t* Action, int32 damage);                                          // for mobs with spikes
@@ -514,6 +515,10 @@ void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
 void OnPlayerVolunteer(CCharEntity* PChar, const std::string& text);
 
 bool OnChocoboDig(CCharEntity* PChar);
+
+void OnFishingStart(CCharEntity* PChar);
+void OnFishingAction(CCharEntity* PChar, uint8 mode, int32 para, int32 para2);
+void OnFishingInterrupt(CCharEntity* PChar);
 
 // Utility method: checks for and loads a lua function for events
 auto LoadEventScript(CCharEntity* PChar, const char* functionName) -> sol::function;

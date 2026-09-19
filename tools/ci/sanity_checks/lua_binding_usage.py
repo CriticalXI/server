@@ -75,6 +75,7 @@ def main():
     function_names.append("onZoneOut")
     function_names.append("onTriggerAreaEnter")
     function_names.append("onTriggerAreaLeave")
+    function_names.append("onFishingHook")
     function_names.append("onEventFinish")
     function_names.append("onEventUpdate")
     function_names.append("sequence")

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../schemas/enums/_enum.schema.json
+
+meta:
+  cpp:
+    underlying: uint8_t
+  lua:
+    table: xi.fishingBaitType
+
+values:
+  bait:    0 # consumed on a catch
+  lure:    1 # reusable
+  special: 2 # one-shot bait for a specific catch

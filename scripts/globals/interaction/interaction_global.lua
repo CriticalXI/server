@@ -123,6 +123,10 @@ function InteractionGlobal.onZoneOut(player, fallbackFn)
     return InteractionGlobal.lookup:onZoneOut(player, fallbackFn)
 end
 
+function InteractionGlobal.onFishingHook(player, area, fallbackFn)
+    return InteractionGlobal.lookup:onFishingHook(player, area, fallbackFn)
+end
+
 function InteractionGlobal.onTriggerAreaEnter(player, triggerArea, instance, fallbackFn)
     return InteractionGlobal.lookup:onTriggerAreaEnter(player, triggerArea, instance, fallbackFn)
 end

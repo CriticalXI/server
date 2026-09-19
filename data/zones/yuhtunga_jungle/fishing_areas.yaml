@@ -1,0 +1,88 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  northeast_pond:
+    cylinder: {center: [380.0, 21.0, 296.0], radius: 15}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - crescent_fish
+      - elshimo_frog
+      - forest_carp
+      - jungle_catfish
+      - moat_carp
+      - monke-onke
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+  gremini_falls:
+    cylinder: {center: [428.0, 20.0, 278.0], radius: 32}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - crescent_fish
+      - elshimo_frog
+      - elshimo_newt
+      - forest_carp
+      - moat_carp
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+  southwest_pond:
+    cylinder: {center: [-340.0, 16.0, -456.0], radius: 15}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - elshimo_newt
+      - forest_carp
+      - jungle_catfish
+      - moat_carp
+      - pipira
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+  southwest_waterfall_south:
+    cylinder: {center: [-458.0, 17.0, -446.0], radius: 28}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - elshimo_newt
+      - forest_carp
+      - moat_carp
+      - pipira
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+  southwest_waterfall_north:
+    cylinder: {center: [-446.0, 17.0, -379.0], radius: 45}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - elshimo_newt
+      - forest_carp
+      - moat_carp
+      - pipira
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+  other_waterside:
+    pool:
+      - copper_ring
+      - crayfish
+      - elshimo_frog
+      - elshimo_newt
+      - forest_carp
+      - moat_carp
+      - rusty_bucket
+      - rusty_leggings
+monsters:
+  17281025: {}
+  17281026: {}
+  17281027: {}
+  17281028: {}
+  17281029: {}

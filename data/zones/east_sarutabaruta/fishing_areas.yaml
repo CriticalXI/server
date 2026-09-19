@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  seaside:
+    poly:
+      - [-28.3, 9.0, -680.86]
+      - [-12.1, 9.0, -712.99]
+      - [-95.1, 9.0, -718.31]
+      - [-134.25, 9.0, -663.89]
+      - [-131.11, 9.0, -642.65]
+    pool:
+      - bastore_bream
+      - bastore_sardine
+      - bladefish
+      - bluetail
+      - clump_of_pamtam_kelp
+      - gold_lobster
+      - ogre_eel
+      - quus
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+  other_waterside_south:
+    cylinder: {center: [-144.69, -5.0, -360.58], radius: 25}
+    pool:
+      - crayfish
+      - rusty_subligar
+  other_waterside_west:
+    cylinder: {center: [-237.236, -1.0, -224.762], radius: 25}
+    pool:
+      - crayfish
+      - rusty_subligar
+  other_waterside_rivers:
+    poly:
+      - [-59.27, -12.0, -61.77]
+      - [-334.78, -12.0, -62.2]
+      - [-326.67, -12.0, 729.7]
+      - [534.48, -12.0, 728.89]
+      - [538.0, -12.0, -251.35]
+      - [-54.22, -12.0, -204.03]
+    pool:
+      - crayfish
+      - rusty_subligar
+  lake_tepokalipuka:
+    poly:
+      - [-360.0, -1.0, -204.0]
+      - [-360.0, -1.0, -75.0]
+      - [-255.44, -1.0, -75.0]
+      - [-235.95, -1.0, -115.16]
+      - [-74.11, -1.0, -115.58]
+      - [-81.45, -1.0, -170.54]
+      - [-248.83, -1.0, -169.08]
+      - [-263.1, -1.0, -198.81]
+    pool:
+      - crayfish
+      - crescent_fish
+      - moat_carp
+      - monke-onke
+      - pipira
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+monsters:
+  17252353: {}
+  17252354: {}
+  17252355: {}
+  17252357: {}

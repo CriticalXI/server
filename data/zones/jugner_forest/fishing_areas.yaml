@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  crystalwater_spring:
+    cylinder: {center: [300.0, 1.0, -179.833], radius: 20}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - crystal_bass
+      - red_terrapin
+      - rusty_leggings
+      - rusty_pick
+      - rusty_subligar
+      - silver_ring
+  lake_mechieume_mouth:
+    cylinder: {center: [19.458, 3.0, 334.528], radius: 31}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - emperor_fish
+      - gold_carp
+      - moat_carp
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - silver_ring
+      - tricolored_carp
+  lake_mechieume_main:
+    poly:
+      - [-171.792, 5.0, 598.376]
+      - [139.312, 5.0, 583.303]
+      - [141.869, 5.0, 322.515]
+      - [-176.356, 5.0, 326.886]
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - giant_catfish
+      - gold_carp
+      - moat_carp
+      - red_terrapin
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - silver_ring
+      - tricolored_carp
+  maidens_spring:
+    cylinder: {center: [-496.682, 9.0, 298.057], radius: 22}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - red_terrapin
+      - rusty_leggings
+      - rusty_pick
+      - rusty_subligar
+      - silver_ring
+  river:
+    pool:
+      - arrowwood_log
+      - cheval_salmon
+      - crayfish
+      - gold_carp
+      - moat_carp
+      - rusty_bucket
+      - rusty_leggings
+      - shining_trout
+      - tricolored_carp
+monsters:
+  17203201: {}
+  17203202: {}
+  17203203: {}
+  17203204: {}
+  17203205: {}
