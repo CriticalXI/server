@@ -404,7 +404,8 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
         break;
         case GP_CLI_COMMAND_ACTION_ACTIONID::Fish:
         {
-            if (PChar->inMogHouse())
+            // The 0x110 packets are rejected while fishing is disabled, so a cast must never open
+            if (!settings::get<bool>("map.FISHING_ENABLE") || PChar->inMogHouse())
             {
                 PChar->pushPacket<GP_SERV_COMMAND_EVENTUCOFF>(PChar, GP_SERV_COMMAND_EVENTUCOFF_MODE::Fishing);
                 return;
