@@ -120,12 +120,26 @@ TEST_CASE("Fishing line snaps begin above rod durability and cap at fifty-five",
     auto rod    = rod_t{};
     rod.maxRank = 10;
 
-    for (const auto rank : { 10, 11, 12, 13 })
+    struct SnapCase
+    {
+        uint8 rank;
+        uint8 chance;
+    };
+
+    // Rank 24 is the first gap whose raw chance passes 255, so it guards the arithmetic as well as the cap
+    const SnapCase cases[] = {
+        { 10, 0 },
+        { 11, 19 },
+        { 12, 38 },
+        { 13, 55 },
+        { 24, 55 },
+    };
+
+    for (const auto& [rank, chance] : cases)
     {
         CAPTURE(rank);
-        const auto  result    = fishingutils::CalculateSnapChance(FISHINGCATCHTYPE_SMALLFISH, 0, 10, FISHINGSIZETYPE_SMALL, false, rank, &rod);
-        const uint8 chances[] = { 0, 19, 38, 55 };
-        CHECK(result.chance == chances[rank - 10]);
+        const auto result = fishingutils::CalculateSnapChance(FISHINGCATCHTYPE_SMALLFISH, 0, 10, FISHINGSIZETYPE_SMALL, false, rank, &rod);
+        CHECK(result.chance == chance);
         if (rank == 10)
         {
             CHECK(result.failReason == FISHINGFAILTYPE_NONE);
@@ -163,6 +177,11 @@ TEST_CASE("Fishing rod breaks begin above durability and cap at twenty", "[phoen
     const auto capped = fishingutils::CalculateBreakChance(FISHINGCATCHTYPE_SMALLFISH, 0, 10, FISHINGSIZETYPE_SMALL, false, 100, &rod);
     CHECK(capped.failReason == FISHINGFAILTYPE_RODBREAK);
     CHECK(capped.chance == 20);
+
+    // Rank 37 is the first gap whose raw chance passes 255, so it guards the arithmetic as well as the cap
+    const auto wide = fishingutils::CalculateBreakChance(FISHINGCATCHTYPE_SMALLFISH, 0, 10, FISHINGSIZETYPE_SMALL, false, 37, &rod);
+    CHECK(wide.failReason == FISHINGFAILTYPE_RODBREAK);
+    CHECK(wide.chance == 20);
 }
 
 TEST_CASE("Fishing legendary attack bonuses also increase wrong-arrow healing", "[phoenix][fishing]")
