@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  front_of_temple_east_side:
+    cylinder: {center: [332.0, 3.5, -514.0], radius: 33}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - elshimo_frog
+      - forest_carp
+      - jungle_catfish
+      - moat_carp
+      - pipira
+      - rusty_subligar
+  front_of_temple_west_side:
+    cylinder: {center: [275.0, 3.5, -514.0], radius: 32}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - elshimo_frog
+      - elshimo_newt
+      - forest_carp
+      - jungle_catfish
+      - moat_carp
+      - rusty_subligar
+  teardrop_spring:
+    cylinder: {center: [539.0, 0.0, -420.0], radius: 20}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - forest_carp
+      - moat_carp
+      - rusty_leggings
+      - rusty_subligar
+      - silver_ring
+  underground_pool_1:
+    cylinder: {center: [106.0, 9.0, -577.0], radius: 10}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - forest_carp
+      - jungle_catfish
+      - moat_carp
+      - monke-onke
+      - rusty_subligar
+  bloodlet_spring:
+    cylinder: {center: [219.0, -1.0, 60.0], radius: 20}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - forest_carp
+      - moat_carp
+      - rusty_bucket
+      - rusty_subligar
+  underground_pool_3:
+    cylinder: {center: [-496.0, 9.0, -186.0], radius: 10}
+    pool:
+      - elshimo_frog
+      - elshimo_newt
+  underground_pool_2:
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - elshimo_frog
+      - elshimo_newt
+      - forest_carp
+      - moat_carp
+      - rusty_subligar
+monsters:
+  17285121: {}
+  17285122: {}
+  17285123: {}
+  17285124: {}
+  17285125: {}

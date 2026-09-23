@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - crayfish
+      - dark_bass
+      - giant_catfish
+      - gold_carp
+      - lungfish
+      - muddy_siredon
+      - phanauet_newt
+      - red_terrapin
+      - rusty_bucket
+      - shining_trout
+      - tricolored_carp
+      - tricorn
+monsters:
+  16781313: {}
+  16781314: {}
+  16781315: {}
+  16781316: {}
+  16781317: {}
+  16781318:
+    area: whole_zone

@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  pond:
+    cylinder: {center: [110.0, -1.0, -200.0], radius: 25}
+    pool:
+      - crayfish
+      - dark_bass
+      - giant_catfish
+      - moat_carp
+      - rusty_bucket
+      - rusty_subligar
+  seaside:
+    pool:
+      - bastore_bream
+      - bastore_sardine
+      - bladefish
+      - bluetail
+      - clump_of_pamtam_kelp
+      - gold_lobster
+      - ogre_eel
+      - quus
+      - rusty_bucket
+      - rusty_leggings
+      - rusty_subligar
+monsters:
+  17248257: {}
+  17248258: {}
+  17248259: {}
+  17248260: {}
+  17248261: {}

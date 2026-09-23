@@ -235,6 +235,13 @@ Below is a more-exhaustive mock example of how a section can be set up, and it t
                 return 543
             end,
         },
+
+        -- onFishingHook is asked before the fishing bite roll while the section's check holds.
+        -- Return an item id to force that catch, or a mob entity to hook that monster. Return
+        -- nothing to let the ordinary roll happen. The first quest that answers wins.
+        onFishingHook = function(player, area)
+            return xi.item.HYDROGAUGE
+        end,
     }
 }
 ```

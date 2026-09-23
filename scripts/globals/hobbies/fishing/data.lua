@@ -3,246 +3,387 @@
 -----------------------------------
 xi = xi or {}
 xi.fishing = xi.fishing or {}
+
+-- What a bite roll can produce.
+xi.fishing.catchType =
+{
+    NOTHING = 0,
+    FISH    = 1,
+    ITEM    = 2,
+    MONSTER = 3,
+}
+
+xi.fishing.stage =
+{
+    IDLE     = 0,
+    CAST     = 1,
+    EMPTY    = 2,
+    FIGHTING = 3,
+    RESOLVED = 4,
+}
+
+xi.fishing.mode =
+{
+    CHECK_HOOK        = 2,
+    END_MINIGAME      = 3,
+    RELEASE           = 4,
+    POTENTIAL_TIMEOUT = 5,
+}
+
+xi.fishing.feeling =
+{
+    GOOD              = 0,
+    BAD               = 1,
+    TERRIBLE          = 2,
+    NO_SKILL          = 3,
+    NO_SKILL_SURE     = 4,
+    NO_SKILL_POSITIVE = 5,
+    KEEN              = 6,
+    EPIC              = 7,
+}
+
+xi.fishing.failure =
+{
+    LOST_BIG   = 2,
+    LOST_SMALL = 3,
+}
+
+xi.fishing.result =
+{
+    CAUGHT     = 0,
+    GAVE_UP    = 1,
+    LINE_BREAK = 2,
+    LOST       = 3,
+    LOW_SKILL  = 4,
+    ROD_BREAK  = 5,
+}
+
+xi.fishing.fatigueEvent =
+{
+    BASIC_LEGENDARY = 0,
+    COUNTABLE_ITEM  = 1,
+    EMPTY_CAST      = 2,
+    JUNK_ITEM       = 3,
+    LARGE_FISH      = 4,
+    LOW_SKILL       = 5,
+    RELEASE         = 6,
+    SMALL_FISH      = 7,
+    SUPER_LEGENDARY = 8,
+    VALUABLE_ITEM   = 9,
+}
+
+-- The buckets that need entries behind their weight
+xi.fishing.entryBuckets =
+{
+    xi.fishing.catchType.FISH,
+    xi.fishing.catchType.ITEM,
+    xi.fishing.catchType.MONSTER,
+}
+
+-- The fight a hooked monster puts up, rolled out of 100 on every hook whatever the monster and the zone
+xi.fishing.monsterFightStats =
+{
+    { chance = 36, level = 10, arrowDamage = 320, arrowDelay = 14, moveFrequency = 15 },
+    { chance = 26, level = 20, arrowDamage = 300, arrowDelay = 11, moveFrequency = 15 },
+    { chance = 19, level = 30, arrowDamage = 320, arrowDelay = 10, moveFrequency = 15 },
+    { chance = 13, level = 40, arrowDamage = 340, arrowDelay =  9, moveFrequency = 15 },
+    { chance =  6, level = 50, arrowDamage = 380, arrowDelay =  8, moveFrequency = 15 },
+}
+
+-----------------------------------
+-- Outcomes
 -----------------------------------
 
--- TODO: Remove unnecesary data. For instance, if brokenRodId is 0, then the rod is obviously unbreakable.
-xi.fishing.rodData =
+-- The line each feeling sends; a keen angler's sense names the catch instead.
+xi.fishing.feelingMessages =
 {
-    -- [rod Id] = { material, size, flags, minRank, maxRank, attack, bonusAttack, recovery, time, timeBonus, delay, move, delay2, move2, isBreakable, brokenRodId, isMMM, isLegendary, rating }
-    [xi.item.BAMBOO_FISHING_ROD      ] = { 0, 0, 0,  1,  8, 140,   0,  60, 30,  0, 2, 1, 1,  0, 2, true,  xi.item.BROKEN_BAMBOO_FISHING_ROD,       false, false,  3 },
-    [xi.item.CARBON_FISHING_ROD      ] = { 1, 0, 0,  1, 13, 100,   0,  75, 43,  0, 2, 1, 1,  0, 4, true,  xi.item.BROKEN_CARBON_FISHING_ROD,       false, false,  7 },
-    [xi.item.CLOTHESPOLE             ] = { 0, 1, 1, 12, 16, 170,   0,  50, 30,  0, 0, 0, 1,  0, 3, true,  xi.item.BROKEN_CLOTHESPOLE,              false, false, 10 },
-    [xi.item.COMPOSITE_FISHING_ROD   ] = { 1, 1, 1, 11, 24, 100,   0,  70, 43,  0, 0, 0, 1,  0, 2, true,  xi.item.BROKEN_COMPOSITE_FISHING_ROD,    false, false, 13 },
-    [xi.item.EBISU_FISHING_ROD       ] = { 1, 0, 4,  1, 30, 100,  50,  50, 30, 10, 2, 1, 1,  0, 3, false, xi.item.NONE,                            false, true,  15 },
-    [xi.item.EBISU_FISHING_ROD_P1    ] = { 1, 0, 4,  1, 30, 100,  50,  50, 40, 10, 2, 1, 1,  0, 3, false, xi.item.NONE,                            false, true,  15 },
-    [xi.item.FASTWATER_FISHING_ROD   ] = { 0, 0, 0,  1,  7, 135,   0,  65, 30,  0, 2, 1, 1,  0, 2, true,  xi.item.BROKEN_FASTWATER_FISHING_ROD,    false, false,  4 },
-    [xi.item.GLASS_FIBER_FISHING_ROD ] = { 1, 0, 0,  1, 12, 100,   0,  80, 45,  0, 2, 1, 1,  0, 4, true,  xi.item.BROKEN_GLASS_FIBER_FISHING_ROD,  false, false,  8 },
-    [xi.item.GOLDFISH_BASKET         ] = { 0, 0, 8,  1,  5, 100,   0,  50, 20,  0, 0, 0, 0,  0, 0, false, xi.item.NONE,                            false, false,  0 },
-    [xi.item.HALCYON_FISHING_ROD     ] = { 1, 0, 2,  1, 18, 100,   0,  70, 41,  0, 2, 1, 0,  2, 3, true,  xi.item.BROKEN_HALCYON_FISHING_ROD,      false, false,  9 },
-    [xi.item.HUME_FISHING_ROD        ] = { 0, 0, 2,  1, 10, 125,   0,  65, 30,  0, 2, 1, 0,  2, 3, true,  xi.item.BROKEN_HUME_FISHING_ROD,         false, false,  6 },
-    [xi.item.JUDGES_ROD              ] = { 1, 0, 0,  1, 40, 200, 100, 100, 60, 30, 2, 1, 1,  0, 5, false, xi.item.NONE,                            false, true,  16 },
-    [xi.item.LU_SHANGS_FISHING_ROD   ] = { 0, 0, 0,  1, 28, 110,  20, 100, 40, 10, 2, 1, 1,  0, 2, true,  xi.item.BROKEN_LU_SHANGS_FISHING_ROD,    false, true,  14 },
-    [xi.item.LU_SHANGS_FISHING_ROD_P1] = { 0, 0, 0,  1, 28, 110,  20, 100, 50, 10, 2, 1, 1,  0, 2, true,  xi.item.BROKEN_LU_SHANGS_FISHING_ROD_P1, false, true,  14 },
-    [xi.item.MAZE_MONGER_FISHING_ROD ] = { 1, 0, 0,  1, 25, 100,   0, 100, 30,  0, 2, 1, 1, 10, 2, true,  xi.item.BROKEN_MMM_FISHING_ROD,          true,  false,  0 },
-    [xi.item.MITHRAN_FISHING_ROD     ] = { 0, 1, 1,  8, 18, 130,   0,  65, 30,  0, 0, 0, 1,  0, 3, true,  xi.item.BROKEN_MITHRAN_FISHING_ROD,      false, false, 12 },
-    [xi.item.SINGLE_HOOK_FISHING_ROD ] = { 1, 1, 1, 14, 22, 100,   0,  80, 45,  0, 0, 0, 1,  0, 3, true,  xi.item.BROKEN_SINGLE_HOOK_FISHING_ROD,  false, false, 11 },
-    [xi.item.TARUTARU_FISHING_ROD    ] = { 0, 0, 0,  1,  9, 130,   0,  70, 30,  0, 2, 1, 1,  0, 4, true,  xi.item.BROKEN_TARUTARU_FISHING_ROD,     false, false,  5 },
-    [xi.item.WILLOW_FISHING_ROD      ] = { 0, 0, 0,  1,  5, 150,   0,  50, 30,  0, 2, 1, 1,  0, 2, true,  xi.item.BROKEN_WILLOW_FISHING_ROD,       false, false,  1 },
-    [xi.item.YEW_FISHING_ROD         ] = { 0, 0, 0,  1,  6, 145,   0,  55, 30,  0, 2, 1, 1,  0, 2, true,  xi.item.BROKEN_YEW_FISHING_ROD,          false, false,  2 },
+    [xi.fishing.feeling.GOOD             ] = xi.fishingMessage.GOOD_FEELING,
+    [xi.fishing.feeling.BAD              ] = xi.fishingMessage.BAD_FEELING,
+    [xi.fishing.feeling.TERRIBLE         ] = xi.fishingMessage.TERRIBLE_FEELING,
+    [xi.fishing.feeling.NO_SKILL         ] = xi.fishingMessage.NO_SKILL_FEELING,
+    [xi.fishing.feeling.NO_SKILL_SURE    ] = xi.fishingMessage.NO_SKILL_SURE_FEELING,
+    [xi.fishing.feeling.NO_SKILL_POSITIVE] = xi.fishingMessage.NO_SKILL_POSITIVE_FEELING,
+    [xi.fishing.feeling.EPIC             ] = xi.fishingMessage.EPIC_CATCH,
 }
 
-xi.fishing.baitData =
+-- Messages for a catch lost to its size
+xi.fishing.lostMessages =
 {
-    -- [bait Id] = { isConsumable, maxHook, isLosable, flags, isMMM, rankMod }
-    [xi.item.BALL_OF_CRAYFISH_PASTE  ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.BALL_OF_INSECT_PASTE    ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.BALL_OF_SARDINE_PASTE   ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.BALL_OF_TROUT_PASTE     ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.DRIED_SQUID             ] = { 2, 1, true,   0, false, 0 },
-    [xi.item.DRILL_CALAMARY          ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.DWARF_PUGIL             ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.FLY_LURE                ] = { 1, 1, true,  16, false, 0 },
-    [xi.item.FROG_LURE               ] = { 1, 1, true,   0, false, 0 },
-    [xi.item.GIANT_SHELL_BUG         ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.GOLIATH_WORM            ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.JUDGE_FLY               ] = { 1, 1, false,  0, false, 0 },
-    [xi.item.JUDGE_MINNOW            ] = { 1, 1, false,  0, false, 0 },
-    [xi.item.JUDGES_LURE             ] = { 1, 1, false,  0, false, 0 },
-    [xi.item.LARGE_MAZE_MONGER_BALL  ] = { 1, 1, true,   0, true,  0 },
-    [xi.item.LITTLE_WORM             ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.LIZARD_LURE             ] = { 1, 1, true,   0, false, 0 },
-    [xi.item.LUFAISE_FLY             ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.LUGWORM                 ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.MAZE_MONGER_MINNOW      ] = { 2, 1, true,   0, true,  0 },
-    [xi.item.MEATBALL                ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.MINNOW                  ] = { 1, 1, true,   0, false, 0 },
-    [xi.item.PEELED_CRAYFISH         ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.PEELED_LOBSTER          ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.PIECE_OF_ROTTEN_MEAT    ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.REGULAR_MAZE_MONGER_BALL] = { 1, 1, true,   0, true,  0 },
-    [xi.item.ROBBER_RIG              ] = { 1, 1, true,  72, false, 0 },
-    [xi.item.ROGUE_RIG               ] = { 1, 1, true,  72, false, 0 },
-    [xi.item.SABIKI_RIG              ] = { 1, 3, true,   0, false, 0 },
-    [xi.item.SEA_DRAGON_LIVER        ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.SHELL_BUG               ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.SHRIMP_LURE             ] = { 1, 1, true,   0, false, 0 },
-    [xi.item.SINKING_MINNOW          ] = { 1, 1, true,   1, false, 0 },
-    [xi.item.SLICE_OF_BLUETAIL       ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.SLICE_OF_COD            ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.SLICE_OF_MOAT_CARP      ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.SLICE_OF_SARDINE        ] = { 0, 1, true,   0, false, 0 },
-    [xi.item.SUPER_SCOOP             ] = { 0, 3, true,  32, false, 0 },
-    [xi.item.WORM_LURE               ] = { 1, 1, true,   0, false, 0 },
+    [xi.fishing.failure.LOST_BIG  ] = xi.fishingMessage.LOST_TOO_BIG,
+    [xi.fishing.failure.LOST_SMALL] = xi.fishingMessage.LOST_TOO_SMALL,
 }
 
--- TODO: unnecesary data -> ranking is always 0, waterType is unused in the code???, requiredCatches is always '', family is always 0, isQuestOnly is probably unneeded, isDisabled doesnt need to exist.
-xi.fishing.catchData =
+-- Animation and message for each failed result
+xi.fishing.results =
 {
-    -- [item Id] = { skillLvl, difficulty, delay, move, minLength, maxLength, ranking, isBig, waterType, questLog, questId, questStatus, flags, hourPattern, moonPattern, monthPattern, isLegendary, legendFlags, isDebris, maxHookAmount, rarity, ki, requiredCatches, family, isQuestOnly, isContested, isDisabled }
-    -- Fish
-    [xi.item.ABAIA                   ] = { 150, 37,  7, 13, 269, 317, 34, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, true,  0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.AHTAPOT                 ] = {  90, 31,  8,  7,  55, 145, 25, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  4, false, 0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ALABALIGI               ] = {  37, 16,  5, 11,   1,   1, 15, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1, 10, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ARMORED_PISCES          ] = { 108, 22,  9, 12,  50, 125, 19, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1,  350, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.BASTORE_BREAM           ] = {  86, 31,  7,  9,   1,   1, 22, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1,  250, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BASTORE_SARDINE_1       ] = {   9, 21, 11,  6,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  1, 2, 2,  3, false, 0, false, 3,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BASTORE_SARDINE_2       ] = {   9, 21, 11,  6,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  1, 2, 2,  3, false, 0, false, 3,  500, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.BASTORE_SWEEPER         ] = {  12, 17,  4,  2,   1,   1, 99, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 2,  3, false, 0, false, 1,  950, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BETTA                   ] = {  68, 16,  3, 12,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 7, 4,  9, false, 0, false, 1,  600, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BHEFHEL_MARLIN_1        ] = {  61, 20, 10, 11,  60, 140, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 7, 1,  8, false, 0, false, 1,  700, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.BHEFHEL_MARLIN_2        ] = {  61, 20, 10, 11,  60, 140, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 7, 1,  8, false, 0, false, 1,  700, xi.keyItem.NONE,           '', 0, false, 1, false }, -- Has 2 different item Ids
-    [xi.item.BIBIKI_URCHIN           ] = {   3, 20, 13,  1,   1,   1,  1, false, 1, xi.questLog.NONE,       255, 0,  0, 3, 1,  1, false, 0, false, 1,   50, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BIBIKIBO                ] = {   8, 22, 12,  3,   1,   1,  1, false, 1, xi.questLog.NONE,       255, 0,  0, 5, 2,  2, false, 0, false, 1,  100, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BLACK_EEL_1             ] = {  47, 24,  5,  8,   1,   1, 15, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 4,  3, false, 0, false, 1,  800, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BLACK_EEL_2             ] = {  47, 24,  5,  8,   1,   1, 15, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 4,  3, false, 0, false, 1,  800, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.BLACK_GHOST             ] = {  88, 36,  9, 11,   1,   1, 18, false, 0, xi.questLog.NONE,       255, 0,  0, 1, 1,  8, false, 0, false, 1,  450, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BLACK_SOLE              ] = {  96, 33,  5, 11,   1,   1, 23, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 1,  0, false, 0, false, 1,  150, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BLADEFISH_1             ] = {  71, 21,  6, 12,  40, 120, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 4,  4, false, 0, false, 1,  750, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.BLADEFISH_2             ] = {  71, 21,  6, 12,  40, 120, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 4,  4, false, 0, false, 1,  750, xi.keyItem.NONE,           '', 0, false, 1, false }, -- Has 2 different item Ids
-    [xi.item.BLINDFISH               ] = {  28, 18,  6,  8,   1,   1, 18, false, 0, xi.questLog.NONE,       255, 0,  0, 7, 2,  8, false, 0, false, 1,  750, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BLUETAIL_1              ] = {  55, 24,  4, 12,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  3, false, 0, false, 1,  650, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BLUETAIL_2              ] = {  55, 24,  4, 12,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  3, false, 0, false, 1,  650, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.BRASS_LOACH             ] = {  42, 27, 11,  7,   1,   1, 99, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 5,  8, false, 0, false, 1,  750, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CA_CUONG                ] = {  78, 17, 12,  6,   1,   1, 99, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CAEDARVA_FROG           ] = {  30, 17,  6, 13,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 2,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CAVE_CHERAX             ] = { 130, 36,  7,  4, 115, 235, 32, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, true,  0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.CHEVAL_SALMON           ] = {  21, 21,  7,  7,   1,   1, 17, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.COBALT_JELLYFISH        ] = {   5, 28, 13,  0,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 1, 1,  0, false, 0, false, 1,  700, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CONE_CALAMARY           ] = {  48, 40, 10,  5,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  1, 3, 1,  3, false, 0, false, 3,  850, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.COPPER_FROG_1           ] = {  16, 22,  8,  4,   1,   1,  9, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 1,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.COPPER_FROG_2           ] = {  16, 22,  8,  4,   1,   1,  9, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 1,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.CORAL_BUTTERFLY         ] = {  40, 26, 10,  8,   1,   1, 19, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 3,  8, false, 0, false, 1,  900, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CRAYFISH_1              ] = {   7, 24, 13,  6,   1,   1,  8, false, 0, xi.questLog.NONE,       255, 0,  0, 2, 2,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CRAYFISH_2              ] = {   7, 24, 13,  6,   1,   1,  8, false, 0, xi.questLog.NONE,       255, 0,  0, 2, 2,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.CRESCENT_FISH           ] = {  69, 28,  7,  8,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 4,  3, false, 0, false, 1,  450, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CRYSTAL_BASS            ] = {  35, 24,  7, 12,   1,   1, 17, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 2,  7, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.DARK_BASS_1             ] = {  33, 23,  7,  8,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  9, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.DARK_BASS_2             ] = {  33, 23,  7,  8,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  9, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.DENIZANASI              ] = {   5, 28, 13,  0,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 1, 1,  0, false, 0, false, 1,  700, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.DIL                     ] = {  96, 33,  5, 11,   1,   1, 23, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 1,  0, false, 0, false, 1,  150, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ELSHIMO_FROG            ] = {  30, 25,  6, 13,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 1,  4, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ELSHIMO_NEWT            ] = {  60, 26,  8, 11,   1,   1, 19, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 1,  1, false, 0, false, 1,  900, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.EMPEROR_FISH            ] = {  91, 36,  4, 13,  60, 180, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  8, false, 0, false, 1,  100, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.FAT_GREEDIE             ] = {  24, 30, 10,  8,   1,   1, 11, false, 1, xi.questLog.NONE,       255, 0,  0, 1, 4,  4, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.FOREST_CARP             ] = {  20, 11,  9, 11,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 2,  1, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.GARPIKE                 ] = {  83, 24,  3, 10,   1,   1, 99, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 4,  4, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.GAVIAL_FISH             ] = {  81, 30, 14, 15,  40, 130, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 4,  4, false, 0, false, 1,  400, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.GERROTHORAX             ] = { 134, 29,  7,  8, 210, 250, 30, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 2,  9, true,  0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.GIANT_CATFISH_1         ] = {  31, 13,  6, 12,  40, 130, 19, true,  0, xi.questLog.NONE,       255, 0,  0, 4, 1,  6, false, 0, false, 1,  900, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.GIANT_CATFISH_2         ] = {  31, 13,  6, 12,  40, 130, 19, true,  0, xi.questLog.NONE,       255, 0,  0, 4, 1,  6, false, 0, false, 1,  900, xi.keyItem.NONE,           '', 0, false, 1, false }, -- Has 2 different item Ids
-    [xi.item.GIANT_CHIRAI            ] = { 110, 25,  4, 15,  75, 170, 27, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, true,  0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.GIANT_DONKO_1           ] = {  50, 17, 14,  8,  45, 150, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 5,  4, false, 0, false, 1,  900, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.GIANT_DONKO_2           ] = {  50, 17, 14,  8,  45, 150, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 5,  4, false, 0, false, 1,  900, xi.keyItem.NONE,           '', 0, false, 1, false }, -- Has 2 different item Ids
-    [xi.item.GIGANT_OCTOPUS_1        ] = {  80, 18,  6,  9,  65, 170, 99, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.GIGANT_OCTOPUS_2        ] = {  80, 18,  6,  9,  65, 170, 99, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.GIGANT_SQUID            ] = {  91, 43,  7, 13,  80, 170, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  4, false, 0, false, 1,  100, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.GOLD_CARP               ] = {  56, 18, 10, 14,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  8, false, 0, false, 1,  750, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.GOLD_LOBSTER_1          ] = {  46, 35,  4,  3,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  1, 3, 1,  0, false, 0, false, 1,  800, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.GOLD_LOBSTER_2          ] = {  46, 35,  4,  3,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  1, 3, 1,  0, false, 0, false, 1,  800, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.GREEDIE                 ] = {  14, 10,  7, 14,   1,   1, 10, false, 1, xi.questLog.NONE,       255, 0,  0, 1, 3,  7, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.GRIMMONITE              ] = {  90, 31,  8,  7,  55, 145, 25, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  4, false, 0, false, 1,  450, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.GUGRU_TUNA_1            ] = {  41, 16,  6, 13,  40, 120, 22, true,  1, xi.questLog.NONE,       255, 0, 16, 1, 1,  0, false, 0, false, 1,  850, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.GUGRU_TUNA_2            ] = {  41, 16,  6, 13,  40, 120, 22, true,  1, xi.questLog.NONE,       255, 0, 16, 1, 1,  0, false, 0, false, 1,  850, xi.keyItem.NONE,           '', 0, false, 1, false }, -- Has 2 different item Ids
-    [xi.item.GUGRUSAURUS             ] = { 140, 39,  6,  5, 145, 425, 33, true,  1, xi.questLog.NONE,       255, 0,  0, 3, 1,  4, true,  7, false, 1,  350, xi.keyItem.SERPENT_RUMORS, '', 0, false, 1, false },
-    [xi.item.GURNARD                 ] = {  26, 13, 11,  9,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 6, 4,  3, false, 0, false, 1,  550, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.HAMSI                   ] = {   9, 21, 11,  6,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  1, 7, 1,  6, false, 0, false, 3, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ICEFISH                 ] = {  49, 38, 11,  7,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  3, false, 0, false, 3,  900, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ISTAKOZ                 ] = {  46, 35,  4,  3,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  3, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ISTAVRIT_1              ] = {  37, 13, 11,  5,  10,  20, 16, true,  0, xi.questLog.NONE,       255, 0,  0, 1, 2,  6, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ISTAVRIT_2              ] = {  37, 13, 11,  5,  10,  20, 16, true,  0, xi.questLog.NONE,       255, 0,  0, 1, 2,  6, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.ISTIRIDYE               ] = {  53, 27, 13,  2,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  1, 3, 2,  4, false, 0, false, 1,  850, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.JUNGLE_CATFISH          ] = {  80, 26,  9, 11,  40, 110, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 4, 1,  6, false, 0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.KALAMAR                 ] = {  48, 40, 10,  5,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  1, 3, 1,  3, false, 0, false, 3,  850, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.KALKANBALIGI            ] = { 105, 19,  6, 12,  60, 120, 27, true,  1, xi.questLog.NONE,       255, 0, 16, 3, 5,  8, true,  0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.KAPLUMBAGA              ] = {  53, 28,  8,  5,   1,   1, 11, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 5,  4, false, 0, false, 1,  800, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.KAYABALIGI              ] = {  75, 30,  7,  8,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  2, false, 0, false, 1,  650, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.KILICBALIGI             ] = {  62, 18, 10, 11,   1,   1, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 7, 1,  8, false, 0, false, 1,  800, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.LAKERDA                 ] = {  41, 16,  6, 13,  55, 100, 22, true,  0, xi.questLog.NONE,       255, 0,  0, 1, 4,  0, false, 0, false, 1,  900, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.LAMP_MARIMO             ] = {   3, 26, 13,  2,   1,   1,  1, false, 0, xi.questLog.NONE,       255, 0,  0, 6, 2,  5, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.LIK                     ] = { 140, 48,  2, 14, 185, 465, 33, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  6, true,  8, false, 1,  850, xi.keyItem.SERPENT_RUMORS, '', 0, false, 1, false },
-    [xi.item.LUNGFISH                ] = {  32, 16,  4,  8,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 1, 1,  8, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MATSYA                  ] = { 150, 31,  5, 12, 163, 331, 99, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 1,  0, true,  0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MEGALODON               ] = {  87, 33, 10, 11, 446, 625, 99, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MERCANBALIGI            ] = {  86, 31,  7,  9,   1,   1, 22, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1,  400, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MOAT_CARP_1             ] = {  11, 16, 10,  9,   1,   1,  7, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MOAT_CARP_2             ] = {  11, 16, 10,  9,   1,   1,  7, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.MOLA_MOLA               ] = { 135, 16, 12, 12, 110, 200, 30, true,  1, xi.questLog.NONE,       255, 0, 16, 1, 5,  8, true,  0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MONKE_ONKE_1            ] = {  51, 17, 11,  9,  45, 115, 18, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  4, false, 0, false, 1,  550, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.MONKE_ONKE_2            ] = {  51, 17, 11,  9,  45, 115, 18, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  4, false, 0, false, 1,  550, xi.keyItem.NONE,           '', 0, false, 1, false }, -- Has 2 different item Ids
-    [xi.item.MOORISH_IDOL            ] = {  26, 18,  6, 11,   1,   1,  9, false, 1, xi.questLog.NONE,       255, 0,  0, 3, 2,  4, false, 0, false, 1,  700, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MORINABALIGI            ] = {  94, 36,  4, 13,   1,   1, 23, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  8, false, 0, false, 1,  450, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MUDDY_SIREDON           ] = {  18, 23, 12, 11,   1,   1,  1, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 1,  1, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.NEBIMONITE              ] = {  27, 30,  9,  5,   1,   1, 10, false, 1, xi.questLog.NONE,       255, 0,  0, 3, 1,  2, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.NOBLE_LADY              ] = {  66, 30,  7, 10,   1,   1, 13, false, 1, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1,  700, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.NOSTEAU_HERRING_1       ] = {  39, 21,  7,  8,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  3, false, 0, false, 1,  950, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.NOSTEAU_HERRING_2       ] = {  39, 21,  7,  8,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  3, false, 0, false, 1,  950, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.OGRE_EEL_1              ] = {  35, 29, 13, 11,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 2,  3, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.OGRE_EEL_2              ] = {  35, 29, 13, 11,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 2,  3, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.PHANAUET_NEWT           ] = {   4, 13, 10, 11,   1,   1,  1, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 2,  1, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.PIPIRA_1                ] = {  29, 11,  6, 14,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  5, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.PIPIRA_2                ] = {  29, 11,  6, 14,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  5, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.PIRARUCU                ] = {  89, 24, 13, 11, 161, 210, 99, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 1,  3, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.PTERYGOTUS              ] = {  99, 28,  8,  7,  25, 260, 24, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  9, false, 0, false, 1,  400, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.QUUS_1                  ] = {  19, 12,  7, 11,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 2,  3, false, 0, false, 3, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.QUUS_2                  ] = {  19, 12,  7, 11,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 2,  3, false, 0, false, 3, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.RED_TERRAPIN            ] = {  53, 28,  8,  5,   1,   1, 11, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 5,  2, false, 0, false, 1,  750, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.RHINOCHIMERA_1          ] = {  72, 17,  5, 14,  10,  90, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  7, false, 0, false, 1,  450, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.RHINOCHIMERA_2          ] = {  72, 17,  5, 14,  10,  90, 23, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 1,  7, false, 0, false, 1,  450, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.RYUGU_TITAN             ] = { 150, 48,  1, 15, 200, 490, 34, true,  1, xi.questLog.NONE,       255, 0,  0, 0, 1,  8, true,  0, false, 1,  700, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.SANDFISH                ] = {  50, 36,  3, 10,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  1, 3, 3,  7, false, 0, false, 3, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.SAZANBALIGI             ] = {  56, 18, 10, 14,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  1, false, 0, false, 1,  650, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.SEA_ZOMBIE              ] = { 100, 39,  3, 15,  80, 195, 28, true,  1, xi.questLog.NONE,       255, 0,  0, 4, 1,  2, true,  0, false, 1,  350, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.SHALL_SHELL             ] = {  53, 27, 13,  2,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  1, 3, 4,  8, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.SHINING_TROUT_1         ] = {  37, 16,  5, 11,   1,   1, 15, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.SHINING_TROUT_2         ] = {  37, 16,  5, 11,   1,   1, 15, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.SILVER_SHARK            ] = {  76, 35,  3,  9,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  0, false, 0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.TAKITARO                ] = { 101, 18,  3, 14,  55, 130, 28, true,  0, xi.questLog.NONE,       255, 0, 16, 3, 5,  2, true,  0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.TAVNAZIAN_GOBY          ] = {  75, 30,  7,  8,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 4,  2, false, 0, false, 1,  850, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.THREE_EYED_FISH_1       ] = {  79, 22, 10, 10,  50, 120, 25, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 4,  8, false, 0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.THREE_EYED_FISH_2       ] = {  79, 22, 10, 10,  50, 120, 25, true,  0, xi.questLog.NONE,       255, 0,  0, 3, 4,  8, false, 0, false, 1,  500, xi.keyItem.NONE,           '', 0, false, 1, false }, -- Has 2 different item Ids
-    [xi.item.TIGER_COD_1             ] = {  29, 23,  9,  9,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  8, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.TIGER_COD_2             ] = {  29, 23,  9,  9,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  8, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.TINY_GOLDFISH           ] = {  20, 22,  0, 14,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 5, 1,  7, false, 0, false, 3, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.TITANIC_SAWFISH         ] = { 125, 39,  6, 13,  75, 210, 29, true,  1, xi.questLog.NONE,       255, 0,  0, 0, 1,  9, true,  0, false, 1,  400, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.TITANICTUS              ] = { 101, 28,  3, 12,  75, 210, 28, true,  1, xi.questLog.NONE,       255, 0,  0, 3, 5,  8, true,  0, false, 1,  350, xi.keyItem.NONE,           '', 0, false, 1, false },
-    [xi.item.TRICOLORED_CARP         ] = {  27, 19, 12, 12,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  8, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.TRICORN                 ] = { 128, 38, 11,  9, 105, 210, 31, true,  0, xi.questLog.NONE,       255, 0,  0, 0, 4, 10, true,  0, false, 1,  500, xi.keyItem.FROG_FISHING,   '', 0, false, 1, false },
-    [xi.item.TRILOBITE               ] = {  59, 27,  5,  6,   1,   1, 14, false, 1, xi.questLog.NONE,       255, 0,  0, 3, 2, 10, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.TRUMPET_SHELL           ] = {  63, 18, 10,  5,   1,   1, 99, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 1,  3, false, 0, false, 1,  550, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.TURNABALIGI             ] = { 104, 30,  7, 12,  65, 175, 24, true,  0, xi.questLog.NONE,       255, 0, 16, 6, 1,  7, false, 0, false, 1,  450, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.USKUMRU                 ] = {  55, 24,  4, 12,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 2,  3, false, 0, false, 1,  550, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.VEYDAL_WRASSE_1         ] = {  35, 13, 11,  5,  40, 125, 25, true,  0, xi.questLog.NONE,       255, 0,  0, 6, 4,  3, false, 0, false, 1,  400, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.VEYDAL_WRASSE_2         ] = {  35, 13, 11,  5,  40, 125, 25, true,  0, xi.questLog.NONE,       255, 0,  0, 6, 4,  3, false, 0, false, 1,  400, xi.keyItem.NONE,           '', 0, false, 0, false }, -- Has 2 different item Ids
-    [xi.item.VONGOLA_CLAM            ] = {  53, 20,  8,  4,   1,   1, 13, false, 1, xi.questLog.NONE,       255, 0,  1, 3, 1,  3, false, 0, false, 1,  900, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.YAYINBALIGI             ] = {  31, 13,  6, 12,  40, 130, 19, true,  0, xi.questLog.NONE,       255, 0,  0, 4, 1,  6, false, 0, false, 1,  900, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.YELLOW_GLOBE            ] = {  17, 17,  8,  8,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 2,  1, false, 0, false, 3, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.YILANBALIGI             ] = {  47, 24,  5,  8,   1,   1, 15, false, 0, xi.questLog.NONE,       255, 0,  0, 4, 4,  3, false, 0, false, 1,  800, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ZAFMLUG_BASS            ] = {  43, 27,  6,  7,   1,   1, 15, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1, 10, false, 0, false, 1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.ZEBRA_EEL               ] = {  71, 32, 10, 10,   1,   1, 23, false, 0, xi.questLog.NONE,       255, 0,  0, 3, 1,  8, false, 0, false, 1,  800, xi.keyItem.NONE,           '', 0, false, 0, false },
+    [xi.fishing.result.GAVE_UP   ] = { animation = xi.animation.NEW_FISHING_STOP,       message = xi.fishingMessage.GIVE_UP        },
+    [xi.fishing.result.LINE_BREAK] = { animation = xi.animation.NEW_FISHING_LINE_BREAK, message = xi.fishingMessage.LINE_BREAK     },
+    [xi.fishing.result.LOST      ] = { animation = xi.animation.NEW_FISHING_STOP,       message = xi.fishingMessage.LOST           },
+    [xi.fishing.result.LOW_SKILL ] = { animation = xi.animation.NEW_FISHING_STOP,       message = xi.fishingMessage.LOST_LOW_SKILL },
+    [xi.fishing.result.ROD_BREAK ] = { animation = xi.animation.NEW_FISHING_ROD_BREAK,  message = xi.fishingMessage.ROD_BREAK      },
+}
 
-    -- Debris
-    [xi.item.ARROWWOOD_LOG           ] = {   4, 18, 13,  2,   1,   3, 18, true,  0, xi.questLog.NONE,       255, 0,  0, 2, 2,  0, false, 0, true,  1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.BUGBEAR_MASK            ] = {  54, 42, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 2, 1,  0, false, 0, true,  1,  700, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CLUMP_OF_ADOULINIAN_KELP] = {   6, 18, 13,  2,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 4,  0, false, 0, true,  1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CLUMP_OF_PAMTAM_KELP    ] = {   3, 24, 13,  2,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  0, 2, 4,  0, false, 0, true,  1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.COPPER_RING             ] = {  24, 40, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  1, 0, 0,  0, false, 0, true,  1,  800, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.CORAL_FRAGMENT          ] = {  74, 47, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  1, 7, 1,  0, false, 0, true,  1,  200, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.DAMP_SCROLL             ] = {  20, 35, 13,  2,   1,   1,  1, false, 0, xi.questLog.NONE,       255, 0,  0, 1, 2,  0, false, 0, true,  1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.FISH_SCALE_SHIELD       ] = {   7, 15, 13,  2,   1,   1, 13, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, true,  1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.GIL                     ] = {   1, 22, 13,  2,   1,   1,  1, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, true,  1,  100, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.HYDROGAUGE              ] = {   7, 25, 13,  2,   1,   1,  1, false, 0, xi.questLog.AHT_URHGAN,  25, 0,  0, 0, 0,  0, false, 0, true,  1, 1000, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MITHRA_SNARE            ] = {  30, 22, 13,  2,   1,   1,  1, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, true,  1, 1000, xi.keyItem.NONE,           '', 0, true , 0, false },
-    [xi.item.MOBLIN_MASK             ] = {  54, 44, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, true,  1,  800, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MYTHRIL_DAGGER          ] = {  90, 78, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, true,  1,   80, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.MYTHRIL_SWORD           ] = {  90, 15, 13,  2,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, true,  1,   60, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.NORG_SHELL              ] = {  14, 31, 13,  2,   1,   1, 14, false, 0, xi.questLog.NONE,       255, 0,  0, 2, 2,  0, false, 0, true,  1,  600, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.RIPPED_CAP              ] = {  20, 36, 13,  2,   1,   1, 13, false, 0, xi.questLog.WINDURST,    23, 0,  0, 1, 3,  0, false, 0, true,  1,  400, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.RUSTY_BUCKET            ] = {   1, 19, 13,  2,   1,   1, 10, false, 0, xi.questLog.NONE,       255, 0,  9, 1, 1,  0, false, 0, true,  1,  900, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.RUSTY_CAP               ] = {  30, 38, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  9, 7, 1,  0, false, 0, true,  1,  800, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.RUSTY_GREATSWORD        ] = {  60, 57, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  8, 0, 0,  0, false, 0, true,  1,  400, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.RUSTY_LEGGINGS          ] = {   7, 26, 13,  2,   1,   1, 18, false, 0, xi.questLog.NONE,       255, 0,  9, 2, 0,  0, false, 0, true,  1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.RUSTY_PICK              ] = {  40, 47, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  8, 2, 1,  0, false, 0, true,  1,  400, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.RUSTY_SUBLIGAR          ] = {   5, 22, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  8, 2, 0,  0, false, 0, true,  1,  500, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.SILVER_RING             ] = {  34, 40, 13,  2,   1,   1,  5, false, 0, xi.questLog.NONE,       255, 0,  1, 0, 0,  0, false, 0, true,  1,  300, xi.keyItem.NONE,           '', 0, false, 0, false },
-    [xi.item.TARUTARU_SNARE          ] = {  30, 22, 13,  2,   1,   1,  1, false, 0, xi.questLog.NONE,       255, 0,  0, 0, 0,  0, false, 0, true,  1, 1000, xi.keyItem.NONE,           '', 0, true,  0, false },
+-- Skill-up chance for fish up to each number of levels over the player
+xi.fishing.skillUpChances =
+{
+    { gap =  1, chance =  3 },
+    { gap =  2, chance = 16 },
+    { gap =  4, chance = 21 },
+    { gap =  7, chance = 27 },
+    { gap = 11, chance = 34 },
+    { gap = 19, chance = 29 },
+    { gap = 29, chance = 16 },
+    { gap = 50, chance = 14 },
+}
+
+-- Daily points and fatigue each event costs, with a separate fatigue cost when over level.
+xi.fishing.fatigueCosts =
+{
+    [xi.fishing.fatigueEvent.BASIC_LEGENDARY] = { daily = 1, fatigue =  140 },
+    [xi.fishing.fatigueEvent.COUNTABLE_ITEM ] = { daily = 1, fatigue =   25 },
+    [xi.fishing.fatigueEvent.EMPTY_CAST     ] = { daily = 0, fatigue =    0 },
+    [xi.fishing.fatigueEvent.JUNK_ITEM      ] = { daily = 0, fatigue =    0 },
+    [xi.fishing.fatigueEvent.LARGE_FISH     ] = { daily = 1, fatigue =   50, overLevel = 200 },
+    [xi.fishing.fatigueEvent.LOW_SKILL      ] = { daily = 0, fatigue = 1000 },
+    [xi.fishing.fatigueEvent.RELEASE        ] = { daily = 0, fatigue =    0, overLevel = 100 },
+    [xi.fishing.fatigueEvent.SMALL_FISH     ] = { daily = 1, fatigue =   25, overLevel = 100 },
+    [xi.fishing.fatigueEvent.SUPER_LEGENDARY] = { daily = 1, fatigue =  780 },
+    [xi.fishing.fatigueEvent.VALUABLE_ITEM  ] = { daily = 1, fatigue =  400 },
+}
+
+-----------------------------------
+-- To YAML?
+-----------------------------------
+
+xi.fishing.rodStats =
+{
+    [xi.item.BAMBOO_FISHING_ROD       ] = { attack = 140, recovery =  60, strength =  26, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0 },
+    [xi.item.CARBON_FISHING_ROD       ] = { attack = 100, recovery =  75, strength =  40, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0 },
+    [xi.item.CLOTHESPOLE              ] = { attack = 170, recovery =  50, strength =  35, smallDelay = 0, smallMove = 0, largeDelay = 1, largeMove =  0, penalty = xi.fishingSize.SMALL },
+    [xi.item.COMPOSITE_FISHING_ROD    ] = { attack = 100, recovery =  70, strength =  75, smallDelay = 0, smallMove = 0, largeDelay = 1, largeMove =  0, penalty = xi.fishingSize.SMALL },
+    [xi.item.EBISU_FISHING_ROD        ] = { attack = 100, recovery =  50, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 50, legendaryRecovery = 25, keenBonus = 40, fatigue = 85, drainStart = 12, drainSlope = 1.3 }, -- Capture needed: the keen term
+    [xi.item.EBISU_FISHING_ROD_P1     ] = { attack = 100, recovery =  50, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 50, legendaryRecovery = 25, keenBonus = 40, fatigue = 85, drainStart = 12, drainSlope = 1.3 }, -- Capture needed: the keen term
+    [xi.item.FASTWATER_FISHING_ROD    ] = { attack = 135, recovery =  65, strength =  28, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0 },
+    [xi.item.GLASS_FIBER_FISHING_ROD  ] = { attack = 100, recovery =  80, strength =  35, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0 },
+    [xi.item.GOLDFISH_BASKET          ] = { attack = 100, recovery =  50, smallDelay = 0, smallMove = 0, largeDelay = 0, largeMove =  0 },
+    [xi.item.HALCYON_FISHING_ROD      ] = { attack = 100, recovery =  70, strength =  55, smallDelay = 2, smallMove = 1, largeDelay = 0, largeMove =  2, penalty = xi.fishingSize.LARGE },
+    [xi.item.HUME_FISHING_ROD         ] = { attack = 125, recovery =  75, strength =  45, smallDelay = 2, smallMove = 1, largeDelay = 0, largeMove =  2, penalty = xi.fishingSize.LARGE },
+    [xi.item.JUDGES_ROD               ] = { attack = 200, recovery = 100, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 100 },
+    [xi.item.LU_SHANGS_FISHING_ROD    ] = { attack = 110, recovery = 100, strength =  95, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 20, fatigue = 95, drainStart = 26, drainSlope = 1.7, drainFloor = 92 },
+    [xi.item.LU_SHANGS_FISHING_ROD_P1 ] = { attack = 110, recovery = 100, strength =  95, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0, legendaryAttack = 20, fatigue = 95, drainStart = 26, drainSlope = 1.7, drainFloor = 92 },
+    [xi.item.MAZE_MONGER_FISHING_ROD  ] = { attack = 100, recovery = 100, strength =  55, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove = 10 },
+    [xi.item.MITHRAN_FISHING_ROD      ] = { attack = 130, recovery =  65, strength =  60, smallDelay = 0, smallMove = 0, largeDelay = 1, largeMove =  0, penalty = xi.fishingSize.SMALL },
+    [xi.item.SINGLE_HOOK_FISHING_ROD  ] = { attack = 100, recovery =  80, strength =  40, smallDelay = 0, smallMove = 0, largeDelay = 1, largeMove =  0, penalty = xi.fishingSize.SMALL },
+    [xi.item.TARUTARU_FISHING_ROD     ] = { attack = 130, recovery =  70, strength =  30, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0 },
+    [xi.item.WILLOW_FISHING_ROD       ] = { attack = 150, recovery =  50, strength =  22, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0 },
+    [xi.item.YEW_FISHING_ROD          ] = { attack = 145, recovery =  55, strength =  24, smallDelay = 2, smallMove = 1, largeDelay = 1, largeMove =  0 },
+}
+
+-- Fatigue cost class for items, countable unless a row says otherwise
+xi.fishing.fatigueClass =
+{
+    COUNTABLE = 0,
+    VALUABLE  = 1,
+    JUNK      = 2,
+}
+
+-- Table of legendary fish that have a break rate against Lu Shangs
+-- Capture Needed: Rates of breaks
+xi.fishing.luShangBreaks =
+{
+    [xi.item.ABAIA          ] = 10,
+    [xi.item.CAVE_CHERAX    ] = 10,
+    [xi.item.GERROTHORAX    ] = 10,
+    [xi.item.GUGRUSAURUS    ] = 10,
+    [xi.item.HAKURYU        ] = 10,
+    [xi.item.LIK            ] = 10,
+    [xi.item.MATSYA         ] = 10,
+    [xi.item.MOLA_MOLA      ] = 10,
+    [xi.item.PIRARUCU       ] = 10,
+    [xi.item.RYUGU_TITAN    ] = 10,
+    [xi.item.TITANIC_SAWFISH] = 10,
+}
+
+xi.fishing.catchStats =
+{
+    [xi.item.ABAIA                    ] = { arrowDamage =  740, arrowDelay =  7, moveFrequency = 13 },
+    [xi.item.AHTAPOT                  ] = { arrowDamage =  620, arrowDelay =  8, moveFrequency =  7 },
+    [xi.item.ALABALIGI                ] = { arrowDamage =  320, arrowDelay =  5, moveFrequency = 11 },
+    [xi.item.ARMORED_PISCES           ] = { arrowDamage =  440, arrowDelay =  5, moveFrequency = 13 },
+    [xi.item.ARROWWOOD_LOG            ] = { arrowDamage =  360, arrowDelay = 14, moveFrequency =  3, weight = 70 },
+    [xi.item.BASTORE_BREAM            ] = { arrowDamage =  620, arrowDelay =  7, moveFrequency =  9 },
+    [xi.item.BASTORE_SARDINE_1        ] = { arrowDamage =  420, arrowDelay = 11, moveFrequency =  6, sizeLoss = 13 },
+    [xi.item.BASTORE_SWEEPER          ] = { arrowDamage =  340, arrowDelay =  4, moveFrequency =  2 },
+    [xi.item.BETTA                    ] = { arrowDamage =  320, arrowDelay =  3, moveFrequency = 12 },
+    [xi.item.BHEFHEL_MARLIN_1         ] = { arrowDamage =  400, arrowDelay = 10, moveFrequency = 11 },
+    [xi.item.BIBIKIBO                 ] = { arrowDamage =  440, arrowDelay = 12, moveFrequency =  3 },
+    [xi.item.BIBIKI_URCHIN            ] = { arrowDamage =  400, arrowDelay = 13, moveFrequency =  1 },
+    [xi.item.BLACK_EEL_1              ] = { arrowDamage =  480, arrowDelay =  5, moveFrequency =  8 },
+    [xi.item.BLACK_GHOST              ] = { arrowDamage =  720, arrowDelay =  9, moveFrequency = 11 },
+    [xi.item.BLACK_SOLE               ] = { arrowDamage =  660, arrowDelay =  5, moveFrequency = 11 },
+    [xi.item.BLADEFISH_1              ] = { arrowDamage =  420, arrowDelay =  6, moveFrequency = 12 },
+    [xi.item.BLINDFISH                ] = { arrowDamage =  360, arrowDelay =  6, moveFrequency =  8 },
+    [xi.item.BLUETAIL_1               ] = { arrowDamage =  480, arrowDelay =  4, moveFrequency = 12 },
+    [xi.item.BRASS_LOACH              ] = { arrowDamage =  540, arrowDelay =  4, moveFrequency =  3 },
+    [xi.item.BUGBEAR_MASK             ] = { arrowDamage =  840, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.CAEDARVA_FROG            ] = { arrowDamage =  340, arrowDelay =  6, moveFrequency = 13 },
+    [xi.item.CAVE_CHERAX              ] = { arrowDamage =  720, arrowDelay =  7, moveFrequency =  4, lineSnap = 15, lowSkill = { gap = 30, chance =  90 } },
+    [xi.item.CA_CUONG                 ] = { arrowDamage =  340, arrowDelay = 12, moveFrequency =  6 },
+    [xi.item.CHEVAL_SALMON            ] = { arrowDamage =  420, arrowDelay =  7, moveFrequency =  7, sizeLoss = 48 },
+    [xi.item.CLUMP_OF_ADOULINIAN_KELP ] = { arrowDamage =  360, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.CLUMP_OF_PAMTAM_KELP     ] = { arrowDamage =  480, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.COBALT_JELLYFISH         ] = { arrowDamage =  560, arrowDelay = 13, moveFrequency =  0 },
+    [xi.item.CONE_CALAMARY            ] = { arrowDamage =  800, arrowDelay = 10, moveFrequency =  5, lineSnap = 50 },
+    [xi.item.COPPER_FROG_1            ] = { arrowDamage =  440, arrowDelay =  8, moveFrequency =  4 },
+    [xi.item.COPPER_RING              ] = { arrowDamage =  800, arrowDelay = 13, moveFrequency =  2, fatigue = xi.fishing.fatigueClass.VALUABLE },
+    [xi.item.CORAL_BUTTERFLY          ] = { arrowDamage =  520, arrowDelay = 10, moveFrequency =  8 },
+    [xi.item.CORAL_FRAGMENT           ] = { arrowDamage =  940, arrowDelay = 13, moveFrequency =  2, weight = 70, lineSnap = 20, fatigue = xi.fishing.fatigueClass.VALUABLE }, -- Capture needed: the snap rate
+    [xi.item.CRAYFISH_1               ] = { arrowDamage =  480, arrowDelay = 13, moveFrequency =  6 },
+    [xi.item.CRESCENT_FISH            ] = { arrowDamage =  560, arrowDelay =  7, moveFrequency =  8 },
+    [xi.item.CRYSTAL_BASS             ] = { arrowDamage =  480, arrowDelay =  7, moveFrequency = 12 },
+    [xi.item.DAMP_SCROLL              ] = { arrowDamage =  700, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.DARK_BASS_1              ] = { arrowDamage =  460, arrowDelay =  7, moveFrequency =  8 },
+    [xi.item.DENIZANASI               ] = { arrowDamage =  560, arrowDelay = 13, moveFrequency =  0 },
+    [xi.item.DIL                      ] = { arrowDamage =  660, arrowDelay =  5, moveFrequency = 11 },
+    [xi.item.ELSHIMO_FROG             ] = { arrowDamage =  500, arrowDelay =  7, moveFrequency =  5 },
+    [xi.item.ELSHIMO_NEWT             ] = { arrowDamage =  520, arrowDelay =  5, moveFrequency =  9 },
+    [xi.item.EMPEROR_FISH             ] = { arrowDamage =  720, arrowDelay =  4, moveFrequency = 13 },
+    [xi.item.FAT_GREEDIE              ] = { arrowDamage =  600, arrowDelay = 10, moveFrequency =  8 },
+    [xi.item.FISH_SCALE_SHIELD        ] = { arrowDamage =  300, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.FOREST_CARP              ] = { arrowDamage =  220, arrowDelay =  9, moveFrequency = 11 },
+    [xi.item.GARPIKE                  ] = { arrowDamage =  480, arrowDelay =  3, moveFrequency = 10 },
+    [xi.item.GAVIAL_FISH              ] = { arrowDamage =  600, arrowDelay = 14, moveFrequency = 15 },
+    [xi.item.GERROTHORAX              ] = { arrowDamage =  580, arrowDelay =  6, moveFrequency =  7 },
+    [xi.item.GIANT_CATFISH_1          ] = { arrowDamage =  260, arrowDelay =  6, moveFrequency = 12 },
+    [xi.item.GIANT_CHIRAI             ] = { arrowDamage =  500, arrowDelay =  4, moveFrequency = 15 },
+    [xi.item.GIANT_DONKO_1            ] = { arrowDamage =  340, arrowDelay = 14, moveFrequency =  8 },
+    [xi.item.GIGANT_OCTOPUS_1         ] = { arrowDamage =  360, arrowDelay =  6, moveFrequency =  9 },
+    [xi.item.GIGANT_SQUID             ] = { arrowDamage =  860, arrowDelay =  7, moveFrequency = 13 },
+    [xi.item.GOLD_CARP                ] = { arrowDamage =  360, arrowDelay = 10, moveFrequency = 14, sizeLoss = 84 },
+    [xi.item.GOLD_LOBSTER_1           ] = { arrowDamage =  700, arrowDelay =  4, moveFrequency =  3 },
+    [xi.item.GREEDIE                  ] = { arrowDamage =  200, arrowDelay =  7, moveFrequency = 14 },
+    [xi.item.GRIMMONITE               ] = { arrowDamage =  620, arrowDelay =  8, moveFrequency =  7 },
+    [xi.item.GUGRUSAURUS              ] = { arrowDamage =  780, arrowDelay =  6, moveFrequency =  5, timeBonus = -20, lineSnap = 31, lowSkill = { gap = 36, chance =  38 } },
+    [xi.item.GUGRU_TUNA_1             ] = { arrowDamage =  320, arrowDelay =  6, moveFrequency = 13 },
+    [xi.item.GURNARD                  ] = { arrowDamage =  260, arrowDelay =  3, moveFrequency = 11 },
+    [xi.item.HAKURYU                  ] = { arrowDamage =  500, arrowDelay =  3, moveFrequency = 13, lowSkill = { gap = 45, chance = 100 } },
+    [xi.item.HAMSI                    ] = { arrowDamage =  420, arrowDelay = 11, moveFrequency =  6 },
+    [xi.item.HYDROGAUGE               ] = { arrowDamage =  500, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.ICEFISH                  ] = { arrowDamage =  760, arrowDelay = 11, moveFrequency =  7 },
+    [xi.item.ISTAKOZ                  ] = { arrowDamage =  700, arrowDelay =  4, moveFrequency =  3 },
+    [xi.item.ISTAVRIT_1               ] = { arrowDamage =  260, arrowDelay =  7, moveFrequency = 12, sizeLoss = 39 },
+    [xi.item.ISTIRIDYE                ] = { arrowDamage =  540, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.JUNGLE_CATFISH           ] = { arrowDamage =  520, arrowDelay =  6, moveFrequency = 12 },
+    [xi.item.KALAMAR                  ] = { arrowDamage =  800, arrowDelay = 10, moveFrequency =  5 },
+    [xi.item.KALKANBALIGI             ] = { arrowDamage =  380, arrowDelay =  6, moveFrequency = 12 },
+    [xi.item.KAPLUMBAGA               ] = { arrowDamage =  560, arrowDelay =  8, moveFrequency =  5 },
+    [xi.item.KAYABALIGI               ] = { arrowDamage =  600, arrowDelay =  7, moveFrequency =  8 },
+    [xi.item.KILICBALIGI              ] = { arrowDamage =  360, arrowDelay =  6, moveFrequency = 15 },
+    [xi.item.LAKERDA                  ] = { arrowDamage =  320, arrowDelay =  6, moveFrequency = 13 },
+    [xi.item.LAMP_MARIMO              ] = { arrowDamage =  520, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.LIK                      ] = { arrowDamage =  960, arrowDelay =  2, moveFrequency = 14, timeBonus =  30, lineSnap = 35, lowSkill = { gap = 45, chance = 100 } }, -- Capture needed: the loss past 40 over
+    [xi.item.LUNGFISH                 ] = { arrowDamage =  320, arrowDelay =  4, moveFrequency =  8 },
+    [xi.item.MATSYA                   ] = { arrowDamage =  620, arrowDelay =  5, moveFrequency = 12 },
+    [xi.item.MEGALODON                ] = { arrowDamage =  660, arrowDelay = 10, moveFrequency = 11 },
+    [xi.item.MERCANBALIGI             ] = { arrowDamage =  620, arrowDelay =  7, moveFrequency =  9 },
+    [xi.item.MITHRA_SNARE             ] = { arrowDamage =  440, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.MOAT_CARP_1              ] = { arrowDamage =  320, arrowDelay = 10, moveFrequency =  9 },
+    [xi.item.MOBLIN_MASK              ] = { arrowDamage =  880, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.MOLA_MOLA                ] = { arrowDamage =  320, arrowDelay = 12, moveFrequency = 12 },
+    [xi.item.MONKE_ONKE_1             ] = { arrowDamage =  340, arrowDelay = 11, moveFrequency =  9 },
+    [xi.item.MOORISH_IDOL             ] = { arrowDamage =  360, arrowDelay =  6, moveFrequency = 11 },
+    [xi.item.MORINABALIGI             ] = { arrowDamage =  720, arrowDelay =  4, moveFrequency = 13 },
+    [xi.item.MUDDY_SIREDON            ] = { arrowDamage =  460, arrowDelay = 12, moveFrequency = 11 },
+    [xi.item.MYTHRIL_DAGGER           ] = { arrowDamage = 1560, arrowDelay = 13, moveFrequency =  2, fatigue = xi.fishing.fatigueClass.VALUABLE },
+    [xi.item.MYTHRIL_SWORD            ] = { arrowDamage =  300, arrowDelay = 13, moveFrequency =  2, fatigue = xi.fishing.fatigueClass.VALUABLE },
+    [xi.item.NEBIMONITE               ] = { arrowDamage =  600, arrowDelay =  9, moveFrequency =  5, weight = 56, sizeLoss = 66 }, -- Heavier than its level: it strains a starter rod
+    [xi.item.NOBLE_LADY               ] = { arrowDamage =  600, arrowDelay =  7, moveFrequency = 10 },
+    [xi.item.NORG_SHELL               ] = { arrowDamage =  620, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.NOSTEAU_HERRING_1        ] = { arrowDamage =  420, arrowDelay =  7, moveFrequency =  8, sizeLoss = 92 },
+    [xi.item.OGRE_EEL_1               ] = { arrowDamage =  580, arrowDelay = 13, moveFrequency = 11 },
+    [xi.item.PHANAUET_NEWT            ] = { arrowDamage =  260, arrowDelay = 10, moveFrequency = 11 },
+    [xi.item.PIPIRA_1                 ] = { arrowDamage =  220, arrowDelay =  6, moveFrequency = 14, sizeLoss = 52 },
+    [xi.item.PIRARUCU                 ] = { arrowDamage =  480, arrowDelay = 14, moveFrequency =  4 },
+    [xi.item.PTERYGOTUS               ] = { arrowDamage =  560, arrowDelay =  8, moveFrequency =  7 },
+    [xi.item.QUUS_1                   ] = { arrowDamage =  240, arrowDelay =  7, moveFrequency = 11 },
+    [xi.item.RED_TERRAPIN             ] = { arrowDamage =  560, arrowDelay =  8, moveFrequency =  5 },
+    [xi.item.RHINOCHIMERA_1           ] = { arrowDamage =  340, arrowDelay =  6, moveFrequency = 15 },
+    [xi.item.RIPPED_CAP               ] = { arrowDamage =  720, arrowDelay = 13, moveFrequency =  2, weight = 50, fatigue = xi.fishing.fatigueClass.JUNK },
+    [xi.item.RUSTY_BUCKET             ] = { arrowDamage =  380, arrowDelay = 13, moveFrequency =  2, weight = 50, fatigue = xi.fishing.fatigueClass.JUNK },
+    [xi.item.RUSTY_CAP                ] = { arrowDamage =  760, arrowDelay = 13, moveFrequency =  2, weight = 50, fatigue = xi.fishing.fatigueClass.VALUABLE },
+    [xi.item.RUSTY_GREATSWORD         ] = { arrowDamage = 1140, arrowDelay = 13, moveFrequency =  2, weight = 50 },
+    [xi.item.RUSTY_LEGGINGS           ] = { arrowDamage =  520, arrowDelay = 13, moveFrequency =  2, weight = 50, fatigue = xi.fishing.fatigueClass.JUNK },
+    [xi.item.RUSTY_PICK               ] = { arrowDamage =  940, arrowDelay = 13, moveFrequency =  2, weight = 50, fatigue = xi.fishing.fatigueClass.VALUABLE },
+    [xi.item.RUSTY_SUBLIGAR           ] = { arrowDamage =  440, arrowDelay = 13, moveFrequency =  2, weight = 78, fatigue = xi.fishing.fatigueClass.JUNK }, -- Broke a Tarutaru rod on all 13 retail reels
+    [xi.item.RYUGU_TITAN              ] = { arrowDamage =  960, arrowDelay =  1, moveFrequency = 15 },
+    [xi.item.SANDFISH                 ] = { arrowDamage =  720, arrowDelay =  3, moveFrequency = 10 },
+    [xi.item.SAZANBALIGI              ] = { arrowDamage =  360, arrowDelay = 10, moveFrequency = 14 },
+    [xi.item.SEA_ZOMBIE               ] = { arrowDamage =  780, arrowDelay =  3, moveFrequency = 15 },
+    [xi.item.SHALL_SHELL              ] = { arrowDamage =  540, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.SHINING_TROUT_1          ] = { arrowDamage =  320, arrowDelay =  5, moveFrequency = 11, sizeLoss = 67 },
+    [xi.item.SILVER_RING              ] = { arrowDamage =  800, arrowDelay = 13, moveFrequency =  2, fatigue = xi.fishing.fatigueClass.VALUABLE },
+    [xi.item.SILVER_SHARK             ] = { arrowDamage =  700, arrowDelay =  3, moveFrequency =  9 },
+    [xi.item.TAKITARO                 ] = { arrowDamage =  360, arrowDelay =  3, moveFrequency = 14 },
+    [xi.item.TARUTARU_SNARE           ] = { arrowDamage =  440, arrowDelay = 13, moveFrequency =  2 },
+    [xi.item.TAVNAZIAN_GOBY           ] = { arrowDamage =  600, arrowDelay =  7, moveFrequency =  8 },
+    [xi.item.THREE_EYED_FISH_1        ] = { arrowDamage =  440, arrowDelay = 10, moveFrequency = 10 },
+    [xi.item.TIGER_COD_1              ] = { arrowDamage =  460, arrowDelay =  9, moveFrequency =  9, sizeLoss = 58 },
+    [xi.item.TINY_GOLDFISH            ] = { arrowDamage =  440, arrowDelay =  0, moveFrequency = 14 },
+    [xi.item.TITANICTUS               ] = { arrowDamage =  560, arrowDelay =  3, moveFrequency = 12 },
+    [xi.item.TITANIC_SAWFISH          ] = { arrowDamage =  780, arrowDelay =  6, moveFrequency = 15 },
+    [xi.item.TRICOLORED_CARP          ] = { arrowDamage =  380, arrowDelay = 12, moveFrequency = 12, sizeLoss = 38 },
+    [xi.item.TRICORN                  ] = { arrowDamage =  760, arrowDelay = 11, moveFrequency =  9 },
+    [xi.item.TRILOBITE                ] = { arrowDamage =  540, arrowDelay =  5, moveFrequency =  6 },
+    [xi.item.TRUMPET_SHELL            ] = { arrowDamage =  360, arrowDelay = 10, moveFrequency =  5 },
+    [xi.item.TURNABALIGI              ] = { arrowDamage =  600, arrowDelay =  4, moveFrequency = 13 },
+    [xi.item.USKUMRU                  ] = { arrowDamage =  480, arrowDelay =  4, moveFrequency = 12 },
+    [xi.item.VEYDAL_WRASSE_1          ] = { arrowDamage =  260, arrowDelay =  5, moveFrequency = 13 },
+    [xi.item.VONGOLA_CLAM             ] = { arrowDamage =  400, arrowDelay =  8, moveFrequency =  4 },
+    [xi.item.YAYINBALIGI              ] = { arrowDamage =  260, arrowDelay =  6, moveFrequency = 12 },
+    [xi.item.YELLOW_GLOBE             ] = { arrowDamage =  340, arrowDelay =  8, moveFrequency =  8, sizeLoss = 15 },
+    [xi.item.YILANBALIGI              ] = { arrowDamage =  480, arrowDelay =  5, moveFrequency =  8 },
+    [xi.item.ZAFMLUG_BASS             ] = { arrowDamage =  540, arrowDelay =  6, moveFrequency =  7 },
+    [xi.item.ZEBRA_EEL                ] = { arrowDamage =  640, arrowDelay = 10, moveFrequency = 10 },
+}
+
+xi.fishing.preferredCatches =
+{
+    [xi.item.BALL_OF_CRAYFISH_PASTE] = { xi.item.BLACK_EEL_1, xi.item.NEBIMONITE, xi.item.YELLOW_GLOBE },
+    [xi.item.BALL_OF_INSECT_PASTE  ] = { xi.item.BLINDFISH, xi.item.FOREST_CARP, xi.item.MOAT_CARP_1 },
+    [xi.item.BALL_OF_SARDINE_PASTE ] = { xi.item.ABAIA, xi.item.DARK_BASS_1, xi.item.EMPEROR_FISH, xi.item.JUNGLE_CATFISH, xi.item.MORINABALIGI },
+    [xi.item.BALL_OF_TROUT_PASTE   ] = { xi.item.ABAIA, xi.item.DARK_BASS_1, xi.item.EMPEROR_FISH, xi.item.JUNGLE_CATFISH, xi.item.MORINABALIGI },
+    [xi.item.FLY_LURE              ] = { xi.item.BETTA, xi.item.BIBIKIBO, xi.item.CHEVAL_SALMON, xi.item.COBALT_JELLYFISH, xi.item.COPPER_FROG_1, xi.item.CRESCENT_FISH, xi.item.DENIZANASI, xi.item.ELSHIMO_FROG, xi.item.PHANAUET_NEWT, xi.item.SHINING_TROUT_1, xi.item.TAKITARO },
+    [xi.item.FROG_LURE             ] = { xi.item.ARMORED_PISCES, xi.item.ELSHIMO_NEWT, xi.item.KAPLUMBAGA, xi.item.MUDDY_SIREDON, xi.item.RED_TERRAPIN },
+    [xi.item.LITTLE_WORM           ] = { xi.item.COBALT_JELLYFISH, xi.item.DENIZANASI },
+    [xi.item.LIZARD_LURE           ] = { xi.item.GAVIAL_FISH },
+    [xi.item.LUFAISE_FLY           ] = { xi.item.GIANT_CHIRAI },
+    [xi.item.LUGWORM               ] = { xi.item.ISTAVRIT_1, xi.item.PTERYGOTUS, xi.item.QUUS_1 },
+    [xi.item.MEATBALL              ] = { xi.item.ARMORED_PISCES, xi.item.BLADEFISH_1, xi.item.CAVE_CHERAX, xi.item.COBALT_JELLYFISH, xi.item.DENIZANASI, xi.item.GAVIAL_FISH, xi.item.GUGRUSAURUS, xi.item.MEGALODON, xi.item.PIRARUCU, xi.item.SILVER_SHARK, xi.item.TITANICTUS },
+    [xi.item.MINNOW                ] = { xi.item.ABAIA, xi.item.ARMORED_PISCES, xi.item.BLACK_GHOST, xi.item.BLUETAIL_1, xi.item.CONE_CALAMARY, xi.item.CRYSTAL_BASS, xi.item.DARK_BASS_1, xi.item.GIANT_CATFISH_1, xi.item.GIGANT_SQUID, xi.item.GREEDIE, xi.item.JUNGLE_CATFISH, xi.item.PIPIRA_1, xi.item.SHINING_TROUT_1, xi.item.TAVNAZIAN_GOBY, xi.item.THREE_EYED_FISH_1 },
+    [xi.item.PEELED_CRAYFISH       ] = { xi.item.EMPEROR_FISH, xi.item.GIANT_DONKO_1 },
+    [xi.item.PIECE_OF_ROTTEN_MEAT  ] = { xi.item.CAVE_CHERAX },
+    [xi.item.ROBBER_RIG            ] = { xi.item.SHALL_SHELL },
+    [xi.item.SABIKI_RIG            ] = { xi.item.BASTORE_SARDINE_1, xi.item.COBALT_JELLYFISH, xi.item.DENIZANASI, xi.item.HAMSI, xi.item.ICEFISH, xi.item.YELLOW_GLOBE },
+    [xi.item.SHELL_BUG             ] = { xi.item.BLACK_EEL_1 },
+    [xi.item.SHRIMP_LURE           ] = { xi.item.BASTORE_BREAM, xi.item.GIGANT_OCTOPUS_1, xi.item.GOLD_CARP, xi.item.GRIMMONITE, xi.item.KALKANBALIGI, xi.item.LUNGFISH, xi.item.MERCANBALIGI, xi.item.MOLA_MOLA, xi.item.MONKE_ONKE_1, xi.item.MOORISH_IDOL, xi.item.OGRE_EEL_1, xi.item.TRICOLORED_CARP, xi.item.TURNABALIGI, xi.item.ZEBRA_EEL },
+    [xi.item.SINKING_MINNOW        ] = { xi.item.ARMORED_PISCES, xi.item.BLACK_SOLE, xi.item.CRYSTAL_BASS, xi.item.GARPIKE, xi.item.GIANT_CATFISH_1, xi.item.GOLD_LOBSTER_1, xi.item.GUGRU_TUNA_1, xi.item.ISTAKOZ, xi.item.KAYABALIGI, xi.item.LAKERDA, xi.item.NOBLE_LADY, xi.item.RHINOCHIMERA_1, xi.item.SHINING_TROUT_1 },
+    [xi.item.SLICE_OF_BLUETAIL     ] = { xi.item.BASTORE_SWEEPER, xi.item.BHEFHEL_MARLIN_1, xi.item.BLADEFISH_1, xi.item.KALAMAR, xi.item.KILICBALIGI, xi.item.VEYDAL_WRASSE_1 },
+    [xi.item.SLICE_OF_COD          ] = { xi.item.DIL, xi.item.GIGANT_SQUID, xi.item.RYUGU_TITAN, xi.item.THREE_EYED_FISH_1 },
+    [xi.item.SLICE_OF_MOAT_CARP    ] = { xi.item.CA_CUONG, xi.item.CRAYFISH_1 },
+    [xi.item.SLICE_OF_SARDINE      ] = { xi.item.ZEBRA_EEL },
+    [xi.item.WORM_LURE             ] = { xi.item.CORAL_BUTTERFLY, xi.item.MOORISH_IDOL, xi.item.SANDFISH, xi.item.TRILOBITE, xi.item.YELLOW_GLOBE, xi.item.ZAFMLUG_BASS },
+}
+
+-- Fatigue class, cooldown in seconds and pinned fight level for the monsters that have them
+xi.fishing.monsters =
+{
+    ['Devil_Manta'    ] = { fatigue = xi.fishing.fatigueClass.VALUABLE, cooldown = 600, level = 50 },
+    ['Fighting_Pugil' ] = { level = 50 },
+    ['Northern_Piranu'] = { cooldown = 14400 },
+    ['Ocean_Crab'     ] = { level = 40 },
+    ['Palm_Crab'      ] = { level = 10 },
+    ['Savanna_Crab'   ] = { level = 20 },
+    ['Scavenger_Crab' ] = { level = 20 },
+    ['Sea_Pugil'      ] = { level = 10 },
+    ['Southern_Piranu'] = { cooldown = 14400 },
 }

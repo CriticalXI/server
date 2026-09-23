@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - cave_cherax
+      - giant_donko
+      - rusty_bucket
+      - rusty_cap
+      - rusty_subligar
+      - sandfish
+monsters:
+  17489921: {}
+  17489922: {}
+  17489923: {}
+  17489924: {}
+  17489925:
+    area: whole_zone

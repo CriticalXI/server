@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - ahtapot
+      - istakoz
+      - istiridye
+      - mercanbaligi
+      - rhinochimera
+      - rusty_leggings
+      - rusty_subligar
+monsters:
+  16998406:
+    area: whole_zone
+    bait: [minnow, sinking_minnow]

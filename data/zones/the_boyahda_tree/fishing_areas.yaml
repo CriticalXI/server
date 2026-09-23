@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  waterfall_basin:
+    cylinder: {center: [45.0, -18.0, -173.0], radius: 27}
+    pool:
+      - arrowwood_log
+      - copper_ring
+      - crayfish
+      - dark_bass
+      - giant_chirai
+      - moat_carp
+      - rusty_leggings
+      - tricolored_carp
+  waterfall_basin_hidden:
+    cylinder: {center: [-244.0, 10.0, -278.0], radius: 20}
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - emperor_fish
+      - moat_carp
+      - rusty_leggings
+      - tricolored_carp
+  other_waterside:
+    pool:
+      - arrowwood_log
+      - crayfish
+      - dark_bass
+      - moat_carp
+      - rusty_leggings
+monsters:
+  17403905: {}
+  17403906: {}
+  17403907: {}
+  17403908: {}
+  17403909: {}

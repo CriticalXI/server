@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - arrowwood_log
+      - crystal_bass
+      - dark_bass
+      - red_terrapin
+monsters:
+  17272833: {}
+  17272834: {}
+  17272835: {}
+  17272836: {}
+  17272837: {}

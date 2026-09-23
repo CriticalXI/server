@@ -95,6 +95,7 @@ local function addHandlers(secondLevel, lookupSecondLevel, checkFunc, container)
             'onZoneIn',
             'onZoneOut',
             'afterZoneIn',
+            'onFishingHook',
         }
 
         for _, keyName in ipairs(wrappedDefinitions) do
@@ -457,6 +458,20 @@ end
 
 function InteractionLookup:afterZoneIn(player, fallbackFn)
     return onHandler(self.data, 'afterZoneIn', 1, { player }, fallbackFn)
+end
+
+-- Asked before the fishing bite roll. A quest section declares onFishingHook = function(player, area)
+-- at zone level and returns the catch to force: an item id, or a mob entity for a monster. The
+-- first quest that answers wins; nothing means the ordinary roll.
+function InteractionLookup:onFishingHook(player, area, fallbackFn)
+    local results = runHandlersInData(self.data, player, 'onFishingHook', 1, { player, area })
+    if results[1] ~= nil then
+        return results[1]
+    end
+
+    if fallbackFn then
+        return fallbackFn(player, area)
+    end
 end
 
 function InteractionLookup:onSteal(player, mob, ability, action, fallbackFn)

@@ -45,6 +45,13 @@ end
 function GetNPCByID(npcid, instanceObj)
 end
 
+-- The fishing catalog and every zone's fishing areas as plain tables, built from data/fishing.yaml
+-- and data/zones/<zone>/fishing_areas.yaml with names resolved to ids. Fetch once and keep it.
+---@nodiscard
+---@return TFishingData
+function GetFishingData()
+end
+
 ---@nodiscard
 ---@param npcid integer
 ---@param instanceObj CInstance?

@@ -55,8 +55,9 @@ end
 ---@param p2 integer?
 ---@param p3 integer?
 ---@param chat integer?
+---@param broadcast boolean?
 ---@return nil
-function CBaseEntity:messageName(messageID, entity, p0, p1, p2, p3, chat)
+function CBaseEntity:messageName(messageID, entity, p0, p1, p2, p3, chat, broadcast)
 end
 
 ---@param messageID integer
@@ -526,6 +527,23 @@ end
 ---@param targetEntity CBaseEntity
 ---@return number
 function CBaseEntity:checkDistance(targetEntity)
+end
+
+-- Whether the entity stands within radius of x, z. Height is ignored.
+---@nodiscard
+---@param x number
+---@param z number
+---@param radius number
+---@return boolean
+function CBaseEntity:isInsideCylinder(x, z, radius)
+end
+
+-- Whether the entity stands inside a ring of {x, y, z} corners, the shape a fishing area or roam
+-- region uses. The ring closes implicitly and height is ignored.
+---@nodiscard
+---@param corners { [1]: number, [2]: number, [3]: number }[]
+---@return boolean
+function CBaseEntity:isInsidePoly(corners)
 end
 
 ---@param milliseconds integer?

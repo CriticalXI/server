@@ -23,7 +23,6 @@
 #define _FISHINGCONTEST_H
 
 #include "items/item_fish.h"
-#include "utils/fishingutils.h"
 
 #include <cstring>
 #include <list>

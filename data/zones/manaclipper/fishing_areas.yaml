@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  dhalmel_rock:
+    pool:
+      - bastore_sardine
+      - bibiki_urchin
+      - bibikibo
+      - bladefish
+      - bluetail
+      - clump_of_pamtam_kelp
+      - cobalt_jellyfish
+      - cone_calamary
+      - gugru_tuna
+      - gugrusaurus
+      - moorish_idol
+      - noble_lady
+      - quus
+      - rusty_bucket
+      - ryugu_titan
+      - titanic_sawfish
+      - titanictus
+      - trilobite
+      - vongola_clam
+      - zafmlug_bass
+  maliyakaleya_reef:
+    pool: []
+  purgonorgo_isle:
+    pool: []
+monsters:
+  16789505: {}
+  16789506: {}
+  16789507: {}
+  16789508: {}
+  16789509:
+    area: dhalmel_rock
+  16789510:
+    area: dhalmel_rock

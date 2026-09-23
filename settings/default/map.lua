@@ -151,11 +151,21 @@ xi.settings.map =
     -- Enable/disable all fishing, including quests. ENABLE AT YOUR OWN RISK.
     FISHING_ENABLE = false,
 
-    -- Sets the minimum level a character must be to fish.
-    FISHING_MIN_LEVEL = 1,
-
     -- Multiplier for fishing skill-up chance. Default = 1.0, very hard.
     FISHING_SKILL_MULTIPLIER = 1.0,
+
+    -- Enable/disable skill-ups from fish lost to their size. Default = true, retail behavior.
+    FISHING_SKILLUP_ON_FAILURE = true,
+
+    -- Enable/disable the daily catch cap and fatigue. Default = true, retail behavior.
+    FISHING_FATIGUE_ENABLE = true,
+
+    -- Characters below the set level obtain 20x the rate of fatigue
+    FISHING_MIN_LEVEL = 20,
+
+    -- Daily catch cap and fatigue cap. Retail = 200 and 20000
+    FISHING_DAILY_CAP   = 200,
+    FISHING_FATIGUE_CAP = 20000,
 
     -- Enable/disable skill-ups from bloodpacts
     SKILLUP_BLOODPACT = true,

@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  whole_zone:
+    pool:
+      - black_eel
+      - copper_frog
+      - crayfish
+      - rusty_bucket
+      - tricolored_carp
+monsters:
+  17362945: {}
+  17362946: {}
+  17362947: {}
+  17362948: {}
+  17362949: {}

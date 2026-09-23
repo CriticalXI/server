@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=../../schemas/fishing_areas.schema.json
+
+areas:
+  hot_springs:
+    cylinder: {center: [-485.042, 44.0, -415.916], radius: 150}
+    pool:
+      - rusty_bucket
+      - rusty_cap
+      - rusty_leggings
+      - rusty_subligar
+      - silver_ring
+  seaside:
+    pool:
+      - bastore_bream
+      - bastore_sardine
+      - bladefish
+      - cobalt_jellyfish
+      - gold_lobster
+      - ogre_eel
+      - quus
+      - rusty_leggings
+      - rusty_subligar
+      - zafmlug_bass
+monsters:
+  17215490: {}
+  17215492: {}
+  17215493: {}
