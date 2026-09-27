@@ -57,7 +57,6 @@ era/data/abyssea/mob_droplist_removal
 era/data/abyssea/npc_list
 era/data/rov/npc_list
 era/data/soa/mob_droplist_adjust
-era/data/toau/pre_rmt_drops
 era/data/wotg/mob_droplist_removal
 phoenix/data
 phoenix/data/bazaar_tax
