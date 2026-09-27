@@ -12,6 +12,7 @@ local shadow = {}
 
 -- Put saved rows back into xi.guildShops.state and fill the shadow copy.
 -- Each row is { shop, itemId, stock, buyPrice, sellPrice, offered, lastRoll }.
+-- Rolls every shop that is still unrolled on the boot day.
 -- Returns the rows to delete ({ shop, itemId }) and how many shops were handled each way.
 helper.restore = function(rows)
     local today  = VanadielUniqueDay()
@@ -91,7 +92,18 @@ helper.restore = function(rows)
         end
     end
 
-    return { deletes = deletes, restored = restored, reRolled = reRolled }
+    -- Unrolled shops roll now so restock days count from boot, not from the first visit.
+    local seeded = 0
+    for shopName, shop in pairs(xi.data.guildShops) do
+        local state = xi.guildShops.state[shopName]
+        if shop.stock and (not state or state.lastRoll < 0) then
+            -- onBuyList only reads the NPC name, so a stub runs the real day roll.
+            xi.guildShops.onBuyList(nil, { getName = function() return shopName end })
+            seeded = seeded + 1
+        end
+    end
+
+    return { deletes = deletes, restored = restored, reRolled = reRolled, seeded = seeded }
 end
 
 -- Collect the rows that changed since the last call and update the shadow copy.
