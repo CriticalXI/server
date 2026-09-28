@@ -53,22 +53,12 @@ templates:
       spawn:
         respawn: 960 # Era dungeon timers
 
-  Kuftal_Delver:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Kuftal_Digger:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers
 
   Ladon:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Machairodus:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers

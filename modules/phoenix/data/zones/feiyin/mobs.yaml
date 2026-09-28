@@ -3,11 +3,6 @@
 
 templates:
 
-  Balayang:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Camazotz_FY:
     attributes:
       spawn:
@@ -62,11 +57,6 @@ templates:
     attributes:
       spawn:
         respawn: 840 # Era dungeon timers
-
-  Sentient_Carafe:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
   Shadow_blm:
     attributes:
@@ -132,11 +122,6 @@ templates:
     attributes:
       spawn:
         respawn: 840 # Era dungeon timers
-
-  Wekufe:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
 spawns:
 

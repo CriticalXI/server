@@ -88,22 +88,12 @@ templates:
       spawn:
         respawn: 960 # Era dungeon timers
 
-  Snaggletooth_Peapuk:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Steelshell:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers
 
   Steelshell_2:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Viseclaw:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers

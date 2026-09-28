@@ -4,12 +4,6 @@
 
 templates:
 
-  Bilesucker:
-    loot: # vial_of_fiend_blood removed
-      drops:
-        - chance: common
-          item:   bat_wing
-
   Blade_Bat_Ranguemont_Pass:
     loot: # vial_of_fiend_blood removed
       drops:
