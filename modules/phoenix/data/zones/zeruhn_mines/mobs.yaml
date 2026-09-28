@@ -89,16 +89,6 @@ templates:
         chunk_of_silver_ore: 0
         chunk_of_zinc_ore:   0
 
-  Burrower_Worm:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Colliery_Bat:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Ding_Bats:
     attributes:
       spawn:
@@ -108,16 +98,6 @@ templates:
     attributes:
       spawn:
         respawn: 480 # Era dungeon timers
-
-  Soot_Crab:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Veindigger_Leech:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
 spawns:
 

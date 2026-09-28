@@ -89,11 +89,6 @@ templates:
       spawn:
         respawn: 960 # Era dungeon timers
 
-  Flume_Toad:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Girtab:
     attributes:
       spawn:
@@ -130,11 +125,6 @@ templates:
         respawn: 960 # Era dungeon timers
 
   Mousse_SSG:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Poroggo_Excavator:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers

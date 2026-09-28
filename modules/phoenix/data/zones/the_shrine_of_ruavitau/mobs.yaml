@@ -18,27 +18,12 @@ templates:
       spawn:
         respawn: 960 # Era dungeon timers
 
-  Aura_Sculpture:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Aura_Statue:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers
 
   Aura_Weapon:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Baelfyr:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Byrgen:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers
@@ -68,22 +53,12 @@ templates:
       spawn:
         respawn: 960 # Era dungeon timers
 
-  Gefyrst:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Ice_Elemental:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers
 
   Thunder_Elemental:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Ungeweder:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers

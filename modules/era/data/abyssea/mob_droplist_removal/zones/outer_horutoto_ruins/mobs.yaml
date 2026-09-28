@@ -9,9 +9,3 @@ templates:
       drops:
         - chance: common
           item:   bat_wing
-
-  Thorn_Bat:
-    loot: # vial_of_fiend_blood removed
-      drops:
-        - chance: common
-          item:   bat_wing

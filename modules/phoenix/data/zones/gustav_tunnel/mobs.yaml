@@ -3,11 +3,6 @@
 
 templates:
 
-  Boulder_Eater:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Demonic_Pugil:
     attributes:
       spawn:

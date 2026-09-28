@@ -3,17 +3,7 @@
 
 templates:
 
-  Blind_Bat:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Bloodsucker_BO:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Dabilla:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers
@@ -49,16 +39,6 @@ templates:
         respawn: 960 # Era dungeon timers
 
   Mousse_BO:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Nachtmahr:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Panna_Cotta:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers

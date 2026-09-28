@@ -93,11 +93,6 @@ templates:
       spawn:
         respawn: 480 # Era dungeon timers
 
-  Fuligo:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Ghoul_blm:
     attributes:
       spawn:

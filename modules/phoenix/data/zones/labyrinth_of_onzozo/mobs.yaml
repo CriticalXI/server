@@ -3,16 +3,6 @@
 
 templates:
 
-  Babaulas:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Boribaba:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Cockatrice:
     attributes:
       spawn:
