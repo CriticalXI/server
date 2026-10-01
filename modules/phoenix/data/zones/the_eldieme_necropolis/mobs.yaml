@@ -104,11 +104,6 @@ templates:
       spawn:
         respawn: 960 # Era dungeon timers
 
-  Nekros_Hound:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Puroboros_EN_GC:
     attributes:
       spawn:

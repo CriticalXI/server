@@ -28,20 +28,10 @@ templates:
       spawn:
         respawn: 720 # Era dungeon timers
 
-  Chaser_Bats:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Combat_MoS:
     attributes:
       spawn:
         respawn: 600 # Era dungeon timers
-
-  Crypterpillar:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
   Earth_Elemental:
     attributes:
@@ -142,11 +132,6 @@ templates:
     attributes:
       spawn:
         respawn: 480 # Era dungeon timers
-
-  Warren_Bat:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
   Wendigo_blm_MoS:
     attributes:

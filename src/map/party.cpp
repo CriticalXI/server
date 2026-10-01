@@ -1325,10 +1325,12 @@ void CParty::RefreshSync()
             syncEffect->SetPower(syncLevel);
         }
 
+        // Members below the sync keep their level but must track the new cap or their own next level up stays capped at the old one
+        member->m_LevelRestriction = syncLevel;
+
         if (member->GetMLevel() != NewMLevel)
         {
             charutils::RemoveAllEquipMods(member);
-            member->m_LevelRestriction = NewMLevel;
             member->SetMLevel(NewMLevel);
             member->SetSLevel(member->jobs.job[static_cast<uint8>(member->GetSJob())]);
             charutils::ApplyAllEquipMods(member);
@@ -1417,6 +1419,16 @@ bool CParty::HasTrusts()
         }
     }
     return false;
+}
+
+void CParty::MarkFormedByTrusts()
+{
+    m_FormedByTrusts = true;
+}
+
+bool CParty::IsFormedByTrusts() const
+{
+    return m_FormedByTrusts;
 }
 
 void CParty::RefreshFlags(std::vector<partyInfo_t>& info)

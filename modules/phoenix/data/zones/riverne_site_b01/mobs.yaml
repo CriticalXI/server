@@ -8,11 +8,6 @@ templates:
       spawn:
         respawn: 960 # Era dungeon timers
 
-  Blazedrake:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Ignidrake:
     attributes:
       spawn:

@@ -68,7 +68,7 @@ enum class login_result : uint8_t
     LOGIN_ERROR_LAUNCH_TOKEN_INVALID = 0x14, // [Phoenix] Launch Token
 };
 
-constexpr std::array<uint8, 3> SupportedXiloaderVersion = { 2, 1, 0 };
+constexpr std::array<uint8, 3> SupportedXiloaderVersion = { 2, 2, 0 };
 
 // NOTE: This collection of flags is 64-bits wide!
 enum AUTH_COMPONENTS

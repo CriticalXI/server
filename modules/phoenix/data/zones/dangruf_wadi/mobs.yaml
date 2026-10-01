@@ -170,35 +170,15 @@ templates:
         bowl_of_goblin_stew:       0
         goblin_mushpot:            0
 
-  Couloir_Leech:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Goblin_Ambusher:
     attributes:
       spawn:
         respawn: 480 # Era dungeon timers
 
-  Goblin_Bladesmith:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Goblin_Bushwhacker:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Goblin_Butcher:
     attributes:
       spawn:
         respawn: 480 # Era dungeon timers
-
-  Goblin_Conjurer:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
   Goblin_Fisher:
     attributes:
@@ -249,11 +229,6 @@ templates:
     attributes:
       spawn:
         respawn: 480 # Era dungeon timers
-
-  Witchetty_Grub:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
 spawns:
 

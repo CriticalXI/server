@@ -8,20 +8,10 @@ templates:
       spawn:
         respawn: 600 # Era dungeon timers
 
-  Bilis_Leech:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Blood_Bunny:
     attributes:
       spawn:
         respawn: 480 # Era dungeon timers
-
-  Buds_Bunny:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
   Clipper:
     attributes:
@@ -117,11 +107,6 @@ templates:
     attributes:
       spawn:
         respawn: 720 # Era dungeon timers
-
-  Swagger_Spruce:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
   Thread_Leech_OC:
     attributes:

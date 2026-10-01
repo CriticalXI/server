@@ -13,11 +13,6 @@ templates:
       spawn:
         respawn: 480 # Era dungeon timers
 
-  Orcish_Barricader:
-    attributes:
-      spawn:
-        respawn: 480 # Era dungeon timers
-
   Orcish_Fodder:
     attributes:
       spawn:
@@ -49,11 +44,6 @@ templates:
         respawn: 480 # Era dungeon timers
 
   Orcish_Stonelauncher:
-    attributes:
-      spawn:
-        respawn: 480 # Era dungeon timers
-
-  Orcish_Wallbreacher:
     attributes:
       spawn:
         respawn: 480 # Era dungeon timers

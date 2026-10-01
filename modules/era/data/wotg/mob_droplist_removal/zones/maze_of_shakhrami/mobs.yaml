@@ -19,9 +19,3 @@ templates:
           item:   spool_of_silk_thread
         - chance: rare
           item:   shakhrami_chest_key
-
-  Crypterpillar:
-    loot: # inferior_cocoon removed
-      drops:
-        - chance: uncommon
-          item:   spool_of_silk_thread

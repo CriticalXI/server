@@ -242,11 +242,6 @@ templates:
       spawn:
         respawn: 600 # Era dungeon timers
 
-  Goblin_Gruel:
-    attributes:
-      spawn:
-        respawn: 600 # Era dungeon timers
-
   Goblin_Leecher:
     attributes:
       spawn:
@@ -278,41 +273,6 @@ templates:
         respawn: 480 # Era dungeon timers
 
   Hati:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Locus_Armet_Beetle:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Locus_Dire_Bat:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Locus_Hati:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Locus_Lemures:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Locus_Spartoi_Sorcerer:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Locus_Spartoi_Warrior:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Locus_Tomb_Worm:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers

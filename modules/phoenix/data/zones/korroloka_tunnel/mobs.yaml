@@ -58,11 +58,6 @@ templates:
       spawn:
         respawn: 600 # Era dungeon timers
 
-  Lacerator:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Land_Worm_Korroloka:
     attributes:
       spawn:
@@ -77,11 +72,6 @@ templates:
     attributes:
       spawn:
         respawn: 600 # Era dungeon timers
-
-  Spool_Leech:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
 
   Thread_Leech:
     attributes:

@@ -38,11 +38,6 @@ templates:
       spawn:
         respawn: 840 # Era dungeon timers
 
-  Donjon_Bat:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Droma_GC:
     attributes:
       spawn:
@@ -103,22 +98,12 @@ templates:
       spawn:
         respawn: 960 # Era dungeon timers
 
-  Fortalice_Bats:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Funnel_Bats_GC:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers
 
   Hellmine:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Kaboom:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers
@@ -164,11 +149,6 @@ templates:
         respawn: 960 # Era dungeon timers
 
   Vault_Weapon:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
-  Warden_Beetle:
     attributes:
       spawn:
         respawn: 960 # Era dungeon timers

@@ -18,11 +18,6 @@ templates:
       spawn:
         respawn: 840 # Era dungeon timers
 
-  Darner:
-    attributes:
-      spawn:
-        respawn: 960 # Era dungeon timers
-
   Firedrake:
     attributes:
       spawn:

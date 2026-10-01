@@ -668,6 +668,12 @@ void dboxutils::TakeItemFromCell(CCharEntity* PChar, GP_CLI_COMMAND_PBX_BOXNO Bo
             return;
         }
 
+        if (BoxNo == GP_CLI_COMMAND_PBX_BOXNO::Outgoing && PItem->isSent())
+        {
+            PChar->pushPacket<GP_SERV_COMMAND_PBX_RESULT>(GP_CLI_COMMAND_PBX_COMMAND::Get, BoxNo, PItem, PostWorkNo, PChar->UContainer->GetItemsCount(), 0xBA);
+            return;
+        }
+
         auto transaction = ItemClaimTransaction::start(PChar);
         if (!transaction)
         {
@@ -703,8 +709,8 @@ void dboxutils::TakeItemFromCell(CCharEntity* PChar, GP_CLI_COMMAND_PBX_BOXNO Bo
             }
 
             // If we got here, something went wrong.
-            throw std::runtime_error(fmt::format("DBOX: Could not finalize take item transaction (player: {} ({}), PostWorkNo: {})",
-                                                 PChar->getName(), PChar->id, PostWorkNo));
+            throw std::runtime_error(fmt::format("DBOX: Could not finalize take item transaction (player: {} ({}), BoxNo: {}, PostWorkNo: {}, item: {} x{}, sent: {})",
+                                                 PChar->getName(), PChar->id, static_cast<int8_t>(BoxNo), PostWorkNo, PItem->getID(), PItem->getQuantity(), PItem->isSent()));
         });
         if (success && !transaction->commit())
         {

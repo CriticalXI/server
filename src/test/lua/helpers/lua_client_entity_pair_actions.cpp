@@ -64,6 +64,7 @@
 #include "map/packets/c2s/0x0fd_myroom_plant_check.h"
 #include "map/packets/c2s/0x0fe_myroom_plant_crop.h"
 #include "map/packets/c2s/0x0ff_myroom_plant_stop.h"
+#include "map/packets/c2s/0x100_myroom_job.h"
 #include "map/packets/c2s/0x102_extended_job.h"
 #include "map/packets/c2s/0x105_bazaar_list.h"
 #include "map/packets/c2s/0x106_bazaar_buy.h"
@@ -796,9 +797,9 @@ void CLuaClientEntityPairActions::engage(CLuaBaseEntity* mob) const
     PChar->loc.p.rotation = worldAngle(PChar->loc.p, PMob->loc.p);
     PMob->loc.p.rotation  = worldAngle(PMob->loc.p, PChar->loc.p);
 
-    // 3. Change last attack time so we can engage immediately
+    // 3. Clear the engage lockout so we can engage immediately
     auto* controller = static_cast<CPlayerController*>(parent_->testChar()->entity()->PAI->GetController());
-    controller->setLastAttackTime(timer::now() - 30s);
+    controller->setEngageLockedUntil(timer::now());
 
     // 4. Send packet to engage
     const auto packet       = parent_->packets().createPacket<GP_CLI_COMMAND_ACTION>();
@@ -967,6 +968,23 @@ void CLuaClientEntityPairActions::equipSet(const sol::table& entries) const
     }
 
     p->Count = idx;
+
+    parent_->packets().sendBasicPacket(*packet);
+}
+
+/************************************************************************
+ *  Function: changeJob()
+ *  Purpose : Emits the 0x100 packet to change main and/or support job.
+ *  Example : player.actions:changeJob(xi.job.WHM)
+ *  Notes   : Requires a mog house or a zone with the mog menu.
+ ************************************************************************/
+
+void CLuaClientEntityPairActions::changeJob(const uint8 mainJob, sol::optional<uint8> subJob) const
+{
+    const auto packet  = parent_->packets().createPacket<GP_CLI_COMMAND_MYROOM_JOB>();
+    auto*      p       = packet->as<GP_CLI_COMMAND_MYROOM_JOB>();
+    p->MainJobIndex    = mainJob;
+    p->SupportJobIndex = subJob.value_or(0);
 
     parent_->packets().sendBasicPacket(*packet);
 }
@@ -1195,6 +1213,7 @@ void CLuaClientEntityPairActions::Register()
     SOL_REGISTER("dropItem", CLuaClientEntityPairActions::dropItem);
     SOL_REGISTER("setLockstyle", CLuaClientEntityPairActions::setLockstyle);
     SOL_REGISTER("equipSet", CLuaClientEntityPairActions::equipSet);
+    SOL_REGISTER("changeJob", CLuaClientEntityPairActions::changeJob);
     SOL_REGISTER("craft", CLuaClientEntityPairActions::craft);
     SOL_REGISTER("plantAdd", CLuaClientEntityPairActions::plantAdd);
     SOL_REGISTER("plantCheck", CLuaClientEntityPairActions::plantCheck);
