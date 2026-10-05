@@ -153,6 +153,9 @@
 #include "packets/s2c/0x0f9_res.h"
 #include "packets/s2c/0x119_abil_recast.h"
 
+#include "enums/msg_basic.h"
+#include "lua/lua_base_entity.h"
+#include "utils/attackutils.h"
 #include "utils/battleutils.h"
 #include "utils/blueutils.h"
 #include "utils/charutils.h"
@@ -167,6 +170,7 @@
 #include "utils/puppetutils.h"
 #include "utils/trustutils.h"
 #include "utils/zoneutils.h"
+#include "ximesh/ximesh.h"
 
 #include <magic_enum/magic_enum.hpp>
 
@@ -841,7 +845,7 @@ void CLuaBaseEntity::clearLocalVarsWithPrefix(const std::string& prefix)
 {
     for (const auto& [localVar, _] : m_PBaseEntity->GetLocalVars())
     {
-        if (starts_with(localVar, prefix))
+        if (localVar.starts_with(prefix))
         {
             m_PBaseEntity->SetLocalVar(localVar, 0);
         }
@@ -4368,13 +4372,13 @@ auto CLuaBaseEntity::getEquippedItem(uint8 slot) -> CItem*
             return nullptr;
         }
 
-        auto* PChar    = static_cast<CCharEntity*>(m_PBaseEntity);
-        auto* slotItem = PChar->getEquip(static_cast<SLOTTYPE>(slot));
-
-        if (slotItem)
+        auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+        if (slot >= SLOT_LINK1)
         {
-            return slotItem;
+            return PChar->getLinkshell(static_cast<SLOTTYPE>(slot));
         }
+
+        return PChar->getEquip(static_cast<SLOTTYPE>(slot));
     }
 
     return nullptr;
@@ -5039,13 +5043,12 @@ auto CLuaBaseEntity::getItems(const sol::object& location) -> sol::table
         locationId = (locationId < CONTAINER_ID::MAX_CONTAINER_ID ? locationId : static_cast<uint8>(LOC_INVENTORY));
     }
 
-    for (int i = 0; i < PChar->getStorage(locationId)->GetSize(); ++i)
-    {
-        if (auto item = PChar->getStorage(locationId)->GetItem(i))
+    auto* PContainer = PChar->getStorage(locationId);
+    PContainer->ForEachItem(
+        [&](CItem* PItem)
         {
-            table.add(item);
-        }
-    }
+            table.add(PItem);
+        });
 
     return table;
 }
@@ -5735,9 +5738,13 @@ auto CLuaBaseEntity::getStorageItem(uint8 container, uint8 slotID, uint8 equipID
             PItem = PStorage->GetItem(slotID);
         }
     }
+    else if (equipID >= SLOT_LINK1)
+    {
+        PItem = PChar->getLinkshell(static_cast<SLOTTYPE>(equipID));
+    }
     else
     {
-        PItem = PChar->getEquip((SLOTTYPE)equipID);
+        PItem = PChar->getEquip(static_cast<SLOTTYPE>(equipID));
     }
 
     return PItem;

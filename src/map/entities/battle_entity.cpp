@@ -21,6 +21,8 @@
 
 #include "battle_entity.h"
 
+#include <algorithm>
+
 #include "enums/four_cc.h"
 
 #include "common/database.h"
@@ -44,6 +46,7 @@
 #include "attackround.h"
 #include "data/enums/mob_mod.h"
 #include "entities/char_entity.h"
+#include "entities/pet_entity.h"
 #include "items/item_weapon.h"
 #include "job_points.h"
 #include "lua/luautils.h"
@@ -2167,20 +2170,12 @@ void CBattleEntity::delTrait(CTrait* PTrait)
     TracyZoneScoped;
 
     delModifier(PTrait->getMod(), PTrait->getValue());
-    TraitList.erase(std::remove(TraitList.begin(), TraitList.end(), PTrait), TraitList.end());
+    std::erase(TraitList, PTrait);
 }
 
 bool CBattleEntity::hasTrait(uint16 traitID)
 {
-    for (CTrait* Trait : TraitList)
-    {
-        if (Trait->getID() == traitID)
-        {
-            return true;
-        }
-    }
-
-    return false;
+    return std::ranges::contains(TraitList, traitID, &CTrait::getID);
 }
 
 bool CBattleEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
