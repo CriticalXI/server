@@ -132,7 +132,7 @@ void MapNetworking::handle_incoming_packet(ByteSpan buffer, const IPP& ipp)
             auto maybePacketSize = compressPacket(PBuff.data(), size);
             if (!maybePacketSize)
             {
-                ShowError("zlib compression error");
+                ShowWarningFmt("zlib compression error from charid '{}', attempted pre-compression packet size '{}'", PSession->charID, size);
                 size = 0;
             }
             else
@@ -621,7 +621,7 @@ int32 MapNetworking::send_parse(uint8* buff, size_t* buffsize, MapSession* PSess
 
             if (!maybePacketSize)
             {
-                ShowError("zlib compression error");
+                ShowWarningFmt("zlib compression error from charid '{}', attempted pre-compression packet size '{}'", PSession->charID, *buffsize);
                 continue;
             }
             PacketSize = *maybePacketSize;
@@ -683,6 +683,7 @@ int32 MapNetworking::send_parse(uint8* buff, size_t* buffsize, MapSession* PSess
     if (incrementKeyAfterEncrypt)
     {
         PSession->incrementBlowfish();
+        ShowInfo(fmt::format("map_session: key counter for {} (charid {}) is now {:08X}", PChar->name, PChar->id, PSession->blowfish.key[4]));
 
         db::preparedStmt("UPDATE accounts_sessions SET session_key = ? WHERE charid = ? LIMIT 1",
                          PSession->blowfish.key,
