@@ -1262,7 +1262,7 @@ INSERT INTO `mob_skills` VALUES (1230,920,'empty_thrash',0,0.0,10.0,3733,1500,4,
 INSERT INTO `mob_skills` VALUES (1231,921,'promyvion_brume',1,0.0,10.0,3000,1000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1232,922,'murk',1,0.0,10.0,3000,1000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1233,923,'material_fend',0,0.0,10.0,2800,1000,1,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (1234,924,'carousel',1,0.0,10.0,4100,1500,4,0,0,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (1234,924,'carousel',1,0.0,10.0,4100,1500,4,0,0,7,0,0,0);
 INSERT INTO `mob_skills` VALUES (1235,925,'pile_pitch',0,0.0,10.0,2000,800,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1236,926,'guided_missile',2,0.0,17.0,2000,800,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1237,927,'hyper_pulse',1,0.0,10.0,2000,800,4,0,0,0,0,0,0);
@@ -1972,7 +1972,7 @@ INSERT INTO `mob_skills` VALUES (1940,1304,'chimera_ripper',0,0.0,7.0,3466,1,4,0
 INSERT INTO `mob_skills` VALUES (1941,1305,'string_clipper',0,0.0,7.0,3366,1,4,0,0,0,4,0,0);
 INSERT INTO `mob_skills` VALUES (1942,1303,'arcuballista',0,0.0,15.0,3133,1,4,0,0,0,3,1,0);
 INSERT INTO `mob_skills` VALUES (1943,1306,'slapstick',0,0.0,7.0,3116,1,4,0,0,0,5,8,0);
-INSERT INTO `mob_skills` VALUES (1944,1307,'shield_bash',0,0.0,7.0,1483,0,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (1944,1307,'shield_bash',0,0.0,7.0,1483,0,4,4,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1945,1219,'provoke',0,0.0,7.0,2000,0,4,4,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1946,435,'shock_absorber',0,0.0,7.0,2000,0,16,4,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1947,438,'flashbulb',0,0.0,7.0,2000,0,4,4,0,0,0,0,0);
