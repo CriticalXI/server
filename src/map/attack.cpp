@@ -630,17 +630,18 @@ void CAttack::ProcessDamage()
         m_baseDamage     = m_attacker->GetMainWeaponDmg();
         int32 kickDamage = 0;
 
-        if (m_attacker->objtype == TYPE_MOB)
+        // Player pets assigned H2H damage type should also be penalized
+        if (m_attacker->objtype == TYPE_MOB || m_attacker->objtype == TYPE_PET)
         {
             // Mobs use a different base damage formula than players.
             // H2H attacks from mobs have a base damage penalty applied based on what zone they are in.
-            float       mobH2HPenalty = 1.0f;
-            int32       fSTR          = battleutils::GetFSTR(m_attacker, m_victim, slot);
-            REGION_TYPE regionID      = m_attacker->loc.zone->GetRegionID();
+            float      mobH2HPenalty = 1.0f;
+            int32      fSTR          = battleutils::GetFSTR(m_attacker, m_victim, slot);
+            xi::Region regionID      = m_attacker->loc.zone->GetRegionID();
 
             if (static_cast<CMobEntity*>(m_attacker)->getMobMod(xi::MobMod::NoH2hPenalty) == 0)
             {
-                if (regionID <= REGION_TYPE::LIMBUS) // Pre TOAU zones
+                if (regionID <= xi::Region::Limbus) // Pre TOAU zones
                 {
                     mobH2HPenalty = 0.425f; // Vanilla - COP
                 }

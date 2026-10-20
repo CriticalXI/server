@@ -110,7 +110,7 @@ void SetLevelRestriction(CCharEntity* PChar, uint8 lvl);
 EMobDifficulty CheckMob(uint8 charlvl, CBattleEntity* PMob);
 
 uint32 GetBaseExp(uint8 charlvl, int16 moblvl);
-uint32 GetExpNEXTLevel(uint8 charlvl);
+auto   GetExpNEXTLevel(uint8 charlvl) -> uint32;
 auto   GetExpNEXTLevelForChar(const CCharEntity* PChar, uint8 charlvl) -> uint32;
 uint8  GetExpLevel(CBattleEntity* PMember);
 
@@ -325,7 +325,7 @@ void updateSession(MapSession* PSession, CCharEntity* PChar, CZone* currentZone)
 void loadDeathTimestamp(CCharEntity* PChar);
 void loadZoningFlag(CCharEntity* PChar);
 
-auto IsHomeNation(uint8 nation, REGION_TYPE region) -> bool;
+auto IsHomeNation(xi::Nation nation, xi::Region region) -> bool;
 bool isOrchestrionPlaced(CCharEntity* PChar);
 void updateMannequins(CCharEntity* PChar);
 
