@@ -23,7 +23,7 @@
 --   Lumbering Lambert (La Theine Plateau)  : 60 minute lottery cooldown
 --   Rampaging Ram (Konschtat Highlands)    : 60 minute lottery cooldown
 --
--- Lottery NMs that share a spawn slot keep their old cooldowns in phoenix/data/nm_respawn.
+-- Lottery NMs that share a spawn slot keep their old cooldowns in the phoenix/data/zones slot lists.
 --
 -- Most of the lottery figures come from a dated before and after on the Japanese wiki.
 -----------------------------------
