@@ -1564,7 +1564,7 @@ auto GetItemByID(uint32 itemId) -> const CItem*
 // We fetch the template and then intend to return an item, but that's really just not set up to work properly
 // So instead we return non-reference values from the item templates that cannot be modified
 // Remove me when we come up with a better way to fetch item templates in lua
-auto GetItemFlagsByID(uint32 itemId) -> ItemFlag
+auto GetItemFlagsByID(uint32 itemId) -> xi::ItemFlag
 {
     const auto* item = xi::items::lookup(itemId);
     if (item)
@@ -1572,7 +1572,7 @@ auto GetItemFlagsByID(uint32 itemId) -> ItemFlag
         return item->getFlag();
     }
 
-    return ItemFlag::None;
+    return xi::ItemFlag::None;
 }
 
 // GetItemByID currently fails because we can't properly guarantee the constness of `const CItem*`
@@ -3019,6 +3019,14 @@ void OnTrade(CCharEntity* PChar, CBaseEntity* PNpc)
 
     ShowTrace("luautils::OnTrade: {} ({}) -> {}", PChar->getName(), zone, name);
 
+    // An event the trade starts copies these. One it doesn't must not inherit them.
+    const auto previousPrep = *PChar->eventPreparation;
+    const auto restorePrep  = xi::finally(
+        [PChar, previousPrep]()
+        {
+            *PChar->eventPreparation = previousPrep;
+        });
+
     PChar->eventPreparation->targetEntity = PNpc;
     PChar->eventPreparation->scriptFile   = filename;
 
@@ -4027,22 +4035,6 @@ void OnMobEngage(CBaseEntity* PMob, CBaseEntity* PTarget)
         return;
     }
 
-    std::string filename;
-    if (PMob->objtype == TYPE_PET)
-    {
-        filename = fmt::format("./scripts/globals/pets/{}.lua", static_cast<CPetEntity*>(PMob)->GetScriptName());
-    }
-    else
-    {
-        filename = fmt::format("./scripts/zones/{}/mobs/{}.lua", PMob->loc.zone->getName(), PMob->getName());
-    }
-
-    if (auto* PChar = dynamic_cast<CCharEntity*>(PTarget))
-    {
-        PChar->eventPreparation->targetEntity = PMob;
-        PChar->eventPreparation->scriptFile   = filename;
-    }
-
     sol::function onMobEngage = getEntityCachedFunction(PMob, "onMobEngage");
     if (!onMobEngage.valid())
     {
@@ -4239,6 +4231,14 @@ void OnMobDeath(CBaseEntity* PMob, CBaseEntity* PKiller)
                     optParams["isWeaponSkillKill"] = weaponskillUsed > 0;
                     optParams["weaponskillUsed"]   = weaponskillUsed;
                     optParams["weaponskillDamage"] = weaponskillDamage;
+
+                    // An event the kill starts copies these. One it doesn't must not inherit them.
+                    const auto previousPrep = *PChar->eventPreparation;
+                    const auto restorePrep  = xi::finally(
+                        [PChar, previousPrep]()
+                        {
+                            *PChar->eventPreparation = previousPrep;
+                        });
 
                     PChar->eventPreparation->targetEntity = PMob;
                     PChar->eventPreparation->scriptFile   = filename;
@@ -5902,11 +5902,11 @@ void OnPlayerMount(CCharEntity* PChar)
     callGlobal<void>("xi.player.onPlayerMount", PChar);
 }
 
-void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID)
+void OnPlayerEmote(CCharEntity* PChar, const xi::Emote emote)
 {
     TracyZoneScoped;
 
-    callGlobal<void>("xi.player.onPlayerEmote", PChar, static_cast<uint8>(EmoteID));
+    callGlobal<void>("xi.player.onPlayerEmote", PChar, emote);
 }
 
 void OnPlayerVolunteer(CCharEntity* PChar, const std::string& text)

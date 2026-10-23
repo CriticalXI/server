@@ -86,13 +86,14 @@
 #include "ai/helpers/gambits_container.h"
 #include "ai/helpers/targetfind.h"
 
+#include "data/enums/automaton_frame.h"
+#include "data/enums/automaton_head.h"
 #include "entities/automaton_entity.h"
 #include "entities/char_entity.h"
 #include "entities/mob_entity.h"
 #include "entities/npc_entity.h"
 #include "entities/pet_entity.h"
 #include "entities/trust_entity.h"
-#include "enums/automaton.h"
 #include "enums/chat_message_area.h"
 #include "enums/item_lockflg.h"
 #include "items/exdata.h"
@@ -2472,7 +2473,7 @@ bool CLuaBaseEntity::inWater()
     // NOTE: Same logic as in PathFind::InWater
     const auto& pos     = m_PBaseEntity->loc.p;
     const auto  terrain = m_PBaseEntity->loc.zone->xiMesh()->getTerrainAt(pos.x, pos.y, pos.z);
-    return terrain == TerrainType::ShallowWater || terrain == TerrainType::DeepWater;
+    return terrain == xi::TerrainType::ShallowWater || terrain == xi::TerrainType::DeepWater;
 }
 
 /************************************************************************
@@ -2914,11 +2915,9 @@ void CLuaBaseEntity::leaveGame()
  *  Notes   : Target is optional.
  ************************************************************************/
 
-void CLuaBaseEntity::sendEmote(const CLuaBaseEntity* target, uint8 emID, uint8 emMode, bool othersOnly) const
+void CLuaBaseEntity::sendEmote(const CLuaBaseEntity* target, const xi::Emote emote, const xi::EmoteMode emoteMode, const bool othersOnly) const
 {
-    const auto* PTarget   = target ? target->GetBaseEntity() : nullptr;
-    const auto  emoteID   = static_cast<Emote>(emID);
-    const auto  emoteMode = static_cast<EmoteMode>(emMode);
+    const auto* PTarget = target ? target->GetBaseEntity() : nullptr;
 
     if (auto* PEntity = dynamic_cast<CNpcEntity*>(m_PBaseEntity); PEntity && PEntity->loc.zone)
     {
@@ -2926,7 +2925,7 @@ void CLuaBaseEntity::sendEmote(const CLuaBaseEntity* target, uint8 emID, uint8 e
         auto targetTargId = PTarget ? PTarget->targid : PEntity->targid;
         PEntity->loc.zone->PushPacket(PEntity,
                                       CHAR_INRANGE,
-                                      std::make_unique<GP_SERV_COMMAND_MOTIONMES>(PEntity, targetId, targetTargId, emoteID, emoteMode));
+                                      std::make_unique<GP_SERV_COMMAND_MOTIONMES>(PEntity, targetId, targetTargId, emote, emoteMode));
 
         return;
     }
@@ -2938,7 +2937,7 @@ void CLuaBaseEntity::sendEmote(const CLuaBaseEntity* target, uint8 emID, uint8 e
         auto messageArea  = othersOnly ? CHAR_INRANGE : CHAR_INRANGE_SELF; // Everyone around the player or everyone around the player and the player
         PChar->loc.zone->PushPacket(PChar,
                                     messageArea,
-                                    std::make_unique<GP_SERV_COMMAND_MOTIONMES>(PChar, targetId, targetTargId, emoteID, emoteMode, 0));
+                                    std::make_unique<GP_SERV_COMMAND_MOTIONMES>(PChar, targetId, targetTargId, emote, emoteMode, 0));
 
         return;
     }
@@ -7674,7 +7673,7 @@ uint8 CLuaBaseEntity::levelRestriction(const sol::object& level)
                             // Reset Activate if Automaton is full HP
                             if (PPet->health.hp == PPet->GetMaxHP())
                             {
-                                resetRecast(RECAST_ABILITY, 205);
+                                resetRecast(std::to_underlying(xi::RecastType::Ability), std::to_underlying(xi::Recast::Activate));
                             }
 
                             PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::AutoExceedsCapacity);
@@ -8380,7 +8379,7 @@ void CLuaBaseEntity::setRankPoints(uint16 rankPoints)
  *  Example : player:addQuest(xi.quest.log_id.BASTOK, xi.quest.id.bastok.LURE_OF_THE_WILDCAT)
  ************************************************************************/
 
-void CLuaBaseEntity::addQuest(QuestLog logId, const uint16 questId) const
+void CLuaBaseEntity::addQuest(const xi::QuestLog logId, const uint16 questId) const
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -8413,7 +8412,7 @@ void CLuaBaseEntity::addQuest(QuestLog logId, const uint16 questId) const
  *  Notes   : This duplicates delQuest with the above exception
  ************************************************************************/
 
-void CLuaBaseEntity::delCurrentQuest(QuestLog logId, const uint16 questID) const
+void CLuaBaseEntity::delCurrentQuest(const xi::QuestLog logId, const uint16 questID) const
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -8448,7 +8447,7 @@ void CLuaBaseEntity::delCurrentQuest(QuestLog logId, const uint16 questID) const
  *  Notes   : Doesn't delete any player variables associated with quest
  ************************************************************************/
 
-void CLuaBaseEntity::delQuest(QuestLog logId, uint16 questID) const
+void CLuaBaseEntity::delQuest(const xi::QuestLog logId, const uint16 questID) const
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -8484,7 +8483,7 @@ void CLuaBaseEntity::delQuest(QuestLog logId, uint16 questID) const
  *  Example : player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_THE_GRADE)
  ************************************************************************/
 
-uint8 CLuaBaseEntity::getQuestStatus(QuestLog logId, uint16 questID) const
+auto CLuaBaseEntity::getQuestStatus(const xi::QuestLog logId, const uint16 questID) const -> uint8
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -8513,7 +8512,7 @@ uint8 CLuaBaseEntity::getQuestStatus(QuestLog logId, uint16 questID) const
  *  Example : if (player:hasCompletedQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.BEYOND_INFINITY)) then
  ************************************************************************/
 
-bool CLuaBaseEntity::hasCompletedQuest(QuestLog logId, uint16 questID) const
+auto CLuaBaseEntity::hasCompletedQuest(const xi::QuestLog logId, const uint16 questID) const -> bool
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -8539,7 +8538,7 @@ bool CLuaBaseEntity::hasCompletedQuest(QuestLog logId, uint16 questID) const
  *  Notes   :
  ************************************************************************/
 
-void CLuaBaseEntity::completeQuest(QuestLog logId, uint16 questID) const
+void CLuaBaseEntity::completeQuest(const xi::QuestLog logId, const uint16 questID) const
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
@@ -13333,9 +13332,9 @@ void CLuaBaseEntity::addRecast(uint8 recastCont, uint16 recastID, uint32 duratio
     CBattleEntity* PBattleEntity = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (PBattleEntity)
     {
-        RECASTTYPE recastContainer = static_cast<RECASTTYPE>(recastCont);
+        xi::RecastType recastContainer = static_cast<xi::RecastType>(recastCont);
 
-        PBattleEntity->PRecastContainer->Add(recastContainer, static_cast<Recast>(recastID), std::chrono::seconds(duration));
+        PBattleEntity->PRecastContainer->Add(recastContainer, static_cast<xi::Recast>(recastID), std::chrono::seconds(duration));
         if (PBattleEntity->objtype == TYPE_PC)
         {
             CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
@@ -13359,10 +13358,10 @@ bool CLuaBaseEntity::hasRecast(uint8 rType, uint16 recastID, const sol::object& 
 
     if (PBattleEntity)
     {
-        RECASTTYPE recastContainer = static_cast<RECASTTYPE>(rType);
-        auto       recast          = (arg2 != sol::lua_nil) ? std::chrono::seconds(arg2.as<uint32>()) : 0s;
+        xi::RecastType recastContainer = static_cast<xi::RecastType>(rType);
+        auto           recast          = (arg2 != sol::lua_nil) ? std::chrono::seconds(arg2.as<uint32>()) : 0s;
 
-        hasRecast = PBattleEntity->PRecastContainer->HasRecast(recastContainer, static_cast<Recast>(recastID), recast);
+        hasRecast = PBattleEntity->PRecastContainer->HasRecast(recastContainer, static_cast<xi::Recast>(recastID), recast);
     }
 
     return hasRecast;
@@ -13381,13 +13380,13 @@ void CLuaBaseEntity::resetRecast(uint8 rType, uint16 recastID)
     // only reset for players
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
-        auto*      PChar           = static_cast<CCharEntity*>(m_PBaseEntity);
-        RECASTTYPE recastContainer = static_cast<RECASTTYPE>(rType);
+        auto*          PChar           = static_cast<CCharEntity*>(m_PBaseEntity);
+        xi::RecastType recastContainer = static_cast<xi::RecastType>(rType);
 
-        if (PChar->PRecastContainer->Has(recastContainer, static_cast<Recast>(recastID)))
+        if (PChar->PRecastContainer->Has(recastContainer, static_cast<xi::Recast>(recastID)))
         {
-            PChar->PRecastContainer->Del(recastContainer, static_cast<Recast>(recastID));
-            PChar->PRecastContainer->Add(recastContainer, static_cast<Recast>(recastID), 0s);
+            PChar->PRecastContainer->Del(recastContainer, static_cast<xi::Recast>(recastID));
+            PChar->PRecastContainer->Add(recastContainer, static_cast<xi::Recast>(recastID), 0s);
         }
 
         PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS2>(PChar);
@@ -13409,8 +13408,8 @@ void CLuaBaseEntity::resetRecasts()
     {
         auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-        PChar->PRecastContainer->Del(RECAST_MAGIC);
-        PChar->PRecastContainer->Del(RECAST_ABILITY);
+        PChar->PRecastContainer->Del(xi::RecastType::Magic);
+        PChar->PRecastContainer->Del(xi::RecastType::Ability);
         PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS2>(PChar);
         PChar->pushPacket<GP_SERV_COMMAND_ABIL_RECAST>(PChar);
     }
@@ -14061,26 +14060,9 @@ void CLuaBaseEntity::updateEnmityFromCure(CLuaBaseEntity* PEntity, int32 amount,
         return;
     }
 
-    // clang-format off
-    auto* PCurer = [&]() -> CBattleEntity*
-    {
-        if (m_PBaseEntity->objtype == TYPE_PC || m_PBaseEntity->objtype == TYPE_TRUST)
-        {
-            return static_cast<CBattleEntity*>(m_PBaseEntity);
-        }
-        else if (m_PBaseEntity->objtype == TYPE_PET && static_cast<CPetEntity*>(m_PBaseEntity)->getPetType() != PET_TYPE::AUTOMATON)
-        {
-            auto* PMaster = static_cast<CPetEntity*>(m_PBaseEntity)->PMaster;
-            if (PMaster->objtype == TYPE_PC)
-            {
-                return static_cast<CCharEntity*>(PMaster);
-            }
-        }
-        return nullptr;
-    }();
-    // clang-format on
+    auto* PCurer = static_cast<CBattleEntity*>(m_PBaseEntity);
 
-    if (PEntity != nullptr && PCurer)
+    if (PEntity && PCurer)
     {
         battleutils::GenerateCureEnmity(PCurer, static_cast<CBattleEntity*>(PEntity->GetBaseEntity()), amount, fixedCE, fixedVE);
     }
@@ -17385,12 +17367,12 @@ auto CLuaBaseEntity::getAutomatonName() const -> std::string
  *  Notes   :
  ************************************************************************/
 
-auto CLuaBaseEntity::getAutomatonFrame() const -> Maybe<AutomatonFrame>
+auto CLuaBaseEntity::getAutomatonFrame() const -> Maybe<xi::AutomatonFrame>
 {
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
         auto frame = static_cast<CCharEntity*>(m_PBaseEntity)->getAutomatonFrame();
-        if (frame >= AutomatonFrame::Harlequin && frame <= AutomatonFrame::Stormwaker)
+        if (frame >= xi::AutomatonFrame::Harlequin && frame <= xi::AutomatonFrame::Stormwaker)
         {
             return frame;
         }
@@ -17414,7 +17396,7 @@ auto CLuaBaseEntity::getAutomatonFrame() const -> Maybe<AutomatonFrame>
  *  Notes   :
  ************************************************************************/
 
-void CLuaBaseEntity::setAutomatonFrame(const AutomatonFrame frame) const
+void CLuaBaseEntity::setAutomatonFrame(const xi::AutomatonFrame frame) const
 {
     auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
 
@@ -17436,12 +17418,12 @@ void CLuaBaseEntity::setAutomatonFrame(const AutomatonFrame frame) const
  *  Notes   :
  ************************************************************************/
 
-auto CLuaBaseEntity::getAutomatonHead() const -> Maybe<AutomatonHead>
+auto CLuaBaseEntity::getAutomatonHead() const -> Maybe<xi::AutomatonHead>
 {
     if (m_PBaseEntity->objtype == TYPE_PC)
     {
         auto head = static_cast<CCharEntity*>(m_PBaseEntity)->getAutomatonHead();
-        if (head >= AutomatonHead::Harlequin && head <= AutomatonHead::Spiritreaver)
+        if (head >= xi::AutomatonHead::Harlequin && head <= xi::AutomatonHead::Spiritreaver)
         {
             return head;
         }
@@ -17465,7 +17447,7 @@ auto CLuaBaseEntity::getAutomatonHead() const -> Maybe<AutomatonHead>
  *  Notes   :
  ************************************************************************/
 
-void CLuaBaseEntity::setAutomatonHead(const AutomatonHead head) const
+void CLuaBaseEntity::setAutomatonHead(const xi::AutomatonHead head) const
 {
     auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
 
@@ -19469,7 +19451,7 @@ void CLuaBaseEntity::castSpell(const sol::object& spell, const sol::object& enti
             // Always delete recast of spell if mob
             if (PMobEntity)
             {
-                PMobEntity->PRecastContainer->Del(RECAST_MAGIC, static_cast<Recast>(spellid));
+                PMobEntity->PRecastContainer->Del(xi::RecastType::Magic, static_cast<xi::Recast>(spellid));
             }
 
             if (targid)
