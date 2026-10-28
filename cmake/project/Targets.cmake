@@ -8,17 +8,8 @@ function(xi_precompile_headers target)
     endif()
 endfunction()
 
-# A first-party static library: xi_common and everything it carries, our warnings, and its own
-# copy of the shared PCH.
-function(xi_add_library target)
-    add_library(${target} STATIC ${ARGN})
-    target_link_libraries(${target} PRIVATE project_warnings)
-    if(NOT target STREQUAL xi_common)
-        target_link_libraries(${target} PUBLIC xi_common)
-    endif()
-    xi_precompile_headers(${target})
-endfunction()
-
+# Libraries can share one PCH even when their dependencies add compile definitions, as long as
+# none of the headers in pch.h read those macros.
 # On MSVC a reused /Zi PCH makes every consumer compile into a copy of the owner's PDB, and CMake
 # refreshes that copy whenever the owner recompiles, orphaning the consumer's older objects (LNK1103).
 function(xi_reuse_pch target owner)
@@ -30,6 +21,24 @@ function(xi_reuse_pch target owner)
         target_precompile_headers(${target} PRIVATE ${XI_PCH})
     else()
         target_precompile_headers(${target} REUSE_FROM ${owner})
+    endif()
+endfunction()
+
+# A first-party library: xi_common and everything it carries, our warnings, and xi_common's PCH.
+# STATIC by default; OBJECT for libraries that only one executable links.
+function(xi_add_library target)
+    cmake_parse_arguments(PARSE_ARGV 1 arg "OBJECT" "" "")
+    if(arg_OBJECT)
+        add_library(${target} OBJECT ${arg_UNPARSED_ARGUMENTS})
+    else()
+        add_library(${target} STATIC ${arg_UNPARSED_ARGUMENTS})
+    endif()
+    target_link_libraries(${target} PRIVATE project_warnings)
+    if(target STREQUAL xi_common)
+        xi_precompile_headers(${target})
+    else()
+        target_link_libraries(${target} PUBLIC xi_common)
+        xi_reuse_pch(${target} xi_common)
     endif()
 endfunction()
 
@@ -80,7 +89,8 @@ function(xi_disable_lto target)
     target_link_options(${target} PRIVATE -fno-lto)
 endfunction()
 
-# A server executable: Windows resource, our warnings, no LTO on Apple, staged in the repo root.
+# A server executable: Windows resource, our warnings, no LTO on Apple, staged in the repo root,
+# and Valgrind targets when ENABLE_VALGRIND is on.
 function(xi_add_executable target rc)
     if(WIN32)
         set(resource ${CMAKE_SOURCE_DIR}/res/${rc})
@@ -91,4 +101,5 @@ function(xi_add_executable target rc)
         xi_disable_lto(${target})
     endif()
     xi_stage_in_repo_root(${target})
+    xi_add_valgrind_targets(${target})
 endfunction()

@@ -53,7 +53,7 @@ auto CGambitsContainer::NewGambitIdentifier(const Gambit_t& gambit) const -> std
 
 // Validate gambit before it's inserted into the gambit list
 // Check levels, etc.
-std::string CGambitsContainer::AddGambit(const Gambit_t& gambit)
+auto CGambitsContainer::AddGambit(const Gambit_t& gambit) -> std::string
 {
     TracyZoneScoped;
 
@@ -417,7 +417,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
             }
             else if (action.select == G_SELECT::HELIX_MOB_WEAKNESS)
             {
-                return POwner->SpellContainer->StormDayAgainstTargetWeakness(resolvedTarget);
+                return POwner->SpellContainer->HelixAgainstTargetWeakness(resolvedTarget);
             }
             else if (action.select == G_SELECT::RANDOM)
             {
@@ -677,7 +677,7 @@ auto CGambitsContainer::Tick(timer::time_point tick) -> Task<void>
                     }
                     else if (action.select == G_SELECT::HELIX_MOB_WEAKNESS)
                     {
-                        auto spell_id = POwner->SpellContainer->StormDayAgainstTargetWeakness(target);
+                        auto spell_id = POwner->SpellContainer->HelixAgainstTargetWeakness(target);
                         if (spell_id.has_value())
                         {
                             controller->Cast(target->entityId(), spell_id.value());
@@ -1513,7 +1513,7 @@ auto CGambitsContainer::CheckTrigger(const CBattleEntity* triggerTarget, const G
     }
 }
 
-bool CGambitsContainer::TryTrustSkill()
+auto CGambitsContainer::TryTrustSkill() -> bool
 {
     TracyZoneScoped;
 
@@ -1536,7 +1536,6 @@ bool CGambitsContainer::TryTrustSkill()
             case G_TP_TRIGGER::ASAP:
             {
                 return true;
-                break;
             }
             case G_TP_TRIGGER::RANDOM:
             {
@@ -1552,7 +1551,6 @@ bool CGambitsContainer::TryTrustSkill()
                 }
                 // clang-format on
                 return result;
-                break;
             }
             case G_TP_TRIGGER::OPENER:
             {
@@ -1571,7 +1569,6 @@ bool CGambitsContainer::TryTrustSkill()
                 });
                 // clang-format on
                 return result;
-                break;
             }
             case G_TP_TRIGGER::CLOSER: // Hold TP indefinitely to close a SC.
             {
@@ -1580,7 +1577,6 @@ bool CGambitsContainer::TryTrustSkill()
                 // TODO: ...and has a valid WS...
 
                 return PSCEffect && PSCEffect->GetStartTime() + 3s < timer::now() && PSCEffect->GetTier() == 0;
-                break;
             }
             case G_TP_TRIGGER::CLOSER_UNTIL_TP: // Will hold TP to close a SC, but WS immediately once specified value is reached.
             {
@@ -1597,12 +1593,10 @@ bool CGambitsContainer::TryTrustSkill()
                 // TODO: ...and has a valid WS...
 
                 return PSCEffect && PSCEffect->GetStartTime() + 3s < timer::now() && PSCEffect->GetTier() == 0;
-                break;
             }
             default:
             {
                 return false;
-                break;
             }
         }
     };
@@ -1841,7 +1835,7 @@ bool CGambitsContainer::TryTrustSkill()
 }
 
 // currently only used for Uka Totlihn to determin what samba to use.
-bool CGambitsContainer::PartyHasHealer()
+auto CGambitsContainer::PartyHasHealer() -> bool
 {
     bool hasHealer = false;
     // clang-format off
@@ -1859,7 +1853,7 @@ bool CGambitsContainer::PartyHasHealer()
 }
 
 // used to check for tanks in party (Volker, AA Hume)
-bool CGambitsContainer::PartyHasTank()
+auto CGambitsContainer::PartyHasTank() -> bool
 {
     bool hasTank = false;
     // clang-format off
