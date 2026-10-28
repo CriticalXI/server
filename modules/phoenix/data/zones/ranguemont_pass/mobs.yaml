@@ -25,6 +25,38 @@ templates:
 
   # -- Custom templates for mobs the core file lacks, scaffolded from the module's mob_groups/mob_pools inserts --
 
+  Floating_Eye:
+    id:            374
+    display_name:  Bat_Eye
+    species:       ahriman
+    spell_list_id: 11
+    skill_list_id: 4
+    attributes:
+      combat:
+        skill: club
+      jobs: [war, blm]
+      render:
+        look:
+          type:  standard
+          model: 264
+        entity_flags:  131
+        animation_sub:  16
+        model_size:      1
+        hitbox:         24
+      behaviors:
+        aggressive: true
+      spawn:
+        respawn: 840
+    loot:
+      drops:
+        - chance: common
+          item:   ahriman_lens
+        - chance: always
+          item:   bottle_of_ahriman_tears
+      despoil:
+        bottle_of_ahriman_tears: 0
+        ahriman_wing:            0
+
   Goblin_Furrier:
     id:            1665
     species:       goblin
@@ -399,19 +431,19 @@ spawns:
     level:    [30, 33]
 
   17457281:
-    template: Bat_Eye
+    template: Floating_Eye
     region:   n_102
     level:    [34, 36]
     script:   Floating_Eye
 
   17457282:
-    template: Bat_Eye
+    template: Floating_Eye
     region:   n_102
     level:    [34, 36]
     script:   Floating_Eye
 
   17457283:
-    template: Bat_Eye
+    template: Floating_Eye
     region:   n_102
     level:    [34, 36]
     script:   Floating_Eye
