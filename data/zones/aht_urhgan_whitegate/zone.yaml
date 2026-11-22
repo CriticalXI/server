@@ -28,6 +28,8 @@ transport:
     whitegate_mhaura_boat:
       door:     _1es
       dock:     [-20.726, 3.389, -154.231, 0]
+      places:
+        approach: [20.726, 3.389, 154.231, 208]
       boundary: 569
       reverse:  true
       voyage:
@@ -40,17 +42,21 @@ transport:
           animation: animation_18
           seconds:   42
           moves:
-            - to: dock
+            - to:    approach
+            - to:    dock
+              after: 20
         - state:     docked
-          seconds:   191
+          seconds:   190
         - state:     closing
-          seconds:   1
+          seconds:   2
         - state:     departing
           animation: animation_19
           hide:      37
     whitegate_nashmau_boat:
       door:     _1et
       dock:     [20.726, 3.389, 154.231, 128]
+      places:
+        approach: [-20.726, 3.389, -154.231, 77]
       boundary: 570
       voyage:
         - silver_sea_route_to_nashmau
@@ -62,11 +68,13 @@ transport:
           animation: animation_20
           seconds:   42
           moves:
-            - to: dock
+            - to:    approach
+            - to:    dock
+              after: 20
         - state:     docked
-          seconds:   431
+          seconds:   430
         - state:     closing
-          seconds:   1
+          seconds:   2
         - state:     departing
           animation: animation_21
           hide:      37

@@ -224,9 +224,9 @@ auto convertTransports(const std::optional<wire::TransportSchedule>& schedule) -
             places.emplace("dock", *dock);
         }
 
-        for (const auto& [place, at] : source.places.value_or(std::map<std::string, std::array<float, 3>>{}))
+        for (const auto& [place, at] : source.places.value_or(std::map<std::string, std::vector<float>>{}))
         {
-            places.emplace(place, position_t{ at[0], at[1], at[2], 0, 0 });
+            places.emplace(place, shared::toPosition(at, fmt::format("transport '{}' place '{}'", name, place)));
         }
 
         transports.emplace_back(TransportData{

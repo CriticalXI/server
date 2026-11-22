@@ -47,7 +47,7 @@ using Animation = std::optional<yaml::EnumToken<xi::Animation>>;
 using Seconds   = std::optional<uint32>;
 using Zone      = std::optional<yaml::EnumToken<xi::ZoneId>>;
 using Zones     = std::optional<std::vector<yaml::EnumToken<xi::ZoneId>>>;
-using Places    = std::optional<std::map<std::string, std::array<float, 3>>>;
+using Places    = std::optional<std::map<std::string, std::vector<float>>>;
 
 struct Music
 {
@@ -174,7 +174,7 @@ struct glz::json_schema<xi::data::datasets::zones::settings::wire::Transport>
 {
     glz::schema door{ .description = "Client name of the boarding door, as it appears in npcs.yaml. Omitted means the run has none." };
     glz::schema dock{ .description = "Where the ship sits while docked, as x, y, z and optionally a facing of 0-255. Omitted leaves it wherever the zone put it." };
-    glz::schema places{ .description = "Named spots the run's moves refer to, as x, y, z. The dock is always available under that name." };
+    glz::schema places{ .description = "Named spots the run's moves refer to, as x, y, z and optionally a facing of 0-255. The dock is always available under that name." };
     glz::schema boundary{ .description = "Boarding area passengers stand in. They ride along when the ship departs." };
     glz::schema reverse{ .description = "Whether the client plays the voyage zone's scenery path backwards for this run. Defaults to false." };
     glz::schema voyage{ .description = "Zones the passengers may travel through. A ship whose destination is chosen at boarding time names each one. Omitted means the run carries nobody." };

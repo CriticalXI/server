@@ -136,7 +136,7 @@ transport:
       dock: [-291.355, 0.000, 516.868, 160]
       places:
         hidden:   [0.000, 100.000, 0.000]
-        outbound: [-260.000, 0.000, 550.000]
+        outbound: [-260.000, 0.000, 550.000, 160]
       boundary: 1
       voyage:
         - phanauet_channel

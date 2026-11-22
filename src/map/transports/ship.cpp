@@ -126,6 +126,11 @@ void Ship::enter(const size_t index, const uint32 now, const uint32 into)
                 this->animate(arriving->Animation, cycleStart + arriving->Start);
             }
 
+            // Retail starts the riders' cutscene as the door shuts, ahead of the departure animation.
+            // Boundary zero means "not in a sub-area", which covers all of Carpenters' Landing and Bibiki Bay.
+            // The barge and the manaclipper board from it and work out who is really aboard themselves.
+            this->dock.zone->TransportDepart(this->dock.boundary, this->dock.prevzone, this->name);
+
             this->swingDoor(xi::Animation::CloseDoor);
         }
         break;
@@ -133,10 +138,6 @@ void Ship::enter(const size_t index, const uint32 now, const uint32 into)
         {
             this->animate(next.Animation, phaseStart);
             this->setDoor(xi::Animation::CloseDoor);
-
-            // Boundary zero means "not in a sub-area", which covers all of Carpenters' Landing and Bibiki Bay.
-            // The barge and the manaclipper board from it and work out who is really aboard themselves.
-            this->dock.zone->TransportDepart(this->dock.boundary, this->dock.prevzone, this->name);
         }
         break;
         case xi::TransportState::Cycling:

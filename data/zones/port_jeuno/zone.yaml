@@ -68,7 +68,7 @@ transport:
       door: _6us
       dock: [-68.000, 10.450, 117.000, 64]
       places:
-        staging: [-29.000, 10.450, 190.000]
+        staging: [-29.000, 10.450, 190.000, 128]
       boundary: 474
       reverse:  true
       voyage:
@@ -123,7 +123,7 @@ transport:
       door: _6ut
       dock: [-70.000, 10.450, -117.000, 192]
       places:
-        staging: [-31.000, 10.450, -190.000]
+        staging: [-31.000, 10.450, -190.000, 128]
       boundary: 475
       voyage:
         - bastok_jeuno_airship

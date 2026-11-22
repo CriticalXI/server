@@ -26,6 +26,7 @@ transport:
               after: 23
         - state:     cycling
           animation: animation_19
+          hide:      49
           moves:
             - to:    offshore
               after: 23

@@ -39,9 +39,9 @@ transport:
             - to:    dock
               after: 20
         - state:     docked
-          seconds:   192
+          seconds:   191
         - state:     closing
-          seconds:   1
+          seconds:   2
         - state:     departing
           hide:      38
           animation: animation_19

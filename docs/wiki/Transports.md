@@ -128,7 +128,7 @@ State `ship:` once for the zone. Several runs can share it, each taking its turn
 |-------------|------------------------------------------------------------------------------------------|
 | `door`      | Script name of the boarding door. Omit on a run that carries nobody                      |
 | `dock`      | The berth, as x, y, z and an optional facing. Omit on a decorative ship that never moves |
-| `places`    | Named spots the phases can move to. `dock` is always available without declaring it      |
+| `places`    | Named spots the phases can move to, as x, y, z and an optional facing. `dock` is always available without declaring it |
 | `boundary`  | Boarding area. Whoever stands in it rides along when the ship departs                    |
 | `voyage`    | The zone passengers cross. Omit if the run carries nobody                                |
 | `every`     | Cycle length in seconds                                                                  |
